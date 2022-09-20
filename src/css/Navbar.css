@@ -1,0 +1,7 @@
+.nav_container {
+  display: flex;
+  justify-content: space-around;
+  background-color: red;
+  position: sticky;
+  top: 0;
+}

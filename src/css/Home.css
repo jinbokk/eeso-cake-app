@@ -1,0 +1,22 @@
+.home_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* cal로 nav height 맞춰 조정하기 */
+  width: 100vw;
+}
+
+.box_container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 90vw;
+  height: 80vh;
+  background-color: red;
+}
+
+.greeting_msg {
+  font-size: clamp(1rem, 10vw, 5rem);
+  padding: 0 4rem;
+}
