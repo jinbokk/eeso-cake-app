@@ -1,0 +1,27 @@
+.footer_container_top {
+  margin: 0px auto;
+  width: 70%;
+  border-top: 1px solid rgb(216, 216, 216);
+  display: flex;
+  flex-direction: column;
+}
+
+.subNav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.subNav div {
+  margin-right: 40px;
+}
+
+.info {
+  border-top: 1px solid rgb(216, 216, 216);
+  display: flex;
+}
+
+.info_items {
+  padding: 40px;
+  padding-left: 0;
+}
