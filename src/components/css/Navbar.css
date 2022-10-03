@@ -1,9 +1,21 @@
+.nav_container_top {
+  display: flex;
+  justify-content: center;
+}
+
 .nav_container {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   /* background-color: red; */
   position: sticky;
   top: 0;
+  height: 70px;
+  width: 70%;
+}
+
+.main_logo {
+  width: 80px;
 }
 
 div * {

@@ -7,7 +7,7 @@ import DesignCakes from "./pages/DesignCakes";
 import FigureCakes from "./pages/FigureCakes";
 import PhotoCakes from "./pages/PhotoCakes";
 import RiceCakes from "./pages/RiceCakes";
-import SpecialCakes from "./pages/SpecialCakes";
+import LetteringCakes from "./pages/LetteringCakes";
 import Tarts from "./pages/Tarts";
 import Footer from "./components/Footer";
 
@@ -22,7 +22,7 @@ function App() {
         <Route path="/figure" element={<FigureCakes />} />
         <Route path="/photo" element={<PhotoCakes />} />
         <Route path="/rice" element={<RiceCakes />} />
-        <Route path="/special" element={<SpecialCakes />} />
+        <Route path="/letter" element={<LetteringCakes />} />
         <Route path="/tart" element={<Tarts />} />
       </Routes>
       <Footer />
