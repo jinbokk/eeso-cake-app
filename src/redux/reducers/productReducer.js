@@ -1,6 +1,9 @@
 let initialState = {
   loading: true,
-  AllProductsData: {},
+  allProductsData: {},
+  riceProductsData: {},
+  breadProductsData: {},
+  tartProductsData: {},
 };
 
 const productReducer = (state = initialState, action) => {
@@ -14,7 +17,10 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        AllProductsData: payload.AllProductJson.data,
+        allProductsData: payload.allProductJson.data,
+        riceProductsData: payload.riceProductJson.data,
+        breadProductsData: payload.breadProductJson.data,
+        tartProductsData: payload.tartProductJson.data,
       };
 
     default:

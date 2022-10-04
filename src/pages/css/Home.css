@@ -1,20 +1,20 @@
 .home_container_top {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100vh;
   /* cal로 nav height 맞춰 조정하기 */
-  width: 100vw;
+  width: 70%;
+  margin: 0px auto;
 }
-
+/* 
 .home_container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   width: 90vw;
   height: 80vh;
-  /* background-color: red; */
 }
 
 .main_msg {
@@ -46,4 +46,4 @@
   color: white;
   font-size: 40px;
   font-weight: bold;
-}
+} */

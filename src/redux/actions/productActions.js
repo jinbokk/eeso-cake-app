@@ -5,14 +5,30 @@ function getProducts() {
     try {
       dispatch({ type: "GET_PRODUCTS_REQUEST" });
 
-      const getAllProduct = await api.get();
+      const getAllProduct = api.get();
+      const getRiceProduct = api.get("/rice");
+      const getBreadProduct = api.get("/bread");
+      const getTartProduct = api.get("/tart");
 
-      console.log("getAllProductData", getAllProduct);
+      const [
+        allProductJson,
+        riceProductJson,
+        breadProductJson,
+        tartProductJson,
+      ] = await Promise.all([
+        getAllProduct,
+        getRiceProduct,
+        getBreadProduct,
+        getTartProduct,
+      ]);
 
       dispatch({
         type: "GET_PRODUCT_SUCCESS",
         payload: {
-          AllProductJson: getAllProduct,
+          allProductJson: allProductJson,
+          riceProductJson: riceProductJson,
+          breadProductJson: breadProductJson,
+          tartProductJson: tartProductJson,
         },
       });
     } catch (error) {

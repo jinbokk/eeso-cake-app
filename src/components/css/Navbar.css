@@ -1,6 +1,9 @@
 .nav_container_top {
   display: flex;
   justify-content: center;
+  position: sticky;
+  top:0;
+  z-index: 100;
 }
 
 .nav_container {
@@ -11,7 +14,7 @@
   position: sticky;
   top: 0;
   height: 70px;
-  width: 70%;
+  width: 100%;
 }
 
 .main_logo {
