@@ -1,0 +1,102 @@
+.landing_container_top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin-top: -70px;
+}
+
+.landing_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-right: 100px;
+  position: relative;
+  z-index: 10;
+}
+
+.landing_text h1,
+h2 {
+  margin: 0;
+}
+
+.landing_text_section1 {
+  margin-bottom: 30px;
+}
+
+.landing_text_section1 h2 {
+  font-family: AnandaBlack;
+  font-size: 30px;
+  color: rgb(193, 157, 85);
+}
+
+.landing_text_section1 h1 {
+  font-family: Simvoni;
+  font-size: 90px;
+}
+
+.landing_text_section2 {
+  margin-bottom: 30px;
+  font-family: Ownglyph;
+  font-size: 20px;
+}
+
+.landing_text_section2 h3 {
+  margin: 15px 0;
+}
+
+.landing_text_section3 {
+  margin-bottom: 30px;
+}
+
+.landing_image {
+  width: 600px;
+  height: 400px;
+  position: relative;
+}
+
+.landing_image::before {
+  border: 1px solid rgb(193, 157, 85, 0.6);
+  position: absolute;
+  right: -1px;
+  bottom: -25%;
+  content: "";
+  padding: 300px 400px;
+}
+
+.landing_button {
+  width: 100%;
+  height: 50;
+  background-color: black;
+  color: white;
+  padding: 12px 54px;
+  font-family: MoodyAdolescent;
+  font-size: 25px;
+}
+
+.landing_img {
+  width: 600px;
+  height: 400px;
+  object-fit: cover;
+}
+
+.deco_flower_img_left {
+  position: absolute;
+  left: -80px;
+  bottom: -80px;
+  transform: rotate(270deg);
+  width: 400px;
+  opacity: 0.7;
+}
+
+.deco_flower_img_right {
+  position: absolute;
+  right: -100px;
+  bottom: -180px;
+  transform: rotate(150deg);
+  width: 500px;
+  opacity: 0.7;
+}

@@ -11,10 +11,12 @@ import LetteringCakes from "./pages/LetteringCakes";
 import Tarts from "./pages/Tarts";
 import Footer from "./components/Footer";
 
+import "./App.css";
+
 function App() {
   return (
     <>
-      <Navbar />
+      <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

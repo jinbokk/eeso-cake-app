@@ -23,7 +23,6 @@ const Navbar = () => {
   
         <Link to="/about">
           <div>ABOUT</div>
-          <div>오시는길?</div>
         </Link>
   
         <Link to="/rice">

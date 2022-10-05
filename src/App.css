@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "AnandaBlack";
+  src: url("../public/fonts/AnandaBlack.ttf");
+}
+@font-face {
+  font-family: "BetterGrade";
+  src: url("../public/fonts/BetterGrade.ttf");
+}
+@font-face {
+  font-family: "MoodyAdolescent";
+  src: url("../public/fonts/MoodyAdolescent.ttf");
+}
+@font-face {
+  font-family: "ScholarlyAmbition";
+  src: url("../public/fonts/ScholarlyAmbition.ttf");
+}
+@font-face {
+  font-family: "Simvoni";
+  src: url("../public/fonts/Simvoni.ttf");
+}
+@font-face {
+  font-family: "Ownglyph";
+  src: url("../public/fonts/Ownglyph.ttf");
+}
+
+html,
+body {
+  background-color: rgb(251, 239, 233);
+}
