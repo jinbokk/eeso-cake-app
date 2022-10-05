@@ -11,7 +11,7 @@ const Navbar = () => {
           <div>
             <img
               className="main_logo"
-              src={require("../images/logo_4.png")}
+              src="/images/logo_4.png"
               alt=""
             />
           </div>

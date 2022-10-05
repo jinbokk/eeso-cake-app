@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 // import api from "../redux/api";
 
-const RiceCakes = () => {
+import ProductFilter from "../components/ProductFilter";
 
+const RiceCakes = () => {
   // function getCakes(year) {
   //   return async (dispatch) => {
   //     const getRiceCakes = await api.get(`/${year}`);
@@ -17,6 +18,7 @@ const RiceCakes = () => {
   return (
     <>
       <div>RiceCakes</div>
+      <ProductFilter />
     </>
   );
 };

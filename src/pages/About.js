@@ -7,7 +7,7 @@ const About = () => {
       <div className="text_container_top">
         <div>About</div>
         <div>
-          <img className="img_container" src={require("../images/test2.jpg")} />
+          <img className="img_container" src="/images/test2.jpg" alt="" />
         </div>
         <div className="text_container">
           <div>안녕하세요 이소케이크입니다 :)</div>
