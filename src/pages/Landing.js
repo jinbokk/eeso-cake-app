@@ -62,7 +62,7 @@ const Landing = () => {
     gsap.fromTo(
       q(".ease_in_bottom_1"),
       { opacity: 0, y: 100 },
-      { opacity: 1, duration: 1.3, ease: "power2.out", y: 0 }
+      { opacity: 0.7, duration: 1.3, ease: "power2.out", y: 0 }
     );
     gsap.fromTo(
       q(".ease_in_bottom_2"),
@@ -98,8 +98,15 @@ const Landing = () => {
             </div>
           </div>
 
-          <div className="landing_image ease_in_right_1">
-            <Swiper
+          <div className="landing_image_container ease_in_right_1">
+            <img
+              src="/images/landing_test.png"
+              className="landing_image_background_removed"
+              alt=""
+            ></img>
+
+            
+            {/* <Swiper
               spaceBetween={50}
               autoplay={{
                 delay: 4500,
@@ -112,28 +119,43 @@ const Landing = () => {
               <SwiperSlide>
                 <img
                   src={riceProductsData.results[0].image_url}
-                  className="landing_img"
+                  className="landing_image"
                   alt=""
                 ></img>
               </SwiperSlide>
               <SwiperSlide>
                 <img
                   src={breadProductsData.results[0].image_url}
-                  className="landing_img"
+                  className="landing_image"
                   alt=""
                 ></img>
               </SwiperSlide>
               <SwiperSlide>
                 <img
                   src={tartProductsData.results[0].image_url}
-                  className="landing_img"
+                  className="landing_image"
                   alt=""
                 ></img>
               </SwiperSlide>
-            </Swiper>
+            </Swiper> */}
           </div>
 
-          <div>
+              <div>
+                <img
+                  src="/images/deco_cake.png"
+                  alt=""
+                  className="deco_cake_image_left ease_in_bottom_1"
+                />
+              </div>
+              <div>
+                <img
+                  src="/images/deco_cake.png"
+                  alt=""
+                  className="deco_cake_image_right ease_in_bottom_1"
+                />
+              </div>
+
+          {/* <div>
             <img
               src="/images/deco_flower.png"
               alt=""
@@ -146,7 +168,7 @@ const Landing = () => {
               alt=""
               className="deco_flower_img_right ease_in_bottom_1"
             />
-          </div>
+          </div> */}
         </div>
       ) : null}
     </>

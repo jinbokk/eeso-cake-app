@@ -5,7 +5,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  margin-top: -70px;
+  margin-top: calc(var(--nav-size) * -1);
 }
 
 .landing_text {
@@ -30,7 +30,7 @@ h2 {
 .landing_text_section1 h2 {
   font-family: AnandaBlack;
   font-size: 30px;
-  color: rgb(193, 157, 85);
+  color: var(--bg-accent);
 }
 
 .landing_text_section1 h1 {
@@ -52,15 +52,20 @@ h2 {
   margin-bottom: 30px;
 }
 
-.landing_image {
+.landing_image_container {
   width: 600px;
   height: 400px;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.landing_image::before {
-  border: 1px solid rgb(193, 157, 85, 0.6);
+.landing_image_container::before {
+  border: 1px solid var(--bg-accent);
+  opacity: 0.6;
   position: absolute;
+  z-index: -1;
   right: -1px;
   bottom: -25%;
   content: "";
@@ -70,20 +75,39 @@ h2 {
 .landing_button {
   width: 100%;
   height: 50;
-  background-color: black;
+  background-color: var(--bg-accent);
+  border: none;
   color: white;
   padding: 12px 54px;
   font-family: MoodyAdolescent;
   font-size: 25px;
 }
 
-.landing_img {
+.landing_image {
   width: 600px;
-  height: 400px;
+  /* height: 400px; */
   object-fit: cover;
 }
 
-.deco_flower_img_left {
+.landing_image_background_removed {
+  width: 550px;
+}
+
+.deco_cake_image_left {
+  position: absolute;
+  left: -80px;
+  bottom: -80px;
+  width: 200px;
+}
+
+.deco_cake_image_right {
+  position: absolute;
+  right: -50px;
+  bottom: -90px;
+  width: 300px;
+}
+
+/* .deco_flower_image_left {
   position: absolute;
   left: -80px;
   bottom: -80px;
@@ -92,11 +116,11 @@ h2 {
   opacity: 0.7;
 }
 
-.deco_flower_img_right {
+.deco_flower_image_right {
   position: absolute;
   right: -100px;
   bottom: -180px;
   transform: rotate(150deg);
   width: 500px;
   opacity: 0.7;
-}
+} */

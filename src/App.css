@@ -25,5 +25,11 @@
 
 html,
 body {
-  background-color: rgb(251, 239, 233);
+  background-color: var(--bg);
+}
+
+:root {
+  --bg: rgb(251, 239, 233);
+  --bg-accent: rgb(191, 47, 47);
+  --nav-size: 70px;
 }

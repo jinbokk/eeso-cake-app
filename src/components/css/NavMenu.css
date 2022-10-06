@@ -1,0 +1,23 @@
+.nav_menu {
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 50px;
+  transition: 0.2s;
+  z-index: 10000;
+}
+
+.nav_menu:hover {
+  color: var(--bg-accent);
+  transition: 0.2s;
+}
+
+.nav_menu_ele {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 300px;
+  /* background-color: blue; */
+}
