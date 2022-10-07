@@ -15,6 +15,7 @@ import { gsap } from "gsap";
 
 const Landing = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(productAction.getProducts());
   }, []);
@@ -39,7 +40,18 @@ const Landing = () => {
       { opacity: 0, x: 200 },
       {
         opacity: 1,
-        duration: 1,
+        duration: 1.3,
+        ease: "power2.out",
+        x: 0,
+      }
+    );
+    gsap.fromTo(
+      q(".ease_in_right_2"),
+      { opacity: 0, x: 200 },
+      {
+        delay: 0.4,
+        opacity: 1,
+        duration: 1.3,
         ease: "power2.out",
         x: 0,
       }
@@ -47,27 +59,27 @@ const Landing = () => {
     gsap.fromTo(
       q(".ease_in_left_1"),
       { opacity: 0, x: -200 },
-      { delay: 0.7, opacity: 1, duration: 1.3, ease: "power2.out", x: 0 }
+      { delay: 1.2, opacity: 1, duration: 1.3, ease: "power2.out", x: 0 }
     );
     gsap.fromTo(
       q(".ease_in_left_2"),
       { opacity: 0, x: -200 },
-      { delay: 0.7, opacity: 1, duration: 1.3, ease: "power2.out", x: 0 }
+      { delay: 1.2, opacity: 1, duration: 1.3, ease: "power2.out", x: 0 }
     );
     gsap.fromTo(
       q(".ease_in_left_3"),
       { opacity: 0, x: -200 },
-      { delay: 0.7, opacity: 1, duration: 1.3, ease: "power2.out", x: 0 }
+      { delay: 1.2, opacity: 1, duration: 1.3, ease: "power2.out", x: 0 }
     );
     gsap.fromTo(
       q(".ease_in_bottom_1"),
       { opacity: 0, y: 100 },
-      { opacity: 0.7, duration: 1.3, ease: "power2.out", y: 0 }
+      { opacity: 1, duration: 1.3, ease: "power2.out", y: 0 }
     );
     gsap.fromTo(
       q(".ease_in_bottom_2"),
       { opacity: 0, y: 100 },
-      { delay: 1.5, opacity: 1, duration: 1.3, ease: "power2.out", y: 0 }
+      { delay: 2, opacity: 1, duration: 1.3, ease: "power2.out", y: 0 }
     );
   }, [loading]);
 
@@ -99,15 +111,8 @@ const Landing = () => {
           </div>
 
           <div className="landing_image_container ease_in_right_1">
-            <img
-              src="/images/landing_test.png"
-              className="landing_image_background_removed"
-              alt=""
-            ></img>
-
-            
-            {/* <Swiper
-              spaceBetween={50}
+            <Swiper
+              spaceBetween={500}
               autoplay={{
                 delay: 4500,
                 disableOnInteraction: false,
@@ -118,29 +123,29 @@ const Landing = () => {
             >
               <SwiperSlide>
                 <img
-                  src={riceProductsData.results[0].image_url}
-                  className="landing_image"
+                  src="/images/landing_test_3.png"
+                  className="landing_image_background_removed ease_in_right_2"
                   alt=""
                 ></img>
               </SwiperSlide>
               <SwiperSlide>
                 <img
-                  src={breadProductsData.results[0].image_url}
-                  className="landing_image"
+                  src="/images/landing_test.png"
+                  className="landing_image_background_removed ease_in_right_2"
                   alt=""
                 ></img>
               </SwiperSlide>
               <SwiperSlide>
                 <img
-                  src={tartProductsData.results[0].image_url}
-                  className="landing_image"
+                  src="/images/landing_test_2.png"
+                  className="landing_image_background_removed ease_in_right_2"
                   alt=""
                 ></img>
               </SwiperSlide>
-            </Swiper> */}
+            </Swiper>
           </div>
 
-              <div>
+          {/* <div>
                 <img
                   src="/images/deco_cake.png"
                   alt=""
@@ -153,7 +158,7 @@ const Landing = () => {
                   alt=""
                   className="deco_cake_image_right ease_in_bottom_1"
                 />
-              </div>
+              </div> */}
 
           {/* <div>
             <img

@@ -3,6 +3,8 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers/index";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+import storage from "redux-persist/lib/storage";
+import persistReducer from "redux-persist/es/persistReducer";
 
 const composeEnhancers = composeWithDevTools({
   actionCreators,
@@ -10,12 +12,21 @@ const composeEnhancers = composeWithDevTools({
   traceLimit: 25,
 });
 
-let store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+let store = createStore(
+  persistedReducer,
+  composeEnhancers(applyMiddleware(thunk))
+);
+
 // let store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default store;
-
-
 
 // ------- USING RTK..
 // import { configureStore } from "@reduxjs/toolkit";

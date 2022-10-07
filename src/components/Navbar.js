@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import "./css/Navbar.css";
+import React from "react";
+
+import "./css/NavBar.css";
 
 import NavMenu from "./NavMenu";
-import NavItem from "./NavItem";
 
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const NavBar = () => {
   return (
     <div className="nav_container_top">
       <div className="nav_container">
@@ -16,62 +16,39 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <NavMenu
-          props={{
-            title: "HOME",
-          }}
-        />
+        <Link to="/">
+          <NavMenu title="HOME" />
+        </Link>
+
+        <Link to="/about">
+          <NavMenu title="ABOUT" />
+        </Link>
 
         <NavMenu
-          props={{
-            title: "ABOUT",
-          }}
-        />
-
-        <NavMenu
-          props={{
-            title: "CAKES",
-            img_url: {
-              rice_image_url: "/images/logo_4.png",
-              bread_image_url: "/images/logo_4.png",
-              tart_image_url: "/images/logo_4.png",
+          title="CAKES"
+          items={[
+            {
+              title: "RICE CAKES",
+              image_url: "/images/rice_cake_icon.png",
+              link: "/rice",
             },
-          }}
+            {
+              title: "BREAD CAKES",
+              image_url: "/images/bread_cake_icon.png",
+              link: "/bread",
+            },
+            {
+              title: "TART CAKES",
+              image_url: "/images/tart_cake_icon.png",
+              link: "/tart",
+            },
+          ]}
         />
 
-        <NavMenu
-          props={{
-            title: "CONTACT",
-            img_url: "/images/logo_4.png",
-          }}
-        />
+        <NavMenu title="CONTACT" />
       </div>
     </div>
-
-    // <Link to="/rice">
-    //   <div>떡 케이크</div>
-    // </Link>
-
-    // <Link to="/figure">
-    //   <div>피큐어 케이크</div>
-    // </Link>
-
-    // <Link to="/photo">
-    //   <div>포토 케이크</div>
-    // </Link>
-
-    // <Link to="/design">
-    //   <div>디자인 케이크</div>
-    // </Link>
-
-    // <Link to="/letter">
-    //   <div>레터링 케이크</div>
-    // </Link>
-
-    // <Link to="/tart">
-    //   <div>타르트</div>
-    // </Link>
   );
 };
 
-export default Navbar;
+export default NavBar;

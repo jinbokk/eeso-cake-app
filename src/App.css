@@ -31,5 +31,6 @@ body {
 :root {
   --bg: rgb(251, 239, 233);
   --bg-accent: rgb(191, 47, 47);
-  --nav-size: 70px;
+  --nav-height: 70px;
+  --filter-width: 350px;
 }
