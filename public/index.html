@@ -27,7 +27,17 @@
     <title>React App</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="instafeed"></div>
+
+    <script type="text/javascript" src="/backend/instafeed.min.js"></script>
+
+    <script type="text/javascript">
+      var feed = new Instafeed({
+        accessToken: process.env.REACT_APP_INSTA_ACCESS_TOKEN,
+      });
+      feed.run();
+    </script>
+
     <div id="root"></div>
     <!--
       This HTML file is a template.

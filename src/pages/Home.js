@@ -10,6 +10,7 @@ import Landing from "./Landing";
 import Sidebar from "../components/Sidebar";
 
 const Home = () => {
+
   return (
     <>
       <div className="home_container_top">
@@ -60,6 +61,12 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+      {/* testing instagram api */}
+
+      <div id="root"></div>
+
+
     </>
   );
 };
