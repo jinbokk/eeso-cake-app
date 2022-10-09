@@ -1,49 +1,100 @@
 .home_container_top {
+  font-family: Ownglyph;
+  font-size: 30px;
+}
+
+.section_1_container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  height: 100vh;
-  /* cal로 nav height 맞춰 조정하기 */
-  width: 70%;
-  margin: 0px auto;
-}
-/* 
-.home_container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 90vw;
+  width: 100vw;
   height: 80vh;
+  background-attachment: fixed;
+  background-position: bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: var(--section-offset);
 }
 
-.main_msg {
-  font-size: clamp(1rem, 10vw, 5rem);
-  padding: 0 4rem;
+.section_1_container::before {
+  position: absolute;
+  width: 100vw;
+  height: 80vh;
+  content: "";
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
 }
 
-.sub_msg {
+.section_1_text {
+  position: relative;
+  z-index: 2;
+  font-size: 60px;
+  font-weight: bold;
+  color: var(--bg);
+  text-shadow: 5px 5px 5px rgb(0, 0, 0, 0.6);
+}
+
+.section_2_container {
+  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  /* margin-top: 100px; */
+  /* background-color: gray; */
 }
 
-.sub_img {
-  position: relative;
+.section_2_image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50vw;
+  height: 100vh;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.section_2_text_container_top {
+  position: absolute;
+  right: 50px;
+  width: 50%;
+}
+
+.section_2_text_container_1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(/src/images/test1.jpg) no-repeat center center;
-  background-attachment: fixed;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  width: 100vw;
-  height: 50vh;
 }
 
-.sub_img div {
-  color: white;
-  font-size: 40px;
-  font-weight: bold;
-} */
+.section_2_text_container_2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.section_2_text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 70px;
+}
+
+.section_2_text_lg {
+  font-size: 100px;
+}
+
+.section_2_text_sm {
+  font-size: 45px;
+}
+
+.underline {
+  margin-bottom: 25px;
+  text-decoration: underline 2px;
+  text-decoration-color: var(--bg-accent);
+  text-underline-offset: 10px;
+}

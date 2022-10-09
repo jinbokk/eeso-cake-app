@@ -5,7 +5,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  margin-top: calc(var(--nav-height) * -1);
+  /* margin-top: calc(var(--nav-height) * -1); */
 }
 
 .landing_text {
@@ -62,10 +62,13 @@ h2 {
 }
 
 .landing_image_container::before {
-  border: 1px solid var(--bg-accent);
-  opacity: 0.6;
+  outline: 3px dashed var(--bg-accent);
+  outline-offset: 10px;
+  border-radius: 30px;
+  background-color: var(--bg-accent);
+  opacity: 0.5;
   position: absolute;
-  z-index: -1;
+  z-index: 1;
   right: -1px;
   bottom: -25%;
   content: "";
@@ -81,6 +84,7 @@ h2 {
   padding: 12px 54px;
   font-family: MoodyAdolescent;
   font-size: 25px;
+  cursor: pointer;
 }
 
 .landing_image {

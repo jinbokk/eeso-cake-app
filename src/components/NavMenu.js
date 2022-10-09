@@ -13,11 +13,13 @@ const NavMenu = (props) => {
       <div>
         {expand && (
           <div className="nav_item_container_top">
-            {props.items.map((item) => (
+            {props.items.map((item, index) => (
               <NavItem
                 title={item.title}
                 image_url={item.image_url}
                 link={item.link}
+                onClick={() => setExpand(!expand)}
+                key={index}
               />
             ))}
           </div>

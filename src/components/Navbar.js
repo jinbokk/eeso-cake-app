@@ -1,12 +1,12 @@
 import React from "react";
 
-import "./css/NavBar.css";
+import "./css/Navbar.css";
 
 import NavMenu from "./NavMenu";
 
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const Navbar = () => {
   return (
     <div className="nav_container_top">
       <div className="nav_container">
@@ -17,11 +17,11 @@ const NavBar = () => {
         </Link>
 
         <Link to="/">
-          <NavMenu title="HOME" />
+          <div className="nav_menu">HOME</div>
         </Link>
 
         <Link to="/about">
-          <NavMenu title="ABOUT" />
+          <div className="nav_menu">ABOUT</div>
         </Link>
 
         <NavMenu
@@ -30,25 +30,27 @@ const NavBar = () => {
             {
               title: "RICE CAKES",
               image_url: "/images/rice_cake_icon.png",
-              link: "/rice",
+              link: "rice",
             },
             {
               title: "BREAD CAKES",
               image_url: "/images/bread_cake_icon.png",
-              link: "/bread",
+              link: "bread",
             },
             {
               title: "TART CAKES",
               image_url: "/images/tart_cake_icon.png",
-              link: "/tart",
+              link: "tart",
             },
           ]}
         />
 
-        <NavMenu title="CONTACT" />
+        <Link to="/contact">
+          <div className="nav_menu">CONTACT</div>
+        </Link>
       </div>
     </div>
   );
 };
 
-export default NavBar;
+export default Navbar;

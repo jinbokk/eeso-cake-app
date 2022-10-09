@@ -33,4 +33,5 @@ body {
   --bg-accent: rgb(191, 47, 47);
   --nav-height: 70px;
   --filter-width: 350px;
+  --section-offset: 200px;
 }

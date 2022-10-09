@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productAction } from "../redux/actions/productActions";
 
@@ -13,27 +13,27 @@ import "./css/Landing.css";
 import { gsap } from "gsap";
 // gsap test -----------------------------------------
 
-const Landing = () => {
-  const dispatch = useDispatch();
+const Landing = (props) => {
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(productAction.getProducts());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(productAction.getProducts());
+  // }, []);
 
-  const {
-    loading,
-    allProductsData,
-    riceProductsData,
-    breadProductsData,
-    tartProductsData,
-  } = useSelector((state) => state.product);
+  // const {
+  //   loading,
+  //   allProductsData,
+  //   riceProductsData,
+  //   breadProductsData,
+  //   tartProductsData,
+  // } = useSelector((state) => state.product);
 
   // gsap test -----------------------------------------
   const el = useRef();
   const q = gsap.utils.selector(el);
 
   useEffect(() => {
-    if (loading === true) return;
+    // if (loading === true) return;
 
     gsap.fromTo(
       q(".ease_in_right_1"),
@@ -81,13 +81,13 @@ const Landing = () => {
       { opacity: 0, y: 100 },
       { delay: 2, opacity: 1, duration: 1.3, ease: "power2.out", y: 0 }
     );
-  }, [loading]);
+  }, []);
 
   // gsap test -----------------------------------------
 
   return (
     <>
-      {!loading ? (
+      {/* {!loading ? ( */}
         <div className="landing_container_top" ref={el}>
           <div className="landing_text">
             <div className="landing_text_section1">
@@ -104,7 +104,10 @@ const Landing = () => {
             </div>
 
             <div className="landing_text_section3">
-              <button className="landing_button ease_in_bottom_2">
+              <button
+                className="landing_button ease_in_bottom_2"
+                onClick={() => props.setBrowse(true)}
+              >
                 SHOP NOW
               </button>
             </div>
@@ -175,7 +178,7 @@ const Landing = () => {
             />
           </div> */}
         </div>
-      ) : null}
+      {/* ) : null} */}
     </>
   );
 };

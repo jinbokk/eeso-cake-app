@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import productReducer from "./productReducer";
+import filteredProductReducer from "./filteredProductReducer";
 
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -15,6 +16,7 @@ const persistConfig = {
 
 export const rootReducer = combineReducers({
   product: productReducer,
+  filteredProduct: filteredProductReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
