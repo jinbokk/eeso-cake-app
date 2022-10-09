@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL: `https://eeso-cake-server.herokuapp.com/api`,
-  baseURL: `http://localhost:8000/api`,
+  baseURL: process.env.REACT_APP_AXIOS_BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
 
