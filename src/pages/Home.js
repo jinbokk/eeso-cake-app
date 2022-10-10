@@ -1,15 +1,13 @@
 import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import "./css/Home.css";
 
-import { productAction } from "../redux/actions/productActions";
-import { useDispatch, useSelector } from "react-redux";
-
-import PreviewItems from "../components/PreviewItems";
-import BestItems from "../components/BestItems";
-import Landing from "./Landing";
-import Sidebar from "../components/Sidebar";
-
 const Home = () => {
+  const productsData = useSelector((state) => state.product);
+  const instagramData = useSelector((state) => state.instagram);
+
+  console.log(productsData);
+  console.log(instagramData);
 
   return (
     <>
@@ -60,13 +58,30 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+        <div className="section_3_container">
+          <h2>이소케이크의 인스타그램</h2>
+          <h3>원하는 케이크를 쉽게 찾아보세요 !</h3>
+          <div>현재 미디어 4839 개</div>
+          <div className="instaFeed_container_top">
+            {instagramData.loading ? (
+              <div>laoding feed</div>
+            ) : (
+              instagramData.userFeedsData.data.map((item) => (
+                <a
+                  className="instaFeed_container"
+                  href={item.permalink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={item.media_url} className="instaFeed_image" />
+                  <div>{item.caption}</div>
+                </a>
+              ))
+            )}
+          </div>
+        </div>
       </div>
-
-      {/* testing instagram api */}
-
-      <div id="root"></div>
-
-
     </>
   );
 };

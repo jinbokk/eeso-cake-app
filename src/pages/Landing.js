@@ -1,32 +1,27 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { productAction } from "../redux/actions/productActions";
+import React, { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
-import "swiper/css";
-
+import "swiper/swiper.min.css";
+import "swiper/modules/pagination/pagination.min.css";
 import "./css/Landing.css";
+
+import { instagramActions } from "../redux/actions/instagramActions";
 
 // gsap test -----------------------------------------
 // https://greensock.com/react/
 import { gsap } from "gsap";
+import { productActions } from "../redux/actions/productActions";
 // gsap test -----------------------------------------
 
 const Landing = (props) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(productAction.getProducts());
-  // }, []);
-
-  // const {
-  //   loading,
-  //   allProductsData,
-  //   riceProductsData,
-  //   breadProductsData,
-  //   tartProductsData,
-  // } = useSelector((state) => state.product);
+  useEffect(() => {
+    dispatch(productActions.getProducts());
+    dispatch(instagramActions.getInstaData());
+  }, []);
 
   // gsap test -----------------------------------------
   const el = useRef();
@@ -88,67 +83,67 @@ const Landing = (props) => {
   return (
     <>
       {/* {!loading ? ( */}
-        <div className="landing_container_top" ref={el}>
-          <div className="landing_text">
-            <div className="landing_text_section1">
-              <h2 className="ease_in_left_1">Design Cake Shop</h2>
-              <h1 className="ease_in_left_2">EESO CAKE</h1>
-            </div>
+      <div className="landing_container_top" ref={el}>
+        <div className="landing_text">
+          <div className="landing_text_section1">
+            <h2 className="ease_in_left_1">Design Cake Shop</h2>
+            <h1 className="ease_in_left_2">EESO CAKE</h1>
+          </div>
 
-            <div className="landing_text_section2">
-              <div className="ease_in_left_3">
-                <h3>안녕하세요, 이소케이크 입니다 :)</h3>
-                <h3>無 합성제 無 보존제 無 유화제</h3>
-                <h3>갓 구워낸 시트와 신선한 생크림만을 사용합니다</h3>
-              </div>
-            </div>
-
-            <div className="landing_text_section3">
-              <button
-                className="landing_button ease_in_bottom_2"
-                onClick={() => props.setBrowse(true)}
-              >
-                SHOP NOW
-              </button>
+          <div className="landing_text_section2">
+            <div className="ease_in_left_3">
+              <h3>안녕하세요, 이소케이크 입니다 :)</h3>
+              <h3>無 합성제 無 보존제 無 유화제</h3>
+              <h3>갓 구워낸 시트와 신선한 생크림만을 사용합니다</h3>
             </div>
           </div>
 
-          <div className="landing_image_container ease_in_right_1">
-            <Swiper
-              spaceBetween={500}
-              autoplay={{
-                delay: 4500,
-                disableOnInteraction: false,
-              }}
-              speed={1100}
-              modules={[Autoplay]}
-              loop={true}
+          <div className="landing_text_section3">
+            <button
+              className="landing_button ease_in_bottom_2"
+              onClick={() => props.setBrowse(true)}
             >
-              <SwiperSlide>
-                <img
-                  src="/images/landing_test_3.png"
-                  className="landing_image_background_removed ease_in_right_2"
-                  alt=""
-                ></img>
-              </SwiperSlide>
-              <SwiperSlide>
-                <img
-                  src="/images/landing_test.png"
-                  className="landing_image_background_removed ease_in_right_2"
-                  alt=""
-                ></img>
-              </SwiperSlide>
-              <SwiperSlide>
-                <img
-                  src="/images/landing_test_2.png"
-                  className="landing_image_background_removed ease_in_right_2"
-                  alt=""
-                ></img>
-              </SwiperSlide>
-            </Swiper>
+              SHOP NOW
+            </button>
           </div>
+        </div>
 
-          {/* <div>
+        <div className="landing_image_container ease_in_right_1">
+          <Swiper
+            spaceBetween={500}
+            autoplay={{
+              delay: 4500,
+              disableOnInteraction: false,
+            }}
+            speed={1100}
+            modules={[Autoplay]}
+            loop={true}
+          >
+            <SwiperSlide>
+              <img
+                src="/images/landing_test_3.png"
+                className="landing_image_background_removed ease_in_right_2"
+                alt=""
+              ></img>
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
+                src="/images/landing_test.png"
+                className="landing_image_background_removed ease_in_right_2"
+                alt=""
+              ></img>
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
+                src="/images/landing_test_2.png"
+                className="landing_image_background_removed ease_in_right_2"
+                alt=""
+              ></img>
+            </SwiperSlide>
+          </Swiper>
+        </div>
+
+        {/* <div>
                 <img
                   src="/images/deco_cake.png"
                   alt=""
@@ -163,7 +158,7 @@ const Landing = (props) => {
                 />
               </div> */}
 
-          {/* <div>
+        {/* <div>
             <img
               src="/images/deco_flower.png"
               alt=""
@@ -177,7 +172,7 @@ const Landing = (props) => {
               className="deco_flower_img_right ease_in_bottom_1"
             />
           </div> */}
-        </div>
+      </div>
       {/* ) : null} */}
     </>
   );

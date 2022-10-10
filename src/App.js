@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -14,7 +15,7 @@ import Sidebar from "./components/Sidebar";
 import { useState } from "react";
 
 function App() {
-  const [browse, setBrowse] = useState(false);  
+  const [browse, setBrowse] = useState(false);
 
   return (
     <>

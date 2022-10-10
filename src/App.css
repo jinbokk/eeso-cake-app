@@ -1,26 +1,26 @@
 @font-face {
   font-family: "AnandaBlack";
-  src: url("../public/fonts/AnandaBlack.ttf");
+  src: url("/fonts/AnandaBlack.ttf");
 }
 @font-face {
   font-family: "BetterGrade";
-  src: url("../public/fonts/BetterGrade.ttf");
+  src: url("/fonts/BetterGrade.ttf");
 }
 @font-face {
   font-family: "MoodyAdolescent";
-  src: url("../public/fonts/MoodyAdolescent.ttf");
+  src: url("/fonts/MoodyAdolescent.ttf");
 }
 @font-face {
   font-family: "ScholarlyAmbition";
-  src: url("../public/fonts/ScholarlyAmbition.ttf");
+  src: url("/fonts/ScholarlyAmbition.ttf");
 }
 @font-face {
   font-family: "Simvoni";
-  src: url("../public/fonts/Simvoni.ttf");
+  src: url("/fonts/Simvoni.ttf");
 }
 @font-face {
   font-family: "Ownglyph";
-  src: url("../public/fonts/Ownglyph.ttf");
+  src: url("/fonts/Ownglyph.ttf");
 }
 
 html,

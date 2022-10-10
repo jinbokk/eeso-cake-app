@@ -1,13 +1,13 @@
-import api from "../api";
+import api_eesocake from "../api_eesocake";
 
 function getFilteredProducts(design) {
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_FILTERED_PRODUCTS_REQUEST" });
 
-      const getFilteredRiceProduct = api.get(`/rice?design=${design}`);
-      const getFilteredBreadProduct = api.get(`/bread?design=${design}`);
-      const getFilteredTartProduct = api.get(`/tart?design=${design}`);
+      const getFilteredRiceProduct = api_eesocake.get(`/rice?design=${design}`);
+      const getFilteredBreadProduct = api_eesocake.get(`/bread?design=${design}`);
+      const getFilteredTartProduct = api_eesocake.get(`/tart?design=${design}`);
 
       const [
         filteredRiceProductJson,

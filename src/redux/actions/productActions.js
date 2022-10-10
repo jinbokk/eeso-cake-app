@@ -1,14 +1,14 @@
-import api from "../api";
+import api_eesocake from "../api_eesocake";
 
 function getProducts() {
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_PRODUCTS_REQUEST" });
 
-      const getAllProduct = api.get();
-      const getRiceProduct = api.get("/rice");
-      const getBreadProduct = api.get("/bread");
-      const getTartProduct = api.get("/tart");
+      const getAllProduct = api_eesocake.get();
+      const getRiceProduct = api_eesocake.get("/rice");
+      const getBreadProduct = api_eesocake.get("/bread");
+      const getTartProduct = api_eesocake.get("/tart");
 
       const [
         allProductJson,
@@ -37,12 +37,12 @@ function getProducts() {
   };
 }
 
-export const productAction = {
+export const productActions = {
   getProducts,
 };
 
 // ------- USING RTK..
-// import api from "../api";
+// import api_eesocake from "../api_eesocake";
 // import { productActions } from "../reducers/productReducer";
 
 // function getProducts() {
@@ -50,7 +50,7 @@ export const productAction = {
 //     try {
 //       dispatch({ type: "GET_PRODUCTS_REQUEST" });
 
-//       const data = await api.get().data;
+//       const data = await api_eesocake.get().data;
 
 //       dispatch(productActions.getAllProducts({ data }));
 //       // dispatch({
@@ -65,6 +65,6 @@ export const productAction = {
 //   };
 // }
 
-// export const productAction = {
+// export const productActions = {
 //   getProducts,
 // };
