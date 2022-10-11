@@ -80,10 +80,11 @@ const FilteredCakes = () => {
 
             <div className="images_container">
               <div style={{ backgroundColor: "red" }}>
-                {filteredRiceProductsData.results.map((item) => (
+                {filteredRiceProductsData.results.map((item, index) => (
                   <img
                     src={item.image_url}
                     alt=""
+                    key={index}
                     className="cake_image"
                     onClick={() => {
                       ModalOpen();
@@ -100,8 +101,10 @@ const FilteredCakes = () => {
               <img src={doc.url} alt="" className="modal_cake_image" />
               <div>
                 {doc.designTag &&
-                  doc.designTag.map((item) => (
-                    <span className="modal_design_tag">{item}</span>
+                  doc.designTag.map((item, index) => (
+                    <span className="modal_design_tag" key={index}>
+                      {item}
+                    </span>
                   ))}
               </div>
             </Box>

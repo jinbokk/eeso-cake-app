@@ -6,6 +6,7 @@ import "./css/Cakes.css";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import { createTheme } from "@mui/material";
 import { productFilterActions } from "../redux/actions/productFilterActions";
 import Subnav from "../components/Subnav";
 import Footer from "../components/Footer";
@@ -21,12 +22,12 @@ const Cakes = () => {
     tartProductsData,
   } = useSelector((state) => state.product);
 
-  const {
-    filteredProductLoading,
-    filteredRiceProductsData,
-    filteredBreadProductsData,
-    filteredTartProductsData,
-  } = useSelector((state) => state.filteredProduct);
+  // const {
+  //   filteredProductLoading,
+  //   filteredRiceProductsData,
+  //   filteredBreadProductsData,
+  //   filteredTartProductsData,
+  // } = useSelector((state) => state.filteredProduct);
 
   const style = {
     position: "absolute",
@@ -43,6 +44,20 @@ const Cakes = () => {
 
   const [open, setOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState(false);
+
+  const theme = createTheme({
+    components: {
+      MuiModal: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "rgb(251,239,233,0.7)",
+          },
+        },
+      },
+    },
+  });
+
+//Muibackdrop에 적용이 안된다. 다시 볼 것.
 
   const ModalOpen = () => {
     setOpen(true);
@@ -73,10 +88,11 @@ const Cakes = () => {
             />
 
             <div className="images_container">
-              {riceProductsData.results.map((item) => (
+              {riceProductsData.results.map((item, index) => (
                 <img
                   src={item.image_url}
                   alt=""
+                  key={index}
                   className="cake_image"
                   onClick={() => {
                     ModalOpen();
@@ -90,13 +106,15 @@ const Cakes = () => {
             </div>
           </div>
 
-          <Modal open={open} onClose={ModalClose} className="modal_backdrop">
+          <Modal open={open} onClose={ModalClose} theme={theme}>
             <Box sx={style}>
               <img src={modalInfo.url} alt="" className="modal_cake_image" />
               <div>
                 {modalInfo.designTag &&
-                  modalInfo.designTag.map((item) => (
-                    <span className="modal_design_tag">{item}</span>
+                  modalInfo.designTag.map((item, index) => (
+                    <span className="modal_design_tag" key={index}>
+                      {item}
+                    </span>
                   ))}
               </div>
             </Box>

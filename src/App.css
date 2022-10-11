@@ -30,6 +30,8 @@ body {
 
 :root {
   --bg: rgb(251, 239, 233);
+  --bg-dark: rgb(255, 226, 211);
+  --bg-deep-dark: rgb(255, 198, 169);
   --bg-accent: rgb(191, 47, 47);
   --nav-height: 70px;
   --filter-width: 350px;

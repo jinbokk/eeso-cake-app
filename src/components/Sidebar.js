@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "./css/Sidebar.css";
 
@@ -21,6 +21,27 @@ const Sidebar = () => {
       }
     );
   }, []);
+
+  const [scrolled, setScrolled] = useState(false);
+
+  const handleScroll = () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll === 0) {
+      setScrolled(false);
+    } else if (currentScroll > 0) {
+      setScrolled(true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [scrolled, handleScroll]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -55,6 +76,18 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
+
+      <button
+        className="go_to_top_button"
+        onClick={() => scrollToTop()}
+        style={
+          scrolled
+            ? { opacity: "1", bottom: "80px", transition: "0.5s" }
+            : { opacity: "0", bottom: "-80px", transition: "0.5s" }
+        }
+      >
+        &#129137;
+      </button>
     </>
   );
 };

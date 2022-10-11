@@ -92,9 +92,9 @@ const Landing = (props) => {
 
           <div className="landing_text_section2">
             <div className="ease_in_left_3">
-              <h3>안녕하세요, 이소케이크 입니다 :)</h3>
-              <h3>無 합성제 無 보존제 無 유화제</h3>
-              <h3>갓 구워낸 시트와 신선한 생크림만을 사용합니다</h3>
+              <h3>안녕하세요, 이소케이크 입니다 : )</h3>
+              <h3>특별하고 소중한 날 ,</h3>
+              <h3>고객님의 행복을 위해 최선을 다하겠습니다</h3>
             </div>
           </div>
 

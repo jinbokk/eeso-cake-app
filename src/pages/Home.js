@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import Footer from "../components/Footer";
 import "./css/Home.css";
+
+import CountUp from "react-countup";
 
 const Home = () => {
   const productsData = useSelector((state) => state.product);
@@ -60,27 +63,49 @@ const Home = () => {
         </div>
 
         <div className="section_3_container">
-          <h2>이소케이크의 인스타그램</h2>
-          <h3>원하는 케이크를 쉽게 찾아보세요 !</h3>
-          <div>현재 미디어 4839 개</div>
-          <div className="instaFeed_container_top">
-            {instagramData.loading ? (
-              <div>laoding feed</div>
-            ) : (
-              instagramData.userFeedsData.data.map((item) => (
-                <a
-                  className="instaFeed_container"
-                  href={item.permalink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={item.media_url} className="instaFeed_image" />
-                  <div>{item.caption}</div>
-                </a>
-              ))
-            )}
-          </div>
+          <h2>- 이소케이크 인스타그램 둘러보기 -</h2>
+
+          {instagramData.loading ? (
+            <div>피드 가져오는 중 ...</div>
+          ) : (
+            <>
+              <div className="instaFeed_counter">
+                지금까지{" "}
+                <CountUp
+                  start={1}
+                  end={instagramData.userProfileData.media_count}
+                  duration={3}
+                  suffix=" 개"
+                  useEasing={true}
+                  className="instaFeed_counter_accent"
+                />
+                의 게시글이 포스팅 되었어요 !
+              </div>
+              <div className="instaFeed_container_top">
+                {instagramData.userFeedsData.data.map((item, index) => (
+                  <a
+                    className="instaFeed_container"
+                    href={item.permalink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    key={index}
+                  >
+                    <img src={item.media_url} className="instaFeed_image" />
+                    <div className="instaFeed_text_container">
+                      <div className="instaFeed_timestamp">
+                        {item.timestamp.slice(0, 10)} /{" "}
+                        {item.timestamp.slice(11, 16)}
+                      </div>
+                      <div className="instaFeed_caption">{item.caption}</div>
+                      <div className="instaFeed_read_more">READ MORE</div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </>
+          )}
         </div>
+        <Footer />
       </div>
     </>
   );

@@ -5,25 +5,24 @@ function getInstaData() {
     try {
       dispatch({ type: "GET_INSTA_DATA_REQUEST" });
 
-      // const getUserProfile = api_instagram.get(
-      //   `/me?fields=username,media_count&access_token=${process.env.REACT_APP_AXIOS_INSTAGRAM_API_ACCESS_TOKEN}`
-      // );
-
-      const getUserFeeds = await api_instagram.get(
-        `/me/media?fields=id,caption,media_url,username,permalink,timestamp&limit=12&access_token=${process.env.REACT_APP_AXIOS_INSTAGRAM_API_ACCESS_TOKEN}`
+      const getUserProfile = api_instagram.get(
+        `/me?fields=media_count&access_token=${process.env.REACT_APP_AXIOS_INSTAGRAM_API_ACCESS_TOKEN}`
       );
 
-      // const [userProfileJson, userFeedsJson] = await Promise.all([
-      //   getUserProfile,
-      //   getUserFeeds,
-      // ]);
+      const getUserFeeds = api_instagram.get(
+        `/me/media?fields=caption,media_url,permalink,timestamp&limit=12&access_token=${process.env.REACT_APP_AXIOS_INSTAGRAM_API_ACCESS_TOKEN}`
+      );
+
+      const [userProfileJson, userFeedsJson] = await Promise.all([
+        getUserProfile,
+        getUserFeeds,
+      ]);
 
       dispatch({
         type: "GET_INSTA_DATA_SUCCESS",
         payload: {
-          // userProfileJson: userProfileJson,
-          // userFeedsJson: userFeedsJson,
-          userFeedsJson: getUserFeeds
+          userProfileJson: userProfileJson,
+          userFeedsJson: userFeedsJson,
         },
       });
     } catch (error) {
