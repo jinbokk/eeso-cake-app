@@ -2,8 +2,9 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { productFilterActions } from "../redux/actions/productFilterActions";
+import "./css/Subnav.css";
 
-const Subnav = () => {
+const Subnav = ({ items }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -15,7 +16,17 @@ const Subnav = () => {
   return (
     <>
       <div className="filter_container">
-        <button
+        {items.map((item, index) => (
+          <button
+            className="filter_button"
+            value={item.value}
+            key={index}
+            onClick={(e) => changeUrl(e)}
+          >
+            {item.title}
+          </button>
+        ))}
+        {/* <button
           className="filter_button"
           value={"dome"}
           onClick={(e) => changeUrl(e)}
@@ -35,7 +46,7 @@ const Subnav = () => {
           onClick={(e) => changeUrl(e)}
         >
           # 리스형
-        </button>
+        </button> */}
       </div>
     </>
   );

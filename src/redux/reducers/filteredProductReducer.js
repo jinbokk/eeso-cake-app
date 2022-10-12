@@ -10,7 +10,7 @@ const filteredProductReducer = (state = initialState, action) => {
 
   switch (type) {
     case "GET_FILTERED_PRODUCTS_REQUEST":
-      return { ...state, loading: true };
+      return { ...state };
 
     case "GET_FILTERED_PRODUCT_SUCCESS":
       return {

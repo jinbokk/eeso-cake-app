@@ -9,7 +9,7 @@ const instagramReducer = (state = initialState, action) => {
 
   switch (type) {
     case "GET_INSTA_DATA_REQUEST":
-      return { ...state, loading: true };
+      return { ...state };
 
     case "GET_INSTA_DATA_SUCCESS":
       return {

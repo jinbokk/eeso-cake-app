@@ -7,35 +7,6 @@
   font-family: Ownglyph;
 }
 
-.filter_container {
-  position: relative;
-  z-index: 90;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.filter_button {
-  font-size: 25px;
-  align-items: center;
-  padding: 10px 20px;
-  margin: 0 10px;
-  background-color: transparent;
-  border: 1px solid var(--bg-accent);
-  border-radius: 20px;
-  color: var(--bg-accent);
-  transition: 0.2s;
-  cursor: pointer;
-  font-family: Ownglyph;
-}
-
-.filter_button:hover {
-  background-color: var(--bg-accent);
-  color: white;
-  transition: 0.2s;
-}
-
 .images_container {
   width: 100%;
   margin: 0 auto;
@@ -59,10 +30,6 @@
   opacity: 1;
   transform: scale(1.05);
   transition: 0.2s;
-}
-
-.modal_backdrop {
-  background-color: none;
 }
 
 .modal_cake_image {

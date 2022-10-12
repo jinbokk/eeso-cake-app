@@ -6,21 +6,21 @@ const api_instagram = axios.create({
 });
 
 api_instagram.interceptors.request.use(
-  function (config) {
-    console.log("request is : ", config);
+  function(config) {
+    console.log(`request is : ${config.baseURL + config.url}`, config);
     return config;
   },
-  function (error) {
+  function(error) {
     return Promise.reject(error);
   }
 );
 
 api_instagram.interceptors.response.use(
-  function (response) {
-    console.log("response is : ", response);
+  function(response) {
+    console.log(`${response.request.responseURL} response is : `, response);
     return response;
   },
-  function (error) {
+  function(error) {
     return Promise.reject(error);
   }
 );

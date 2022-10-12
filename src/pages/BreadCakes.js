@@ -11,20 +11,8 @@ import { productFilterActions } from "../redux/actions/productFilterActions";
 import Subnav from "../components/Subnav";
 import Footer from "../components/Footer";
 
-const RiceCakes = () => {
-  let { ingredient } = useParams();
-
-  console.log(ingredient);
-
+const BreadCakes = () => {
   const dispatch = useDispatch();
-
-  // const {
-  //   loading,
-  //   allProductsData,
-  //   riceProductsData,
-  //   breadProductsData,
-  //   tartProductsData,
-  // } = useSelector((state) => state.product);
 
   const {
     loading,
@@ -33,10 +21,6 @@ const RiceCakes = () => {
     breadProductsData,
     tartProductsData,
   } = useSelector((state) => state.product);
-
-  const productsData = `${ingredient}ProductData`;
-
-  console.log(productsData);
 
   // const {
   //   filteredProductLoading,
@@ -97,14 +81,18 @@ const RiceCakes = () => {
           <div className="cakes_page_container">
             <Subnav
               items={[
-                { title: "# 돔형", value: "dome" },
-                { title: "# 초승달형", value: "crescent" },
-                { title: "# 리스형", value: "wreath" },
+                { title: "# 레터링 케이크", value: "letter" },
+                { title: "# 피규어 케이크", value: "figure" },
+                { title: "# 포토 케이크", value: "photo" },
+                { title: "# 생화 케이크", value: "fresh_flower" },
+                { title: "# 꽃다발 케이크", value: "bouquet" },
+                { title: "# 돈 케이크", value: "money" },
+                { title: "# 입체 케이크", value: "3D" },
               ]}
             />
 
             <div className="images_container">
-              {productsData.results.map((item, index) => (
+              {breadProductsData.results.map((item, index) => (
                 <img
                   src={item.image_url}
                   alt=""
@@ -143,4 +131,4 @@ const RiceCakes = () => {
   );
 };
 
-export default RiceCakes;
+export default BreadCakes;

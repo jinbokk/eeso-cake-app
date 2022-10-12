@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import "./css/Home.css";
 
 import CountUp from "react-countup";
+import Loading from "../components/Loading";
 
 const Home = () => {
   const productsData = useSelector((state) => state.product);
@@ -66,7 +67,7 @@ const Home = () => {
           <h2>- 이소케이크 인스타그램 둘러보기 -</h2>
 
           {instagramData.loading ? (
-            <div>피드 가져오는 중 ...</div>
+            <Loading text={"인스타그램 피드"} />
           ) : (
             <>
               <div className="instaFeed_counter">

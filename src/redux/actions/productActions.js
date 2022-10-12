@@ -1,14 +1,14 @@
 import api_eesocake from "../api_eesocake";
 
-function getProducts() {
+function getProducts(page) {
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_PRODUCTS_REQUEST" });
 
       const getAllProduct = api_eesocake.get();
-      const getRiceProduct = api_eesocake.get("/rice");
-      const getBreadProduct = api_eesocake.get("/bread");
-      const getTartProduct = api_eesocake.get("/tart");
+      const getRiceProduct = api_eesocake.get(`/rice?page=${page || 1}`);
+      const getBreadProduct = api_eesocake.get(`/bread?page=${page || 1}`);
+      const getTartProduct = api_eesocake.get(`/tart?page=${page || 1}`);
 
       const [
         allProductJson,

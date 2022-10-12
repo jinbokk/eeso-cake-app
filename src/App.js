@@ -6,6 +6,10 @@ import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import RiceCakes from "./pages/RiceCakes";
+import BreadCakes from "./pages/BreadCakes";
+import TartCakes from "./pages/TartCakes";
+
 import Cakes from "./pages/Cakes";
 
 import Footer from "./components/Footer";
@@ -13,6 +17,7 @@ import Footer from "./components/Footer";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 function App() {
   const [browse, setBrowse] = useState(false);
@@ -28,7 +33,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/cakes/:ingredient" element={<Cakes />} />
+            {/* <Route path="/cakes/:ingredient" element={<Cakes />} /> */}
+
+            <Route path="/cakes/rice" element={<RiceCakes />} />
+            <Route path="/cakes/bread" element={<BreadCakes />} />
+            <Route path="/cakes/tart" element={<TartCakes />} />
           </Routes>
         </>
       )}

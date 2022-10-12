@@ -11,20 +11,8 @@ import { productFilterActions } from "../redux/actions/productFilterActions";
 import Subnav from "../components/Subnav";
 import Footer from "../components/Footer";
 
-const RiceCakes = () => {
-  let { ingredient } = useParams();
-
-  console.log(ingredient);
-
+const TartCakes = () => {
   const dispatch = useDispatch();
-
-  // const {
-  //   loading,
-  //   allProductsData,
-  //   riceProductsData,
-  //   breadProductsData,
-  //   tartProductsData,
-  // } = useSelector((state) => state.product);
 
   const {
     loading,
@@ -33,10 +21,6 @@ const RiceCakes = () => {
     breadProductsData,
     tartProductsData,
   } = useSelector((state) => state.product);
-
-  const productsData = `${ingredient}ProductData`;
-
-  console.log(productsData);
 
   // const {
   //   filteredProductLoading,
@@ -95,16 +79,10 @@ const RiceCakes = () => {
       ) : (
         <>
           <div className="cakes_page_container">
-            <Subnav
-              items={[
-                { title: "# 돔형", value: "dome" },
-                { title: "# 초승달형", value: "crescent" },
-                { title: "# 리스형", value: "wreath" },
-              ]}
-            />
+            <Subnav items={[{ title: "# 숫자 타르트", value: null }]} />
 
             <div className="images_container">
-              {productsData.results.map((item, index) => (
+              {tartProductsData.results.map((item, index) => (
                 <img
                   src={item.image_url}
                   alt=""
@@ -143,4 +121,4 @@ const RiceCakes = () => {
   );
 };
 
-export default RiceCakes;
+export default TartCakes;
