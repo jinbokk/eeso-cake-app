@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 import "swiper/swiper.min.css";
 import "swiper/modules/pagination/pagination.min.css";
+import Footer from "../components/Footer";
 
 const About = () => {
   return (
@@ -38,13 +39,25 @@ const About = () => {
                     loop={true}
                   >
                     <SwiperSlide>
-                      <img src="/images/landing_test_3.png" alt="" className="banner_swiper_image"></img>
+                      <img
+                        src="/images/landing_test_3.png"
+                        alt=""
+                        className="banner_swiper_image"
+                      ></img>
                     </SwiperSlide>
                     <SwiperSlide>
-                      <img src="/images/landing_test.png" alt="" className="banner_swiper_image"></img>
+                      <img
+                        src="/images/landing_test.png"
+                        alt=""
+                        className="banner_swiper_image"
+                      ></img>
                     </SwiperSlide>
                     <SwiperSlide>
-                      <img src="/images/landing_test_2.png" alt="" className="banner_swiper_image"></img>
+                      <img
+                        src="/images/landing_test_2.png"
+                        alt=""
+                        className="banner_swiper_image"
+                      ></img>
                     </SwiperSlide>
                   </Swiper>
                 </div>
@@ -101,6 +114,7 @@ const About = () => {
           </div>
         </Row>
       </Container>
+      <Footer />
     </>
   );
 };

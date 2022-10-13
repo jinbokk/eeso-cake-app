@@ -1,0 +1,7 @@
+.map_container {
+  width: 100vw;
+  height: calc(100vh - var(--nav-height));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

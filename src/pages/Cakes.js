@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -7,43 +7,42 @@ import "./css/Cakes.css";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { createTheme } from "@mui/material";
-import { productFilterActions } from "../redux/actions/productFilterActions";
+import { productActions } from "../redux/actions/productActions";
 import Subnav from "../components/Subnav";
 import Footer from "../components/Footer";
+import Loading from "../components/Loading";
 
-const RiceCakes = () => {
-  let { ingredient } = useParams();
+import useGetCakes from "../hooks/useGetCakes";
 
-  console.log(ingredient);
+const Cakes = () => {
+  const { ingredient } = useParams();
 
   const dispatch = useDispatch();
 
-  // const {
-  //   loading,
-  //   allProductsData,
-  //   riceProductsData,
-  //   breadProductsData,
-  //   tartProductsData,
-  // } = useSelector((state) => state.product);
+  const [pageNum, setPageNum] = useState(1);
 
-  const {
-    loading,
-    allProductsData,
-    riceProductsData,
-    breadProductsData,
-    tartProductsData,
-  } = useSelector((state) => state.product);
+  const { loading, ProductsData } = useSelector((state) => state.product);
 
-  const productsData = `${ingredient}ProductData`;
+  const { cakesData, hasMore, moreCakesLoading } = useGetCakes(
+    ingredient,
+    pageNum
+  );
 
-  console.log(productsData);
+  const observer = useRef();
 
-  // const {
-  //   filteredProductLoading,
-  //   filteredRiceProductsData,
-  //   filteredBreadProductsData,
-  //   filteredTartProductsData,
-  // } = useSelector((state) => state.filteredProduct);
+  const lastCakeElementRef = useCallback(
+    (node) => {
+      if (moreCakesLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNum((prevPageNum) => prevPageNum + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [moreCakesLoading, hasMore]
+  );
 
   const style = {
     position: "absolute",
@@ -54,8 +53,6 @@ const RiceCakes = () => {
     width: "60%",
     height: "80%",
     bgcolor: "none",
-    // border: "2px solid white",
-    // boxShadow: 20,
   };
 
   const [open, setOpen] = useState(false);
@@ -91,34 +88,59 @@ const RiceCakes = () => {
   return (
     <>
       {loading ? (
-        <div>loading</div>
+        <Loading text={"떡케이크"} />
       ) : (
         <>
           <div className="cakes_page_container">
             <Subnav
               items={[
-                { title: "# 돔형", value: "dome" },
-                { title: "# 초승달형", value: "crescent" },
-                { title: "# 리스형", value: "wreath" },
+                { title: "# 레터링 케이크", value: "letter" },
+                { title: "# 피규어 케이크", value: "figure" },
+                { title: "# 포토 케이크", value: "photo" },
+                { title: "# 생화 케이크", value: "fresh_flower" },
+                { title: "# 꽃다발 케이크", value: "bouquet" },
+                { title: "# 돈 케이크", value: "money" },
+                { title: "# 입체 케이크", value: "3D" },
               ]}
             />
 
             <div className="images_container">
-              {productsData.results.map((item, index) => (
-                <img
-                  src={item.image_url}
-                  alt=""
-                  key={index}
-                  className="cake_image"
-                  onClick={() => {
-                    ModalOpen();
-                    setModalInfo({
-                      url: item.image_url,
-                      designTag: item.design,
-                    });
-                  }}
-                />
-              ))}
+              {cakesData.map((item, index) => {
+                if (cakesData.length === index + 1) {
+                  return (
+                    <img
+                      ref={lastCakeElementRef}
+                      src={item.image_url}
+                      alt=""
+                      key={index}
+                      className="cake_image"
+                      onClick={() => {
+                        ModalOpen();
+                        setModalInfo({
+                          url: item.image_url,
+                          designTag: item.design,
+                        });
+                      }}
+                    />
+                  );
+                } else {
+                  return (
+                    <img
+                      src={item.image_url}
+                      alt=""
+                      key={index}
+                      className="cake_image"
+                      onClick={() => {
+                        ModalOpen();
+                        setModalInfo({
+                          url: item.image_url,
+                          designTag: item.design,
+                        });
+                      }}
+                    />
+                  );
+                }
+              })}
             </div>
           </div>
 
@@ -143,4 +165,4 @@ const RiceCakes = () => {
   );
 };
 
-export default RiceCakes;
+export default Cakes;

@@ -19,13 +19,13 @@
   width: 90%;
 }
 
-.main_logo {
-  width: 100px;
-}
-
-div * {
+.nav_container > a {
   text-decoration: none;
   color: black;
+}
+
+.main_logo {
+  width: 100px;
 }
 
 /* NavMenu */

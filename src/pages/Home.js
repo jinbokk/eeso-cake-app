@@ -7,11 +7,7 @@ import CountUp from "react-countup";
 import Loading from "../components/Loading";
 
 const Home = () => {
-  const productsData = useSelector((state) => state.product);
   const instagramData = useSelector((state) => state.instagram);
-
-  console.log(productsData);
-  console.log(instagramData);
 
   return (
     <>

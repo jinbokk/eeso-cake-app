@@ -4,7 +4,7 @@ import "./css/Navbar.css";
 
 import NavMenu from "./NavMenu";
 
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -24,6 +24,10 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled, handleScroll]);
 
+  let activeStyle = {
+    color: "var(--bg-accent)",
+  };
+
   return (
     <div
       className="nav_container_top"
@@ -37,19 +41,25 @@ const Navbar = () => {
       }
     >
       <div className="nav_container">
-        <Link to="/">
+        <NavLink to="/home">
           <div>
             <img className="main_logo" src="/images/logo_test.png" alt="" />
           </div>
-        </Link>
+        </NavLink>
 
-        <Link to="/">
+        <NavLink
+          to="/home"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
           <div className="nav_menu">HOME</div>
-        </Link>
+        </NavLink>
 
-        <Link to="/about">
+        <NavLink
+          to="/about"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
           <div className="nav_menu">ABOUT</div>
-        </Link>
+        </NavLink>
 
         <NavMenu
           title="CAKES"
@@ -72,9 +82,12 @@ const Navbar = () => {
           ]}
         />
 
-        <Link to="/contact">
+        <NavLink
+          to="/contact"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
           <div className="nav_menu">CONTACT</div>
-        </Link>
+        </NavLink>
       </div>
     </div>
   );

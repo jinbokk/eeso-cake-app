@@ -1,34 +1,18 @@
 import api_eesocake from "../api_eesocake";
 
-function getProducts(page) {
+function getProducts(ingredient, pageNum) {
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_PRODUCTS_REQUEST" });
 
-      const getAllProduct = api_eesocake.get();
-      const getRiceProduct = api_eesocake.get(`/rice?page=${page || 1}`);
-      const getBreadProduct = api_eesocake.get(`/bread?page=${page || 1}`);
-      const getTartProduct = api_eesocake.get(`/tart?page=${page || 1}`);
-
-      const [
-        allProductJson,
-        riceProductJson,
-        breadProductJson,
-        tartProductJson,
-      ] = await Promise.all([
-        getAllProduct,
-        getRiceProduct,
-        getBreadProduct,
-        getTartProduct,
-      ]);
+      const ProductsJson = await api_eesocake.get(
+        `/${ingredient}?page=${pageNum || 1}`
+      );
 
       dispatch({
         type: "GET_PRODUCT_SUCCESS",
         payload: {
-          allProductJson: allProductJson,
-          riceProductJson: riceProductJson,
-          breadProductJson: breadProductJson,
-          tartProductJson: tartProductJson,
+          ProductsJson: ProductsJson,
         },
       });
     } catch (error) {
