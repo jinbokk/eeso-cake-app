@@ -1,5 +1,11 @@
 /* navbar */
 
+* a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+}
+
 .nav_container_top {
   display: flex;
   justify-content: center;
@@ -17,11 +23,6 @@
   top: 0;
   height: var(--nav-height);
   width: 90%;
-}
-
-.nav_container > a {
-  text-decoration: none;
-  color: black;
 }
 
 .main_logo {
@@ -66,14 +67,15 @@
   left: 0;
   background-color: white;
   z-index: -10;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .nav_item_container {
-  padding-top: var(--nav-height);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 50px;
 }
 
 .nav_item_image {

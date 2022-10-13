@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 import productReducer from "./productReducer";
-import filteredProductReducer from "./filteredProductReducer";
 import instagramReducer from "./instagramReducer";
 
 import { persistReducer } from "redux-persist";
@@ -17,7 +16,6 @@ const persistConfig = {
 
 export const rootReducer = combineReducers({
   product: productReducer,
-  filteredProduct: filteredProductReducer,
   instagram: instagramReducer,
 });
 

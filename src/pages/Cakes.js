@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState, useRef, useCallback, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import "./css/Cakes.css";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { createTheme } from "@mui/material";
-import { productActions } from "../redux/actions/productActions";
 import Subnav from "../components/Subnav";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
@@ -17,16 +15,16 @@ import useGetCakes from "../hooks/useGetCakes";
 const Cakes = () => {
   const { ingredient } = useParams();
 
-  const dispatch = useDispatch();
-
   const [pageNum, setPageNum] = useState(1);
 
-  const { loading, ProductsData } = useSelector((state) => state.product);
-
-  const { cakesData, hasMore, moreCakesLoading } = useGetCakes(
+  const { loading, cakesData, hasMore, moreCakesLoading } = useGetCakes(
     ingredient,
     pageNum
   );
+
+  useEffect(() => {
+    setPageNum(1);
+  }, [ingredient, loading]);
 
   const observer = useRef();
 
@@ -85,10 +83,20 @@ const Cakes = () => {
   //   dispatch(productFilterActions.getFilteredProducts(e.target.value));
   // };
 
+  let loadingText = "";
+
+  if (ingredient === "rice") {
+    loadingText = "떡케이크 가져오는 중...";
+  } else if (ingredient === "bread") {
+    loadingText = "빵케이크 가져오는 중...";
+  } else if (ingredient === "tart") {
+    loadingText = "타르트 가져오는 중...";
+  }
+
   return (
     <>
       {loading ? (
-        <Loading text={"떡케이크"} />
+        <Loading width={"100vw"} height={"100vh"} text={loadingText} />
       ) : (
         <>
           <div className="cakes_page_container">
@@ -143,6 +151,14 @@ const Cakes = () => {
               })}
             </div>
           </div>
+
+          {moreCakesLoading ? (
+            <Loading
+              width={"100vw"}
+              height={"50vh"}
+              text={"사진 더 가져오는 중..."}
+            />
+          ) : null}
 
           <Modal open={open} onClose={ModalClose} theme={theme}>
             <Box sx={style}>

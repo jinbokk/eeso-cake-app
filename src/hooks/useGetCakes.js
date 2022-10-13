@@ -14,32 +14,27 @@ export default function useGetCakes(ingredient, pageNum) {
     setCakesData([]);
   }, [ingredient]);
 
-  const { ProductsData } = useSelector((state) => state.product);
+  const { loading, ProductsData } = useSelector((state) => state.product);
 
   useEffect(() => {
-    setMoreCakesLoading(true);
-
     dispatch(productActions.getProducts(ingredient, pageNum));
 
-    console.log(ProductsData);
+    setMoreCakesLoading(true);
 
-    setCakesData((prevCakes) => {
-      return [...new Set([...prevCakes, ...ProductsData.results])];
-    });
+    if (!loading && cakesData !== []) {
+      setCakesData((prevCakes) => {
+        return [...new Set([...prevCakes, ...ProductsData.results])];
+      });
 
-    setHasMore(ProductsData.results.length > 0);
+      setHasMore(ProductsData.results.length > 0);
 
-    // dispatch(productActions.getProducts(ingredient, pageNum)).then((res) => {
-    //   console.log("res is !!!!!!!!!!!!", res);
+      setMoreCakesLoading(false);
+    } else {
+      setCakesData((prevCakes) => {
+        return [...new Set([...prevCakes, ...ProductsData.results])];
+      });
+    }
+  }, [loading, ingredient, pageNum]);
 
-    //   setCakesData((prevCakes) => {
-    //     return [...new Set([...prevCakes, ...res.data.results])];
-    //   });
-    //   setHasMore(res.data.results.length > 0);
-    // });
-
-    setMoreCakesLoading(false);
-  }, [ingredient, pageNum, ProductsData]);
-
-  return { moreCakesLoading, cakesData, hasMore };
+  return { loading, moreCakesLoading, cakesData, hasMore };
 }

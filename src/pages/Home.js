@@ -14,7 +14,7 @@ const Home = () => {
       <div className="home_container_top">
         <div
           className="section_1_container"
-          style={{ backgroundImage: "url(" + "/images/home_image_4.jpg" + ")" }}
+          style={{ backgroundImage: "url(" + "/images/home_image_4.png" + ")" }}
         >
           <div className="section_1_text">
             <span style={{ fontSize: "100px", color: "var(--bg)" }}>특</span>
@@ -63,7 +63,11 @@ const Home = () => {
           <h2>- 이소케이크 인스타그램 둘러보기 -</h2>
 
           {instagramData.loading ? (
-            <Loading text={"인스타그램 피드"} />
+            <Loading
+              width={"100vw"}
+              height={"100vh"}
+              text={"인스타그램 피드 가져오는 중..."}
+            />
           ) : (
             <>
               <div className="instaFeed_counter">

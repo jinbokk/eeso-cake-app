@@ -1,6 +1,6 @@
 .loading_container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,17 +19,17 @@
 }
 
 .flipping div {
-  animation: flipping-18i5bq 1.2000000000000002s calc(var(--delay) * 0.8s)
+  animation: flipping-18i5bq 1.2s calc(var(--delay) * 0.8s)
     infinite backwards;
   background-color: #bf2f2f;
 }
 
 .flipping div:nth-child(1) {
-  --delay: 0.08000000000000002;
+  --delay: 0.08;
 }
 
 .flipping div:nth-child(2) {
-  --delay: 0.16000000000000003;
+  --delay: 0.16;
 }
 
 .flipping div:nth-child(3) {
@@ -37,7 +37,7 @@
 }
 
 .flipping div:nth-child(4) {
-  --delay: 0.32000000000000006;
+  --delay: 0.32;
 }
 
 .flipping div:nth-child(5) {
@@ -49,15 +49,15 @@
 }
 
 .flipping div:nth-child(7) {
-  --delay: 0.5599999999999999;
+  --delay: 0.56;
 }
 
 .flipping div:nth-child(8) {
-  --delay: 0.6400000000000001;
+  --delay: 0.64;
 }
 
 .flipping div:nth-child(9) {
-  --delay: 0.7200000000000001;
+  --delay: 0.72;
 }
 
 @keyframes flipping-18i5bq {

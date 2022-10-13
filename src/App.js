@@ -8,7 +8,6 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Cakes from "./pages/Cakes";
 import Contact from "./pages/Contact";
-import Footer from "./components/Footer";
 
 import "./App.css";
 import { useState } from "react";
@@ -16,23 +15,22 @@ import { useState } from "react";
 function App() {
   const [browse, setBrowse] = useState(false);
 
-
   return (
     <>
-      {/* {!browse ? (
+      {!browse ? (
         <Landing setBrowse={setBrowse} />
-      ) : ( */}
-      <>
-        <Navbar />
-        <Sidebar />
-        <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/cakes/:ingredient" element={<Cakes />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </>
-      {/* )} */}
+      ) : (
+        <>
+          <Navbar />
+          <Sidebar />
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/cakes/:ingredient" element={<Cakes />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </>
+      )}
     </>
   );
 }
