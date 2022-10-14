@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import api_eesocake from "../redux/api_eesocake";
 import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../redux/actions/productActions";
 
@@ -10,31 +9,27 @@ export default function useGetCakes(ingredient, pageNum) {
   const [cakesData, setCakesData] = useState([]);
   const [hasMore, setHasMore] = useState(false);
 
-  useEffect(() => {
-    setCakesData([]);
-  }, [ingredient]);
-
   const { loading, ProductsData } = useSelector((state) => state.product);
 
   useEffect(() => {
+    setCakesData([]);
+    dispatch({ type: "GET_ANOTHER_PRODUCTS_REQUEST" });
+  }, [ingredient]);
+
+  useEffect(() => {
+    setMoreCakesLoading(true);
+    
     dispatch(productActions.getProducts(ingredient, pageNum));
 
-    setMoreCakesLoading(true);
-
-    if (!loading && cakesData !== []) {
+    if (!loading) {
       setCakesData((prevCakes) => {
         return [...new Set([...prevCakes, ...ProductsData.results])];
       });
 
       setHasMore(ProductsData.results.length > 0);
-
       setMoreCakesLoading(false);
-    } else {
-      setCakesData((prevCakes) => {
-        return [...new Set([...prevCakes, ...ProductsData.results])];
-      });
     }
-  }, [loading, ingredient, pageNum]);
+  }, [loading, pageNum]);
 
   return { loading, moreCakesLoading, cakesData, hasMore };
 }

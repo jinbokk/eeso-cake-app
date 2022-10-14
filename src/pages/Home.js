@@ -17,10 +17,23 @@ const Home = () => {
           style={{ backgroundImage: "url(" + "/images/home_image_4.png" + ")" }}
         >
           <div className="section_1_text">
-            <span style={{ fontSize: "100px", color: "var(--bg)" }}>특</span>
-            별한 날을 더욱 특별하게
+            <div>
+              <span
+                style={{
+                  fontSize: "180px",
+                  color: "var(--bg)",
+                }}
+              >
+                M
+              </span>
+              aking your day even more special
+            </div>
+            {/* <div>
+              <span style={{ fontSize: "100px", color: "var(--bg)" }}>특</span>
+              별한 날을 더욱 특별하게
+            </div> */}
+            {/* <div>- 이소케이크 -</div> */}
           </div>
-          <div className="section_1_text">- 이소케이크 -</div>
         </div>
 
         <div className="section_2_container">

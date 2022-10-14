@@ -19,7 +19,6 @@ const Landing = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(productActions.getProducts());
     dispatch(instagramActions.getInstaData());
   }, []);
 

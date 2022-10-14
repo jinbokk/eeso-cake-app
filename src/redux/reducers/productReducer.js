@@ -10,6 +10,9 @@ const productReducer = (state = initialState, action) => {
     case "GET_PRODUCTS_REQUEST":
       return { ...state };
 
+    case "GET_ANOTHER_PRODUCTS_REQUEST":
+      return { ...state, loading: true };
+
     case "GET_PRODUCT_SUCCESS":
       return {
         ...state,

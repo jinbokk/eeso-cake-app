@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import "./css/Cakes.css";
@@ -22,21 +22,24 @@ const Cakes = () => {
     pageNum
   );
 
-  useEffect(() => {
-    setPageNum(1);
-  }, [ingredient, loading]);
-
   const observer = useRef();
 
   const lastCakeElementRef = useCallback(
     (node) => {
+      console.log("node is", node);
       if (moreCakesLoading) return;
+
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPageNum((prevPageNum) => prevPageNum + 1);
-        }
-      });
+
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && hasMore) {
+            setPageNum((prevPageNum) => prevPageNum + 1);
+          }
+        },
+        { threshold: [0, 0.3, 1] }
+      );
+
       if (node) observer.current.observe(node);
     },
     [moreCakesLoading, hasMore]
@@ -93,28 +96,6 @@ const Cakes = () => {
     loadingText = "타르트 가져오는 중...";
   }
 
-  let subnav_items;
-
-  if (ingredient === "rice") {
-    subnav_items = [
-      { title: "# 돔형 케이크", value: "dome" },
-      { title: "# 반달형 케이크", value: "crescent" },
-      { title: "# 리스형 케이크", value: "wreath" },
-    ];
-  } else if (ingredient === "bread") {
-    subnav_items = [
-      { title: "# 레터링 케이크", value: "letter" },
-      { title: "# 피규어 케이크", value: "figure" },
-      { title: "# 포토 케이크", value: "photo" },
-      { title: "# 생화 케이크", value: "fresh_flower" },
-      { title: "# 꽃다발 케이크", value: "bouquet" },
-      { title: "# 돈 케이크", value: "money" },
-      { title: "# 입체 케이크", value: "3D" },
-    ];
-  } else if (ingredient === "tart") {
-    subnav_items = [{ title: "# 숫자 타르트", value: "number" }];
-  }
-
   return (
     <>
       {loading ? (
@@ -122,7 +103,7 @@ const Cakes = () => {
       ) : (
         <>
           <div className="cakes_page_container">
-            <Subnav items={subnav_items} />
+            <Subnav ingredient={ingredient} />
 
             <div className="images_container">
               {cakesData.map((item, index) => {

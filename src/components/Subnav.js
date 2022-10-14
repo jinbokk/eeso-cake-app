@@ -3,7 +3,29 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./css/Subnav.css";
 
-const Subnav = ({ items }) => {
+const Subnav = ({ ingredient }) => {
+  let subnav_items;
+
+  if (ingredient === "rice") {
+    subnav_items = [
+      { title: "# 돔형 케이크", value: "dome" },
+      { title: "# 반달형 케이크", value: "crescent" },
+      { title: "# 리스형 케이크", value: "wreath" },
+    ];
+  } else if (ingredient === "bread") {
+    subnav_items = [
+      { title: "# 레터링 케이크", value: "letter" },
+      { title: "# 피규어 케이크", value: "figure" },
+      { title: "# 포토 케이크", value: "photo" },
+      { title: "# 생화 케이크", value: "fresh_flower" },
+      { title: "# 꽃다발 케이크", value: "bouquet" },
+      { title: "# 돈 케이크", value: "money" },
+      { title: "# 입체 케이크", value: "3D" },
+    ];
+  } else if (ingredient === "tart") {
+    subnav_items = [{ title: "# 숫자 타르트", value: "number" }];
+  }
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -14,7 +36,7 @@ const Subnav = ({ items }) => {
   return (
     <>
       <div className="filter_container">
-        {items.map((item, index) => (
+        {subnav_items.map((item, index) => (
           <button
             className="filter_button"
             value={item.value}
