@@ -18,8 +18,10 @@ export default function useGetCakes(ingredient, pageNum) {
 
   useEffect(() => {
     setMoreCakesLoading(true);
-    
-    dispatch(productActions.getProducts(ingredient, pageNum));
+
+    if (loading) {
+      dispatch(productActions.getProducts(ingredient, pageNum));
+    }
 
     if (!loading) {
       setCakesData((prevCakes) => {
@@ -29,7 +31,13 @@ export default function useGetCakes(ingredient, pageNum) {
       setHasMore(ProductsData.results.length > 0);
       setMoreCakesLoading(false);
     }
-  }, [loading, pageNum]);
+  }, [pageNum, moreCakesLoading]);
 
   return { loading, moreCakesLoading, cakesData, hasMore };
 }
+
+// 첫 로딩시 1번의 dispatch를 한다 >> ingredient를 의존하는 another products request로 로딩 true
+
+// dispatch 시작시 로딩 true > productAction 실행
+
+// productAction 끝난 뒤 로딩 false > 해당 데이터를 setCakesData에 넣는다

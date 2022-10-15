@@ -26,18 +26,21 @@ const Cakes = () => {
 
   const lastCakeElementRef = useCallback(
     (node) => {
-      console.log("node is", node);
       if (moreCakesLoading) return;
 
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver(
         (entries) => {
+          console.log("visible", entries[0]);
+
+          console.log("hasMore?", hasMore);
+
           if (entries[0].isIntersecting && hasMore) {
             setPageNum((prevPageNum) => prevPageNum + 1);
           }
-        },
-        { threshold: [0, 0.3, 1] }
+        }
+        // { threshold: [0, 0.3, 1] }
       );
 
       if (node) observer.current.observe(node);
@@ -149,7 +152,7 @@ const Cakes = () => {
             <Loading
               width={"100vw"}
               height={"50vh"}
-              text={"사진 더 가져오는 중..."}
+              text={"이미지 가져오는 중..."}
             />
           ) : null}
 

@@ -14,23 +14,23 @@ import { useState } from "react";
 
 function App() {
   // Throttling scroll events for infinite scroll
-  let scrollPool = 500;
+  // let scrollPool = 500;
 
-  function resetScrollPool() {
-    scrollPool = 500;
-  }
+  // function resetScrollPool() {
+  //   scrollPool = 500;
+  // }
 
-  function scrollThrottle(event) {
-    window.requestAnimationFrame(resetScrollPool);
-    if (scrollPool < 0) {
-      return false;
-    }
-    const scrollDistance = event.deltaY * 10;
-    scrollPool = scrollPool - Math.abs(scrollDistance);
-    document.querySelector("#root").scrollTop += scrollDistance;
-  }
+  // function scrollThrottle(event) {
+  //   window.requestAnimationFrame(resetScrollPool);
+  //   if (scrollPool < 0) {
+  //     return false;
+  //   }
+  //   const scrollDistance = event.deltaY * 10;
+  //   scrollPool = scrollPool - Math.abs(scrollDistance);
+  //   document.querySelector("#root").scrollTop += scrollDistance;
+  // }
 
-  window.addEventListener("wheel", scrollThrottle);
+  // window.addEventListener("wheel", scrollThrottle);
   // -------------------------------------------------
 
   const [browse, setBrowse] = useState(false);
