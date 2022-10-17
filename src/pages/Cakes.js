@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import "./css/Cakes.css";
@@ -17,7 +17,12 @@ const Cakes = () => {
 
   const [pageNum, setPageNum] = useState(1);
 
-  const { loading, cakesData, hasMore, moreCakesLoading } = useGetCakes(
+  useEffect(() => {
+    setPageNum(1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [ingredient]);
+
+  const { loading, moreCakesLoading, cakesData, hasMore } = useGetCakes(
     ingredient,
     pageNum
   );
@@ -30,18 +35,11 @@ const Cakes = () => {
 
       if (observer.current) observer.current.disconnect();
 
-      observer.current = new IntersectionObserver(
-        (entries) => {
-          console.log("visible", entries[0]);
-
-          console.log("hasMore?", hasMore);
-
-          if (entries[0].isIntersecting && hasMore) {
-            setPageNum((prevPageNum) => prevPageNum + 1);
-          }
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNum((prevPageNum) => prevPageNum + 1);
         }
-        // { threshold: [0, 0.3, 1] }
-      );
+      });
 
       if (node) observer.current.observe(node);
     },

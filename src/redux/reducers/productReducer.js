@@ -1,6 +1,6 @@
 let initialState = {
   loading: true,
-  ProductsData: {},
+  productsData: {},
 };
 
 const productReducer = (state = initialState, action) => {
@@ -17,7 +17,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        ProductsData: payload.ProductsJson.data,
+        productsData: payload.ProductsJson.data,
       };
 
     default:
@@ -31,7 +31,7 @@ export default productReducer;
 // import { createSlice } from "@reduxjs/toolkit";
 
 // let initialState = {
-//   AllProductsData: {},
+//   AllproductsData: {},
 // };
 
 // const productSlice = createSlice({
@@ -39,7 +39,7 @@ export default productReducer;
 //   initialState,
 //   reducers: {
 //     getAllProducts(state, action) {
-//       state.AllProductsData = action.payload.data;
+//       state.AllproductsData = action.payload.data;
 //     },
 //   },
 // });

@@ -33,24 +33,24 @@ function App() {
   // window.addEventListener("wheel", scrollThrottle);
   // -------------------------------------------------
 
-  const [browse, setBrowse] = useState(false);
+  // const [browse, setBrowse] = useState(false);
 
   return (
     <>
-      {!browse ? (
+      {/* {!browse ? (
         <Landing setBrowse={setBrowse} />
-      ) : (
+      ) : ( */}
         <>
           <Navbar />
           <Sidebar />
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/cakes/:ingredient" element={<Cakes />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </>
-      )}
+      {/* )} */}
     </>
   );
 }

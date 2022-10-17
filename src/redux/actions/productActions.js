@@ -6,7 +6,7 @@ function getProducts(ingredient, pageNum) {
       dispatch({ type: "GET_PRODUCTS_REQUEST" });
 
       const ProductsJson = await api_eesocake.get(
-        `/${ingredient}?page=${pageNum}`
+        `/${ingredient}?page=${pageNum || 1}`
       );
 
       dispatch({

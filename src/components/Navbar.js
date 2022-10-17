@@ -41,14 +41,14 @@ const Navbar = () => {
       }
     >
       <div className="nav_container">
-        <NavLink to="/home">
+        <NavLink to="/">
           <div>
             <img className="main_logo" src="/images/logo_test.png" alt="" />
           </div>
         </NavLink>
 
         <NavLink
-          to="/home"
+          to="/"
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
           <div className="nav_menu">HOME</div>
