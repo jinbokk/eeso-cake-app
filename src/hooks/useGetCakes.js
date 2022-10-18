@@ -16,12 +16,16 @@ export default function useGetCakes(ingredient, pageNum) {
     setCakesData([]);
   }, [ingredient]);
 
-  useEffect(() => {
-    setMoreCakesLoading(true);
-    dispatch(productActions.getProducts(ingredient, pageNum));
-  }, [pageNum]);
+  // useEffect(() => {
+  //   setMoreCakesLoading(true);
+  //   dispatch(productActions.getProducts(ingredient, pageNum));
+  // }, [pageNum]);
 
   useEffect(() => {
+
+    setMoreCakesLoading(true);
+    dispatch(productActions.getProducts(ingredient, pageNum));
+
     if (!loading) {
       setCakesData((prevCakes) => {
         return [...new Set([...prevCakes, ...productsData.results])];

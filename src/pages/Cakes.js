@@ -27,6 +27,8 @@ const Cakes = () => {
     pageNum
   );
 
+  // console.log("cakesData",cakesData)
+
   const observer = useRef();
 
   const lastCakeElementRef = useCallback(
@@ -87,7 +89,7 @@ const Cakes = () => {
   //   dispatch(productFilterActions.getFilteredProducts(e.target.value));
   // };
 
-  let loadingText = "";
+  let loadingText;
 
   if (ingredient === "rice") {
     loadingText = "떡케이크 가져오는 중...";
