@@ -11,41 +11,55 @@ import Footer from "../components/Footer";
 import Loading from "../components/Loading";
 
 import useGetCakes from "../hooks/useGetCakes";
+import { useDispatch, useSelector } from "react-redux";
+import { productActions } from "../redux/actions/productActions";
 
 const Cakes = () => {
+  const dispatch = useDispatch();
+
+  const { loading, productsData } = useSelector((state) => state.product);
+
   const { ingredient } = useParams();
 
   const [pageNum, setPageNum] = useState(1);
+
+  useEffect(() => {
+    dispatch(productActions.getProducts(ingredient, pageNum));
+  }, [pageNum]);
 
   useEffect(() => {
     setPageNum(1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [ingredient]);
 
-  const { loading, moreCakesLoading, cakesData, hasMore } = useGetCakes(
-    ingredient,
-    pageNum
-  );
+  useEffect(() => {
+    "productsData changed";
+  }, [productsData]);
 
-  // console.log("cakesData",cakesData)
+  // const { loading, moreCakesLoading, cakesData, hasMore } = useGetCakes(
+  //   ingredient,
+  //   pageNum
+  // );
 
   const observer = useRef();
 
   const lastCakeElementRef = useCallback(
     (node) => {
-      if (moreCakesLoading) return;
+      if (loading) return;
 
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
+        // if (entries[0].isIntersecting && hasMore) {
+        if (entries[0].isIntersecting) {
           setPageNum((prevPageNum) => prevPageNum + 1);
         }
       });
 
       if (node) observer.current.observe(node);
     },
-    [moreCakesLoading, hasMore]
+    [loading]
+    // [loading, hasMore]
   );
 
   const style = {
@@ -109,8 +123,8 @@ const Cakes = () => {
             <Subnav ingredient={ingredient} />
 
             <div className="images_container">
-              {cakesData.map((item, index) => {
-                if (cakesData.length === index + 1) {
+              {productsData.map((item, index) => {
+                if (productsData.length === index + 1) {
                   return (
                     <img
                       ref={lastCakeElementRef}
@@ -148,13 +162,13 @@ const Cakes = () => {
             </div>
           </div>
 
-          {moreCakesLoading ? (
+          {/* {moreCakesLoading ? (
             <Loading
               width={"100vw"}
               height={"50vh"}
               text={"이미지 가져오는 중..."}
             />
-          ) : null}
+          ) : null} */}
 
           <Modal open={open} onClose={ModalClose} theme={theme}>
             <Box sx={style}>

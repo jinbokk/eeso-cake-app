@@ -12,30 +12,27 @@ export default function useGetCakes(ingredient, pageNum) {
   const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
-    dispatch({ type: "GET_ANOTHER_PRODUCTS_REQUEST" });
     setCakesData([]);
+    dispatch({ type: "GET_ANOTHER_PRODUCTS_REQUEST" });
   }, [ingredient]);
 
-  // useEffect(() => {
-  //   setMoreCakesLoading(true);
-  //   dispatch(productActions.getProducts(ingredient, pageNum));
-  // }, [pageNum]);
-
   useEffect(() => {
-
     setMoreCakesLoading(true);
     dispatch(productActions.getProducts(ingredient, pageNum));
+    setMoreCakesLoading(false);
+  }, [pageNum]);
 
-    if (!loading) {
-      setCakesData((prevCakes) => {
-        return [...new Set([...prevCakes, ...productsData.results])];
-      });
+  // useEffect(() => {
+  //   if (!loading) {
+  //     setCakesData((prevCakes) => {
+  //       return [...new Set([...prevCakes, ...productsData.results])];
+  //     });
 
-      setHasMore(productsData.results.length > 0);
+  //     setHasMore(productsData.results.length > 0);
 
-      setMoreCakesLoading(false);
-    }
-  }, [loading, pageNum]);
+  //     setMoreCakesLoading(false);
+  //   }
+  // }, [loading, pageNum]);
 
   return { loading, moreCakesLoading, cakesData, hasMore };
 }

@@ -1,6 +1,6 @@
 let initialState = {
   loading: true,
-  productsData: {},
+  productsData: [],
 };
 
 const productReducer = (state = initialState, action) => {
@@ -17,7 +17,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        productsData: payload.ProductsJson.data,
+        productsData: [...state.productsData, ...payload.productsData],
       };
 
     default:

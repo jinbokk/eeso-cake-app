@@ -5,14 +5,14 @@ function getProducts(ingredient, pageNum) {
     try {
       dispatch({ type: "GET_PRODUCTS_REQUEST" });
 
-      const ProductsJson = await api_eesocake.get(
+      const productsJson = await api_eesocake.get(
         `/${ingredient}?page=${pageNum || 1}`
       );
 
       dispatch({
         type: "GET_PRODUCT_SUCCESS",
         payload: {
-          ProductsJson: ProductsJson,
+          productsData: productsJson.data.results,
         },
       });
     } catch (error) {
