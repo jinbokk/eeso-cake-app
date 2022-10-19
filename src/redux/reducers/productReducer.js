@@ -26,25 +26,3 @@ const productReducer = (state = initialState, action) => {
 };
 
 export default productReducer;
-
-// ------- USING RTK..
-// import { createSlice } from "@reduxjs/toolkit";
-
-// let initialState = {
-//   AllproductsData: {},
-// };
-
-// const productSlice = createSlice({
-//   name: "product",
-//   initialState,
-//   reducers: {
-//     getAllProducts(state, action) {
-//       state.AllproductsData = action.payload.data;
-//     },
-//   },
-// });
-// /// NO MORE "return , ...state" !!!
-
-// export const productActions = productSlice.actions;
-
-// export default productSlice.reducer;

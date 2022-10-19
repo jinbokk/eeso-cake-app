@@ -22,6 +22,10 @@ export default function useGetCakes(ingredient, pageNum) {
     setMoreCakesLoading(false);
   }, [pageNum]);
 
+  useEffect(()=>{
+    
+  },[productsData])
+
   // useEffect(() => {
   //   if (!loading) {
   //     setCakesData((prevCakes) => {
