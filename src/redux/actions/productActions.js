@@ -5,18 +5,36 @@ function getProducts(ingredient, pageNum) {
     try {
       dispatch({ type: "GET_PRODUCTS_REQUEST" });
 
-      const productsJson = await api_eesocake.get(
-        `/${ingredient}?page=${pageNum || 1}`
-      );
+      await api_eesocake
+        .get(`/${ingredient}?page=${pageNum || 1}`)
+        .then((res) => {
+          dispatch({
+            type: "GET_PRODUCTS_SUCCESS",
+            payload: {
+              ingredient: ingredient,
+              productsData: res.data.results,
+              pageNum: res.data.page,
+            },
+          });
 
-      dispatch({
-        type: "GET_PRODUCT_SUCCESS",
-        payload: {
-          productsData: productsJson.data.results,
-        },
-      });
+          if (res.data.next) {
+            dispatch({
+              type: "HAS_MORE_PRODUCTS",
+              payload: {
+                hasMore: true,
+              },
+            });
+          } else {
+            dispatch({
+              type: "NO_MORE_PRODUCT",
+              payload: {
+                hasMore: true,
+              },
+            });
+          }
+        });
     } catch (error) {
-      dispatch({ type: "GET_PRODUCTS_FAILURE", payload: { error } });
+      console.log("error occurred : ", error);
     }
   };
 }

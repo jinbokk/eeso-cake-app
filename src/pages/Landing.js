@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
@@ -7,20 +6,13 @@ import "swiper/swiper.min.css";
 import "swiper/modules/pagination/pagination.min.css";
 import "./css/Landing.css";
 
-import { instagramActions } from "../redux/actions/instagramActions";
 
 // gsap test -----------------------------------------
 // https://greensock.com/react/
 import { gsap } from "gsap";
-import { productActions } from "../redux/actions/productActions";
 // gsap test -----------------------------------------
 
 const Landing = (props) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(instagramActions.getInstaData());
-  }, []);
 
   // gsap test -----------------------------------------
   const el = useRef();

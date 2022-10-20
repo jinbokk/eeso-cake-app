@@ -10,36 +10,53 @@ import Subnav from "../components/Subnav";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
 
-import useGetCakes from "../hooks/useGetCakes";
 import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../redux/actions/productActions";
 
 const Cakes = () => {
   const dispatch = useDispatch();
 
-  const { loading, productsData } = useSelector((state) => state.product);
+  const isFirstRun = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRun) {
+      dispatch(productActions.getProducts(ingredient, pageNum));
+    }
+    isFirstRun.current = false;
+  }, []);
 
   const { ingredient } = useParams();
 
+  const { loading, moreCakesLoading, productsData, hasMore } = useSelector(
+    (state) => state.product
+  );
+
   const [pageNum, setPageNum] = useState(1);
 
+  // const [moreCakesLoading, setMoreCakesLoading] = useState(true);
+
   useEffect(() => {
-    dispatch(productActions.getProducts(ingredient, pageNum));
+    if (!isFirstRun.current && !loading) {
+      dispatch(productActions.getProducts(ingredient, pageNum));
+    }
   }, [pageNum]);
 
   useEffect(() => {
-    setPageNum(1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    console.log(isFirstRun);
+    if (!isFirstRun.current && !loading) {
+      dispatch({ type: "GET_ANOTHER_PRODUCTS_REQUEST" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setPageNum(1);
+      // setMoreCakesLoading(true);
+      dispatch(productActions.getProducts(ingredient, 1));
+    }
   }, [ingredient]);
 
-  useEffect(() => {
-    "productsData changed";
-  }, [productsData]);
-
-  // const { loading, moreCakesLoading, cakesData, hasMore } = useGetCakes(
-  //   ingredient,
-  //   pageNum
-  // );
+  // useEffect(() => {
+  //   setMoreCakesLoading(true);
+  //   if (!loading) {
+  //   }
+  // }, [loading]);
 
   const observer = useRef();
 
@@ -50,15 +67,15 @@ const Cakes = () => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        // if (entries[0].isIntersecting && hasMore) {
-        if (entries[0].isIntersecting) {
+        if (entries[0].isIntersecting && hasMore) {
+          // if (entries[0].isIntersecting && hasMore) {
           setPageNum((prevPageNum) => prevPageNum + 1);
         }
       });
 
       if (node) observer.current.observe(node);
     },
-    [loading]
+    [loading, hasMore]
     // [loading, hasMore]
   );
 
@@ -162,13 +179,13 @@ const Cakes = () => {
             </div>
           </div>
 
-          {/* {moreCakesLoading ? (
+          {moreCakesLoading ? (
             <Loading
               width={"100vw"}
               height={"50vh"}
               text={"이미지 가져오는 중..."}
             />
-          ) : null} */}
+          ) : null}
 
           <Modal open={open} onClose={ModalClose} theme={theme}>
             <Box sx={style}>

@@ -1,12 +1,21 @@
 import React, { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
 import Footer from "../components/Footer";
 import "./css/Home.css";
 
 import CountUp from "react-countup";
 import Loading from "../components/Loading";
 
+import { instagramActions } from "../redux/actions/instagramActions";
+
 const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(instagramActions.getInstaData());
+  }, []);
+
   const instagramData = useSelector((state) => state.instagram);
 
   return (
