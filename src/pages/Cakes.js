@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 import "./css/Cakes.css";
 
@@ -19,13 +19,22 @@ const Cakes = () => {
   const isFirstRun = useRef(true);
 
   useEffect(() => {
-    if (isFirstRun) {
-      dispatch(productActions.getProducts(ingredient, pageNum));
-    }
+    dispatch(
+      productActions.getProducts({
+        options: {
+          ingredient: ingredient,
+          pageNum: pageNum,
+          designParams: designParams,
+        },
+      })
+    );
     isFirstRun.current = false;
   }, []);
 
   const { ingredient } = useParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const designParams = searchParams.get("design");
 
   const { loading, moreCakesLoading, productsData, hasMore } = useSelector(
     (state) => state.product
@@ -33,30 +42,36 @@ const Cakes = () => {
 
   const [pageNum, setPageNum] = useState(1);
 
-  // const [moreCakesLoading, setMoreCakesLoading] = useState(true);
-
   useEffect(() => {
-    if (!isFirstRun.current && !loading) {
-      dispatch(productActions.getProducts(ingredient, pageNum));
+    if (!isFirstRun.current && !loading && pageNum !== 1) {
+      dispatch(
+        productActions.getProducts({
+          options: {
+            ingredient: ingredient,
+            pageNum: pageNum,
+            designParams: designParams,
+          },
+        })
+      );
     }
   }, [pageNum]);
 
   useEffect(() => {
-    console.log(isFirstRun);
     if (!isFirstRun.current && !loading) {
-      dispatch({ type: "GET_ANOTHER_PRODUCTS_REQUEST" });
-      window.scrollTo({ top: 0, behavior: "smooth" });
       setPageNum(1);
-      // setMoreCakesLoading(true);
-      dispatch(productActions.getProducts(ingredient, 1));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      dispatch({ type: "GET_ANOTHER_PRODUCTS_REQUEST" });
+      dispatch(
+        productActions.getProducts({
+          options: {
+            ingredient: ingredient,
+            designParams: designParams,
+            pageNum: 1,
+          },
+        })
+      );
     }
-  }, [ingredient]);
-
-  // useEffect(() => {
-  //   setMoreCakesLoading(true);
-  //   if (!loading) {
-  //   }
-  // }, [loading]);
+  }, [ingredient, designParams]);
 
   const observer = useRef();
 
@@ -68,7 +83,6 @@ const Cakes = () => {
 
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          // if (entries[0].isIntersecting && hasMore) {
           setPageNum((prevPageNum) => prevPageNum + 1);
         }
       });
@@ -76,7 +90,6 @@ const Cakes = () => {
       if (node) observer.current.observe(node);
     },
     [loading, hasMore]
-    // [loading, hasMore]
   );
 
   const style = {
@@ -113,13 +126,6 @@ const Cakes = () => {
 
   const ModalClose = () => setOpen(false);
 
-  // const navigate = useNavigate();
-
-  // const changeUrl = (e) => {
-  //   navigate(`?design=${e.target.value}`); //url만 유저친화적으로 변경한 것. 랜더에 영향 없음.
-  //   dispatch(productFilterActions.getFilteredProducts(e.target.value));
-  // };
-
   let loadingText;
 
   if (ingredient === "rice") {
@@ -132,13 +138,13 @@ const Cakes = () => {
 
   return (
     <>
+      <Subnav ingredient={ingredient} />
+
       {loading ? (
         <Loading width={"100vw"} height={"100vh"} text={loadingText} />
       ) : (
         <>
           <div className="cakes_page_container">
-            <Subnav ingredient={ingredient} />
-
             <div className="images_container">
               {productsData.map((item, index) => {
                 if (productsData.length === index + 1) {

@@ -14,15 +14,29 @@ const productReducer = (state = initialState, action) => {
     case "GET_PRODUCTS_REQUEST":
       return { ...state };
 
-    case "GET_ANOTHER_PRODUCTS_REQUEST":
-      return { ...state, loading: true, productsData: [], pageNum: 1 };
-
     case "GET_PRODUCTS_SUCCESS":
       return {
         ...state,
         loading: false,
         ingredient: payload.ingredient,
         productsData: [...state.productsData, ...payload.productsData],
+        pageNum: payload.pageNum,
+      };
+
+    case "GET_ANOTHER_PRODUCTS_REQUEST":
+      return {
+        ...state,
+        loading: true,
+        productsData: [],
+        pageNum: 1,
+      };
+
+    case "GET_ANOTHER_PRODUCTS_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        ingredient: payload.ingredient,
+        productsData: [...payload.productsData],
         pageNum: payload.pageNum,
       };
 

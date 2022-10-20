@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Footer from "../components/Footer";
@@ -23,7 +23,7 @@ const Home = () => {
       <div className="home_container_top">
         <div
           className="section_1_container"
-          style={{ backgroundImage: "url(" + "/images/home_image_4.png" + ")" }}
+          style={{ backgroundImage: "url(/images/home_image_4.png)" }}
         >
           <div className="section_1_text">
             <div>
@@ -48,7 +48,7 @@ const Home = () => {
         <div className="section_2_container">
           <div
             style={{
-              backgroundImage: "url(" + "/images/home_image_1.jpg" + ")",
+              backgroundImage: "url(/images/home_image_1.jpg)",
             }}
             className="section_2_image"
           ></div>
@@ -113,7 +113,11 @@ const Home = () => {
                     rel="noopener noreferrer"
                     key={index}
                   >
-                    <img src={item.media_url} className="instaFeed_image" />
+                    <img
+                      src={item.media_url}
+                      className="instaFeed_image"
+                      alt=""
+                    />
                     <div className="instaFeed_text_container">
                       <div className="instaFeed_timestamp">
                         {item.timestamp.slice(0, 10)} /{" "}

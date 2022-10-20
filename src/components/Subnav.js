@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./css/Subnav.css";
 
@@ -26,11 +25,10 @@ const Subnav = ({ ingredient }) => {
     subnav_items = [{ title: "# 숫자 타르트", value: "number" }];
   }
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const changeUrl = (e) => {
-    navigate(`?design=${e.target.value}`); //url만 유저친화적으로 변경한 것. 랜더에 영향 없음.
+    navigate(`?design=${e.target.value}`);
   };
 
   return (
