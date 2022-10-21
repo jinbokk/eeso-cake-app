@@ -7,6 +7,7 @@ import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Cakes from "./pages/Cakes";
+import Guide from "./pages/Guide";
 import Contact from "./pages/Contact";
 
 import "./App.css";
@@ -40,16 +41,17 @@ function App() {
       {/* {!browse ? (
         <Landing setBrowse={setBrowse} />
       ) : ( */}
-        <>
-          <Navbar />
-          <Sidebar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/cakes/:ingredient" element={<Cakes />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </>
+      <>
+        <Navbar />
+        <Sidebar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/cakes/:ingredient" element={<Cakes />} />
+          <Route path="/guide" element={<Guide />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </>
       {/* )} */}
     </>
   );

@@ -1,6 +1,5 @@
 import React from "react";
 import Map from "../components/Map";
-import { Row, Col, Container } from "react-bootstrap";
 
 import "./css/Contact.css";
 import Footer from "../components/Footer";
@@ -8,18 +7,19 @@ import Footer from "../components/Footer";
 const Contact = () => {
   return (
     <>
-      <Container>
-        <Row>
-          <Col>
-            <div>정보 입력하기</div>
-          </Col>
-          <Col>
-            <div className="map_container">
-              <Map />
-            </div>
-          </Col>
-        </Row>
-      </Container>
+      <div className="contact_container">
+        <div>
+          <div>케이크 사이즈 안내</div>
+          <img src="/images/cake_size.png" className="cakes_size_image" />
+        </div>
+
+        <div>
+          <div className="map_container">
+            <div>오시는 길 안내</div>
+            <Map />
+          </div>
+        </div>
+      </div>
       <Footer />
     </>
   );

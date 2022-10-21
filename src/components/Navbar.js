@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import "./css/Navbar.css";
 
-import NavMenu from "./NavMenu";
-
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [expand, setExpand] = useState(false);
 
   const handleScroll = () => {
     const currentScroll = window.pageYOffset;
@@ -61,26 +60,69 @@ const Navbar = () => {
           <div className="nav_menu">ABOUT</div>
         </NavLink>
 
-        <NavMenu
-          title="CAKES"
-          items={[
-            {
-              title: "RICE CAKES",
-              image_url: "/images/rice_cake_icon.png",
-              link: "rice",
-            },
-            {
-              title: "BREAD CAKES",
-              image_url: "/images/bread_cake_icon.png",
-              link: "bread",
-            },
-            {
-              title: "TART CAKES",
-              image_url: "/images/tart_cake_icon.png",
-              link: "tart",
-            },
-          ]}
-        />
+        <div
+          exact
+          to="/cakes"
+          className="nav_menu"
+          onClick={() => setExpand(!expand)}
+        >
+          CAKES
+        </div>
+
+        <div>
+          {expand && (
+            <>
+              <NavLink
+                to="cakes/rice"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
+                <div className="nav_item_container">
+                  <img
+                    src="/images/rice_cake_icon.png"
+                    alt=""
+                    className="nav_item_image"
+                  />
+                  <h3>RICE CAKES</h3>
+                </div>
+              </NavLink>
+
+              <NavLink
+                to="cakes/bread"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
+                <div className="nav_item_container">
+                  <img
+                    src="/images/bread_cake_icon.png"
+                    alt=""
+                    className="nav_item_image"
+                  />
+                  <h3>BREAD CAKES</h3>
+                </div>
+              </NavLink>
+
+              <NavLink
+                to="cakes/tart"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
+                <div className="nav_item_container">
+                  <img
+                    src="/images/tart_cake_icon.png"
+                    alt=""
+                    className="nav_item_image"
+                  />
+                  <h3>TART CAKES</h3>
+                </div>
+              </NavLink>
+            </>
+          )}
+        </div>
+
+        <NavLink
+          to="/guide"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
+          <div className="nav_menu">GUIDE</div>
+        </NavLink>
 
         <NavLink
           to="/contact"

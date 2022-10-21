@@ -1,0 +1,49 @@
+.guide_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Ownglyph;
+  font-size: 30px;
+}
+
+.guide_subtitle {
+  margin: 50px 0;
+}
+
+.cakes_size_image {
+  width: 80vw;
+}
+
+.size_info {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
+
+.size_info div {
+  padding: 50px;
+}
+
+.design_container {
+  display: flex;
+  width: 100vw;
+  justify-content: space-around;
+}
+
+.design_info_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 400px;
+  word-break: keep-all;
+}
+
+.taste_info_container,
+.package_info_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

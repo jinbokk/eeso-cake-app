@@ -138,7 +138,7 @@ const Cakes = () => {
 
   return (
     <>
-      <Subnav ingredient={ingredient} />
+      <Subnav option={ingredient} />
 
       {loading ? (
         <Loading width={"100vw"} height={"100vh"} text={loadingText} />
