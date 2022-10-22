@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./css/Navbar.css";
 
 import { NavLink } from "react-router-dom";
+import NavDropdown from "./NavDropdown";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -60,8 +61,10 @@ const Navbar = () => {
           <div className="nav_menu">ABOUT</div>
         </NavLink>
 
+        {/* <NavDropdown /> */}
+
         <div
-          exact
+          // exact
           to="/cakes"
           className="nav_menu"
           onClick={() => setExpand(!expand)}
@@ -120,8 +123,12 @@ const Navbar = () => {
         <NavLink
           to="/guide"
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          onMouseEnter={() => {
+            console.log("mouse enter");
+          }}
         >
           <div className="nav_menu">GUIDE</div>
+          {/* {mouseEnter ? <div>mouse Enter !</div> : null} */}
         </NavLink>
 
         <NavLink
