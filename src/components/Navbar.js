@@ -61,8 +61,6 @@ const Navbar = () => {
           <div className="nav_menu">ABOUT</div>
         </NavLink>
 
-        {/* <NavDropdown /> */}
-
         <div
           // exact
           to="/cakes"
@@ -128,8 +126,18 @@ const Navbar = () => {
           }}
         >
           <div className="nav_menu">GUIDE</div>
-          {/* {mouseEnter ? <div>mouse Enter !</div> : null} */}
         </NavLink>
+
+        <NavDropdown
+          navMenu={{
+            mainTitle: "TEST Main Title",
+            item: [
+              { subTitle: "TEST Sub Title1", path: "/test1" },
+              { subTitle: "TEST Sub Title2", path: "/test2" },
+              { subTitle: "TEST Sub Title3", path: "/test3" },
+            ],
+          }}
+        />
 
         <NavLink
           to="/contact"

@@ -1,42 +1,33 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
-export default function NavDropdown() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+import "./css/NavDropdown.css";
+
+const NavDropdown = ({ navMenu }) => {
+  const [mouseOn, SetMouseOn] = useState(false);
+
+  let activeStyle = {
+    color: "var(--bg-accent)",
   };
 
   return (
-    <div>
-      <Button
-        id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
-        Dashboard
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
-    </div>
+    <>
+      <div className="dropdown_menu_container_top">
+        {navMenu.mainTitle}
+        <div className="dropdown_menu_container">
+          {navMenu.item.map((item, index) => (
+            <NavLink
+              to={item.path}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              key={index}
+            >
+              {item.subTitle}
+            </NavLink>
+          ))}
+        </div>
+      </div>
+    </>
   );
-}
+};
+
+export default NavDropdown;
