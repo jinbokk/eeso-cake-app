@@ -1,27 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 import "./css/NavDropdown.css";
 
 const NavDropdown = ({ navMenu }) => {
-  const [mouseOn, SetMouseOn] = useState(false);
-
   let activeStyle = {
     color: "var(--bg-accent)",
+    pointerEvents: "none",
   };
 
   return (
     <>
-      <div className="dropdown_menu_container_top">
-        {navMenu.mainTitle}
-        <div className="dropdown_menu_container">
+      <div className="dropdown">
+        <button className="dropdown_btn">{navMenu.mainTitle}</button>
+        <div className={`dropdown_menu_container ${navMenu.flexDir}`}>
           {navMenu.item.map((item, index) => (
             <NavLink
-              to={item.path}
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to={item.link}
+              style={({ isActive }) => (isActive ? activeStyle : null)}
+              className="dropdown_menu"
               key={index}
             >
-              {item.subTitle}
+              {item.imgSrc ? (
+                <div className="dropdown_menu_img_container">
+                  <img src={item.imgSrc} className="dropdown_menu_img" />
+                  <div>{item.subTitle}</div>
+                </div>
+              ) : (
+                <div>{item.subTitle}</div>
+              )}
             </NavLink>
           ))}
         </div>

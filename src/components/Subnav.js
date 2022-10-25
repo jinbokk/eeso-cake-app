@@ -7,6 +7,7 @@ const Subnav = ({ option }) => {
 
   if (option === "rice") {
     subnav_items = [
+      { title: "# 전체 보기", value: "" },
       { title: "# 돔 디자인", value: "?design=dome" },
       { title: "# 크레센트 디자인", value: "?design=crescent" },
       { title: "# 리스 디자인", value: "?design=wreath" },
@@ -15,6 +16,7 @@ const Subnav = ({ option }) => {
 
   if (option === "bread") {
     subnav_items = [
+      { title: "# 전체 보기", value: "" },
       { title: "# 레터링 케이크", value: "?design=letter" },
       { title: "# 피규어 케이크", value: "?design=figure" },
       { title: "# 포토 케이크", value: "?design=photo" },
@@ -26,15 +28,18 @@ const Subnav = ({ option }) => {
   }
 
   if (option === "tart") {
-    subnav_items = [{ title: "# 숫자 타르트", value: "?design=number" }];
-  }
-
-  if (option === "guide") {
     subnav_items = [
-      { title: "# 떡 케이크 안내", value: "rice" },
-      { title: "# 빵 케이크 안내", value: "bread" },
+      // { title: "# 전체 보기", value: "" },
+      { title: "# 숫자 타르트", value: "?design=number" },
     ];
   }
+
+  // if (option === "guide") {
+  //   subnav_items = [
+  //     { title: "# 떡 케이크 안내", value: "rice" },
+  //     { title: "# 빵 케이크 안내", value: "bread" },
+  //   ];
+  // }
 
   const navigate = useNavigate();
 

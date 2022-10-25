@@ -7,7 +7,8 @@ import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Cakes from "./pages/Cakes";
-import Guide from "./pages/Guide";
+import GuideRice from "./pages/GuideRice";
+import GuideBread from "./pages/GuideBread";
 import Contact from "./pages/Contact";
 
 import "./App.css";
@@ -48,7 +49,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/cakes/:ingredient" element={<Cakes />} />
-          <Route path="/guide" element={<Guide />} />
+          <Route path="/guide/rice" element={<GuideRice />} />
+          <Route path="/guide/bread" element={<GuideBread />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </>

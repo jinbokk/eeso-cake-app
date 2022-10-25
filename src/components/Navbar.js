@@ -7,7 +7,6 @@ import NavDropdown from "./NavDropdown";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [expand, setExpand] = useState(false);
 
   const handleScroll = () => {
     const currentScroll = window.pageYOffset;
@@ -41,110 +40,80 @@ const Navbar = () => {
       }
     >
       <div className="nav_container">
-        <NavLink to="/">
-          <div>
-            <img className="main_logo" src="/images/logo_test.png" alt="" />
-          </div>
-        </NavLink>
-
-        <NavLink
-          to="/"
-          style={({ isActive }) => (isActive ? activeStyle : undefined)}
-        >
-          <div className="nav_menu">HOME</div>
-        </NavLink>
-
-        <NavLink
-          to="/about"
-          style={({ isActive }) => (isActive ? activeStyle : undefined)}
-        >
-          <div className="nav_menu">ABOUT</div>
-        </NavLink>
-
-        <div
-          // exact
-          to="/cakes"
-          className="nav_menu"
-          onClick={() => setExpand(!expand)}
-        >
-          CAKES
+        <div>
+          <NavLink to="/">
+            <div>
+              <img className="main_logo" src="/images/logo_test.png" alt="" />
+            </div>
+          </NavLink>
         </div>
 
         <div>
-          {expand && (
-            <>
-              <NavLink
-                to="cakes/rice"
-                style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              >
-                <div className="nav_item_container">
-                  <img
-                    src="/images/rice_cake_icon.png"
-                    alt=""
-                    className="nav_item_image"
-                  />
-                  <h3>RICE CAKES</h3>
-                </div>
-              </NavLink>
-
-              <NavLink
-                to="cakes/bread"
-                style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              >
-                <div className="nav_item_container">
-                  <img
-                    src="/images/bread_cake_icon.png"
-                    alt=""
-                    className="nav_item_image"
-                  />
-                  <h3>BREAD CAKES</h3>
-                </div>
-              </NavLink>
-
-              <NavLink
-                to="cakes/tart"
-                style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              >
-                <div className="nav_item_container">
-                  <img
-                    src="/images/tart_cake_icon.png"
-                    alt=""
-                    className="nav_item_image"
-                  />
-                  <h3>TART CAKES</h3>
-                </div>
-              </NavLink>
-            </>
-          )}
+          <NavLink
+            to="/"
+            end
+            style={({ isActive }) => (isActive ? activeStyle : null)}
+          >
+            <div className="nav_menu">HOME</div>
+          </NavLink>
         </div>
 
-        <NavLink
-          to="/guide"
-          style={({ isActive }) => (isActive ? activeStyle : undefined)}
-          onMouseEnter={() => {
-            console.log("mouse enter");
-          }}
-        >
-          <div className="nav_menu">GUIDE</div>
-        </NavLink>
+        <div>
+          <NavLink
+            to="/about"
+            style={({ isActive }) => (isActive ? activeStyle : null)}
+          >
+            <div className="nav_menu">ABOUT</div>
+          </NavLink>
+        </div>
 
-        <NavDropdown
-          navMenu={{
-            mainTitle: "TEST Main Title",
-            item: [
-              { subTitle: "TEST Sub Title1", path: "/test1" },
-              { subTitle: "TEST Sub Title2", path: "/test2" },
-              { subTitle: "TEST Sub Title3", path: "/test3" },
-            ],
-          }}
-        />
+        <div>
+          <NavDropdown
+            navMenu={{
+              mainTitle: "CAKES",
+              flexDir: "row",
+              item: [
+                {
+                  subTitle: "RICE CAKES",
+                  link: "/cakes/rice",
+                  imgSrc: "/images/rice_cake_icon.png",
+                },
+                {
+                  subTitle: "BREAD CAKES",
+                  link: "/cakes/bread",
+                  imgSrc: "/images/bread_cake_icon.png",
+                },
+                {
+                  subTitle: "TART CAKES",
+                  link: "/cakes/tart",
+                  imgSrc: "/images/tart_cake_icon.png",
+                },
+              ],
+            }}
+          />
+        </div>
 
-        <NavLink
-          to="/contact"
-          style={({ isActive }) => (isActive ? activeStyle : undefined)}
-        >
-          <div className="nav_menu">CONTACT</div>
-        </NavLink>
+        <div>
+          <NavDropdown
+            navMenu={{
+              mainTitle: "GUIDE",
+              flexDir: "col",
+              item: [
+                { subTitle: "RICE CAKE GUIDE", link: "/guide/rice" },
+                { subTitle: "BREAD CAKE GUIDE", link: "/guide/bread" },
+              ],
+            }}
+          />
+        </div>
+
+        <div>
+          <NavLink
+            to="/contact"
+            style={({ isActive }) => (isActive ? activeStyle : null)}
+          >
+            <div className="nav_menu">CONTACT</div>
+          </NavLink>
+        </div>
       </div>
     </div>
   );

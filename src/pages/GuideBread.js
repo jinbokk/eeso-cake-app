@@ -5,10 +5,10 @@ import "./css/Guide.css";
 import Footer from "../components/Footer";
 import Subnav from "../components/Subnav";
 
-const Guide = () => {
+const GuideBread = () => {
   return (
     <>
-      <Subnav option={"guide"} />
+      {/* <Subnav option={"guide"} /> */}
       <div className="guide_container">
         <div className="guide_subtitle">케이크 사이즈 안내</div>
         <div>
@@ -23,13 +23,13 @@ const Guide = () => {
             <div>3호 : 지름 18cm (5~7인용)</div>
             <div>4호 : 지름 18cm (7~9인용)</div>
           </div> */}
-          <div>1호 : 지름 16cm ( 2~4인용)</div>
+          <div>1호 : 지름 16cm ( 2~4인용 )</div>
 
-          <div>2호 : 지름 19cm ( 4~6인용)</div>
+          <div>2호 : 지름 19cm ( 4~6인용 )</div>
 
-          <div>3호 : 지름 21cm (6~9인 이상)</div>
+          <div>3호 : 지름 21cm ( 6~9인 이상 )</div>
 
-          <div>미니 : 지름 13cm (1~2인용)</div>
+          <div>미니 : 지름 13cm ( 1~2인용 )</div>
 
           <div>
             * 미니, 3호 사이즈는 2단, 3단 케이크 제작 시 가능하신 사이즈입니다.
@@ -181,4 +181,4 @@ const Guide = () => {
   );
 };
 
-export default Guide;
+export default GuideBread;

@@ -5,10 +5,10 @@ import "./css/Guide.css";
 import Footer from "../components/Footer";
 import Subnav from "../components/Subnav";
 
-const Guide = () => {
+const GuideRice = () => {
   return (
     <>
-      <Subnav option={"guide"} />
+      {/* <Subnav option={"guide"} /> */}
       <div className="guide_container">
         <div className="guide_subtitle">케이크 사이즈 안내</div>
         <div>
@@ -109,4 +109,4 @@ const Guide = () => {
   );
 };
 
-export default Guide;
+export default GuideRice;
