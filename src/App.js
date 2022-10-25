@@ -11,6 +11,8 @@ import GuideRice from "./pages/GuideRice";
 import GuideBread from "./pages/GuideBread";
 import Contact from "./pages/Contact";
 
+import "swiper/css";
+// import "swiper/css/pagination";
 import "./App.css";
 import { useState } from "react";
 
@@ -35,26 +37,26 @@ function App() {
   // window.addEventListener("wheel", scrollThrottle);
   // -------------------------------------------------
 
-  // const [browse, setBrowse] = useState(false);
+  const [browse, setBrowse] = useState(false);
 
   return (
     <>
-      {/* {!browse ? (
+      {!browse ? (
         <Landing setBrowse={setBrowse} />
-      ) : ( */}
-      <>
-        <Navbar />
-        <Sidebar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/cakes/:ingredient" element={<Cakes />} />
-          <Route path="/guide/rice" element={<GuideRice />} />
-          <Route path="/guide/bread" element={<GuideBread />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </>
-      {/* )} */}
+      ) : (
+        <>
+          <Navbar />
+          <Sidebar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/cakes/:ingredient" element={<Cakes />} />
+            <Route path="/guide/rice" element={<GuideRice />} />
+            <Route path="/guide/bread" element={<GuideBread />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </>
+      )}
     </>
   );
 }

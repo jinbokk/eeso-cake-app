@@ -1,14 +1,11 @@
 import React from "react";
-import Map from "../components/Map";
 
 import "./css/Guide.css";
 import Footer from "../components/Footer";
-import Subnav from "../components/Subnav";
 
 const GuideRice = () => {
   return (
     <>
-      {/* <Subnav option={"guide"} /> */}
       <div className="guide_container">
         <div className="guide_subtitle">케이크 사이즈 안내</div>
         <div>

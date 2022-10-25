@@ -2,10 +2,8 @@ import React, { useEffect, useRef } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
-import "swiper/swiper.min.css";
-import "swiper/modules/pagination/pagination.min.css";
-import "./css/Landing.css";
 
+import "./css/Landing.css";
 
 // gsap test -----------------------------------------
 // https://greensock.com/react/

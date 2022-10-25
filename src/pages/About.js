@@ -7,8 +7,6 @@ import Col from "react-bootstrap/Col";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
-import "swiper/swiper.min.css";
-import "swiper/modules/pagination/pagination.min.css";
 import Footer from "../components/Footer";
 
 const About = () => {
