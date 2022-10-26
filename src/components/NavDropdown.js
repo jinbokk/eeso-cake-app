@@ -12,7 +12,15 @@ const NavDropdown = ({ navMenu }) => {
   return (
     <>
       <div className="dropdown">
-        <button className="dropdown_btn">{navMenu.mainTitle}</button>
+        <button className="dropdown_btn">
+          <NavLink
+            to={"/" + navMenu.mainTitle.toLowerCase()}
+            style={({ isActive }) => (isActive ? activeStyle : null)}
+          >
+            {navMenu.mainTitle}
+          </NavLink>
+        </button>
+
         <div className={`dropdown_menu_container ${navMenu.flexDir}`}>
           {navMenu.item.map((item, index) => (
             <NavLink
