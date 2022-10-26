@@ -1,7 +1,9 @@
-import React from 'react'
+import { useEffect } from "react";
 
-export default function useHighlightMenu() {
-  return (
-    <div>useHighlightMenu</div>
-  )
+export default function useHighlight() {
+  useEffect(() => {
+    console.log(window.location.pathname);
+  }, []);
+
+  return;
 }

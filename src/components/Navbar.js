@@ -4,9 +4,12 @@ import "./css/Navbar.css";
 
 import { NavLink } from "react-router-dom";
 import NavDropdown from "./NavDropdown";
+import useHighlight from "../hooks/useHighlight";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+
+  useHighlight();
 
   const handleScroll = () => {
     const currentScroll = window.pageYOffset;
