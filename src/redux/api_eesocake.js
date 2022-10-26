@@ -2,7 +2,6 @@ import axios from "axios";
 
 const api_eesocake = axios.create({
   baseURL: process.env.REACT_APP_AXIOS_EESOCAKE_API_BASE_URL,
-  // baseURL: "http://localhost:8000/api",
   headers: { "Content-Type": "application/json" },
 });
 
