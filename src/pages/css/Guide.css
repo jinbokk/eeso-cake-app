@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   font-family: Ownglyph;
+  font-weight: bold;
   font-size: 30px;
 }
 
@@ -12,7 +13,12 @@
 }
 
 .cakes_size_image {
-  width: 80vw;
+  width: 70vw;
+}
+
+.cakes_design_image {
+  width: 100%;
+  border-radius: 5%;
 }
 
 .size_info {
@@ -40,10 +46,61 @@
   word-break: keep-all;
 }
 
-.taste_info_container,
+/* .taste_info_container,
 .package_info_container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
+
+.taste_info_container > div,
+.package_info_container > div {
+  margin: 20px;
+} */
+
+.guide_swiper_container {
+  width: 100vw;
+  max-height: 90vh;
+}
+
+.swiper_cakes_size_image_container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper_cakes_size_image {
+  max-width: 70%;
+  min-height: 100%;
+  max-height: 90vh;
+  padding-bottom: 80px;
+}
+
+.guide_swiper_container .swiper-pagination-bullet {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.guide_swiper_container .swiper-pagination-bullet > div {
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--bg);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 30px;
+}
+
+/* .row > div {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+} */

@@ -11,8 +11,7 @@ import GuideRice from "./pages/GuideRice";
 import GuideBread from "./pages/GuideBread";
 import Contact from "./pages/Contact";
 
-import "swiper/css";
-// import "swiper/css/pagination";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { useState } from "react";
 

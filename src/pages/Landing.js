@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 
+import "swiper/css";
+import "swiper/css/pagination";
 import "./css/Landing.css";
 
 // gsap test -----------------------------------------
@@ -11,7 +13,6 @@ import { gsap } from "gsap";
 // gsap test -----------------------------------------
 
 const Landing = (props) => {
-
   // gsap test -----------------------------------------
   const el = useRef();
   const q = gsap.utils.selector(el);

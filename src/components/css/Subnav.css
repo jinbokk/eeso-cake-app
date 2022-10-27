@@ -19,6 +19,7 @@
   transition: 0.2s;
   cursor: pointer;
   font-family: Ownglyph;
+  font-weight: bold;
 }
 
 .filter_button:hover {

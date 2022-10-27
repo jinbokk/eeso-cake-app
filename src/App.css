@@ -1,18 +1,14 @@
 @font-face {
-  font-family: "AnandaBlack";
-  src: url("/public/fonts/AnandaBlack.ttf");
-}
-@font-face {
-  font-family: "BetterGrade";
-  src: url("/public/fonts/BetterGrade.ttf");
+  font-family: "SCDream";
+  src: url("/public/fonts/SCDream.otf");
 }
 @font-face {
   font-family: "MoodyAdolescent";
   src: url("/public/fonts/MoodyAdolescent.ttf");
 }
 @font-face {
-  font-family: "ScholarlyAmbition";
-  src: url("/public/fonts/ScholarlyAmbition.ttf");
+  font-family: "BetterGrade";
+  src: url("/public/fonts/BetterGrade.ttf");
 }
 @font-face {
   font-family: "Simvoni";
@@ -28,12 +24,25 @@ body {
   background-color: var(--bg);
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: black;
+}
+
 :root {
   --bg: rgb(251, 239, 233);
   --bg-dark: rgb(255, 226, 211);
   --bg-deep-dark: rgb(255, 198, 169);
   --bg-accent: rgb(191, 47, 47);
+  --swiper-theme-color: rgb(191, 47, 47) !important;
+  --swiper-pagination-bullet-inactive-color: rgb(191, 47, 47) !important;
   --nav-height: 70px;
+  --nav-font-family: Simvoni;
+  --nav-font-size: 14px;
   --filter-width: 350px;
   --section-offset: 200px;
 }

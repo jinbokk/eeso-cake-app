@@ -40,12 +40,13 @@ h2 {
 
 .landing_text_section2 {
   margin-bottom: 30px;
-  font-family: Ownglyph;
-  font-size: 20px;
 }
 
 .landing_text_section2 h3 {
   margin: 15px 0;
+  font-family: Ownglyph;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 .landing_text_section3 {

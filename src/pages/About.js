@@ -1,4 +1,7 @@
 import React from "react";
+
+import "swiper/css";
+import "swiper/css/pagination";
 import "./css/About.css";
 
 import Container from "react-bootstrap/Container";
