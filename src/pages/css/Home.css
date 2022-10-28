@@ -1,7 +1,6 @@
 .home_container_top {
   font-family: Ownglyph;
-  font-weight: bold;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .section_1_container {
@@ -32,7 +31,6 @@
   position: relative;
   z-index: 2;
   font-size: 150px;
-  font-weight: bold;
   color: var(--bg);
   text-shadow: 7px 7px 10px rgb(0, 0, 0, 0.6);
   display: flex;
@@ -96,7 +94,6 @@
 }
 
 .underline {
-  font-weight: bold;
   margin-bottom: 25px;
   text-decoration: underline 2px;
   text-decoration-color: var(--bg-accent);
@@ -112,7 +109,6 @@
 
 .instaFeed_counter_accent {
   color: var(--bg-accent);
-  font-weight: bold;
 }
 
 .instaFeed_container_top {
@@ -180,7 +176,6 @@
 
 .instaFeed_caption {
   font-size: 21px;
-  font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -195,7 +190,6 @@
 
 .instaFeed_read_more {
   font-size: 20px;
-  font-weight: bold;
   padding: 10px;
   text-align: right;
   opacity: 0.5;

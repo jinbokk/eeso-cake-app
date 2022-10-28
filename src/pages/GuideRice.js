@@ -1,16 +1,15 @@
 import React from "react";
+import Footer from "../components/Footer";
+import useWindowDimensions from "../hooks/useWindowDimensions";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper";
+import { Container, Row, Col } from "react-bootstrap";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./css/Guide.css";
 
-import useWindowDimensions from "../hooks/useWindowDimensions";
-
-import Footer from "../components/Footer";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper";
-import { Container, Row, Col } from "react-bootstrap";
 
 const GuideRice = () => {
   const { width, height } = useWindowDimensions();

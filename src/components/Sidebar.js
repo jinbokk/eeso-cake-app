@@ -86,7 +86,7 @@ const Sidebar = () => {
             : { opacity: "0", bottom: "-80px", transition: "0.5s" }
         }
       >
-        &#129137;
+        <div style={{ paddingBottom: "6px" }}>&#129137;</div>
       </button>
     </>
   );

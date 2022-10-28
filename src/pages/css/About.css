@@ -4,7 +4,6 @@
   justify-content: center;
   align-items: center;
   font-family: Ownglyph;
-  font-weight: bold;
   font-size: 25px;
   width: 100vw;
   height: calc(100vh - var(--nav-height));
@@ -55,7 +54,6 @@
 
 .text_accent {
   color: var(--bg-accent);
-  font-weight: bold;
   text-decoration: underline 2px;
   text-underline-offset: 6px;
   margin: 0 3px;

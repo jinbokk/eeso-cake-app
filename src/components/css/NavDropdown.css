@@ -10,7 +10,7 @@
   font-size: inherit;
   font-weight: inherit;
   cursor: pointer;
-  padding: 0;
+  padding: 15px;
   transition: 0.2s;
 }
 
@@ -28,7 +28,7 @@
   position: absolute;
   /* left: -150%; */
   left: 0;
-  top: 30px;
+  top: 45px;
   white-space: nowrap;
   background-color: var(--bg);
   padding: 15px;
