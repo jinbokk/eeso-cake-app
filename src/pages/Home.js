@@ -128,8 +128,8 @@ const Home = () => {
             </>
           )}
         </div>
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };
