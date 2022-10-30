@@ -24,7 +24,7 @@ const Navbar = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [scrolled, handleScroll]);
+  }, [scrolled]);
 
   let activeStyle = {
     color: "var(--bg-accent)",
@@ -73,6 +73,19 @@ const Navbar = () => {
         <div>
           <NavDropdown
             navMenu={{
+              mainTitle: "GUIDE",
+              flexDir: "col",
+              item: [
+                { subTitle: "RICE CAKE GUIDE", link: "/guide/rice" },
+                { subTitle: "BREAD CAKE GUIDE", link: "/guide/bread" },
+              ],
+            }}
+          />
+        </div>
+
+        <div>
+          <NavDropdown
+            navMenu={{
               mainTitle: "CAKES",
               flexDir: "row",
               item: [
@@ -97,25 +110,45 @@ const Navbar = () => {
         </div>
 
         <div>
-          <NavDropdown
-            navMenu={{
-              mainTitle: "GUIDE",
-              flexDir: "col",
-              item: [
-                { subTitle: "RICE CAKE GUIDE", link: "/guide/rice" },
-                { subTitle: "BREAD CAKE GUIDE", link: "/guide/bread" },
-              ],
-            }}
-          />
-        </div>
-
-        <div>
           <NavLink
             to="/contact"
             style={({ isActive }) => (isActive ? activeStyle : null)}
           >
             <div className="nav_menu">CONTACT</div>
           </NavLink>
+        </div>
+        <div className="link_container">
+          <div>
+            <a
+              href="https://www.instagram.com/eeso_cake/?hl=ko"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src="/icons/instgram.png" alt="" className="link_icon" />
+            </a>
+          </div>
+          <div>
+            <a
+              href="https://blog.naver.com/eesocake"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src="/icons/naver.png" alt="" className="link_icon" />
+            </a>
+          </div>
+          <div>
+            <a
+              href="https://pf.kakao.com/_ZyKnd"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="/icons/kakaotalk.png"
+                alt=""
+                className="link_icon"
+              />
+            </a>
+          </div>
         </div>
       </div>
     </div>

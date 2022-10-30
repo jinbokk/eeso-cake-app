@@ -40,6 +40,11 @@
   font-family: BetterGrade !important;
 }
 
+.glow {
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff93b3, 0 0 40px #e65f8c,
+    0 0 50px #e73689
+}
+
 .section_2_container_top {
   position: relative;
   display: flex;

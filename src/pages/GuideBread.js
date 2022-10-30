@@ -29,6 +29,19 @@ const GuideBread = () => {
   return (
     <>
       <Container className="guide_container w-60 p-5">
+        <Row>
+          <Col className="text-center">
+            <h1>빵 케이크 가이드</h1>
+            <h3>
+              심플한 레터링 케이크부터 귀여운 피규어 케이크, 먹을 수 있는 포토
+              케이크까지
+            </h3>
+            <h3>
+              모든 순간, 모든 공간에 어울리는 이소케이크의 시그니처 케이크
+            </h3>
+          </Col>
+        </Row>
+
         <Row style={{ width: "100%" }}>
           <hr data-content="주문 전 안내사항" />
         </Row>
@@ -72,7 +85,7 @@ const GuideBread = () => {
                 해드릴 수 없습니다.
               </div>
               <div className="opacity-50">
-                디자인 & 레터링 케이크는 디자인에 따라 가격이 다르기 때문에,
+                모든 케이크는 디자인에 따라 가격이 다르기 때문에,
               </div>
               <div className="opacity-50">
                 원하시는 디자인을 필히 사진 또는 손그림 첨부해주세요!
@@ -83,7 +96,7 @@ const GuideBread = () => {
           <Col md={6}>
             <p>
               <div>
-                &#10004; 타 업체 사진은 받지 않습니다. ( 색상 참고만 가능 )
+                &#10004; 색상 참조 외에 타 업체 디자인 참조는 하지 않습니다.
               </div>
 
               <div className="opacity-50">
@@ -115,8 +128,8 @@ const GuideBread = () => {
             </p>
             <p>
               <div>
-                &#10004; 레터링 빵 케이크는 픽업해 가신 후 빠른 시간 내에
-                냉장보관해주셔야 합니다.
+                &#10004; 레터링 빵 케이크는 픽업해 가신 후 빠른 시간 내에 냉장
+                보관해 주셔야 합니다.
               </div>
               <div className="opacity-50">
                 30분 이상 상온 노출 시 크림 갈라짐, 색 번짐이 발생할 수 있으며,
@@ -242,8 +255,8 @@ const GuideBread = () => {
             </div>
 
             <div className="opacity-50">
-              디자인 선택이 어려우시다면~! 축하 내용을 말씀해주세요~ 제가 몇
-              가지 추천도 해드릴게요 : )
+              디자인 선택이 어려우시다면, 기념 내용을 말씀해주세요~ 제가 몇 가지
+              추천도 해드릴게요 : )
             </div>
             <div className="opacity-50">
               ( ex : 여자친구 생일 케이크, 아이 돌잔치 케이크, 부모님 생신

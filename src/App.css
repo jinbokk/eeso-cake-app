@@ -77,6 +77,8 @@ a:hover {
   --bg-dark: rgb(255, 226, 211);
   --bg-deep-dark: rgb(255, 198, 169);
   --bg-accent: rgb(191, 47, 47);
+  --bg-accent-filter: invert(34%) sepia(68%) saturate(3396%) hue-rotate(340deg)
+    brightness(76%) contrast(95%);
   --swiper-theme-color: rgb(191, 47, 47) !important;
   --swiper-pagination-bullet-inactive-color: rgb(191, 47, 47) !important;
   --nav-height: 70px;

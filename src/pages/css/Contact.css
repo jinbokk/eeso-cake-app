@@ -1,15 +1,18 @@
 .contact_container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  font-family: Ownglyph;
+  font-size: 25px;
 }
 
-.map_container {
-  width: 100vw;
-  height: calc(100vh - var(--nav-height));
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.by_subway {
+  background-color: orange;
+  padding: 5px;
+  border-radius: 30px;
+  color: var(--bg);
+}
+
+.by_bus {
+  background-color: green;
+  padding: 5px;
+  border-radius: 30px;
+  color: var(--bg);
 }

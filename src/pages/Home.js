@@ -26,7 +26,7 @@ const Home = () => {
           style={{ backgroundImage: "url(/images/home_image_4.png)" }}
         >
           <div className="section_1_text">
-            <div>
+            <div className="glow">
               <span
                 style={{
                   fontSize: "180px",

@@ -91,3 +91,14 @@
   position: relative;
   top: 10px;
 }
+
+.link_container {
+  position: absolute;
+  right: 150px;
+  display: flex;
+}
+
+.link_icon {
+  width: 30px;
+  margin: 0 10px;
+}

@@ -8,14 +8,13 @@
   border-top: 1px solid rgb(216, 216, 216);
 }
 
-.footer_banner_item_icon {
+.banner_item_icon {
   width: 50px;
   margin: 15px;
-  filter: invert(34%) sepia(68%) saturate(3396%) hue-rotate(340deg)
-    brightness(76%) contrast(95%);
+  filter: var(--bg-accent-filter);
 }
 
-.footer_banner_item_text {
+.banner_item_text {
   margin: 15px;
   display: flex;
   flex-direction: column;
@@ -23,7 +22,7 @@
   justify-content: center;
 }
 
-.footer_banner_item_text div:first-child {
+.banner_item_text div:first-child {
   color: var(--bg-accent);
   margin-bottom: 5px;
 }
@@ -42,6 +41,21 @@
 
 .info {
   padding: 10px;
+}
+
+.info_title {
+  display: flex;
+  align-items: center;
+  color: var(--bg-accent);
+}
+
+.info_title img {
+  filter: var(--bg-accent-filter);
+}
+
+.info_icon {
+  width: 17px;
+  margin-right: 10px;
 }
 
 .info_items {
