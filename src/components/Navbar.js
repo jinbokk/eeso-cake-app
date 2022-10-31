@@ -124,7 +124,11 @@ const Navbar = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src="/icons/instgram.png" alt="" className="link_icon" />
+              <img
+                src="/icons/instgram_mini.png"
+                alt=""
+                className="link_icon"
+              />
             </a>
           </div>
           <div>
@@ -133,7 +137,7 @@ const Navbar = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src="/icons/naver.png" alt="" className="link_icon" />
+              <img src="/icons/naver_mini.png" alt="" className="link_icon" />
             </a>
           </div>
           <div>
@@ -143,7 +147,7 @@ const Navbar = () => {
               rel="noopener noreferrer"
             >
               <img
-                src="/icons/kakaotalk.png"
+                src="/icons/kakaotalk_mini.png"
                 alt=""
                 className="link_icon"
               />
