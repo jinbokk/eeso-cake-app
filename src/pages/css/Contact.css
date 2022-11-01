@@ -1,18 +1,41 @@
 .contact_container {
-  font-family: Ownglyph;
-  font-size: 25px;
+  font-family: var(--main-font);
+  font-size: 1.1rem;
+  padding-right: 5%;
+  line-height: 3rem;
 }
 
 .by_subway {
-  background-color: orange;
-  padding: 5px;
+  background-color: rgb(255, 155, 0);
+  padding: 5px 10px;
   border-radius: 30px;
   color: var(--bg);
 }
 
 .by_bus {
   background-color: green;
-  padding: 5px;
+  padding: 5px 10px;
   border-radius: 30px;
   color: var(--bg);
+}
+
+.dummy_image {
+  width: 100%;
+  max-height: calc(100vh - 150px);
+  object-fit: cover;
+}
+
+.location_link {
+  text-decoration: underline;
+  text-underline-offset: 0.5rem;
+  /* border-bottom: 1px solid rgb(109, 109, 109); */
+  transition: 0.3s;
+}
+
+.location_link:hover {
+  text-decoration: underline var(--bg-accent);
+  text-underline-offset: 0.5rem;
+  color: var(--bg-accent);
+  /* border-bottom: 1px solid var(--bg-accent); */
+  transition: 0.3s;
 }

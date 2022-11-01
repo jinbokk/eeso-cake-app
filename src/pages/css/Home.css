@@ -1,6 +1,6 @@
 .home_container_top {
-  font-family: Ownglyph;
-  font-size: 25px;
+  font-family: var(--main-font);
+  font-size: 1.2rem;
 }
 
 .section_1_container {
@@ -30,7 +30,7 @@
 .section_1_text {
   position: relative;
   z-index: 2;
-  font-size: 150px;
+  font-size: 10rem;
   color: var(--bg);
   text-shadow: 7px 7px 10px rgb(0, 0, 0, 0.6);
   display: flex;
@@ -42,7 +42,7 @@
 
 .glow {
   text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff93b3, 0 0 40px #e65f8c,
-    0 0 50px #e73689
+    0 0 50px #e73689;
 }
 
 .section_2_container_top {
@@ -91,11 +91,11 @@
 }
 
 .section_2_text_lg {
-  font-size: 100px;
+  font-size: 6rem;
 }
 
 .section_2_text_sm {
-  font-size: 45px;
+  font-size: 2.5rem;
 }
 
 .underline {
@@ -180,21 +180,20 @@
 }
 
 .instaFeed_caption {
-  font-size: 21px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  height: 9rem;
+  line-height: 1.7em;
   display: -webkit-box;
+  overflow: hidden;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
+  font-size: 0.9rem;
+  text-overflow: ellipsis;
   word-wrap: break-word;
-  line-height: 1.3em;
-  height: 6.5em;
-  opacity: 0.7;
-  /* lineheight * linc-calmp */
+  opacity: 0.8;
 }
 
 .instaFeed_read_more {
-  font-size: 20px;
+  font-size: 1rem;
   padding: 10px;
   text-align: right;
   opacity: 0.5;
@@ -202,7 +201,7 @@
 }
 
 .instaFeed_timestamp {
-  font-size: 21px;
+  font-size: 0.9rem;
   padding-bottom: 10px;
   opacity: 0.4;
   text-align: right;

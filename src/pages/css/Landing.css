@@ -28,14 +28,14 @@ h2 {
 }
 
 .landing_text_section1 h2 {
-  font-family: AnandaBlack;
-  font-size: 25px;
+  font-family: var(--landing-font);
+  font-size: 2rem;
   color: var(--bg-accent);
 }
 
 .landing_text_section1 h1 {
-  font-family: Simvoni;
-  font-size: 90px;
+  font-family: var(--nav-font);
+  font-size: 6rem;
 }
 
 .landing_text_section2 {
@@ -44,8 +44,8 @@ h2 {
 
 .landing_text_section2 h3 {
   margin: 15px 0;
-  font-family: Ownglyph;
-  font-size: 25px;
+  font-family: var(--main-font);
+  font-size: 1.3rem;
 }
 
 .landing_text_section3 {
@@ -82,8 +82,9 @@ h2 {
   border: none;
   color: white;
   padding: 12px 54px;
-  font-family: MoodyAdolescent;
-  font-size: 25px;
+  font-family: var(--landing-font);
+  font-weight: bold;
+  font-size: 1.3rem;
   cursor: pointer;
 }
 

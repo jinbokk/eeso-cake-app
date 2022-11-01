@@ -3,8 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: Ownglyph;
-  font-size: 25px;
+  font-family: var(--main-font);
+  font-size: 1rem;
   margin: auto;
 }
 
@@ -95,7 +95,7 @@
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  font-size: 25px;
+  font-size: 1.5rem;
 }
 
 /* .row > div {

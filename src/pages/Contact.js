@@ -8,51 +8,56 @@ import { Container, Row, Col } from "react-bootstrap";
 const Contact = () => {
   return (
     <>
-      <Container className="contact_container">
-        <Row style={{ width: "100%" }}>
-          <hr data-content="오시는 길 안내" />
-        </Row>
+      <div className="contact_container">
+        <Row style={{ width: "100%" }}></Row>
 
-        <Row>
-          <Col>
-            <h2>경기도 의정부시 민락동 754-7 (승지로30번길 20) </h2>
-            <div>
-              자차 이용시 가게 앞 정차 가능하오나, 공간이 협소하여 불가할 수
-              있습니다
-            </div>
-            <Map />
-          </Col>
-        </Row>
-
-        <Row>
+        <Row className="align-items-center">
           <Col lg={6}>
-            <div>대중교통 이용시</div>
+            <img
+              src="/images/contact/dummy_4.jpg"
+              alt=""
+              className="dummy_image"
+            />
+          </Col>
+
+          <Col lg={6}>
+            <div>LOCATION / HOURS</div>
             <div>
-              의정부 <span className="by_subway">경전철 탑석역</span> 하차 후,
-              7분 내 도보 이동
+              <a
+                href="https://map.naver.com/v5/search/%EC%9D%B4%EC%86%8C%EC%BC%80%EC%9D%B4%ED%81%AC/place/661959504?c=14147586.5818935,4542283.8149681,16.63,0,0,0,dh&placePath=%3Fentry%253Dbmp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="location_link"
+              >
+                경기도 의정부시 민락동 754-7 (승지로30번길 20)
+              </a>
             </div>
-            <div>
-              의정부 <span className="by_bus">청구아파트 버스정류소</span> 하차
-              후, 7분 내 도보 이동
-            </div>
-            {/* <div>대중교통 이용시 </div>
-            <div>
-              <div>지하철 이용시</div>
-              <img
-                src="/images/contact/subway.png"
-                alt=""
-                style={{ width: "300px" }}
-              />
-              <div>의정부 경전철 탑석역 하차 후, </div>
-              <div>부용초등학교 후문쪽 상가 1층</div>
-            </div>
-            <div>
-              <div>버스 이용시</div>
-              <div></div>
-            </div> */}
+
+            <Map />
+
+            <Row>
+              <Col lg={6}>
+                <div>가게 앞 정차 가능, 주차 불가</div>
+                <div>대중교통 이용시</div>
+                <div>
+                  의정부 <span className="by_subway">경전철 탑석역</span> 하차
+                  후, 7분 내 도보 이동
+                </div>
+                <div>
+                  의정부 <span className="by_bus">청구아파트 버스정류소</span>{" "}
+                  하차 후, 7분 내 도보 이동
+                </div>
+              </Col>
+              <Col lg={6}>
+                <div>매주 월요일 휴무</div>
+                <div>화요일 ~ 금요일 : 11:00 ~ 19:30</div>
+                <div>토요일 : 10:00 ~ 16:00</div>
+                <div>일요일 : 10:00 ~ 12:00</div>
+              </Col>
+            </Row>
           </Col>
         </Row>
-      </Container>
+      </div>
       <Footer />
     </>
   );

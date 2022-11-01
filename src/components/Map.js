@@ -13,7 +13,8 @@ const Map = () => {
       <NaverMap
         mapDivId={"maps-getting-started-uncontrolled"} // default: react-naver-map
         style={{
-          height: "550px",
+          height: "400px",
+          margin: "25px 0",
         }}
         defaultCenter={{ lat: 37.73715829851119, lng: 127.08922349318145 }}
         defaultZoom={17}

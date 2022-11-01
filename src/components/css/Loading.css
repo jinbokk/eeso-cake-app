@@ -5,8 +5,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: Ownglyph;
-  font-size: 25px;
+  font-family: var(--main-font);
+  font-size: 1rem;
   transform: translateY(calc(var(--nav-height) * -1));
 }
 
@@ -19,8 +19,7 @@
 }
 
 .flipping div {
-  animation: flipping-18i5bq 1.2s calc(var(--delay) * 0.8s)
-    infinite backwards;
+  animation: flipping-18i5bq 1.2s calc(var(--delay) * 0.8s) infinite backwards;
   background-color: #bf2f2f;
 }
 
