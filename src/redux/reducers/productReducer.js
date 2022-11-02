@@ -2,6 +2,7 @@ let initialState = {
   loading: true,
   moreCakesLoading: false,
   ingredient: null,
+  allProductsData: [],
   productsData: [],
   pageNum: 1,
   hasMore: false,
@@ -11,6 +12,16 @@ const productReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case "GET_ALL_PRODUCTS_REQUEST":
+      return { ...state };
+
+    case "GET_ALL_PRODUCTS_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        allProductsData: payload.allProductsData,
+      };
+
     case "GET_PRODUCTS_REQUEST":
       return { ...state };
 

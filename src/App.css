@@ -36,6 +36,8 @@ body {
   line-height: 2rem;
   background-color: var(--bg);
   word-break: keep-all !important;
+  width: 100vw;
+  /* overflow-x: hidden; */
 }
 
 hr {
@@ -89,10 +91,10 @@ a:hover {
   --landing-font: GowunBatang;
   --main-font: GowunBatang;
   --font-size: 15px;
-  --sub-font: ;
   --nav-font: GowunBatang;
   --nav-font-size: 0.9rem;
   --nav-height: 70px;
+  --triggered-nav-width: 400px;
   --bg: rgb(251, 239, 233);
   --bg-dark: rgb(255, 226, 211);
   --bg-deep-dark: rgb(255, 198, 169);

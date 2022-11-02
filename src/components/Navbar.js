@@ -48,7 +48,7 @@ const Navbar = () => {
             <span className="nav_trigger_bar"></span>
           </span>
 
-          <div className="triggerd_container"></div>
+          <div className="triggered_container"></div>
 
           <ul>
             <div

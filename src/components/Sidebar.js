@@ -45,7 +45,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="sidebar_container" ref={el}>
+      {/* <div className="sidebar_container" ref={el}>
         <div className="ease_in_right">
           <div>
             <a
@@ -75,7 +75,7 @@ const Sidebar = () => {
             </a>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <button
         className="go_to_top_button"

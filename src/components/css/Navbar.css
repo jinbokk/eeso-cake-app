@@ -10,12 +10,14 @@ ul,
 li {
   list-style: none;
   margin-bottom: 0 !important;
+  padding: 0 !important;
   display: flex;
 }
 
 .nav_container_top {
   display: flex;
   justify-content: center;
+  align-items: center;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -118,18 +120,21 @@ label input,
   z-index: 1000;
 }
 
-.triggerd_container {
-  position: absolute;
-  right: 0;
+.triggered_container {
+  position: fixed;
   z-index: 900;
-  width: 400px;
+  top: 0;
+  right: calc(var(--triggered-nav-width) * -1);
+  width: var(--triggered-nav-width);
   height: 100vh;
   background-color: bisque;
+  transition: 0.5s;
 }
 
 @media screen and (max-width: 992px) {
-  label input:checked ~ .triggerd_container {
+  label input:checked ~ .triggered_container {
     background-color: red;
+    right: 0;
   }
 
   .nav_trigger {
@@ -143,10 +148,14 @@ label input,
   .triggered li {
     display: none;
   }
+
+  .main_logo {
+    margin: 0 !important;
+  }
 }
 
 .nav_trigger {
-  position: absolute;
+  position: fixed;
   right: 0px;
   top: 0px;
   z-index: 10000;
@@ -160,10 +169,10 @@ label input,
 .nav_trigger_bar {
   position: absolute;
   top: 50%;
-  left: 0;
-  width: 30px;
+  right: 33%;
+  width: 25px;
   height: 2px;
-  background: black;
+  background: rgba(0, 0, 0, 0.5);
   display: block;
   -webkit-transform-origin: center;
   transform-origin: center;
@@ -180,15 +189,15 @@ label input,
   display: block;
   width: 100%;
   height: 100%;
-  background: black;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .nav_trigger_bar:before {
-  top: 10px;
+  top: 7px;
 }
 
 .nav_trigger_bar:after {
-  bottom: 10px;
+  bottom: 7px;
 }
 
 label input:checked + .nav_trigger .nav_trigger_bar {

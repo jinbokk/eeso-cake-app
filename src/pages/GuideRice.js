@@ -273,7 +273,7 @@ const GuideRice = () => {
         </Row>
 
         <Row style={{ width: "100%" }}>
-          <hr data-content="패키징" />
+          <hr data-content="패키지" />
         </Row>
 
         <Row>

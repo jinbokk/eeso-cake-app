@@ -1,39 +1,12 @@
 .about_container_top {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
   font-family: var(--main-font);
   font-size: 1rem;
-  width: 100vw;
-  height: calc(100vh - var(--nav-height));
-}
-
-.about_banner_container {
-  text-align: center;
-  padding: 20px;
-}
-
-.banner_swiper_container {
-  width: 50vw;
-  text-align: center;
-}
-
-.banner_swiper_image {
-  padding: 20px;
-  width: 300px;
 }
 
 .about_banner_img {
   width: 800px;
   object-fit: contain;
-}
-
-.about_text_container_top {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
+  margin-top: 50px;
 }
 
 .about_text_container {

@@ -1,5 +1,36 @@
 import api_eesocake from "../api_eesocake";
 
+function getAllProducts() {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "GET_ALL_PRODUCTS_REQUEST" });
+
+      const getRiceCakeData = api_eesocake.get(`/rice?page=1`);
+      const getBreadCakeData = api_eesocake.get(`/bread?page=1`);
+      const getTartCakeData = api_eesocake.get(`/tart?page=1`);
+
+      const [riceCakeJson, breadCakeJson, tartCakeJson] = await Promise.all([
+        getRiceCakeData,
+        getBreadCakeData,
+        getTartCakeData,
+      ]);
+
+      dispatch({
+        type: "GET_ALL_PRODUCTS_SUCCESS",
+        payload: {
+          allProductsData: [
+            ...riceCakeJson.data.results,
+            ...breadCakeJson.data.results,
+            ...tartCakeJson.data.results,
+          ].sort(() => Math.random() - 0.5),
+        },
+      });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
 function getProducts({ options }) {
   return async (dispatch) => {
     try {
@@ -91,6 +122,7 @@ function getAnotherProducts({ options }) {
 }
 
 export const productActions = {
+  getAllProducts,
   getProducts,
   getAnotherProducts,
 };
