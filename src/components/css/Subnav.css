@@ -1,8 +1,10 @@
 .filter_container {
   position: relative;
   z-index: 90;
+  width: 100vw;
   height: 100px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }

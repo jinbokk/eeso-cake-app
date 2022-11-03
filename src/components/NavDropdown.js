@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import "./css/NavDropdown.css";
 
-const NavDropdown = ({ navMenu }) => {
+const NavDropdown = ({ navMenu, setToggleHandler }) => {
   let activeStyle = {
     color: "var(--bg-accent)",
     pointerEvents: "none",
@@ -17,11 +17,16 @@ const NavDropdown = ({ navMenu }) => {
             to={"/" + navMenu.mainTitle.toLowerCase()}
             style={({ isActive }) => (isActive ? activeStyle : null)}
           >
-            {navMenu.mainTitle}
+            <div>
+              {navMenu.mainTitle}
+              <span style={{ marginLeft: "5px" }}>&#9662;</span>
+            </div>
           </NavLink>
         </button>
 
-        <div className={`dropdown_menu_container ${navMenu.flexDir}`}>
+        <div
+          className={`dropdown_menu_container ${navMenu.flexDir} align-items-start`}
+        >
           {navMenu.item.map((item, index) => (
             <NavLink
               to={item.link}
@@ -30,12 +35,17 @@ const NavDropdown = ({ navMenu }) => {
               key={index}
             >
               {item.imgSrc ? (
-                <div className="dropdown_menu_img_container">
-                  <img src={item.imgSrc} className="dropdown_menu_img" />
+                <div
+                  className="dropdown_menu_img_container"
+                  onClick={() => setToggleHandler(false)}
+                >
+                  <img src={item.imgSrc} className="dropdown_menu_img" alt="" />
                   <div>{item.subTitle}</div>
                 </div>
               ) : (
-                <div>{item.subTitle}</div>
+                <div onClick={() => setToggleHandler(false)}>
+                  {item.subTitle}
+                </div>
               )}
             </NavLink>
           ))}

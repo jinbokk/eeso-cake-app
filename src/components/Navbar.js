@@ -20,6 +20,12 @@ const Navbar = () => {
     }
   };
 
+  const [toggleHandler, setToggleHandler] = useState(false);
+
+  useEffect(() => {
+    console.log(toggleHandler);
+  }, [toggleHandler]);
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -37,101 +43,109 @@ const Navbar = () => {
           scrolled
             ? {
                 boxShadow: "0px 8px 10px rgba(0, 0, 0, 0.2)",
-                transition: "0.3s",
+                transition: "box-shadow 0.3s",
               }
-            : { boxShadow: "none", transition: "0.3s" }
+            : { boxShadow: "none", transition: "box-shadow 0.3s" }
         }
       >
-        <label>
-          <input type="checkbox"></input>
-          <span className="nav_trigger">
-            <span className="nav_trigger_bar"></span>
-          </span>
+        <span
+          className="nav_mobile"
+          onClick={() => setToggleHandler((prev) => !prev)}
+        >
+          <span
+            className={
+              toggleHandler ? "nav_mobile_bar close" : "nav_mobile_bar"
+            }
+          ></span>
+        </span>
 
-          <div className="triggered_container"></div>
+        <span
+          className={
+            toggleHandler
+              ? "nav_mobile_transparent triggered"
+              : "nav_mobile_transparent"
+          }
+          onClick={() => setToggleHandler(false)}
+        ></span>
 
-          <ul>
-            <div
-              className={
-                width < 992 ? "nav_container triggered" : "nav_container"
-              }
-            >
-              <div className="main_logo">
-                <NavLink to="/">
-                  <div>
-                    <img src="/images/logo_test.png" alt="" />
-                  </div>
-                </NavLink>
+        <div
+          className={
+            width < 992
+              ? "nav_container mobile" + (toggleHandler ? " triggered" : "")
+              : "nav_container"
+          }
+        >
+          <div className="main_logo">
+            <NavLink to="/" onClick={() => setToggleHandler(false)}>
+              <div>
+                <img src="/images/logo_test.png" alt="" />
               </div>
+            </NavLink>
+          </div>
 
-              <li>
-                <NavLink
-                  to="/"
-                  end
-                  style={({ isActive }) => (isActive ? activeStyle : null)}
-                >
-                  <div className="nav_menu">HOME</div>
-                </NavLink>
-              </li>
+          <NavLink
+            to="/"
+            end
+            style={({ isActive }) => (isActive ? activeStyle : null)}
+            onClick={() => setToggleHandler(false)}
+          >
+            <div className="nav_menu">HOME</div>
+          </NavLink>
 
-              <li>
-                <NavLink
-                  to="/about"
-                  style={({ isActive }) => (isActive ? activeStyle : null)}
-                >
-                  <div className="nav_menu">ABOUT</div>
-                </NavLink>
-              </li>
+          <NavLink
+            to="/about"
+            style={({ isActive }) => (isActive ? activeStyle : null)}
+            onClick={() => setToggleHandler(false)}
+          >
+            <div className="nav_menu">ABOUT</div>
+          </NavLink>
 
-              <li>
-                <NavDropdown
-                  navMenu={{
-                    mainTitle: "GUIDE",
-                    flexDir: "col",
-                    item: [
-                      { subTitle: "RICE CAKE GUIDE", link: "/guide/rice" },
-                      { subTitle: "BREAD CAKE GUIDE", link: "/guide/bread" },
-                    ],
-                  }}
-                />
-              </li>
+          <NavDropdown
+            navMenu={{
+              mainTitle: "GUIDE",
+              flexDir: "col",
+              item: [
+                { subTitle: "RICE CAKE GUIDE", link: "/guide/rice" },
+                { subTitle: "BREAD CAKE GUIDE", link: "/guide/bread" },
+              ],
+            }}
+            setToggleHandler={setToggleHandler}
+          />
 
-              <li>
-                <NavDropdown
-                  navMenu={{
-                    mainTitle: "CAKES",
-                    flexDir: "row",
-                    item: [
-                      {
-                        subTitle: "RICE CAKES",
-                        link: "/cakes/rice",
-                        imgSrc: "/images/rice_cake_icon.png",
-                      },
-                      {
-                        subTitle: "BREAD CAKES",
-                        link: "/cakes/bread",
-                        imgSrc: "/images/bread_cake_icon.png",
-                      },
-                      {
-                        subTitle: "TART CAKES",
-                        link: "/cakes/tart",
-                        imgSrc: "/images/tart_cake_icon.png",
-                      },
-                    ],
-                  }}
-                />
-              </li>
+          <NavDropdown
+            navMenu={{
+              mainTitle: "CAKES",
+              flexDir: "col",
+              item: [
+                {
+                  subTitle: "RICE CAKES",
+                  link: "/cakes/rice",
+                  imgSrc: "/images/rice_cake_icon.png",
+                },
+                {
+                  subTitle: "BREAD CAKES",
+                  link: "/cakes/bread",
+                  imgSrc: "/images/bread_cake_icon.png",
+                },
+                {
+                  subTitle: "TART CAKES",
+                  link: "/cakes/tart",
+                  imgSrc: "/images/tart_cake_icon.png",
+                },
+              ],
+            }}
+            setToggleHandler={setToggleHandler}
+          />
 
-              <li>
-                <NavLink
-                  to="/contact"
-                  style={({ isActive }) => (isActive ? activeStyle : null)}
-                >
-                  <div className="nav_menu">CONTACT</div>
-                </NavLink>
-              </li>
+          <NavLink
+            to="/contact"
+            style={({ isActive }) => (isActive ? activeStyle : null)}
+            onClick={() => setToggleHandler(false)}
+          >
+            <div className="nav_menu">CONTACT</div>
+          </NavLink>
 
-              {/* <div className="link_container">
+          {/* <div className="link_container">
             <div>
               <a
                 href="https://www.instagram.com/eeso_cake/?hl=ko"
@@ -168,9 +182,7 @@ const Navbar = () => {
               </a>
             </div>
           </div> */}
-            </div>
-          </ul>
-        </label>
+        </div>
       </div>
     </>
   );
