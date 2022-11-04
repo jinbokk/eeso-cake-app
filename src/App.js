@@ -40,9 +40,9 @@ function App() {
 
   return (
     <>
-      {!browse ? (
+      {/* {!browse ? (
         <Landing setBrowse={setBrowse} />
-      ) : (
+      ) : ( */}
         <>
           <Navbar />
           <Sidebar />
@@ -55,7 +55,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </>
-      )}
+      {/* )} */}
     </>
   );
 }
