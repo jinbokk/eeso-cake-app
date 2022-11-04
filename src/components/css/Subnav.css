@@ -4,15 +4,17 @@
   width: 100vw;
   height: 100px;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
+  overflow: auto;
   justify-content: center;
   align-items: center;
 }
 
 .filter_button {
   font-size: 1rem;
+  white-space: nowrap;
   align-items: center;
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
   margin: 0 10px;
   background-color: transparent;
   border: 1px solid var(--bg-accent);

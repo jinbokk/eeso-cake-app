@@ -33,7 +33,7 @@ const Home = () => {
       <Container fluid className="home_container_top">
         <Row
           className="main_banner_container m-0"
-          style={{ backgroundImage: "url(/images/home_image_4.png)" }}
+          style={{ backgroundImage: "url(/images/home_main_banner.png)" }}
         >
           <Col>
             <div className="main_banner_text">
@@ -200,7 +200,7 @@ const Home = () => {
         <Row className="sub_banner_container_top mx-0 my-5 ">
           <Col lg={7} className="p-0">
             <img
-              src="/images/home_image_1.jpg"
+              src="/images/home_sub_banner.jpg"
               alt=""
               className="sub_banner_image"
             />
