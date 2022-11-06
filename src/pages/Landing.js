@@ -73,7 +73,27 @@ const Landing = (props) => {
 
   return (
     <>
-      <Container className="landing_container_top" ref={el}>
+      <Container ref={el} className="landing_container">
+        <Row className="row_1">
+          <Col lg={6} className="col_1">
+            <div className="ease_in_left_3">
+              <h3>안녕하세요, 이소케이크 입니다 : )</h3>
+              <h3>특별하고 소중한 날 ,</h3>
+              <h3>고객님의 행복을 위해 최선을 다하겠습니다</h3>
+            </div>
+          </Col>
+
+          <Col lg={6} className="col_2">
+            <div className="ease_in_left_3">
+              <h3>안녕하세요, 이소케이크 입니다 : )</h3>
+              <h3>특별하고 소중한 날 ,</h3>
+              <h3>고객님의 행복을 위해 최선을 다하겠습니다</h3>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+
+      {/* <Container ref={el}>
         <Row>
           <Col lg={6}>
             <Row>
@@ -137,38 +157,8 @@ const Landing = (props) => {
               </Swiper>
             </div>
           </Col>
-
-          {/* <div>
-                    <img
-                      src="/images/deco_cake.png"
-                      alt=""
-                      className="deco_cake_image_left ease_in_bottom_1"
-                    />
-                  </div>
-                  <div>
-                    <img
-                      src="/images/deco_cake.png"
-                      alt=""
-                      className="deco_cake_image_right ease_in_bottom_1"
-                    />
-                  </div> */}
-
-          {/* <div>
-                <img
-                  src="/images/deco_flower.png"
-                  alt=""
-                  className="deco_flower_img_left ease_in_bottom_1"
-                />
-              </div>
-              <div>
-                <img
-                  src="/images/deco_flower.png"
-                  alt=""
-                  className="deco_flower_img_right ease_in_bottom_1"
-                />
-              </div> */}
         </Row>
-      </Container>
+      </Container> */}
     </>
   );
 };

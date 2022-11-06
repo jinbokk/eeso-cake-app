@@ -39,9 +39,9 @@ body {
 }
 
 body {
+  width: 100vw;
   background-color: var(--bg);
   word-break: keep-all !important;
-  width: 100vw;
   padding-top: var(--nav-height);
 }
 
