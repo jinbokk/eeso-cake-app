@@ -1,6 +1,13 @@
 .landing_container {
-  font-family: var(--landing-font);
-  font-size: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* height: 100vh; */
+  overflow-y: hidden;
+  height: 100vh;
+  max-width: 100vw !important;
+  transform: translate(-50%, -50%);
+  /* background-color: red; */
 }
 
 .landing_container::before {
@@ -15,32 +22,104 @@
   transform: translate(-50%, -50%);
   display: block;
   z-index: 0;
-  width: 80%;
-  height: 80%;
-  padding: 5%;
+  width: 80vw;
+  height: 80vh;
   content: "";
 }
 
-.row_1 {
-  width: 100%;
-  margin: 0 !important;
+.landing_h1 {
+  font-family: var(--nav-font);
+  font-size: clamp(2.5rem, 5vw, 5rem);
 }
 
-.row_1::before {
-  /* outline: 3px dashed var(--bg-accent);
-  outline-offset: 10px;
-  border-radius: 30px;
+.landing_h2 {
+  font-family: var(--landing-font);
+  font-size: clamp(1.3rem, 4vw, 2.5rem);
+
+  color: var(--bg-accent);
+}
+
+.landing_h3 {
+  font-family: var(--main-font);
+  font-size: clamp(1rem, 4vw, 1.5rem);
+}
+
+.landing_button {
+  display: inline-block;
+  width: fit-content;
   background-color: var(--bg-accent);
-  opacity: 0.5;
-  position: relative;
-  z-index: 0;
-  top: 0;
-  left: 0;
-  width: inherit;
-  content: ""; */
+  border: none;
+  color: white;
+  padding: 12px 54px;
+  font-family: var(--landing-font);
+  font-weight: bold;
+  font-size: clamp(0.9rem, 4vw, 1.3rem);
+  cursor: pointer;
+}
+
+.row_1 {
+  margin: auto !important;
+  /* margin-top: calc(var(--nav-height) * -1 - 24px) !important; */
+  width: 70%;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .col_1 {
-  background-color: blue;
-  /* opacity: 0.2; */
+  /* background-color: blue; */
+  /* padding-left: 5% !important; */
+  /* margin: auto; */
+  z-index: 10;
+}
+
+.col_2 {
+  /* background-color: violet; */
+  height: fit-content;
+}
+
+.col_2_swiper_container {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+.swiper-wrapper {
+  /* background-color: red; */
+  height: fit-content;
+}
+
+.swiper-slide {
+  /* display: flex;
+  justify-content: center; */
+  text-align: center;
+}
+
+.swiper-slide img {
+  width: 95%;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 992px) {
+  .col_1 {
+    position: absolute;
+    top: 20%;
+  }
+
+  .col_2 {
+    position: absolute;
+    bottom: -25%;
+    /* left: 50%;
+    transform: translate(-50%, 50%); */
+  }
+
+  /* .landing_container::before {
+    height: 45vh;
+    top: 35%;
+  } */
+
+  .bear_test {
+    position: relative;
+    bottom: 150px;
+  }
 }
