@@ -1,34 +1,101 @@
 @font-face {
-  font-family: "SCDream";
-  src: url("/public/fonts/SCDream.otf");
+  font-family: "BetterGrade";
+  src: url("/public/fonts/BetterGrade.woff2") format("woff2"),
+    url("/public/fonts/BetterGrade.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
+
+/* @font-face {
+  font-family: "GmarketSans";
+  src: url("/public/fonts/GmarketSansTTFMedium.woff2") format("woff2"),
+    url("/public/fonts/GmarketSansTTFMedium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
+} */
+
+/* @font-face {
+  font-family: "Cafe24Simplehae";
+  src: url("/public/fonts/Cafe24Simplehae.woff2") format("woff2"),
+    url("/public/fonts/Cafe24Simplehae.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+} */
+
 @font-face {
   font-family: "MoodyAdolescent";
-  src: url("/public/fonts/MoodyAdolescent.ttf");
-}
-@font-face {
-  font-family: "BetterGrade";
-  src: url("/public/fonts/BetterGrade.ttf");
-}
-@font-face {
-  font-family: "Simvoni";
-  src: url("/public/fonts/Simvoni.ttf");
-}
-@font-face {
-  font-family: "Ownglyph";
-  src: url("/public/fonts/Ownglyph.ttf");
+  src: url("/public/fonts/MoodyAdolescent-Regular.woff2") format("woff2"),
+    url("/public/fonts/MoodyAdolescent-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
 
 @font-face {
-  font-family: "VITRO_PRIDE";
-  src: url("/public/fonts/VITRO_PRIDE.ttf");
+  font-family: "Recipekorea";
+  src: url("/public/fonts/RecipekoreaM.woff2") format("woff2"),
+    url("/public/fonts/RecipekoreaM.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
 }
 
-/* good */
 @font-face {
   font-family: "GowunBatang";
-  src: url("/public/fonts/GowunBatang.ttf");
+  src: url("/public/fonts/GowunBatang-Regular.woff2") format("woff2"),
+    url("/public/fonts/GowunBatang-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
+
+@font-face {
+  font-family: "Simvoni";
+  src: url("/public/fonts/SimvoniRegular.woff2") format("woff2"),
+    url("/public/fonts/SimvoniRegular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+/* @font-face {
+  font-family: "S-Core Dream 4";
+  src: url("/public/fonts/S-CoreDream-4Regular.woff2") format("woff2"),
+    url("/public/fonts/S-CoreDream-4Regular.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-display: block;
+} */
+
+/* @font-face {
+  font-family: "Ownglyph";
+  src: url("/public/fonts/OwnglyphMinhyeChae.woff2") format("woff2"),
+    url("/public/fonts/OwnglyphMinhyeChae.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+} */
+
+/* @font-face {
+  font-family: "VITRO INSPIRE TTF";
+  src: url("/public/fonts/VITRO-INSPIRE-TTF.woff2") format("woff2"),
+    url("/public/fonts/VITRO-INSPIRE-TTF.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: block;
+} */
+
+/* @font-face {
+  font-family: "VITRO PRIDE TTF";
+  src: url("/public/fonts/VITRO-PRIDE-TTF.woff2") format("woff2"),
+    url("/public/fonts/VITRO-PRIDE-TTF.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+} */
 
 html,
 body {
