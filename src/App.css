@@ -109,7 +109,9 @@ body {
   width: 100vw;
   background-color: var(--bg);
   word-break: keep-all !important;
-  padding-top: var(--nav-height);
+  /* padding-top: var(--nav-height); */
+  position: absolute;
+  top: var(--nav-height);
 }
 
 hr {

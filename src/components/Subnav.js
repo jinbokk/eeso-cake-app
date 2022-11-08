@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import { NavLink, useSearchParams } from "react-router-dom";
 import "./css/Subnav.css";
 
@@ -51,7 +52,7 @@ const Subnav = ({ option }) => {
 
   return (
     <>
-      <div className="filter_container">
+      <Container className="filter_container">
         {subnav_items.map((item, index) => (
           <NavLink
             to={item.link}
@@ -88,7 +89,7 @@ const Subnav = ({ option }) => {
             {item.title}
           </NavLink>
         ))}
-      </div>
+      </Container>
     </>
   );
 };

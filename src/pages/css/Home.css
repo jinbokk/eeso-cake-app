@@ -55,13 +55,30 @@
   height: 100%;
 }
 
-.home_swiper_image {
+/* .home_swiper_image {
   width: 300px;
+  height: 200px;
   height: 90%;
   object-fit: cover;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 15px;
   cursor: grab;
+} */
+
+.home_cakes_image_container {
+  max-height: calc(250px * 6);
+  overflow-y: hidden;
+}
+
+.home_cakes_image {
+  width: 300px;
+  height: 220px !important;
+  margin-bottom: 30px;
+  height: 90%;
+  object-fit: cover;
+  /* box-shadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px; */
+  border-radius: 15px;
+  pointer-events: none;
 }
 
 .test {
@@ -171,7 +188,7 @@
   color: var(--bg-accent);
   opacity: 0.8;
   transition: 0.2s;
-  animation: gelatine 0.7s infinite;
+  /* animation: gelatine 0.7s infinite; */
 }
 
 .instaFeed_image {
@@ -198,7 +215,7 @@
 }
 
 .instaFeed_read_more {
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 10px;
   text-align: right;
   opacity: 0.5;

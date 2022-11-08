@@ -1,13 +1,14 @@
 .filter_container {
   position: relative;
   z-index: 90;
-  width: 100vw;
+  width: fit-content;
   height: 100px;
   display: flex;
   /* flex-wrap: wrap; */
   overflow: auto;
   justify-content: center;
   align-items: center;
+  touch-action: auto;
 }
 
 .filter_button {

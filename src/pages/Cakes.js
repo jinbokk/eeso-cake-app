@@ -111,7 +111,7 @@ const Cakes = () => {
       MuiModal: {
         styleOverrides: {
           root: {
-            backgroundColor: "rgb(251,239,233,0.7)",
+            // backgroundColor: "rgb(251,239,233,0.7)",
           },
         },
       },

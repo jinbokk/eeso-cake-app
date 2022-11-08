@@ -60,8 +60,7 @@ const Home = () => {
           <Col className="my-3">
             <hr data-content="고객님을 위한 다양한 케이크가 준비되어 있습니다" />
           </Col>
-
-          <Col>
+          {/* <Col>
             {loading ? (
               <Loading
                 width={"100vw"}
@@ -194,8 +193,25 @@ const Home = () => {
                 </Swiper>
               </>
             )}
-          </Col>
+          </Col> */}
         </Row>
+
+        <Container className="home_cakes_image_container">
+          <Row>
+            {allProductsData.slice(0, 16).map((item, index) => (
+              <Col
+                className="justify-content-center align-items-center"
+              >
+                <img
+                  src={item.image_url}
+                  key={index}
+                  alt=""
+                  className="home_cakes_image"
+                />
+              </Col>
+            ))}
+          </Row>
+        </Container>
 
         <Row className="sub_banner_container_top mx-0 my-5 ">
           <Col lg={7} className="p-0">
