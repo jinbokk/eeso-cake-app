@@ -27,6 +27,7 @@ li {
   font-weight: bold;
   width: 100vw;
   height: var(--nav-height);
+  border-bottom: 1px solid rgba(255, 2, 2, 0.08);
 }
 
 .nav_container {
@@ -162,14 +163,14 @@ li {
     position: absolute;
     background-color: none;
     right: calc(var(--mobile-nav-width) * -1);
-    /* right: 0; */
     height: 100vh;
     width: var(--mobile-nav-width);
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     transition: 0.5s;
     padding-left: 5%;
+    padding-top: 15%;
   }
 }
 

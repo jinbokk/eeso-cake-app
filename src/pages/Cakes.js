@@ -12,6 +12,7 @@ import Loading from "../components/Loading";
 
 import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../redux/actions/productActions";
+import { Container, Row, Col } from "react-bootstrap";
 
 const Cakes = () => {
   const dispatch = useDispatch();
@@ -144,46 +145,62 @@ const Cakes = () => {
         <Loading width={"100vw"} height={"100vh"} text={loadingText} />
       ) : (
         <>
-          <div className="cakes_page_container">
-            <div className="images_container">
+          <Container>
+            <Row>
               {productsData.map((item, index) => {
                 if (productsData.length === index + 1) {
                   return (
-                    <img
-                      ref={lastCakeElementRef}
-                      src={item.image_url}
-                      alt=""
-                      key={index}
-                      className="cake_image"
-                      onClick={() => {
-                        ModalOpen();
-                        setModalInfo({
-                          url: item.image_url,
-                          designTag: item.design,
-                        });
-                      }}
-                    />
+                    <Col
+                      xs={6}
+                      sm={6}
+                      md={4}
+                      lg={3}
+                      className="images_container"
+                    >
+                      <img
+                        ref={lastCakeElementRef}
+                        src={item.image_url}
+                        alt=""
+                        key={index}
+                        className="cake_image"
+                        onClick={() => {
+                          ModalOpen();
+                          setModalInfo({
+                            url: item.image_url,
+                            designTag: item.design,
+                          });
+                        }}
+                      />
+                    </Col>
                   );
                 } else {
                   return (
-                    <img
-                      src={item.image_url}
-                      alt=""
-                      key={index}
-                      className="cake_image"
-                      onClick={() => {
-                        ModalOpen();
-                        setModalInfo({
-                          url: item.image_url,
-                          designTag: item.design,
-                        });
-                      }}
-                    />
+                    <Col
+                      xs={6}
+                      sm={6}
+                      md={4}
+                      lg={3}
+                      className="images_container"
+                    >
+                      <img
+                        src={item.image_url}
+                        alt=""
+                        key={index}
+                        className="cake_image"
+                        onClick={() => {
+                          ModalOpen();
+                          setModalInfo({
+                            url: item.image_url,
+                            designTag: item.design,
+                          });
+                        }}
+                      />
+                    </Col>
                   );
                 }
               })}
-            </div>
-          </div>
+            </Row>
+          </Container>
 
           {moreCakesLoading ? (
             <Loading
