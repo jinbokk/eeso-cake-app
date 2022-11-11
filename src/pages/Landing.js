@@ -6,7 +6,7 @@ import { Autoplay, EffectFade } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import "./css/Landing.css";
+import "./css/landing.css";
 
 // gsap test -----------------------------------------
 // https://greensock.com/react/

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import "./css/Sidebar.css";
+import "./css/sidebar.css";
 
 import { gsap } from "gsap";
 

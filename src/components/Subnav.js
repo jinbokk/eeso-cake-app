@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { NavLink, useSearchParams } from "react-router-dom";
-import "./css/Subnav.css";
+import "./css/subnav.css";
 
 const Subnav = ({ option }) => {
   const [searchParams] = useSearchParams();

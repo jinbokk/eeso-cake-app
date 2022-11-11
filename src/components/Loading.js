@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./css/Loading.css";
+import "./css/loading.css";
 
 const Loading = ({ width, height, text }) => {
   return (

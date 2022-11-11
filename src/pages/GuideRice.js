@@ -8,7 +8,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "./css/Guide.css";
+import "./css/guide.css";
 
 const GuideRice = () => {
   const { width, height } = useWindowDimensions();

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 
-import "./css/Cakes.css";
+import "./css/cakes.css";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";

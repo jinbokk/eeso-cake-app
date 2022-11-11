@@ -1,7 +1,7 @@
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from "react-naver-maps";
 import React from "react";
 
-import "./css/Map.css";
+import "./css/map.css";
 
 const Map = () => {
   return (

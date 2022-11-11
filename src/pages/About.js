@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./css/About.css";
+import "./css/about.css";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";

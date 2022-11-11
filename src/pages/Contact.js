@@ -1,7 +1,7 @@
 import React from "react";
 import Map from "../components/Map";
 
-import "./css/Contact.css";
+import "./css/contact.css";
 import Footer from "../components/Footer";
 import { Container, Row, Col } from "react-bootstrap";
 

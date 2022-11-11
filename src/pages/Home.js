@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 import "swiper/css";
 import "swiper/css/free-mode";
-import "./css/About.css";
-import "./css/Home.css";
+import "./css/about.css";
+import "./css/home.css";
 
 import CountUp from "react-countup";
 import Loading from "../components/Loading";
@@ -28,25 +29,17 @@ const Home = () => {
 
   const instagramData = useSelector((state) => state.instagram);
 
+  const { width, height } = useWindowDimensions();
+
   return (
     <>
       <Container fluid className="home_container_top">
-        <Row
-          className="main_banner_container m-0"
-          style={{ backgroundImage: "url(/images/home_main_banner.png)" }}
-        >
+        <Row className="main_banner_container m-0">
           <Col>
             <div className="main_banner_text">
               <div className="glow">
                 <span>
-                  <span
-                    style={{
-                      fontSize: "12rem",
-                      color: "var(--bg)",
-                    }}
-                  >
-                    M
-                  </span>
+                  <span className="main_banner_text_accent">M</span>
                   aking
                 </span>
                 <span> your day</span>
@@ -56,165 +49,101 @@ const Home = () => {
           </Col>
         </Row>
 
+        <Row className="logo_banner_container">
+          <Col lg={12} className="d-flex justify-content-center">
+            <img
+              src="/images/banner_transparent.png"
+              alt=""
+              className="logo_banner_img"
+            />
+          </Col>
+          <Col
+            lg={12}
+            className="d-flex flex-column justify-content-center align-items-center p-4"
+          >
+            <div className="logo_banner_catchphrase">
+              특별한 날을 더욱 특별하게,
+            </div>
+            <div className="logo_banner_catchphrase">
+              당신의 소중한 날을 빛내줄 이소케이크
+            </div>
+          </Col>
+        </Row>
+
         <Row>
           <Col className="my-3">
             <hr data-content="고객님을 위한 다양한 케이크가 준비되어 있습니다" />
           </Col>
-          {/* <Col>
-            {loading ? (
-              <Loading
-                width={"100vw"}
-                height={"100vh"}
-                text={"케이크 이미지 가져오는 중..."}
-              />
-            ) : (
-              <>
-                <Swiper
-                  breakpoints={{
-                    768: {
-                      slidesPerView: 3,
-                      spaceBetween: 30,
-                    },
-                    960: {
-                      slidesPerView: 4,
-                      spaceBetween: 20,
-                    },
-                    1600: {
-                      slidesPerView: 5,
-                      spaceBetween: 10,
-                    },
-                  }}
-                  slidesPerView={1}
-                  spaceBetween={0}
-                  speed={3400}
-                  autoplay={{
-                    delay: 1000,
-                    disableOnInteraction: true,
-                  }}
-                  freeMode={true}
-                  modules={[FreeMode, Autoplay]}
-                  loop={true}
-                  className="home_swiper_container"
-                >
-                  {allProductsData.slice(0, 19).map((item, index) => (
-                    <SwiperSlide
-                      key={index}
-                      className="d-flex justify-content-center"
-                    >
-                      <img
-                        src={item.image_url}
-                        alt=""
-                        className="home_swiper_image"
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
 
-                <Swiper
-                  breakpoints={{
-                    768: {
-                      slidesPerView: 3,
-                      spaceBetween: 30,
-                    },
-                    960: {
-                      slidesPerView: 4,
-                      spaceBetween: 20,
-                    },
-                    1600: {
-                      slidesPerView: 5,
-                      spaceBetween: 10,
-                    },
-                  }}
-                  slidesPerView={1}
-                  spaceBetween={40}
-                  speed={3500}
-                  autoplay={{
-                    delay: 1000,
-                    disableOnInteraction: true,
-                  }}
-                  freeMode={true}
-                  modules={[FreeMode, Autoplay]}
-                  loop={true}
-                  className="home_swiper_container"
-                >
-                  {allProductsData.slice(20, 38).map((item, index) => (
-                    <SwiperSlide
-                      key={index}
-                      className="d-flex justify-content-center"
+          {width < 992 ? (
+            <>
+              <Col>
+                {loading ? (
+                  <Loading
+                    width={"100vw"}
+                    height={"100vh"}
+                    text={"케이크 이미지 가져오는 중..."}
+                  />
+                ) : (
+                  <>
+                    <Swiper
+                      slidesPerView={2}
+                      spaceBetween={10}
+                      speed={3000}
+                      autoplay={{
+                        delay: 1,
+                        disableOnInteraction: false,
+                      }}
+                      freeMode={true}
+                      modules={[FreeMode, Autoplay]}
+                      loop={true}
+                      className="home_swiper_container"
                     >
-                      <img
-                        src={item.image_url}
-                        alt=""
-                        className="home_swiper_image"
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-
-                <Swiper
-                  breakpoints={{
-                    768: {
-                      slidesPerView: 3,
-                      spaceBetween: 30,
-                    },
-                    960: {
-                      slidesPerView: 4,
-                      spaceBetween: 20,
-                    },
-                    1600: {
-                      slidesPerView: 5,
-                      spaceBetween: 10,
-                    },
-                  }}
-                  slidesPerView={1}
-                  spaceBetween={40}
-                  speed={3600}
-                  autoplay={{
-                    delay: 1000,
-                    disableOnInteraction: true,
-                  }}
-                  freeMode={true}
-                  modules={[FreeMode, Autoplay]}
-                  loop={true}
-                  className="home_swiper_container"
-                >
-                  {allProductsData.slice(39, 57).map((item, index) => (
-                    <SwiperSlide
-                      key={index}
-                      className="d-flex justify-content-center"
-                    >
-                      <img
-                        src={item.image_url}
-                        alt=""
-                        className="home_swiper_image"
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </>
-            )}
-          </Col> */}
+                      {allProductsData.slice(0, 9).map((item, index) => (
+                        <SwiperSlide
+                          key={index}
+                          className="d-flex justify-content-center"
+                        >
+                          <img
+                            src={item.image_url}
+                            alt=""
+                            className="home_swiper_image"
+                          />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </>
+                )}
+              </Col>
+            </>
+          ) : null}
         </Row>
 
-        <Container className="home_cakes_image_container">
-          <Row>
-            {allProductsData.slice(0, 16).map((item, index) => (
-              <Col
-                className="justify-content-center align-items-center"
-              >
-                <img
-                  src={item.image_url}
-                  key={index}
-                  alt=""
-                  className="home_cakes_image"
-                />
-              </Col>
-            ))}
-          </Row>
-        </Container>
+        {width < 992 ? null : (
+          <Container className="home_cakes_image_container">
+            <Row>
+              {allProductsData.slice(0, 16).map((item, index) => (
+                <Col className="justify-content-center align-items-center">
+                  <img
+                    src={item.image_url}
+                    key={index}
+                    alt=""
+                    className="home_cakes_image"
+                  />
+                </Col>
+              ))}
+            </Row>
+          </Container>
+        )}
 
-        <Row className="sub_banner_container_top mx-0 my-5 ">
-          <Col lg={7} className="p-0">
+        <Row>
+          <Col className="my-3">
+            <hr data-content="건강하게, 맛있게" />
+          </Col>
+        </Row>
+
+        <Row className="sub_banner_container_top mx-0">
+          <Col lg={7} className="p-0 mb-3">
             <img
               src="/images/home_sub_banner.jpg"
               alt=""
@@ -222,38 +151,51 @@ const Home = () => {
             />
           </Col>
 
-          <Col lg={5} className="d-flex flex-column">
-            <div className="d-flex justify-content-around my-5">
-              <div className="d-flex flex-column align-items-center">
-                <div className="sub_banner_text_lg">無</div>
-                <div className="sub_banner_text_sm">합성제</div>
-              </div>
+          <Col lg={5} className="d-flex flex-column my-3">
+            <Row className="d-flex flex-column">
+              <Col className="justify-content-center">
+                <div className="underline">케이크도 건강해야 합니다</div>
+              </Col>
 
-              <div className="d-flex flex-column align-items-center">
-                <div className="sub_banner_text_lg">無</div>
-                <div className="sub_banner_text_sm">보존제</div>
-              </div>
+              <Col className="d-flex flex-row justify-content-around my-5">
+                <div className="d-flex flex-column align-items-center">
+                  <div className="sub_banner_text_lg">無</div>
+                  <div className="sub_banner_text_sm">합성제</div>
+                </div>
 
-              <div className="d-flex flex-column align-items-center">
-                <div className="sub_banner_text_lg">無</div>
-                <div className="sub_banner_text_sm">유화제</div>
-              </div>
-            </div>
+                <div className="d-flex flex-column align-items-center">
+                  <div className="sub_banner_text_lg">無</div>
+                  <div className="sub_banner_text_sm">보존제</div>
+                </div>
 
-            <div className="text-center my-5">
-              <div className="underline">케이크도 건강해야 합니다</div>
-              <div>
-                이소케이크에서는, 합성제 보존제 유화제 등을 사용하지 않고
-              </div>
-              <div>수시로 갓 구워낸 시트와 유생크림만을 사용합니다</div>
-            </div>
+                <div className="d-flex flex-column align-items-center">
+                  <div className="sub_banner_text_lg">無</div>
+                  <div className="sub_banner_text_sm">유화제</div>
+                </div>
+              </Col>
+
+              <Col className="text-center">
+                <div className="sub_banner_text_sm">
+                  이소케이크에서는, 합성제 보존제 유화제 등을 사용하지 않고
+                </div>
+                <div className="sub_banner_text_sm">
+                  수시로 갓 구워낸 시트와 유생크림만을 사용합니다
+                </div>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col className="my-3">
+            <hr data-content="이소케이크 인스타그램" />
           </Col>
         </Row>
 
         <Row className="sub_banner_container w-75 m-auto d-flex justify-content-center align-items-center">
-          <h2 style={{ textAlign: "center" }}>
-            - 이소케이크 인스타그램 둘러보기 -
-          </h2>
+          {/* <h2 style={{ textAlign: "center" }}>
+            - 이소케이크 인스타그램 -
+          </h2> */}
 
           {instagramData.loading ? (
             <Loading
@@ -263,18 +205,22 @@ const Home = () => {
             />
           ) : (
             <>
-              <div className="instaFeed_counter">
-                지금까지{" "}
-                <CountUp
-                  start={1}
-                  end={instagramData.userProfileData.media_count}
-                  duration={3}
-                  suffix=" 개"
-                  useEasing={true}
-                  className="instaFeed_counter_accent"
-                />
-                의 게시글이 포스팅 되었어요 !
-              </div>
+              <Row className="instaFeed_counter w-auto">
+                <Col sm={12} lg={"auto"} className="text-nowrap">지금까지 </Col>
+                <Col sm={12} lg={"auto"} className="text-nowrap">
+                  <CountUp
+                    start={1}
+                    end={instagramData.userProfileData.media_count}
+                    duration={3}
+                    suffix=" 개"
+                    useEasing={true}
+                    className="instaFeed_counter_accent"
+                  />
+                </Col>
+                <Col sm={12} lg={"auto"} className="text-nowrap">
+                  게시글이 포스팅 되었어요
+                </Col>
+              </Row>
               <div className="instaFeed_container_top">
                 {instagramData.userFeedsData.data.map((item, index) => (
                   <a

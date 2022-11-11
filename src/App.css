@@ -124,6 +124,13 @@ hr {
   height: 1.5em;
   opacity: 1;
   margin: 3em 0 !important;
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 992px) {
+  hr {
+    font-size: 1rem;
+  }
 }
 
 hr::before {
@@ -167,16 +174,15 @@ a:hover {
   --font-size: 15px;
   --nav-font: GowunBatang;
   --nav-font-size: 0.9rem;
-  --nav-height: 80px;
-  --mobile-nav-width: 100vw;
+  --nav-height: 70px;
   --bg: rgb(251, 239, 233);
   --bg-dark: rgb(255, 226, 211);
   --bg-deep-dark: rgb(255, 198, 169);
   --bg-accent: rgb(191, 47, 47);
   --bg-accent-filter: invert(34%) sepia(68%) saturate(3396%) hue-rotate(340deg)
     brightness(76%) contrast(95%);
-  --swiper-theme-color: rgb(191, 47, 47) !important;
-  --swiper-pagination-bullet-inactive-color: rgb(191, 47, 47) !important;
   --filter-width: 350px;
   --section-offset: 200px;
+  --swiper-theme-color: rgb(191, 47, 47) !important;
+  --swiper-pagination-bullet-inactive-color: rgb(191, 47, 47) !important;
 }
