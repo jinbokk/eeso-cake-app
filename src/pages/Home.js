@@ -89,7 +89,7 @@ const Home = () => {
                     <Swiper
                       slidesPerView={2}
                       spaceBetween={10}
-                      speed={3000}
+                      speed={5000}
                       autoplay={{
                         delay: 1,
                         disableOnInteraction: false,
@@ -97,7 +97,7 @@ const Home = () => {
                       freeMode={true}
                       modules={[FreeMode, Autoplay]}
                       loop={true}
-                      className="home_swiper_container"
+                      className="custom_swiper_container"
                     >
                       {allProductsData.slice(0, 9).map((item, index) => (
                         <SwiperSlide
@@ -206,7 +206,9 @@ const Home = () => {
           ) : (
             <>
               <Row className="instaFeed_counter w-auto">
-                <Col sm={12} lg={"auto"} className="text-nowrap">지금까지 </Col>
+                <Col sm={12} lg={"auto"} className="text-nowrap">
+                  지금까지{" "}
+                </Col>
                 <Col sm={12} lg={"auto"} className="text-nowrap">
                   <CountUp
                     start={1}
@@ -221,31 +223,79 @@ const Home = () => {
                   게시글이 포스팅 되었어요
                 </Col>
               </Row>
-              <div className="instaFeed_container_top">
-                {instagramData.userFeedsData.data.map((item, index) => (
-                  <a
-                    className="instaFeed_container"
-                    href={item.permalink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    key={index}
-                  >
-                    <img
-                      src={item.media_url}
-                      className="instaFeed_image"
-                      alt=""
-                    />
-                    <div className="instaFeed_text_container">
-                      <div className="instaFeed_timestamp">
-                        {item.timestamp.slice(0, 10)} /{" "}
-                        {item.timestamp.slice(11, 16)}
+
+              {width < 992 ? (
+                <Swiper
+                  slidesPerView={2}
+                  spaceBetween={10}
+                  speed={5000}
+                  autoplay={{
+                    delay: 1,
+                    disableOnInteraction: false,
+                  }}
+                  freeMode={true}
+                  modules={[FreeMode, Autoplay]}
+                  loop={true}
+                  className="custom_swiper_container"
+                >
+                  {instagramData.userFeedsData.data.map((item, index) => (
+                    <SwiperSlide
+                      key={index}
+                      className="d-flex justify-content-center"
+                    >
+                      <a
+                        className="instaFeed_container"
+                        href={item.permalink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        key={index}
+                      >
+                        <img
+                          src={item.media_url}
+                          className="instaFeed_image"
+                          alt=""
+                        />
+                        <div className="instaFeed_text_container">
+                          <div className="instaFeed_timestamp">
+                            {item.timestamp.slice(0, 10)} /{" "}
+                            {item.timestamp.slice(11, 16)}
+                          </div>
+                          <div className="instaFeed_caption">
+                            {item.caption}
+                          </div>
+                          <div className="instaFeed_read_more">READ MORE</div>
+                        </div>
+                      </a>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              ) : (
+                <div className="instaFeed_container_top">
+                  {instagramData.userFeedsData.data.map((item, index) => (
+                    <a
+                      className="instaFeed_container"
+                      href={item.permalink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      key={index}
+                    >
+                      <img
+                        src={item.media_url}
+                        className="instaFeed_image"
+                        alt=""
+                      />
+                      <div className="instaFeed_text_container">
+                        <div className="instaFeed_timestamp">
+                          {item.timestamp.slice(0, 10)} /{" "}
+                          {item.timestamp.slice(11, 16)}
+                        </div>
+                        <div className="instaFeed_caption">{item.caption}</div>
+                        <div className="instaFeed_read_more">READ MORE</div>
                       </div>
-                      <div className="instaFeed_caption">{item.caption}</div>
-                      <div className="instaFeed_read_more">READ MORE</div>
-                    </div>
-                  </a>
-                ))}
-              </div>
+                    </a>
+                  ))}
+                </div>
+              )}
             </>
           )}
         </Row>

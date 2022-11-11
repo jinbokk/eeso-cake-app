@@ -31,12 +31,12 @@ const GuideBread = () => {
       <Container className="guide_container w-60 p-5">
         <Row>
           <Col className="text-center">
-            <h1>빵 케이크 가이드</h1>
-            <h3>
+            <h1 className="mb-4 guide_title">빵 케이크 가이드</h1>
+            <h3 className="mb-4 guide_sub_title">
               심플한 레터링 케이크부터 귀여운 피규어 케이크, 먹을 수 있는 포토
               케이크까지
             </h3>
-            <h3>
+            <h3 className="guide_sub_title">
               모든 순간, 모든 공간에 어울리는 이소케이크의 시그니처 케이크
             </h3>
           </Col>
@@ -202,7 +202,7 @@ const GuideBread = () => {
         <Row>
           <Col
             md={12}
-            className="d-flex flex-column justify-content-center align-items-center"
+            className="d-flex flex-column justify-content-center align-items-center text-center"
           >
             <p>겉 크림 : 크림치즈 크림</p>
             <p>속 크림 (샌드 크림) : 생크림</p>
@@ -225,10 +225,16 @@ const GuideBread = () => {
         <Row>
           <Col
             md={12}
-            className="d-flex flex-column justify-content-center align-items-center"
+            className="d-flex flex-column justify-content-center align-items-center text-center"
           >
-            <p>택 1 ) 바닐라 빵시트 / 생크림 샌드 ( 기본형 )</p>
-            <p>택 2 ) 초코 빵시트 / 초코 생크림 샌드 ( +3,000원 )</p>
+            <p>
+              <div>택 1 ) </div>
+              <div>바닐라 빵시트 / 생크림 샌드 ( 기본형 )</div>
+            </p>
+            <p>
+              <div>택 2 ) </div>
+              <div>초코 빵시트 / 초코 생크림 샌드 ( +3,000원 )</div>
+            </p>
             <p>* 프랑스산 발로나 초코 파우더를 사용합니다 :)</p>
           </Col>
         </Row>
@@ -238,7 +244,7 @@ const GuideBread = () => {
         </Row>
 
         <Row>
-          <Col className="px-5 d-flex justify-content-center align-items-center">
+          <Col className="px-5 d-flex justify-content-center align-items-center text-center">
             <p>위의 내용을 확인하신 후,</p>
             <p>
               성함 / 연락처 / 픽업 날짜 및 시간과 함께 편하신 곳으로 상담 요청
@@ -247,7 +253,7 @@ const GuideBread = () => {
             <p>확인 후 빠른 연락드리겠습니다 : )</p>
 
             <div
-              className="p-5 d-flex flex-column justify-content-center align-items-center"
+              className="py-5 d-flex flex-column justify-content-center align-items-center"
               style={{ color: "var(--bg-accent)" }}
             >
               <p>전화 예약 : 0507 - 1424 - 1945</p>

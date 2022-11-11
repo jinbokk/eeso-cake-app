@@ -71,3 +71,9 @@
 .go_to_top_button:active {
   transform: scale(0.8);
 }
+
+@media screen and (max-width: 992px) {
+  .go_to_top_button {
+    right: 40px;
+  }
+}

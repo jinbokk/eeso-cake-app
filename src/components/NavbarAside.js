@@ -131,7 +131,7 @@ const NavbarAside = () => {
 
         <Row>
           <Col>
-            <div className="link_container">
+            <div className="link_container_navAside">
               <div>
                 <a
                   href="https://www.instagram.com/eeso_cake/?hl=ko"

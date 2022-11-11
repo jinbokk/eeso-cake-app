@@ -31,8 +31,10 @@ const GuideRice = () => {
       <Container className="guide_container w-60 p-5">
         <Row>
           <Col className="text-center">
-            <h1>떡 케이크 가이드</h1>
-            <h3>설기떡 위에 앙금으로 만든 꽃을 올린 아름다운 케이크</h3>
+            <h1 className="mb-4 guide_title">떡 케이크 가이드</h1>
+            <h3 className="guide_sub_title">
+              설기떡 위에 앙금으로 만든 꽃을 올린 아름다운 케이크
+            </h3>
           </Col>
         </Row>
 
@@ -202,7 +204,7 @@ const GuideRice = () => {
               alt=""
             />
             <div className="m-3">돔 디자인</div>
-            <div>
+            <div className="text-center">
               케이크 윗면에 전체적으로 꽃이 올라가는 디자인! 미니, 1호 사이즈에
               추천드리는 디자인입니다 풍성해 보이는 디자인.
             </div>
@@ -219,7 +221,7 @@ const GuideRice = () => {
               alt=""
             />
             <div className="m-3">크레센트트 디자인</div>
-            <div>
+            <div className="text-center">
               여백의 미를 살린 세련된 케이크를 찾으시는 분들께 추천드려요!
             </div>
           </Col>
@@ -235,7 +237,7 @@ const GuideRice = () => {
               alt=""
             />
             <div className="m-3">리스 디자인</div>
-            <div>
+            <div className="text-center">
               3,4호 대형 사이즈에 추천드리는 디자인입니다 화려한 화관 스타일의
               케이크! 여러 조각 나누어 드셔도 예쁨을 최대한 남길 수 있는 디자인.
             </div>
@@ -295,7 +297,7 @@ const GuideRice = () => {
         </Row>
 
         <Row>
-          <Col className="px-5 d-flex justify-content-center align-items-center">
+          <Col className="px-5 d-flex justify-content-center align-items-center text-center">
             <p>위의 내용을 확인하신 후,</p>
             <p>
               성함 / 연락처 / 픽업 날짜 및 시간과 함께 편하신 곳으로 상담 요청
@@ -304,7 +306,7 @@ const GuideRice = () => {
             <p>확인 후 빠른 연락드리겠습니다 : )</p>
 
             <div
-              className="p-5 d-flex flex-column justify-content-center align-items-center"
+              className="py-5 d-flex flex-column justify-content-center align-items-center"
               style={{ color: "var(--bg-accent)" }}
             >
               <p>전화 예약 : 0507 - 1424 - 1945</p>

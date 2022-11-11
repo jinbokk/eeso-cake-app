@@ -78,9 +78,55 @@ const Footer = () => {
           </Col>
         </Row> */}
 
-        <Container className="border_top">
-          <Row className="w-auto m-auto">
-            <Col lg={4} className="p-5">
+        <Container className="border_top py-5">
+          <Row>
+            <Col>
+              <div className="link_container">
+                <div>
+                  <a
+                    href="https://www.instagram.com/eeso_cake/?hl=ko"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="/icons/instgram_mini.png"
+                      alt=""
+                      className="link_icon"
+                    />
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="https://blog.naver.com/eesocake"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="/icons/naver_mini.png"
+                      alt=""
+                      className="link_icon"
+                    />
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="https://pf.kakao.com/_ZyKnd"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="/icons/kakaotalk_mini.png"
+                      alt=""
+                      className="link_icon"
+                    />
+                  </a>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          
+          <Row className="w-auto m-auto info_container">
+            <Col lg={4} className="px-5">
               <p>
                 <div className="info_title">
                   <img
@@ -106,7 +152,7 @@ const Footer = () => {
               </p>
             </Col>
 
-            <Col lg={4} className="p-5">
+            <Col lg={4} className="px-5">
               <p>
                 <div className="info_title">
                   <img
@@ -131,7 +177,7 @@ const Footer = () => {
               </p>
             </Col>
 
-            <Col lg={4} className="p-5">
+            <Col lg={4} className="px-5">
               <p>
                 <div className="info_title">
                   <img
@@ -159,7 +205,7 @@ const Footer = () => {
         </Container>
 
         <Container>
-          <Row className="copyright justify-content-end p-5">
+          <Row className="copyright justify-content-end p-4">
             Copyright 2022. eesocake. All Right Reserved
           </Row>
         </Container>

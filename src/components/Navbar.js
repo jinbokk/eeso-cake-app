@@ -131,6 +131,50 @@ const Navbar = () => {
               >
                 <div className="nav_menu">CONTACT</div>
               </NavLink>
+
+              <div>
+                <div className="link_container_nav">
+                  <div>
+                    <a
+                      href="https://www.instagram.com/eeso_cake/?hl=ko"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src="/icons/instgram_mini.png"
+                        alt=""
+                        className="link_icon"
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a
+                      href="https://blog.naver.com/eesocake"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src="/icons/naver_mini.png"
+                        alt=""
+                        className="link_icon"
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a
+                      href="https://pf.kakao.com/_ZyKnd"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src="/icons/kakaotalk_mini.png"
+                        alt=""
+                        className="link_icon"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
             </>
           )}
         </div>
