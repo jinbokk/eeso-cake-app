@@ -6,12 +6,12 @@
   transform: translateY(-50%);
 }
 
-.sidebar_icon {
+/* .sidebar_icon {
   width: 45px;
   height: 45px;
   margin-bottom: 15px;
   transition: 0.3s;
-}
+} */
 
 @keyframes jump-shaking {
   0% {
@@ -75,5 +75,8 @@
 @media screen and (max-width: 992px) {
   .go_to_top_button {
     right: 40px;
+    bottom: 50px !important;
+    width: 40px;
+    height: 40px;
   }
 }

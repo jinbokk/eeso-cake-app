@@ -35,7 +35,7 @@ const Contact = () => {
 
             <Map />
 
-            <Row>
+            <Row className="contact_text_container">
               <Col lg={6} className="mb-3">
                 <div className="fw-bold">가게 앞 정차 가능, 주차 불가</div>
                 <div>대중교통 이용시</div>

@@ -59,7 +59,7 @@ const NavDropdown = ({ navMenu, setToggleHandler }) => {
                           alt=""
                         />
                       </div>
-                      <div>{item.subTitle}</div>
+                      <div style={{ margin: "auto" }}>{item.subTitle}</div>
                     </div>
                   ) : (
                     <div onClick={() => setToggleHandler(false)}>

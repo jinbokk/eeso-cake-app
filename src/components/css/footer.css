@@ -81,10 +81,10 @@
 
 @media screen and (max-width: 992px) {
   .info_container div {
-    font-size: 0.9rem;
+    font-size: 0.5rem;
   }
 
   .copyright {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
   }
 }

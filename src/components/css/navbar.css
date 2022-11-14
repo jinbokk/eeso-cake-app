@@ -224,6 +224,15 @@ li {
 /* Responsive */
 
 @media screen and (max-width: 992px) {
+  .nav_container_top {
+    height: calc(var(--nav-height) - 10px);
+  }
+
+  .main_logo {
+    height: 65px;
+    padding: 15px;
+  }
+
   .dropDown,
   .dropDown_btn {
     height: auto;
@@ -291,8 +300,8 @@ li {
   right: 0px;
   top: 0px;
   z-index: 10000;
-  width: var(--nav-height);
-  height: var(--nav-height);
+  width: calc(var(--nav-height) - 10px);
+  height: calc(var(--nav-height) - 10px);
   -webkit-transition: 0.3s ease-in-out;
   transition: 0.3s ease-in-out;
   cursor: pointer;

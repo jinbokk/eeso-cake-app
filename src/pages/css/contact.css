@@ -41,3 +41,13 @@
   /* border-bottom: 1px solid var(--bg-accent); */
   transition: 0.3s;
 }
+
+.contact_text_container {
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 992px) {
+  .contact_text_container {
+    font-size: 0.8rem;
+  }
+}

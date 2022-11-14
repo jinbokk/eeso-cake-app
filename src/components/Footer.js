@@ -126,7 +126,7 @@ const Footer = () => {
           </Row>
           
           <Row className="w-auto m-auto info_container">
-            <Col lg={4} className="px-5">
+            <Col lg={4} className="px-3">
               <p>
                 <div className="info_title">
                   <img
@@ -152,7 +152,7 @@ const Footer = () => {
               </p>
             </Col>
 
-            <Col lg={4} className="px-5">
+            <Col lg={4} className="px-3">
               <p>
                 <div className="info_title">
                   <img
@@ -177,7 +177,7 @@ const Footer = () => {
               </p>
             </Col>
 
-            <Col lg={4} className="px-5">
+            <Col lg={4} className="px-3">
               <p>
                 <div className="info_title">
                   <img

@@ -44,7 +44,7 @@ const NavbarAside = () => {
 
         <Row>
           <Col className="mt-3">
-            <Accordion defaultActiveKey={["0"]} alwaysOpen>
+            <Accordion defaultActiveKey={["0"]}>
               <Accordion.Item eventKey="0">
                 <NavLink
                   to="/"
