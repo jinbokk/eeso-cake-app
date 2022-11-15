@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
+import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Landing from "./pages/Landing";
@@ -48,6 +49,7 @@ function App() {
           <Sidebar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/about" element={<About />} />
             <Route path="/cakes/:ingredient" element={<Cakes />} />
             <Route path="/guide/rice" element={<GuideRice />} />

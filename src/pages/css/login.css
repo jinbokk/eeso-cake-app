@@ -1,0 +1,95 @@
+.login_container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--nav-height));
+  justify-content: center;
+  align-items: center;
+  font-family: GowunBatang;
+}
+
+.login_logo {
+  width: 80vw;
+  max-width: 500px;
+  position: relative;
+  bottom: 70px;
+}
+
+.form_container {
+  width: 80vw;
+  max-width: 500px;
+}
+
+.form_container > div > input {
+  border-radius: 0;
+  border-color: pink;
+  height: 3.5rem;
+  padding: 0 1.2rem;
+}
+
+.form_container > div > input:focus {
+  box-shadow: none;
+  border-color: pink;
+}
+
+.form_container > div:first-child > input {
+  border-bottom: none;
+}
+
+.form-check {
+  display: flex !important;
+  align-items: center;
+}
+
+.form-check > input {
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-right: 0.6rem;
+}
+
+.form-check-input,
+.form-check-input:checked {
+  border-color: pink !important;
+  box-shadow: none !important;
+}
+
+.form-check-input:focus {
+  border-color: pink !important;
+}
+
+.form-check-input:checked {
+  background-color: pink !important;
+}
+
+.login_button {
+  background-color: pink !important;
+  border: none !important;
+  height: 3.5rem;
+  color: rgba(33, 37, 41, 0.7) !important;
+  font-weight: bold !important;
+  /* color: black !important; */
+}
+
+.help_link {
+  opacity: 0.7;
+}
+
+.help_link > a {
+  cursor: pointer;
+}
+
+.help_link > a:hover {
+  opacity: 1 !important;
+  text-decoration: underline 1px rgba(33, 37, 41, 0.5) !important;
+
+  text-underline-offset: 5px;
+}
+
+.help_link > span {
+  pointer-events: none;
+}
+
+/* @media screen and (max-width: 992px) {
+  .login_container {
+    font-size: 1rem;
+  }
+} */
