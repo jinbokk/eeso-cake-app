@@ -1,0 +1,55 @@
+<div>
+  <label>image</label>
+  <input type="file" name="image"/>
+  <!-- <input type="file" name="image" class="filepond" /> -->
+</div>
+
+<div>
+  <label>ingredient</label>
+  <input type="radio" name="ingredient" value="rice" />Rice
+  <input type="radio" name="ingredient" value="bread" />Bread
+  <input type="radio" name="ingredient" value="tart" />Tart
+</div>
+
+<div>
+  <label>layer</label>
+  <input type="radio" name="layer" value="1" />1
+  <input type="radio" name="layer" value="2" />2
+  <input type="radio" name="layer" value="3" />3
+</div>
+
+<div>
+  <label>design</label>
+  <div>
+    <div>category</div>
+    <input type="checkbox" name="design" value="figure" />figure
+    <input type="checkbox" name="design" value="photo" />photo
+    <input type="checkbox" name="design" value="letter" />letter
+  </div>
+
+  <div>
+    <div>special</div>
+    <input type="checkbox" name="design" value="money" />money
+    <input type="checkbox" name="design" value="topper" />topper
+    <input type="checkbox" name="design" value="3D" />3D
+    <input type="checkbox" name="design" value="fresh_flower" />fresh_flower
+    <input type="checkbox" name="design" value="bouquet" />bouquet
+  </div>
+
+  <div>
+    <div>rice cake design</div>
+    <input type="radio" name="design" value="dome" />dome
+    <input type="radio" name="design" value="crescent" />crescent
+    <input type="radio" name="design" value="wreath" />wreath
+  </div>
+</div>
+
+<div>
+  <label>description</label>
+  <textarea
+    name="description"
+    rows="10"
+    cols="40"
+    value="<%= product.description %>"
+  ></textarea>
+</div>
