@@ -8,19 +8,19 @@ const Sidebar = () => {
   const el = useRef();
   const q = gsap.utils.selector(el);
 
-  useEffect(() => {
-    gsap.fromTo(
-      q(".ease_in_right"),
-      { opacity: 0, x: 200 },
-      {
-        delay: 2.5,
-        opacity: 1,
-        duration: 1,
-        ease: "back.out(2)",
-        x: 0,
-      }
-    );
-  }, []);
+  // useEffect(() => {
+  //   gsap.fromTo(
+  //     q(".ease_in_right"),
+  //     { opacity: 0, x: 200 },
+  //     {
+  //       delay: 2.5,
+  //       opacity: 1,
+  //       duration: 1,
+  //       ease: "back.out(2)",
+  //       x: 0,
+  //     }
+  //   );
+  // }, []);
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -37,7 +37,7 @@ const Sidebar = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [scrolled, handleScroll]);
+  }, [scrolled]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

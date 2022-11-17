@@ -83,7 +83,7 @@ router.post("/", upload.single("image"), async (req, res) => {
   } catch (error) {
     res.render("products/new", {
       product: product,
-      errorMessage: "Error creating Product",
+      errorMessage: "Error to creating Product",
     });
     console.log("error is : ", error);
   }
