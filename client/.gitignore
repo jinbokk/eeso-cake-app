@@ -1,7 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-.env
-
 # dependencies
 /node_modules
 /.pnp
@@ -23,3 +19,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#crawler
+/eeso_cake
+/__pycache__
+
+# etc
+.env
+.vscode
+/uploads

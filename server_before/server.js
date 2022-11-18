@@ -34,7 +34,7 @@ app.use("/api", apiRouter);
 // Mongoose 6 always behaves as if useNewUrlParser , useUnifiedTopology ,
 // and useCreateIndex are true , and useFindAndModify is false .
 
-mongoose.connect(process.env.PRODUCT_DATABASE_URL);
+mongoose.connect(process.env.MONGO_URI);
 const db = mongoose.connection;
 db.on("error", (error) => console.log(error));
 db.once("open", () => console.log(`Connected to mongoDB`));
