@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api_instagram = axios.create({
-  baseURL: process.env.REACT_APP_AXIOS_INSTAGRAM_API_BASE_URL,
+  baseURL: process.env.REACT_APP_INSTAGRAM_API_BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
 
