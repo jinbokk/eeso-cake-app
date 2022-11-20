@@ -21,9 +21,16 @@ router.post("/register", (req, res) => {
   const user = new User(req.body);
 
   user.save((err, doc) => {
-    if (err) return res.json({ success: false, err });
+    if (err)
+      return res.json({
+        registerSuccess: false,
+        message:
+          err.code === 11000
+            ? "동일한 이메일로 가입된 계정이 존재합니다."
+            : "회원가입에 실패하였습니다.",
+      });
     return res.status(200).json({
-      success: true,
+      registerSuccess: true,
     });
   });
 });

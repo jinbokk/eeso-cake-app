@@ -8,20 +8,15 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import "./css/landing.css";
 
-// gsap test -----------------------------------------
 // https://greensock.com/react/
 import { gsap } from "gsap";
 import { Container, Row, Col } from "react-bootstrap";
-// gsap test -----------------------------------------
 
 const Landing = (props) => {
-  // gsap test -----------------------------------------
+  // gsap
   const el = useRef();
   const q = gsap.utils.selector(el);
-
   useEffect(() => {
-    // if (loading === true) return;
-
     gsap.fromTo(
       q(".ease_in_right_1"),
       { opacity: 0, x: 200 },
@@ -70,8 +65,6 @@ const Landing = (props) => {
     );
   }, []);
 
-  // gsap test -----------------------------------------
-
   return (
     <>
       <Container ref={el} className="landing_container">
@@ -100,7 +93,7 @@ const Landing = (props) => {
 
             <button
               className="landing_button ease_in_bottom_2"
-              onClick={() => props.setBrowse(true)}
+              onClick={() => props.setIsLandingPageView(true)}
             >
               SHOP NOW
             </button>

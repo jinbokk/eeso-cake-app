@@ -122,10 +122,12 @@ const Home = () => {
           <Container className="home_cakes_image_container">
             <Row>
               {allProductsData.slice(0, 16).map((item, index) => (
-                <Col className="justify-content-center align-items-center">
+                <Col
+                  className="justify-content-center align-items-center"
+                  key={index}
+                >
                   <img
                     src={item.image_url}
-                    key={index}
                     alt=""
                     className="home_cakes_image"
                   />

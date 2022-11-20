@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { userActions } from "../redux/actions/userActions";
 
 import "./css/login.css";
@@ -14,42 +14,35 @@ function Login() {
 
   // react-redux
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loginResult } = useSelector((state) => state.user);
 
+  useEffect(() => {
+    if (loginResult && loginResult.loginSuccess) {
+      navigate(-1);
+    } else if (loginResult && !loginResult.loginSuccess) {
+      alert(loginResult.message);
+    }
+  }, [loginResult]);
+
   // react-router-dom
-  const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("submit");
 
     let body = {
       email: email,
       password: password,
     };
 
-    dispatch(userActions.loginUser(body)).then(() => {
-      if (loginResult.loginSuccess) {
-        navigate(-1);
-      } else {
-        alert(loginResult.message);
-      }
-    });
-    // .then(async (res) => {
-    //   console.log(res);
-    // if (res.payload.loginResult.loginSuccess) {
-    //   // history.push("/");
-    // } else {
-    //   alert("로그인 에러");
-    // }
-    // });
+    dispatch(userActions.loginUser(body));
   };
 
   return (
     <Container className="login_container">
       <img className="login_logo" src="/images/banner_bgremoved.png" alt="" />
       <Form className="form_container" onSubmit={submitHandler}>
-        <Form.Group controlId="formBasicEmail">
+        <Form.Group controlId="Email">
           <Form.Control
             type="email"
             placeholder="이메일을 입력해 주세요."
@@ -57,14 +50,14 @@ function Login() {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="Password">
           <Form.Control
             type="password"
             placeholder="비밀번호를 입력해 주세요."
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Group className="mb-3" controlId="Checkbox">
           <Row>
             <Col lg={6}>
               <Form.Check type="checkbox" label="이메일 기억하기" />
@@ -73,7 +66,7 @@ function Login() {
               <div className="help_link">
                 <a>비밀번호를 잊으셨나요?</a>
                 <span className="mx-2">/</span>
-                <a>회원가입</a>
+                <NavLink to="/register">회원가입</NavLink>
               </div>
             </Col>
           </Row>

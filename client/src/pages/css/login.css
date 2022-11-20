@@ -32,7 +32,8 @@
 }
 
 .form_container > div:first-child > input {
-  border-bottom: none;
+  position: relative;
+  bottom: -1px;
 }
 
 .form-check {
@@ -88,8 +89,8 @@
   pointer-events: none;
 }
 
-/* @media screen and (max-width: 992px) {
-  .login_container {
-    font-size: 1rem;
+@media screen and (max-width: 992px) {
+  .help_link {
+    margin: 1rem 0;
   }
-} */
+}

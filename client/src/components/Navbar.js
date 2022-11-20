@@ -47,13 +47,6 @@ const Navbar = () => {
         }
       >
         <div className="nav_container">
-          {/* <div
-          className={
-            width < 992
-              ? "nav_container mobile" + (toggleHandler ? " triggered" : "")
-              : "nav_container"
-          }
-        > */}
           {width < 992 ? (
             <>
               <NavLink to="/">
@@ -137,10 +130,20 @@ const Navbar = () => {
 
               <div>
                 <div className="util_container">
-                  <div className="mx-5">
-                    <a>LOGIN</a>
+                  <div className="user_container mx-5">
+                    <NavLink
+                      to="/login"
+                      style={({ isActive }) => (isActive ? activeStyle : null)}
+                    >
+                      LOGIN
+                    </NavLink>
                     <span className="mx-2">/</span>
-                    <a>SIGN UP</a>
+                    <NavLink
+                      to="/register"
+                      style={({ isActive }) => (isActive ? activeStyle : null)}
+                    >
+                      SIGN UP
+                    </NavLink>
                   </div>
                   <a
                     href="https://www.instagram.com/eeso_cake/?hl=ko"

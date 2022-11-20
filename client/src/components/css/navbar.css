@@ -119,10 +119,32 @@ li {
   vertical-align: middle;
 }
 
+.util_container > a {
+  transition: 0.3s;
+}
+
+.util_container > a:hover {
+  transform: scale(1.2);
+  transition: 0.3s;
+}
+
 .util_containerAside {
   display: flex;
   justify-content: center;
   padding-bottom: 10vh;
+}
+
+.user_container > a {
+  transition: 0.3s;
+}
+
+.user_container > span {
+  pointer-events: none;
+}
+
+.user_container > a:hover {
+  color: var(--bg-accent);
+  transition: 0.3;
 }
 
 .link_icon {
@@ -228,14 +250,15 @@ li {
 
 .user_container {
   margin-left: auto;
+  white-space: nowrap;
 }
 
 /* Responsive */
 
 @media screen and (max-width: 992px) {
-  .nav_container_top {
+  /* .nav_container_top {
     height: calc(var(--nav-height) - 10px);
-  }
+  } */
 
   .main_logo {
     height: 65px;

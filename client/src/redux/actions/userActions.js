@@ -13,16 +13,33 @@ import axios from "axios";
 //   };
 // }
 
+function registerUser(dataToSubmit) {
+  return async (dispatch) => {
+    try {
+      const registerResult = await axios
+        .post("/api/users/register", dataToSubmit)
+        .then((res) => res.data);
+
+      dispatch({
+        type: "REGISTER_USER",
+        payload: registerResult,
+      });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
 function loginUser(dataToSubmit) {
   return async (dispatch) => {
     try {
-      const login_result = await axios
+      const loginResult = await axios
         .post("/api/users/login", dataToSubmit)
         .then((res) => res.data);
 
       dispatch({
         type: "LOGIN_USER",
-        payload: login_result,
+        payload: loginResult,
       });
     } catch (error) {
       console.log("error occurred : ", error);
@@ -69,7 +86,7 @@ function loginUser(dataToSubmit) {
 // }
 
 export const userActions = {
-  //   registerUser,
+  registerUser,
   loginUser,
   //   auth,
   //   logoutUser,

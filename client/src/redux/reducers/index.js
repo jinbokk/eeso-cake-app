@@ -12,7 +12,9 @@ const persistConfig = {
   storage,
   // reducer 중에 "특정" reducer만 localstorage에 저장합니다.
   // whitelist: ["특정"]
+  whitelist: ["userReducer"],
   // blacklist의 경우, 그것만 제외합니다
+  blacklist: ["productReducer", "instagramReducer"],
 };
 
 export const rootReducer = combineReducers({

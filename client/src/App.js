@@ -1,7 +1,8 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState, useLayoutEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Landing from "./pages/Landing";
@@ -17,15 +18,29 @@ import UploadProduct from "./pages/UploadProduct";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { useState } from "react";
 
 function App() {
-  const [browse, setBrowse] = useState(false);
+  const [isLandingPageView, setIsLandingPageView] = useState(false);
+
+  // sessionStorage
+
+  useLayoutEffect(() => {
+    let landingPageView = sessionStorage.getItem("isLandingPageView");
+
+    if (landingPageView === null) {
+      landingPageView = false;
+      sessionStorage.setItem("isLandingPageView", landingPageView);
+    } else {
+      landingPageView = true;
+      sessionStorage.setItem("isLandingPageView", landingPageView);
+      setIsLandingPageView(landingPageView);
+    }
+  }, [isLandingPageView]);
 
   return (
     <>
-      {!browse ? (
-        <Landing setBrowse={setBrowse} />
+      {!isLandingPageView ? (
+        <Landing setIsLandingPageView={setIsLandingPageView} />
       ) : (
         <>
           <Suspense fallback={<Loading />}>
@@ -34,6 +49,7 @@ function App() {
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route exact path="/login" element={<Login />} />
+              <Route exact path="/register" element={<Register />} />
               <Route exact path="/about" element={<About />} />
               <Route exact path="/cakes/:ingredient" element={<Cakes />} />
               <Route exact path="/guide/rice" element={<GuideRice />} />
