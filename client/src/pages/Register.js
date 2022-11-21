@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
 import { userActions } from "../redux/actions/userActions";
 
+import { BsFillCheckCircleFill } from "react-icons/bs";
 import "./css/login.css";
 
 function Register() {
@@ -13,6 +14,60 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  // register regular expression
+  const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/; //공백은 히+ㅎ 이다. 폰트 깨짐.
+  const emailRegex =
+    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  // 영어 대문자, 소문자, 숫자, 특수문자를 조합한 8자리 이상의 문자
+  // const phoneNumberRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+
+  const nameValueCheck = nameRegex.test(name);
+  const emailValueCheck = emailRegex.test(email);
+  const passwordValueCheck = passwordRegex.test(password);
+  // const phoneNumberValueCheck = phoneNumberRegex.test(phoneNumber);
+
+  // state for value check
+  const [isNameWrong, setIsNameWrong] = useState(false);
+  const [isEmailWrong, setIsEmailWrong] = useState(false);
+  const [isPasswordWrong, setIsPasswordWrong] = useState(false);
+  const [isCPasswordWrong, setIsCPasswordWrong] = useState(false);
+
+  const nameCheckHandler = () => {
+    if (nameValueCheck === false) {
+      return setIsNameWrong(true);
+    } else {
+      setIsNameWrong(false);
+      return;
+      // + 체크표시 추가 ! 여기 로직에서 해야함
+    }
+  };
+
+  const emailCheckHandler = () => {
+    if (emailValueCheck === false) {
+      return setIsEmailWrong(true);
+    } else {
+      return setIsEmailWrong(false);
+    }
+  };
+
+  const passwordCheckHandler = () => {
+    if (passwordValueCheck === false) {
+      return setIsPasswordWrong(true);
+    } else {
+      return setIsPasswordWrong(false);
+    }
+  };
+
+  const cpasswordCheckHandler = (e) => {
+    if (e.target.value === password) {
+      return setIsCPasswordWrong(false);
+    } else {
+      return setIsCPasswordWrong(true);
+    }
+  };
 
   // react-redux
   const dispatch = useDispatch();
@@ -47,18 +102,13 @@ function Register() {
     dispatch(userActions.registerUser(body));
   };
 
-  const valueCheckHandler = (e) => {
-    // {isNaN(name) === false ? "이름을 확인해 주세요" : null}
-    console.log(e);
-  };
-
   return (
     <Container className="login_container">
       <img className="login_logo" src="/images/banner_bgremoved.png" alt="" />
       <Form className="form_container" onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="Name">
           <Form.Label style={{ fontWeight: "bold" }}>
-            이름
+            성함
             <span
               style={{ color: "red", fontWeight: "lighter", marginLeft: "6px" }}
             >
@@ -67,10 +117,18 @@ function Register() {
           </Form.Label>
           <Form.Control
             type="name"
-            placeholder="이름을 입력해 주세요."
+            placeholder="성함을 입력해 주세요."
             onChange={(e) => setName(e.target.value)}
+            onBlur={nameCheckHandler}
           />
-          <div onBlur={() => console.log("hi")}></div>
+
+          {isNameWrong ? (
+            <div style={{ color: "red" }}>성함을 확인해 주세요</div>
+          ) : (
+            <span className="checked">
+              <BsFillCheckCircleFill />
+            </span>
+          )}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="Email">
@@ -86,10 +144,18 @@ function Register() {
             type="email"
             placeholder="이메일을 입력해 주세요."
             onChange={(e) => setEmail(e.target.value)}
+            onBlur={emailCheckHandler}
           />
+          {isEmailWrong ? (
+            <div style={{ color: "red" }}>이메일을 확인해 주세요</div>
+          ) : (
+            <span className="checked">
+              <BsFillCheckCircleFill />
+            </span>
+          )}
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="Password">
+        <Form.Group controlId="Password">
           <Form.Label style={{ fontWeight: "bold" }}>
             비밀번호
             <span
@@ -102,18 +168,41 @@ function Register() {
             type="password"
             placeholder="비밀번호를 입력해 주세요."
             onChange={(e) => setPassword(e.target.value)}
+            onBlur={passwordCheckHandler}
           />
+          {isPasswordWrong ? (
+            <div style={{ color: "red" }}>비밀번호를 확인해 주세요</div>
+          ) : (
+            <span className="checked">
+              <BsFillCheckCircleFill />
+            </span>
+          )}
         </Form.Group>
+        <div style={{ opacity: "0.7", fontSize: "0.7rem" }}>
+          8자리 이상의 영어 대문자, 소문자, 숫자, 특수문자 조합
+        </div>
 
-        <Form.Group className="mb-3" controlId="PasswordConfirm">
+        <Form.Group className="my-2" controlId="PasswordConfirm">
           <Form.Control
             type="password"
             placeholder="비밀번호 확인"
             onChange={(e) => setConfirmPassword(e.target.value)}
+            onBlur={cpasswordCheckHandler}
           />
+          {isCPasswordWrong ? (
+            <div style={{ color: "red" }}>비밀번호가 일치하지 않습니다</div>
+          ) : (
+            <span className="checked">
+              <BsFillCheckCircleFill />
+            </span>
+          )}
         </Form.Group>
 
-        <Button className="login_button w-100" variant="primary" type="submit">
+        <Button
+          className="login_button mt-4 w-100"
+          variant="primary"
+          type="submit"
+        >
           회원가입
         </Button>
       </Form>
