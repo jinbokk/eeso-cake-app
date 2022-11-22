@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userActions } from "../redux/actions/userActions";
 
 import { BsFillCheckCircleFill } from "react-icons/bs";
@@ -30,42 +30,52 @@ function Register() {
   // const phoneNumberValueCheck = phoneNumberRegex.test(phoneNumber);
 
   // state for value check
-  const [isNameWrong, setIsNameWrong] = useState(false);
-  const [isEmailWrong, setIsEmailWrong] = useState(false);
-  const [isPasswordWrong, setIsPasswordWrong] = useState(false);
-  const [isCPasswordWrong, setIsCPasswordWrong] = useState(false);
+  const [isNameWrong, setIsNameWrong] = useState({
+    result: false,
+    checkMark: false,
+  });
+  const [isEmailWrong, setIsEmailWrong] = useState({
+    result: false,
+    checkMark: false,
+  });
+  const [isPasswordWrong, setIsPasswordWrong] = useState({
+    result: false,
+    checkMark: false,
+  });
+  const [isCPasswordWrong, setIsCPasswordWrong] = useState({
+    result: false,
+    checkMark: false,
+  });
 
   const nameCheckHandler = () => {
     if (nameValueCheck === false) {
-      return setIsNameWrong(true);
+      return setIsNameWrong({ result: true, checkMark: false });
     } else {
-      setIsNameWrong(false);
-      return;
-      // + 체크표시 추가 ! 여기 로직에서 해야함
+      return setIsNameWrong({ result: false, checkMark: true });
     }
   };
 
   const emailCheckHandler = () => {
     if (emailValueCheck === false) {
-      return setIsEmailWrong(true);
+      return setIsEmailWrong({ result: true, checkMark: false });
     } else {
-      return setIsEmailWrong(false);
+      return setIsEmailWrong({ result: false, checkMark: true });
     }
   };
 
   const passwordCheckHandler = () => {
     if (passwordValueCheck === false) {
-      return setIsPasswordWrong(true);
+      return setIsPasswordWrong({ result: true, checkMark: false });
     } else {
-      return setIsPasswordWrong(false);
+      return setIsPasswordWrong({ result: false, checkMark: true });
     }
   };
 
   const cpasswordCheckHandler = (e) => {
-    if (e.target.value === password) {
-      return setIsCPasswordWrong(false);
+    if (e.target.value !== password) {
+      return setIsCPasswordWrong({ result: true, checkMark: false });
     } else {
-      return setIsCPasswordWrong(true);
+      return setIsCPasswordWrong({ result: false, checkMark: true });
     }
   };
 
@@ -77,7 +87,7 @@ function Register() {
   useEffect(() => {
     if (registerResult && registerResult.registerSuccess) {
       navigate("/login", { replace: true }); // 회원가입 후 뒤로가기 방지
-      dispatch({ type: "REGISTER_DONE" });
+      dispatch({ type: "REGISTER_USER", payload: undefined });
       alert("회원가입이 완료되었습니다.");
     } else if (registerResult && !registerResult.registerSuccess) {
       alert(registerResult.message);
@@ -99,7 +109,16 @@ function Register() {
       password: password,
     };
 
-    dispatch(userActions.registerUser(body));
+    if (
+      isNameWrong.result ||
+      isEmailWrong.result ||
+      isPasswordWrong.result ||
+      isCPasswordWrong.result
+    ) {
+      alert("회원정보를 다시 확인 해 주세요");
+    } else {
+      dispatch(userActions.registerUser(body));
+    }
   };
 
   return (
@@ -119,16 +138,19 @@ function Register() {
             type="name"
             placeholder="성함을 입력해 주세요."
             onChange={(e) => setName(e.target.value)}
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.preventDefault();
+            }}
             onBlur={nameCheckHandler}
           />
 
-          {isNameWrong ? (
+          {isNameWrong.result ? (
             <div style={{ color: "red" }}>성함을 확인해 주세요</div>
-          ) : (
+          ) : isNameWrong.checkMark ? (
             <span className="checked">
               <BsFillCheckCircleFill />
             </span>
-          )}
+          ) : null}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="Email">
@@ -144,15 +166,18 @@ function Register() {
             type="email"
             placeholder="이메일을 입력해 주세요."
             onChange={(e) => setEmail(e.target.value)}
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.preventDefault();
+            }}
             onBlur={emailCheckHandler}
           />
-          {isEmailWrong ? (
+          {isEmailWrong.result ? (
             <div style={{ color: "red" }}>이메일을 확인해 주세요</div>
-          ) : (
+          ) : isEmailWrong.checkMark ? (
             <span className="checked">
               <BsFillCheckCircleFill />
             </span>
-          )}
+          ) : null}
         </Form.Group>
 
         <Form.Group controlId="Password">
@@ -168,15 +193,18 @@ function Register() {
             type="password"
             placeholder="비밀번호를 입력해 주세요."
             onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.preventDefault();
+            }}
             onBlur={passwordCheckHandler}
           />
-          {isPasswordWrong ? (
+          {isPasswordWrong.result ? (
             <div style={{ color: "red" }}>비밀번호를 확인해 주세요</div>
-          ) : (
+          ) : isPasswordWrong.checkMark ? (
             <span className="checked">
               <BsFillCheckCircleFill />
             </span>
-          )}
+          ) : null}
         </Form.Group>
         <div style={{ opacity: "0.7", fontSize: "0.7rem" }}>
           8자리 이상의 영어 대문자, 소문자, 숫자, 특수문자 조합
@@ -187,15 +215,18 @@ function Register() {
             type="password"
             placeholder="비밀번호 확인"
             onChange={(e) => setConfirmPassword(e.target.value)}
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.preventDefault();
+            }}
             onBlur={cpasswordCheckHandler}
           />
-          {isCPasswordWrong ? (
+          {isCPasswordWrong.result ? (
             <div style={{ color: "red" }}>비밀번호가 일치하지 않습니다</div>
-          ) : (
+          ) : isCPasswordWrong.checkMark ? (
             <span className="checked">
               <BsFillCheckCircleFill />
             </span>
-          )}
+          ) : null}
         </Form.Group>
 
         <Button

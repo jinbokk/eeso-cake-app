@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const NavDropdown = ({ navMenu, setToggleHandler }) => {
+const NavDropdown = ({ navMenu }) => {
   // const [isShown, setIsShown] = useState(false);
 
   const mouseOver = (e) => {
@@ -47,10 +47,7 @@ const NavDropdown = ({ navMenu, setToggleHandler }) => {
                   className="dropDown_menu"
                 >
                   {item.imgSrc ? (
-                    <div
-                      className="dropDown_menu_img_container"
-                      onClick={() => setToggleHandler(false)}
-                    >
+                    <div className="dropDown_menu_img_container">
                       <div>
                         <img
                           src={item.imgSrc}
@@ -61,9 +58,7 @@ const NavDropdown = ({ navMenu, setToggleHandler }) => {
                       <div style={{ margin: "auto" }}>{item.subTitle}</div>
                     </div>
                   ) : (
-                    <div onClick={() => setToggleHandler(false)}>
-                      {item.subTitle}
-                    </div>
+                    <div>{item.subTitle}</div>
                   )}
                 </NavLink>
               </li>

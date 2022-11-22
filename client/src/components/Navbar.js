@@ -6,10 +6,26 @@ import { NavLink } from "react-router-dom";
 import NavDropdown from "./NavDropdown";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import NavbarAside from "./NavbarAside";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const [scrolled, setScrolled] = useState(false);
   const { width, height } = useWindowDimensions();
+
+  const { loginResult } = useSelector((state) => state.user);
+
+  const logoutHandler = () => {
+    axios.get(`/api/users/logout`).then((res) => {
+      if (res.data.logoutSuccess) {
+        dispatch({ type: "LOGIN_USER", payload: undefined });
+        return alert("로그아웃 되었습니다");
+      } else {
+        return alert("로그아웃에 실패하였습니다");
+      }
+    });
+  };
 
   const handleScroll = () => {
     const currentScroll = window.pageYOffset;
@@ -131,19 +147,31 @@ const Navbar = () => {
               <div>
                 <div className="util_container">
                   <div className="user_container mx-5">
-                    <NavLink
-                      to="/login"
-                      style={({ isActive }) => (isActive ? activeStyle : null)}
-                    >
-                      LOGIN
-                    </NavLink>
-                    <span className="mx-2">/</span>
-                    <NavLink
-                      to="/register"
-                      style={({ isActive }) => (isActive ? activeStyle : null)}
-                    >
-                      SIGN UP
-                    </NavLink>
+                    {loginResult && loginResult.loginSuccess ? (
+                      <NavLink to="/" onClick={logoutHandler}>
+                        로그아웃
+                      </NavLink>
+                    ) : (
+                      <>
+                        <NavLink
+                          to="/login"
+                          style={({ isActive }) =>
+                            isActive ? activeStyle : null
+                          }
+                        >
+                          로그인
+                        </NavLink>
+                        <span className="mx-2">/</span>
+                        <NavLink
+                          to="/register"
+                          style={({ isActive }) =>
+                            isActive ? activeStyle : null
+                          }
+                        >
+                          회원가입
+                        </NavLink>
+                      </>
+                    )}
                   </div>
                   <a
                     href="https://www.instagram.com/eeso_cake/?hl=ko"

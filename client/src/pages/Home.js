@@ -26,7 +26,9 @@ const Home = () => {
 
   const { loading, allProductsData } = useSelector((state) => state.product);
 
-  const instagramData = useSelector((state) => state.instagram);
+  const { instaLoading, userProfileData, userFeedsData } = useSelector(
+    (state) => state.instagram
+  );
 
   const { width, height } = useWindowDimensions();
 
@@ -198,7 +200,7 @@ const Home = () => {
             - 이소케이크 인스타그램 -
           </h2> */}
 
-          {instagramData.loading ? (
+          {instaLoading ? (
             <Loading
               width={"100vw"}
               height={"100vh"}
@@ -213,7 +215,7 @@ const Home = () => {
                 <Col sm={12} lg={"auto"} className="text-nowrap">
                   <CountUp
                     start={1}
-                    end={instagramData.userProfileData.media_count}
+                    end={userProfileData.media_count}
                     duration={3}
                     suffix=" 개"
                     useEasing={true}
@@ -239,7 +241,7 @@ const Home = () => {
                   loop={true}
                   className="custom_swiper_container"
                 >
-                  {instagramData.userFeedsData.data.map((item, index) => (
+                  {userFeedsData.data.map((item, index) => (
                     <SwiperSlide
                       key={index}
                       className="d-flex justify-content-center"
@@ -272,7 +274,7 @@ const Home = () => {
                 </Swiper>
               ) : (
                 <div className="instaFeed_container_top">
-                  {instagramData.userFeedsData.data.map((item, index) => (
+                  {userFeedsData.data.map((item, index) => (
                     <a
                       className="instaFeed_container"
                       href={item.permalink}

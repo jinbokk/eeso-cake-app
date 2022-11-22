@@ -1,6 +1,7 @@
 let initialState = {
   registerResult: undefined,
   loginResult: undefined,
+  authUserData: undefined,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -10,11 +11,11 @@ const userReducer = (state = initialState, action) => {
     case "REGISTER_USER":
       return { ...state, registerResult: payload };
 
-    case "REGISTER_DONE":
-      return { ...state, registerResult: undefined };
-
     case "LOGIN_USER":
       return { ...state, loginResult: payload };
+
+    case "AUTH_USER":
+      return { ...state, authUserData: payload };
 
     default:
       return { ...state };

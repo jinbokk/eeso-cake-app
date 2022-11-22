@@ -35,7 +35,13 @@ function Login() {
       password: password,
     };
 
-    dispatch(userActions.loginUser(body));
+    if (body.email === "") {
+      alert("이메일을 입력해주세요");
+    } else if (body.password === "") {
+      alert("비밀번호를 입력해주세요");
+    } else {
+      dispatch(userActions.loginUser(body));
+    }
   };
 
   return (

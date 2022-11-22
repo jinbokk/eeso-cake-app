@@ -155,12 +155,12 @@ const Cakes = () => {
                       md={4}
                       lg={3}
                       className="images_container"
+                      key={index}
                     >
                       <img
                         ref={lastCakeElementRef}
                         src={item.image_url}
                         alt=""
-                        key={index}
                         className="cake_image"
                         onClick={() => {
                           ModalOpen();
@@ -180,11 +180,11 @@ const Cakes = () => {
                       md={4}
                       lg={3}
                       className="images_container"
+                      key={index}
                     >
                       <img
                         src={item.image_url}
                         alt=""
-                        key={index}
                         className="cake_image"
                         onClick={() => {
                           ModalOpen();

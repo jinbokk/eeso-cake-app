@@ -15,15 +15,31 @@ import Contact from "./pages/Contact";
 import Loading from "./components/Loading";
 import Footer from "./components/Footer";
 import UploadProduct from "./pages/UploadProduct";
+import Auth from "./hoc/Auth";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
+  // Hoc Auth
+  //  --- Auth option ---
+  //   1. null : 아무나 출입 가능
+  //   2. true : 로그인 한 유저만 출입 가능
+  //   3. false : 로그인 한 유저는 출입 불가
+
+  const AuthLogin = Auth(Login, false);
+  const AuthRegister = Auth(Register, false);
+  const AuthHome = Auth(Home, null);
+  const AuthAbout = Auth(About, null);
+  const AuthCakes = Auth(Cakes, null);
+  const AuthGuideRice = Auth(GuideRice, null);
+  const AuthGuideBread = Auth(GuideBread, null);
+  const AuthContact = Auth(Contact, null);
+  const AuthUploadProduct = Auth(UploadProduct, true);
+
+  // sessionStorage (플리커링을 없애기 위해 useLayoutEffect 사용)
   const [isLandingPageView, setIsLandingPageView] = useState(false);
-
-  // sessionStorage
-
+  
   useLayoutEffect(() => {
     let landingPageView = sessionStorage.getItem("isLandingPageView");
 
@@ -47,15 +63,15 @@ function App() {
             <Navbar />
             <Sidebar />
             <Routes>
-              <Route exact path="/" element={<Home />} />
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path="/register" element={<Register />} />
-              <Route exact path="/about" element={<About />} />
-              <Route exact path="/cakes/:ingredient" element={<Cakes />} />
-              <Route exact path="/guide/rice" element={<GuideRice />} />
-              <Route exact path="/guide/bread" element={<GuideBread />} />
-              <Route exact path="/contact" element={<Contact />} />
-              <Route exact path="/upload" element={<UploadProduct />} />
+              <Route exact path="/" element={<AuthHome />} />
+              <Route exact path="/login" element={<AuthLogin />} />
+              <Route exact path="/register" element={<AuthRegister />} />
+              <Route exact path="/about" element={<AuthAbout />} />
+              <Route exact path="/cakes/:ingredient" element={<AuthCakes />} />
+              <Route exact path="/guide/rice" element={<AuthGuideRice />} />
+              <Route exact path="/guide/bread" element={<AuthGuideBread />} />
+              <Route exact path="/contact" element={<AuthContact />} />
+              <Route exact path="/upload" element={<AuthUploadProduct />} />
             </Routes>
             <Footer />
           </Suspense>

@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER } from "./types";
 // import { USER_SERVER } from "../components/Config.js";
 
 // function registerUser(dataToSubmit) {
@@ -67,6 +66,23 @@ function loginUser(dataToSubmit) {
 //   }
 // }
 
+function auth() {
+  return async (dispatch) => {
+    try {
+      const authUserData = await axios
+        .get("/api/users/auth")
+        .then((res) => res.data);
+
+      dispatch({
+        type: "AUTH_USER",
+        payload: authUserData,
+      });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
 // function auth() {
 //   const req = axios.get(`${USER_SERVER}/auth`).then((res) => res.data);
 
@@ -88,6 +104,6 @@ function loginUser(dataToSubmit) {
 export const userActions = {
   registerUser,
   loginUser,
-  //   auth,
+  auth,
   //   logoutUser,
 };

@@ -41,7 +41,7 @@ router.post("/login", (req, res) => {
     if (!user)
       return res.json({
         loginSuccess: false,
-        message: "해당 이메일로 가입된 계정이 존재하지 않습니다.",
+        message: "해당 이메일로 가입된 계정이 없습니다.",
       });
 
     // 2. if email checked, then check password verify
@@ -49,7 +49,7 @@ router.post("/login", (req, res) => {
       if (!isMatch)
         return res.json({
           loginSuccess: false,
-          message: "비밀번호가 올바르지 않습니다.",
+          message: "비밀번호가 일치하지 않습니다.",
         });
 
       // 3. if password checked, then generate token
