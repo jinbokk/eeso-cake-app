@@ -22,11 +22,6 @@ import "./App.css";
 
 function App() {
   // Hoc Auth
-  //  --- Auth option ---
-  //   1. null : 아무나 출입 가능
-  //   2. true : 로그인 한 유저만 출입 가능
-  //   3. false : 로그인 한 유저는 출입 불가
-
   const AuthLogin = Auth(Login, false);
   const AuthRegister = Auth(Register, false);
   const AuthHome = Auth(Home, null);

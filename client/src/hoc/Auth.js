@@ -1,15 +1,44 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../redux/actions/userActions";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth(SpecificComponent, option, adminRoute = null) {
-  function AuthenticationCheck(props) {
+  //  --- Auth option ---
+  //   1. null : 아무나 출입 가능
+  //   2. true : 로그인 한 유저만 출입 가능
+  //   3. false : 로그인 한 유저는 출입 불가
+
+  function AuthenticationCheck() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { authUserData } = useSelector((state) => state.user);
 
     useEffect(() => {
       dispatch(userActions.auth());
     }, []);
+
+    useEffect(() => {
+      console.log("authUserData", authUserData);
+      if (authUserData && !authUserData.isAuth) {
+        //로그인이 안되었는데,
+        console.log("authUserData.isAuth", authUserData.isAuth);
+
+        if (option) {
+          // 로그인한 유저만 출입 가능하다면
+          navigate(-1);
+        }
+      } else {
+        if (adminRoute && authUserData && !authUserData.isAdmin) {
+          //로그인을 했고, 관리자라우트에 관리자가 접근하려는데 관리자가 아니라면,
+          navigate(-1);
+        } else {
+          if (option === false) {
+            navigate(-1);
+          }
+        }
+      }
+    }, [authUserData]);
 
     return <SpecificComponent />;
   }

@@ -7,7 +7,7 @@ const api_eesocake = axios.create({
 
 api_eesocake.interceptors.request.use(
   function(config) {
-    console.log(`request is : ${config.baseURL + config.url}`, config);
+    // console.log(`request is : ${config.baseURL + config.url}`, config);
     return config;
   },
   function(error) {
@@ -17,7 +17,7 @@ api_eesocake.interceptors.request.use(
 
 api_eesocake.interceptors.response.use(
   function(response) {
-    console.log(`${response.request.responseURL} response is : `, response);
+    // console.log(`${response.request.responseURL} response is : `, response);
     return response;
   },
   function(error) {
