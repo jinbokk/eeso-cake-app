@@ -20,7 +20,7 @@ const Contact = () => {
           </Col>
 
           <Col lg={7}>
-            <div className="fw-bold">LOCATION / HOURS</div>
+            <div className="fw-bold mt-4">LOCATION / HOURS</div>
             <div>
               <a
                 href="https://map.naver.com/v5/search/%EC%9D%B4%EC%86%8C%EC%BC%80%EC%9D%B4%ED%81%AC/place/661959504?c=14147586.5818935,4542283.8149681,16.63,0,0,0,dh&placePath=%3Fentry%253Dbmp"
