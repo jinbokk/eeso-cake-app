@@ -1,34 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import Dropzone from "react-dropzone";
-import axios from "axios";
 
 const FileUpload = (props) => {
-  const [images, setImages] = useState([]);
-
   const dropHandler = (files) => {
-    let formData = new FormData();
-
-    formData.append("file", files[0]);
-
-    axios.post("/api/products/image", formData).then((res) => {
-      if (res.data.success) {
-        setImages([...images, res.data.filePath]);
-
-        props.refreshFunction([...images, res.data.filePath]);
-      } else {
-        alert("파일을 저장하는데 실패하였습니다");
-      }
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        props.setImages((prev) => [
+          ...prev,
+          reader.result,
+        ]);
+      };
+      reader.readAsDataURL(file);
     });
   };
 
   const deleteHandler = (item) => {
-    const currentIndex = images.indexOf(item);
-
-    let newImages = [...images];
+    const currentIndex = props.images.indexOf(item);
+    let newImages = [...props.images];
     newImages.splice(currentIndex, 1);
-
-    setImages(newImages);
-    props.refreshFunction([newImages]);
+    props.setImages(newImages);
   };
 
   return (
@@ -63,10 +54,10 @@ const FileUpload = (props) => {
           overflow: "auto",
         }}
       >
-        {images.map((item, index) => (
+        {props.images.map((item, index) => (
           <img
             onClick={() => deleteHandler(item)}
-            src={`http://localhost:5000/${item}`}
+            src={item}
             alt=""
             key={index}
             style={{ width: "100%", cursor: "pointer" }}

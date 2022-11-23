@@ -5,12 +5,12 @@ const mongoose = require("mongoose");
 const productSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
-    title: { type: String, required: true },
-    ingredient: { type: String, required: true },
-    layer: { type: Number, required: true },
-    design: { type: Array, default: [], required: true },
+    title: { type: String },
+    ingredient: { type: String },
+    layer: { type: Number },
+    design: { type: Array, default: [] },
     image: { type: Array, default: [] },
-    image_url: { type: String, required: true },
+    image_url: { type: String },
     description: { type: String },
     price: { type: Number, default: 0 },
     sold: { type: Number, default: 0 },
