@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-// const productImageBasePath = "uploads/productImages";
-
 const productSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
@@ -9,7 +7,6 @@ const productSchema = new mongoose.Schema(
     ingredient: { type: String },
     layer: { type: Number },
     design: { type: Array, default: [] },
-    image: { type: Array, default: [] },
     image_url: { type: String },
     description: { type: String },
     price: { type: Number, default: 0 },
@@ -20,4 +17,3 @@ const productSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Product", productSchema);
-// module.exports.productImageBasePath = productImageBasePath;

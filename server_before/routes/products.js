@@ -47,10 +47,12 @@ router.get("/new", (req, res) => {
 });
 
 // Create Product Route
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/", upload.single("file"), async (req, res) => {
   try {
     const fileName =
       req.file !== null ? req.file.originalname.split(".")[0] : null;
+
+    console.log(req.file.path);
 
     const cloudinary_upload = await cloudinary.uploader.upload(
       req.file.path,
