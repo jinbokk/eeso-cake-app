@@ -34,7 +34,7 @@ function App() {
 
   // sessionStorage (플리커링을 없애기 위해 useLayoutEffect 사용)
   const [isLandingPageView, setIsLandingPageView] = useState(false);
-  
+
   useLayoutEffect(() => {
     let landingPageView = sessionStorage.getItem("isLandingPageView");
 

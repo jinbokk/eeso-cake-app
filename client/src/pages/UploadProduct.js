@@ -1,14 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
+
+import {
+  Button,
+  TextareaAutosize,
+  ToggleButtonGroup,
+  ToggleButton,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
+
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { pink } from "@mui/material/colors";
+
 import Dropzone from "react-dropzone";
 import axios from "axios";
 
-export default function UploadProduct() {
-  const [file, setFile] = useState();
-  const [images, setImages] = useState([]);
+import "./css/uploadProduct.css";
 
-  const { register, handleSubmit } = useForm();
+export default function UploadProduct() {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: pink[300],
+      },
+      secondary: {
+        main: pink[500],
+      },
+    },
+  });
+
+  const [layer, setLayer] = useState("");
+  const [ingredient, setIngredient] = useState("");
+  const [design, setDesign] = useState([]);
+
+  const layerHandler = (event, layer) => {
+    setLayer(layer);
+  };
+
+  const ingredientHandler = (event, ingredient) => {
+    setIngredient(ingredient);
+  };
+
+  const designHandler = (event, design) => {
+    setDesign(design);
+  };
+
+  useEffect(() => {
+    setDesign([]);
+  }, [ingredient]);
+
+  const { handleSubmit, control } = useForm();
+
+  const preventEnterEvent = (e) => {
+    if (e.target.name === "description") {
+      return;
+    } else {
+      if (e.key === "Enter") return e.preventDefault();
+    }
+  };
+
+  const [file, setFile] = useState(undefined);
+  const [images, setImages] = useState([]);
 
   const dropHandler = (imageFiles) => {
     imageFiles.forEach((imageFile) => {
@@ -31,100 +85,245 @@ export default function UploadProduct() {
 
   const onSubmit = (data, event) => {
     event.preventDefault();
+    if (file === undefined || data.ingredient === undefined) {
+      return alert("양식을 다시 확인 해 주세요");
+    } else {
+      let formData = new FormData();
 
-    let formData = new FormData();
+      console.log(data);
 
-    formData.append("file", file[0]);
-    formData.append("title", data.title);
-    formData.append("ingredient", data.ingredient);
-    formData.append("design", data.design);
-    formData.append("description", data.description);
-    formData.append("price", data.price);
+      formData.append("file", file[0]);
+      formData.append("title", data.title);
+      formData.append("price", data.price);
+      formData.append("ingredient", data.ingredient);
+      formData.append("layer", data.layer);
+      formData.append("design", data.design);
+      formData.append("description", data.description);
 
-    axios.post("/api/products", formData).then((res) => {
-      if (res.status === 200) {
-        alert("상품 업로드가 완료되었습니다.");
-        console.log(res.data);
-        // 이후 페이지 새로고침 하기
-      } else {
-        alert("상품 업로드에 실패하였습니다.");
-        console.log(res.message);
-      }
-    });
+      axios
+        .post("/api/products/upload", formData)
+        .then((res) => {
+          if (res.status === 200) {
+            alert("상품 업로드가 완료되었습니다.");
+            // window.location.reload();
+          } else {
+            alert("상품 업로드에 실패하였습니다.");
+          }
+        })
+        .catch((err) => {
+          alert("상품 업로드에 실패하였습니다.");
+          console.log(err.response.data.message.message);
+        });
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Dropzone onDrop={dropHandler}>
-        {({ getRootProps, getInputProps }) => (
-          <section>
-            <div
-              style={{
-                width: "400px",
-                height: "400px",
-                backgroundColor: "white",
-                border: "1px solid lightgray",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              {...getRootProps()}
-            >
-              <input {...getInputProps()} />
-              <p style={{ fontSize: "5rem" }}>+</p>
-            </div>
-          </section>
-        )}
-      </Dropzone>
-
-      <aside
-        style={{
-          display: "flex",
-          width: "350px",
-          height: "350px",
-          overflow: "auto",
-        }}
+    <Container className="py-5">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={(e) => preventEnterEvent(e)}
       >
-        {images.map((item, index) => (
-          <img
-            onClick={() => deleteHandler(item)}
-            src={item}
-            alt=""
-            key={index}
-            style={{ width: "100%", cursor: "pointer" }}
-          />
-        ))}
-      </aside>
-      <input {...register("title", {})} type="text" placeholder="title" />
-      <input
-        {...register("price", {})}
-        type="number"
-        placeholder="price"
-        {...register}
-      />
-      <input {...register("ingredient")} type="radio" value="rice" />
-      <input {...register("ingredient")} type="radio" value="bread" />
-      <input {...register("ingredient")} type="radio" value="tart" />
-      <input {...register("layer")} type="radio" value="1" />
-      <input {...register("layer")} type="radio" value="2" />
-      <input {...register("layer")} type="radio" value="3" />
-      <select {...register("design")}>
-        <option value="figure">figure</option>
-        <option value="photo">photo</option>
-        <option value="letter">letter</option>
-      </select>
-      <select {...register("special")}>
-        <option value="money">money</option>
-        <option value="topper">topper</option>
-        <option value="3D">3D</option>
-        <option value="fresh_flower">fresh_flower</option>
-        <option value="bouquet">bouquet</option>
-      </select>
-      <input {...register("riceCakeDesign")} type="radio" value="dome" />
-      <input {...register("riceCakeDesign")} type="radio" value="crescent" />
-      <input {...register("riceCakeDesign")} type="radio" value="wreath" />
-      <textarea {...register("description", {})} />
-      <input type="submit" />
-    </form>
+        <Dropzone onDrop={dropHandler}>
+          {({ getRootProps, getInputProps }) => (
+            <section className="image_uploader">
+              <div className="upload_image" {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p style={{ fontSize: "5rem" }}>+</p>
+              </div>
+              <aside className="preview_image_container">
+                {images.map((item, index) => (
+                  <img
+                    onClick={() => deleteHandler(item)}
+                    src={item}
+                    alt=""
+                    key={index}
+                    className="preview_image"
+                  />
+                ))}
+              </aside>
+            </section>
+          )}
+        </Dropzone>
+
+        <ThemeProvider theme={theme}>
+          <Row className="mb-5">
+            <Col lg={4}>
+              <Controller
+                control={control}
+                name="title"
+                render={({ field }) => (
+                  <TextField
+                    id="outlined-basic"
+                    label="상품명"
+                    variant="outlined"
+                    style={{ width: "100%" }}
+                    className="my-4"
+                    {...field}
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="price"
+                render={({ field }) => (
+                  <TextField
+                    id="outlined-basic"
+                    label="가격"
+                    variant="outlined"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">₩</InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">원</InputAdornment>
+                      ),
+                    }}
+                    style={{ width: "100%" }}
+                    {...field}
+                  />
+                )}
+              />
+            </Col>
+
+            <Col lg={8}>
+              <Row>
+                <Col>
+                  <Controller
+                    control={control}
+                    name="ingredient"
+                    render={({ field: { onChange, value, ...field } }) => (
+                      <ToggleButtonGroup
+                        color="secondary"
+                        className="my-4"
+                        size="large"
+                        value={ingredient}
+                        onChange={(event, value) => {
+                          onChange(value);
+                          ingredientHandler(event, value);
+                        }}
+                        exclusive
+                        {...field}
+                      >
+                        <ToggleButton value="rice">떡케이크</ToggleButton>
+                        <ToggleButton value="bread">빵케이크</ToggleButton>
+                        <ToggleButton value="tart">타르트</ToggleButton>
+                        <ToggleButton value="event">이벤트 케이크</ToggleButton>
+                      </ToggleButtonGroup>
+                    )}
+                  />
+                </Col>
+                <Col>
+                  <Controller
+                    control={control}
+                    name="layer"
+                    render={({ field: { onChange, value, ...field } }) => (
+                      <ToggleButtonGroup
+                        color="secondary"
+                        className="my-4"
+                        size="large"
+                        value={layer}
+                        onChange={(event, value) => {
+                          onChange(value);
+                          layerHandler(event, value);
+                        }}
+                        exclusive
+                        {...field}
+                      >
+                        <ToggleButton value="1">1층</ToggleButton>
+                        <ToggleButton value="2">2층</ToggleButton>
+                        <ToggleButton value="3">3층</ToggleButton>
+                      </ToggleButtonGroup>
+                    )}
+                  />
+                </Col>
+              </Row>
+
+              {ingredient === "rice" ? (
+                <>
+                  <Row>
+                    <Controller
+                      control={control}
+                      name="design"
+                      render={({ field: { onChange, value, ...field } }) => (
+                        <ToggleButtonGroup
+                          color="secondary"
+                          className="mb-4"
+                          size="large"
+                          value={design}
+                          onChange={(event, value) => {
+                            onChange(value);
+                            designHandler(event, value);
+                          }}
+                          {...field}
+                        >
+                          <ToggleButton value="dome">돔형</ToggleButton>
+                          <ToggleButton value="crescent">초승달형</ToggleButton>
+                          <ToggleButton value="wreath">리스형</ToggleButton>
+                        </ToggleButtonGroup>
+                      )}
+                    />
+                  </Row>
+                </>
+              ) : null}
+
+              <Controller
+                name="design"
+                control={control}
+                render={({ field: { onChange, value, ...field } }) => (
+                  <ToggleButtonGroup
+                    color="secondary"
+                    className="d-flex flex-wrap"
+                    size="large"
+                    value={design}
+                    onChange={(event, value) => {
+                      onChange(value);
+                      designHandler(event, value);
+                    }}
+                    {...field}
+                  >
+                    <ToggleButton value="figure">피규어</ToggleButton>
+                    <ToggleButton value="photo">포토</ToggleButton>
+                    <ToggleButton value="letter">레터링</ToggleButton>
+                    <ToggleButton value="money">돈</ToggleButton>
+                    <ToggleButton value="topper">토퍼</ToggleButton>
+                    <ToggleButton value="3D">3D</ToggleButton>
+                    <ToggleButton value="fresh_flower">생화</ToggleButton>
+                    <ToggleButton value="bouquet">꽃다발</ToggleButton>
+                  </ToggleButtonGroup>
+                )}
+              />
+            </Col>
+          </Row>
+
+          <Row className="mb-5 px-3">
+            <Controller
+              control={control}
+              name="description"
+              render={({ field }) => (
+                <TextareaAutosize
+                  className="description_box"
+                  minRows={3}
+                  placeholder="설명글"
+                  {...field}
+                />
+              )}
+            />
+          </Row>
+
+          <Row>
+            <Col>
+              <Button
+                variant="contained"
+                type="submit"
+                style={{ height: "50px" }}
+              >
+                상품 업로드
+              </Button>
+            </Col>
+          </Row>
+        </ThemeProvider>
+      </form>
+    </Container>
   );
 }

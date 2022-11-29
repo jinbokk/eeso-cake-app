@@ -4,31 +4,25 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 
 import "swiper/css";
 import "swiper/css/free-mode";
-import "./css/about.css";
+// import "./css/about.css";
 import "./css/home.css";
 
-import CountUp from "react-countup";
 import Loading from "../components/Loading";
 
-import { instagramActions } from "../redux/actions/instagramActions";
 import { productActions } from "../redux/actions/productActions";
 import { Container, Row, Col } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Autoplay } from "swiper";
+import Instagram from "../components/Instagram";
 
 const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(productActions.getAllProducts());
-    dispatch(instagramActions.getInstaData());
+    dispatch(productActions.getProducts());
   }, []);
 
-  const { loading, allProductsData } = useSelector((state) => state.product);
-
-  const { instaLoading, userProfileData, userFeedsData } = useSelector(
-    (state) => state.instagram
-  );
+  const { loading, productsData } = useSelector((state) => state.product);
 
   const { width, height } = useWindowDimensions();
 
@@ -100,7 +94,7 @@ const Home = () => {
                       loop={true}
                       className="custom_swiper_container"
                     >
-                      {allProductsData.slice(0, 9).map((item, index) => (
+                      {productsData.slice(0, 9).map((item, index) => (
                         <SwiperSlide
                           key={index}
                           className="d-flex justify-content-center"
@@ -117,27 +111,25 @@ const Home = () => {
                 )}
               </Col>
             </>
-          ) : null}
+          ) : (
+            <Container className="home_cakes_image_container">
+              <Row>
+                {productsData.slice(0, 16).map((item, index) => (
+                  <Col
+                    className="justify-content-center align-items-center"
+                    key={index}
+                  >
+                    <img
+                      src={item.image_url}
+                      alt=""
+                      className="home_cakes_image"
+                    />
+                  </Col>
+                ))}
+              </Row>
+            </Container>
+          )}
         </Row>
-
-        {width < 992 ? null : (
-          <Container className="home_cakes_image_container">
-            <Row>
-              {allProductsData.slice(0, 16).map((item, index) => (
-                <Col
-                  className="justify-content-center align-items-center"
-                  key={index}
-                >
-                  <img
-                    src={item.image_url}
-                    alt=""
-                    className="home_cakes_image"
-                  />
-                </Col>
-              ))}
-            </Row>
-          </Container>
-        )}
 
         <Row>
           <Col className="my-3">
@@ -188,121 +180,9 @@ const Home = () => {
             </Row>
           </Col>
         </Row>
-
-        <Row>
-          <Col className="my-3">
-            <hr data-content="이소케이크 인스타그램" />
-          </Col>
-        </Row>
-
-        <Row className="sub_banner_container w-75 m-auto d-flex justify-content-center align-items-center">
-          {/* <h2 style={{ textAlign: "center" }}>
-            - 이소케이크 인스타그램 -
-          </h2> */}
-
-          {instaLoading ? (
-            <Loading
-              width={"100vw"}
-              height={"100vh"}
-              text={"인스타그램 피드 가져오는 중..."}
-            />
-          ) : (
-            <>
-              <Row className="instaFeed_counter w-auto">
-                <Col sm={12} lg={"auto"} className="text-nowrap">
-                  지금까지{" "}
-                </Col>
-                <Col sm={12} lg={"auto"} className="text-nowrap">
-                  <CountUp
-                    start={1}
-                    end={userProfileData.media_count}
-                    duration={3}
-                    suffix=" 개"
-                    useEasing={true}
-                    className="instaFeed_counter_accent"
-                  />
-                </Col>
-                <Col sm={12} lg={"auto"} className="text-nowrap">
-                  게시글이 포스팅 되었어요
-                </Col>
-              </Row>
-
-              {width < 992 ? (
-                <Swiper
-                  slidesPerView={2}
-                  spaceBetween={10}
-                  speed={5000}
-                  autoplay={{
-                    delay: 1,
-                    disableOnInteraction: false,
-                  }}
-                  freeMode={true}
-                  modules={[FreeMode, Autoplay]}
-                  loop={true}
-                  className="custom_swiper_container"
-                >
-                  {userFeedsData.data.map((item, index) => (
-                    <SwiperSlide
-                      key={index}
-                      className="d-flex justify-content-center"
-                    >
-                      <a
-                        className="instaFeed_container"
-                        href={item.permalink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        key={index}
-                      >
-                        <img
-                          src={item.media_url}
-                          className="instaFeed_image"
-                          alt=""
-                        />
-                        <div className="instaFeed_text_container">
-                          <div className="instaFeed_timestamp">
-                            {item.timestamp.slice(0, 10)} /{" "}
-                            {item.timestamp.slice(11, 16)}
-                          </div>
-                          <div className="instaFeed_caption">
-                            {item.caption}
-                          </div>
-                          <div className="instaFeed_read_more">READ MORE</div>
-                        </div>
-                      </a>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              ) : (
-                <div className="instaFeed_container_top">
-                  {userFeedsData.data.map((item, index) => (
-                    <a
-                      className="instaFeed_container"
-                      href={item.permalink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      key={index}
-                    >
-                      <img
-                        src={item.media_url}
-                        className="instaFeed_image"
-                        alt=""
-                      />
-                      <div className="instaFeed_text_container">
-                        <div className="instaFeed_timestamp">
-                          {item.timestamp.slice(0, 10)} /{" "}
-                          {item.timestamp.slice(11, 16)}
-                        </div>
-                        <div className="instaFeed_caption">{item.caption}</div>
-                        <div className="instaFeed_read_more">READ MORE</div>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-        </Row>
       </Container>
+
+      <Instagram />
     </>
   );
 };

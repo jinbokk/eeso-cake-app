@@ -10,7 +10,7 @@ function getInstaData() {
       );
 
       const getUserFeeds = api_instagram.get(
-        `/me/media?fields=caption,media_url,permalink,timestamp&limit=12&access_token=${process.env.REACT_APP_INSTAGRAM_API_ACCESS_TOKEN}`
+        `/me/media?fields=caption,media_url,permalink,timestamp,children{media_url}&limit=12&access_token=${process.env.REACT_APP_INSTAGRAM_API_ACCESS_TOKEN}`
       );
 
       const [userProfileJson, userFeedsJson] = await Promise.all([

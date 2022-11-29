@@ -20,11 +20,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-#crawler
-/eeso_cake
-/__pycache__
-
 # etc
 .env
 .vscode
-/uploads

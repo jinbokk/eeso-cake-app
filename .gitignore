@@ -21,11 +21,10 @@ yarn-debug.log*
 yarn-error.log*
 
 #crawler
-/eeso_cake
+/eeso_cake_crawler_photo
 /__pycache__
 
 # etc
 .env
 .vscode
-/uploads
 /temp
