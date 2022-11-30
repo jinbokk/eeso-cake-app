@@ -290,6 +290,11 @@ export default function UploadProduct() {
                     <ToggleButton value="3D">3D</ToggleButton>
                     <ToggleButton value="fresh_flower">생화</ToggleButton>
                     <ToggleButton value="bouquet">꽃다발</ToggleButton>
+                    <ToggleButton value="tiara">티아라</ToggleButton>
+                    <ToggleButton value="party">파티</ToggleButton>
+                    <ToggleButton value="snack">과자</ToggleButton>
+                    <ToggleButton value="lotto">로또</ToggleButton>
+                    <ToggleButton value="duck">오리삼형제</ToggleButton>
                   </ToggleButtonGroup>
                 )}
               />

@@ -222,6 +222,7 @@ li {
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .dropDown_depth_1:hover > li .dropDown_depth_2 {
@@ -236,7 +237,7 @@ li {
   pointer-events: none;
   position: absolute;
   top: 100%;
-  left: 0;
+  left: -50%;
   width: max-content;
   opacity: 0;
   transition: 0.3s;

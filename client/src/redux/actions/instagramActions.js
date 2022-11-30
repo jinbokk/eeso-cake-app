@@ -1,4 +1,10 @@
-import api_instagram from "../api_instagram";
+import axios from "axios";
+
+const api_instagram = axios.create({
+  baseURL: process.env.REACT_APP_INSTAGRAM_API_BASE_URL,
+  headers: { "Content-Type": "application/json" },
+});
+
 
 function getInstaData() {
   return async (dispatch) => {
