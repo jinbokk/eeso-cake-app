@@ -138,6 +138,13 @@ const Navbar = () => {
               />
 
               <NavLink
+                to="/order/list"
+                style={({ isActive }) => (isActive ? activeStyle : null)}
+              >
+                <div className="nav_menu">ORDER</div>
+              </NavLink>
+
+              <NavLink
                 to="/contact"
                 style={({ isActive }) => (isActive ? activeStyle : null)}
               >

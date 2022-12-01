@@ -19,7 +19,10 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(productActions.getProducts());
+    let option = {
+      ingredient: "all",
+    };
+    dispatch(productActions.getProducts(option));
   }, []);
 
   const { loading, productsData } = useSelector((state) => state.product);
@@ -94,7 +97,7 @@ const Home = () => {
                       loop={true}
                       className="custom_swiper_container"
                     >
-                      {productsData.slice(0, 9).map((item, index) => (
+                      {productsData.map((item, index) => (
                         <SwiperSlide
                           key={index}
                           className="d-flex justify-content-center"
@@ -114,9 +117,9 @@ const Home = () => {
           ) : (
             <Container className="home_cakes_image_container">
               <Row>
-                {productsData.slice(0, 16).map((item, index) => (
+                {productsData.slice(0, 19).map((item, index) => (
                   <Col
-                    className="justify-content-center align-items-center"
+                    className="d-flex justify-content-center m-0"
                     key={index}
                   >
                     <img

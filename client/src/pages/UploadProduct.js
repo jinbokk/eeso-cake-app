@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Container, Row, Col } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 
 import {
@@ -20,6 +21,9 @@ import axios from "axios";
 import "./css/uploadProduct.css";
 
 export default function UploadProduct() {
+  const { isAdmin } = useSelector((state) => state.user.authUserData);
+  console.log(isAdmin);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -118,217 +122,227 @@ export default function UploadProduct() {
   };
 
   return (
-    <Container className="py-5">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        onKeyDown={(e) => preventEnterEvent(e)}
-      >
-        <Dropzone onDrop={dropHandler}>
-          {({ getRootProps, getInputProps }) => (
-            <section className="image_uploader">
-              <div className="upload_image" {...getRootProps()}>
-                <input {...getInputProps()} />
-                <p style={{ fontSize: "5rem" }}>+</p>
-              </div>
-              <aside className="preview_image_container">
-                {images.map((item, index) => (
-                  <img
-                    onClick={() => deleteHandler(item)}
-                    src={item}
-                    alt=""
-                    key={index}
-                    className="preview_image"
-                  />
-                ))}
-              </aside>
-            </section>
-          )}
-        </Dropzone>
+    <>
+      {!isAdmin ? null : (
+        <Container className="py-5">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onKeyDown={(e) => preventEnterEvent(e)}
+          >
+            <Dropzone onDrop={dropHandler}>
+              {({ getRootProps, getInputProps }) => (
+                <section className="image_uploader">
+                  <div className="upload_image" {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <p style={{ fontSize: "5rem" }}>+</p>
+                  </div>
+                  <aside className="preview_image_container">
+                    {images.map((item, index) => (
+                      <img
+                        onClick={() => deleteHandler(item)}
+                        src={item}
+                        alt=""
+                        key={index}
+                        className="preview_image"
+                      />
+                    ))}
+                  </aside>
+                </section>
+              )}
+            </Dropzone>
 
-        <ThemeProvider theme={theme}>
-          <Row className="mb-5">
-            <Col lg={4}>
-              <Controller
-                control={control}
-                name="title"
-                render={({ field }) => (
-                  <TextField
-                    id="outlined-basic"
-                    label="상품명"
-                    variant="outlined"
-                    style={{ width: "100%" }}
-                    className="my-4"
-                    {...field}
-                  />
-                )}
-              />
-
-              <Controller
-                control={control}
-                name="price"
-                render={({ field }) => (
-                  <TextField
-                    id="outlined-basic"
-                    label="가격"
-                    variant="outlined"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">₩</InputAdornment>
-                      ),
-                      endAdornment: (
-                        <InputAdornment position="end">원</InputAdornment>
-                      ),
-                    }}
-                    style={{ width: "100%" }}
-                    {...field}
-                  />
-                )}
-              />
-            </Col>
-
-            <Col lg={8}>
-              <Row>
-                <Col>
+            <ThemeProvider theme={theme}>
+              <Row className="mb-5">
+                <Col lg={4}>
                   <Controller
                     control={control}
-                    name="ingredient"
-                    render={({ field: { onChange, value, ...field } }) => (
-                      <ToggleButtonGroup
-                        color="secondary"
+                    name="title"
+                    render={({ field }) => (
+                      <TextField
+                        id="outlined-basic"
+                        label="상품명"
+                        variant="outlined"
+                        style={{ width: "100%" }}
                         className="my-4"
-                        size="large"
-                        value={ingredient}
-                        onChange={(event, value) => {
-                          onChange(value);
-                          ingredientHandler(event, value);
-                        }}
-                        exclusive
                         {...field}
-                      >
-                        <ToggleButton value="rice">떡케이크</ToggleButton>
-                        <ToggleButton value="bread">빵케이크</ToggleButton>
-                        <ToggleButton value="tart">타르트</ToggleButton>
-                        <ToggleButton value="event">이벤트 케이크</ToggleButton>
-                      </ToggleButtonGroup>
+                      />
+                    )}
+                  />
+
+                  <Controller
+                    control={control}
+                    name="price"
+                    render={({ field }) => (
+                      <TextField
+                        id="outlined-basic"
+                        label="가격"
+                        variant="outlined"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">₩</InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">원</InputAdornment>
+                          ),
+                        }}
+                        style={{ width: "100%" }}
+                        {...field}
+                      />
                     )}
                   />
                 </Col>
-                <Col>
+
+                <Col lg={8}>
+                  <Row>
+                    <Col>
+                      <Controller
+                        control={control}
+                        name="ingredient"
+                        render={({ field: { onChange, value, ...field } }) => (
+                          <ToggleButtonGroup
+                            color="secondary"
+                            className="my-4"
+                            size="large"
+                            value={ingredient}
+                            onChange={(event, value) => {
+                              onChange(value);
+                              ingredientHandler(event, value);
+                            }}
+                            exclusive
+                            {...field}
+                          >
+                            <ToggleButton value="rice">떡케이크</ToggleButton>
+                            <ToggleButton value="bread">빵케이크</ToggleButton>
+                            <ToggleButton value="tart">타르트</ToggleButton>
+                            <ToggleButton value="event">
+                              이벤트 케이크
+                            </ToggleButton>
+                          </ToggleButtonGroup>
+                        )}
+                      />
+                    </Col>
+                    <Col>
+                      <Controller
+                        control={control}
+                        name="layer"
+                        render={({ field: { onChange, value, ...field } }) => (
+                          <ToggleButtonGroup
+                            color="secondary"
+                            className="my-4"
+                            size="large"
+                            value={layer}
+                            onChange={(event, value) => {
+                              onChange(value);
+                              layerHandler(event, value);
+                            }}
+                            exclusive
+                            {...field}
+                          >
+                            <ToggleButton value="1">1층</ToggleButton>
+                            <ToggleButton value="2">2층</ToggleButton>
+                            <ToggleButton value="3">3층</ToggleButton>
+                          </ToggleButtonGroup>
+                        )}
+                      />
+                    </Col>
+                  </Row>
+
+                  {ingredient === "rice" ? (
+                    <>
+                      <Row>
+                        <Controller
+                          control={control}
+                          name="design"
+                          render={({
+                            field: { onChange, value, ...field },
+                          }) => (
+                            <ToggleButtonGroup
+                              color="secondary"
+                              className="mb-4"
+                              size="large"
+                              value={design}
+                              onChange={(event, value) => {
+                                onChange(value);
+                                designHandler(event, value);
+                              }}
+                              {...field}
+                            >
+                              <ToggleButton value="dome">돔형</ToggleButton>
+                              <ToggleButton value="crescent">
+                                초승달형
+                              </ToggleButton>
+                              <ToggleButton value="wreath">리스형</ToggleButton>
+                            </ToggleButtonGroup>
+                          )}
+                        />
+                      </Row>
+                    </>
+                  ) : null}
+
                   <Controller
+                    name="design"
                     control={control}
-                    name="layer"
                     render={({ field: { onChange, value, ...field } }) => (
                       <ToggleButtonGroup
                         color="secondary"
-                        className="my-4"
+                        className="d-flex flex-wrap"
                         size="large"
-                        value={layer}
+                        value={design}
                         onChange={(event, value) => {
                           onChange(value);
-                          layerHandler(event, value);
+                          designHandler(event, value);
                         }}
-                        exclusive
                         {...field}
                       >
-                        <ToggleButton value="1">1층</ToggleButton>
-                        <ToggleButton value="2">2층</ToggleButton>
-                        <ToggleButton value="3">3층</ToggleButton>
+                        <ToggleButton value="figure">피규어</ToggleButton>
+                        <ToggleButton value="photo">포토</ToggleButton>
+                        <ToggleButton value="letter">레터링</ToggleButton>
+                        <ToggleButton value="money">돈</ToggleButton>
+                        <ToggleButton value="topper">토퍼</ToggleButton>
+                        <ToggleButton value="3D">3D</ToggleButton>
+                        <ToggleButton value="fresh_flower">생화</ToggleButton>
+                        <ToggleButton value="bouquet">꽃다발</ToggleButton>
+                        <ToggleButton value="tiara">티아라</ToggleButton>
+                        <ToggleButton value="party">파티</ToggleButton>
+                        <ToggleButton value="snack">과자</ToggleButton>
+                        <ToggleButton value="lotto">로또</ToggleButton>
+                        <ToggleButton value="duck">오리삼형제</ToggleButton>
                       </ToggleButtonGroup>
                     )}
                   />
                 </Col>
               </Row>
 
-              {ingredient === "rice" ? (
-                <>
-                  <Row>
-                    <Controller
-                      control={control}
-                      name="design"
-                      render={({ field: { onChange, value, ...field } }) => (
-                        <ToggleButtonGroup
-                          color="secondary"
-                          className="mb-4"
-                          size="large"
-                          value={design}
-                          onChange={(event, value) => {
-                            onChange(value);
-                            designHandler(event, value);
-                          }}
-                          {...field}
-                        >
-                          <ToggleButton value="dome">돔형</ToggleButton>
-                          <ToggleButton value="crescent">초승달형</ToggleButton>
-                          <ToggleButton value="wreath">리스형</ToggleButton>
-                        </ToggleButtonGroup>
-                      )}
+              <Row className="mb-5 px-3">
+                <Controller
+                  control={control}
+                  name="description"
+                  render={({ field }) => (
+                    <TextareaAutosize
+                      className="description_box"
+                      minRows={3}
+                      placeholder="설명글"
+                      {...field}
                     />
-                  </Row>
-                </>
-              ) : null}
-
-              <Controller
-                name="design"
-                control={control}
-                render={({ field: { onChange, value, ...field } }) => (
-                  <ToggleButtonGroup
-                    color="secondary"
-                    className="d-flex flex-wrap"
-                    size="large"
-                    value={design}
-                    onChange={(event, value) => {
-                      onChange(value);
-                      designHandler(event, value);
-                    }}
-                    {...field}
-                  >
-                    <ToggleButton value="figure">피규어</ToggleButton>
-                    <ToggleButton value="photo">포토</ToggleButton>
-                    <ToggleButton value="letter">레터링</ToggleButton>
-                    <ToggleButton value="money">돈</ToggleButton>
-                    <ToggleButton value="topper">토퍼</ToggleButton>
-                    <ToggleButton value="3D">3D</ToggleButton>
-                    <ToggleButton value="fresh_flower">생화</ToggleButton>
-                    <ToggleButton value="bouquet">꽃다발</ToggleButton>
-                    <ToggleButton value="tiara">티아라</ToggleButton>
-                    <ToggleButton value="party">파티</ToggleButton>
-                    <ToggleButton value="snack">과자</ToggleButton>
-                    <ToggleButton value="lotto">로또</ToggleButton>
-                    <ToggleButton value="duck">오리삼형제</ToggleButton>
-                  </ToggleButtonGroup>
-                )}
-              />
-            </Col>
-          </Row>
-
-          <Row className="mb-5 px-3">
-            <Controller
-              control={control}
-              name="description"
-              render={({ field }) => (
-                <TextareaAutosize
-                  className="description_box"
-                  minRows={3}
-                  placeholder="설명글"
-                  {...field}
+                  )}
                 />
-              )}
-            />
-          </Row>
+              </Row>
 
-          <Row>
-            <Col>
-              <Button
-                variant="contained"
-                type="submit"
-                style={{ height: "50px" }}
-              >
-                상품 업로드
-              </Button>
-            </Col>
-          </Row>
-        </ThemeProvider>
-      </form>
-    </Container>
+              <Row>
+                <Col>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    style={{ height: "50px" }}
+                  >
+                    상품 업로드
+                  </Button>
+                </Col>
+              </Row>
+            </ThemeProvider>
+          </form>
+        </Container>
+      )}
+    </>
   );
 }

@@ -20,7 +20,6 @@ const productReducer = (state = initialState, action) => {
         loading: false,
         ingredient: payload.ingredient,
         productsData: [...payload.productsData],
-        // productsData: [...state.productsData, ...payload.productsData],
         pageNum: payload.pageNum,
         hasMore: payload.hasMore,
       };
@@ -38,35 +37,17 @@ const productReducer = (state = initialState, action) => {
         hasMore: payload.hasMore,
       };
 
-    case "GET_ANOTHER_PRODUCTS_REQUEST":
-      return {
-        ...state,
-        loading: true,
-        productsData: [],
-        pageNum: 1,
-      };
+    case "GET_FORSALE_PRODUCTS_REQUEST":
+      return { ...state };
 
-    case "GET_ANOTHER_PRODUCTS_SUCCESS":
+    case "GET_FORSALE_PRODUCTS_SUCCESS":
       return {
         ...state,
         loading: false,
         ingredient: payload.ingredient,
         productsData: [...payload.productsData],
         pageNum: payload.pageNum,
-      };
-
-    case "HAS_MORE_PRODUCTS":
-      return {
-        ...state,
         hasMore: payload.hasMore,
-        moreCakesLoading: true,
-      };
-
-    case "NO_MORE_PRODUCT":
-      return {
-        ...state,
-        hasMore: false,
-        moreCakesLoading: false,
       };
 
     default:

@@ -13,7 +13,7 @@ const Subnav = ({ option }) => {
     subnav_items = [
       { title: "# 전체 보기", link: "" },
       { title: "# 돔 디자인", link: "?design=dome" },
-      { title: "# 크레센트 디자인", link: "?design=crescent" },
+      { title: "# 초승달 디자인", link: "?design=crescent" },
       { title: "# 리스 디자인", link: "?design=wreath" }, 
     ];
   }

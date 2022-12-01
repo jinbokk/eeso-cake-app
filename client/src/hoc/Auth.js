@@ -19,20 +19,19 @@ export default function Auth(SpecificComponent, option, adminRoute = null) {
     }, []);
 
     useEffect(() => {
-      console.log("authUserData", authUserData);
       if (authUserData && !authUserData.isAuth) {
         //로그인이 안되었는데,
-        console.log("authUserData.isAuth", authUserData.isAuth);
-
         if (option) {
           // 로그인한 유저만 출입 가능하다면
-          navigate(-1);
+          navigate("/login");
         }
       } else {
         if (adminRoute && authUserData && !authUserData.isAdmin) {
-          //로그인을 했고, 관리자라우트에 관리자가 접근하려는데 관리자가 아니라면,
-          navigate(-1);
+          // 로그인을 했고, 관리자라우트에 관리자가 접근하려는데 관리자가 아니라면,
+          navigate("/");
+          alert("관리자 전용 페이지 입니다");
         } else {
+          // 로그인을 했고, 로그인 한 유저는 접근 불가한 페이지로 가려고 한다면,
           if (option === false) {
             navigate(-1);
           }

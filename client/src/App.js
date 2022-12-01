@@ -9,6 +9,8 @@ import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Cakes from "./pages/Cakes";
+import Order from "./pages/Order";
+import ProductDetail from "./pages/ProductDetail";
 import GuideRice from "./pages/GuideRice";
 import GuideBread from "./pages/GuideBread";
 import Contact from "./pages/Contact";
@@ -27,10 +29,12 @@ function App() {
   const AuthHome = Auth(Home, null);
   const AuthAbout = Auth(About, null);
   const AuthCakes = Auth(Cakes, null);
+  const AuthOrder = Auth(Order, null);
+  const AuthProductDetail = Auth(ProductDetail, null);
   const AuthGuideRice = Auth(GuideRice, null);
   const AuthGuideBread = Auth(GuideBread, null);
   const AuthContact = Auth(Contact, null);
-  const AuthUploadProduct = Auth(UploadProduct, true);
+  const AuthUploadProduct = Auth(UploadProduct, true, true);
 
   // sessionStorage (플리커링을 없애기 위해 useLayoutEffect 사용)
   const [isLandingPageView, setIsLandingPageView] = useState(false);
@@ -63,6 +67,12 @@ function App() {
               <Route exact path="/register" element={<AuthRegister />} />
               <Route exact path="/about" element={<AuthAbout />} />
               <Route exact path="/cakes/:ingredient" element={<AuthCakes />} />
+              <Route exact path="/order/list" element={<AuthOrder />} />
+              <Route
+                exact
+                path="/order/detail"
+                element={<AuthProductDetail />}
+              />
               <Route exact path="/guide/rice" element={<AuthGuideRice />} />
               <Route exact path="/guide/bread" element={<AuthGuideBread />} />
               <Route exact path="/contact" element={<AuthContact />} />

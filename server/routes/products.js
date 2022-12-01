@@ -76,15 +76,45 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   });
 });
 
+// CAKES PAGE
 router.get("/cakes/:ingredient", async (req, res) => {
   let { ingredient } = req.params;
   let { design } = req.query;
 
   let query;
-  if (design) {
+  if (ingredient === "all") {
+    query = {};
+  } else {
+    if (design) {
+      query = {
+        ingredient: ingredient,
+        design: design,
+      };
+    } else {
+      query = {
+        ingredient: ingredient,
+      };
+    }
+  }
+
+  const option = {
+    page: parseInt(req.query.page) || Number(1),
+    limit: 30,
+  };
+
+  const results = await Product.paginate(query, option);
+
+  return res.status(200).json(results);
+});
+
+// ORDER PAGE
+router.get("/order/list/:ingredient", async (req, res) => {
+  let { ingredient } = req.params;
+
+  let query;
+  if (ingredient === "all") {
     query = {
-      ingredient: ingredient,
-      design: design,
+      price: { $ne: null },
     };
   } else {
     query = {
@@ -97,52 +127,22 @@ router.get("/cakes/:ingredient", async (req, res) => {
     limit: 30,
   };
 
-  const test = await Product.paginate(query, option);
+  const results = await Product.paginate(query, option);
 
-  return res.status(200).json(test);
+  return res.status(200).json(results);
 });
 
-// router.get("/cakes/:ingredient", (req, res) => {
-//   let { ingredient } = req.params;
-//   let { design } = req.query;
-//   let page = parseInt(req.query.page) || Number(1);
+router.get("/order/detail", async (req, res) => {
+  let productId = req.query;
 
-//   let option;
-//   if (design) {
-//     option = {
-//       ingredient: ingredient,
-//       design: design,
-//     };
-//   } else {
-//     option = {
-//       ingredient: ingredient,
-//     };
-//   }
+  console.log("productID::::::", productId);
 
-//   let limit = 30;
-//   let skip;
-//   if (page === Number(1)) {
-//     skip = 0;
-//   } else {
-//     skip = parseInt(page * limit - limit);
-//   }
-
-//   Product.find(option)
-//     // .sort({ createdAt: -1 })
-//     .skip(skip)
-//     .limit(limit)
-//     .exec((err, results) => {
-//       if (err) {
-//         return res.status(400).json({ success: false, err });
-//       } else {
-//         return res.status(200).json({
-//           success: true,
-//           productInfo: results,
-//           page: page,
-//           limit: limit,
-//         });
-//       }
-//     });
-// });
+  Product.find({ _id: productId }).exec((err, productDetail) => {
+    if (err) return res.status(400).send(err);
+    return res
+      .status(200)
+      .send({ success: true, productDetail: productDetail });
+  });
+});
 
 module.exports = router;

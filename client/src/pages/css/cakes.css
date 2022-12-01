@@ -1,15 +1,7 @@
-/* .cakes_page_container {
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: var(--main-font);
-} */
-
 .images_container {
   width: 100%;
   margin: 0 auto;
+  position: relative;
 }
 
 .cake_image {
@@ -29,15 +21,86 @@
   transition: 0.2s;
 }
 
+.design_tag_container {
+  position: absolute;
+  z-index: 10;
+  width: calc(100% - 20px);
+  text-align: center;
+}
+
+.design_tag {
+  display: inline-block;
+  position: relative;
+  bottom: 55px;
+  background-color: var(--bg-accent);
+  border-radius: 1rem;
+  padding: 0 0.8rem;
+  margin: 0 0.5rem;
+  color: var(--bg);
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  transform: translateY(10px);
+}
+
+.cake_image:hover ~ .design_tag_container > .design_tag {
+  opacity: 1;
+  transition: 0.3s;
+  transform: translateY(0);
+}
+
+.modal-content {
+  background-color: var(--bg) !important;
+}
+
+.modal-body {
+  padding: 0 !important;
+}
+
 .modal_cake_image {
-  height: 100%;
   width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(10px 10px 10px rgb(0, 0, 0, 0.3));
+  height: 100%;
+}
+
+.modal_design_tag_container {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 
 .modal_design_tag {
-  margin: 10px;
-  color: var(--bg-accent);
-  font-size: 1.3rem;
+  display: inline-block;
+  position: relative;
+  bottom: 70px;
+  background-color: var(--bg-accent);
+  border-radius: 1rem;
+  padding: 0.1rem 1.2rem;
+  margin: 0 1rem;
+  color: var(--bg);
+  font-size: 1.2rem;
+  pointer-events: none;
+  animation: fadeIn 0.4s ease-in;
+}
+
+@media screen and (max-width: 992px) {
+  .design_tag {
+    display: none;
+  }
+  .modal_design_tag {
+    bottom: 50px;
+    padding: 0 1rem;
+    font-size: 0.5rem;
+  }
 }
