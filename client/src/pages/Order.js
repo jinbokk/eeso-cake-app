@@ -4,8 +4,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 
 import Loading from "../components/Loading";
-import { productActions } from "../redux/actions/productActions";
-
+import { forSaleProductAction } from "../redux/actions/forSaleProductAction";
 import "./css/order.css";
 
 const Order = () => {
@@ -13,22 +12,14 @@ const Order = () => {
 
   const isFirstRun = useRef(true);
   const { ingredient } = useParams();
-  const { loading, moreCakesLoading, productsData, hasMore } = useSelector(
-    (state) => state.product
+  const { loading, forSale_productsData } = useSelector(
+    (state) => state.forSaleProduct
   );
 
   useEffect(() => {
-    let option = {
-      ingredient: "all",
-    };
-
-    dispatch(productActions.getForSaleProducts(option));
+    dispatch(forSaleProductAction.getForSaleProducts());
     isFirstRun.current = false;
   }, []);
-
-  const productCardHandler = (event, card) => {
-    console.log(card);
-  };
 
   return (
     <div className="pt-5">
@@ -41,7 +32,7 @@ const Order = () => {
       ) : (
         <Container>
           <Row>
-            {productsData.map((item, index) => (
+            {forSale_productsData.map((item, index) => (
               <Col
                 xs={12}
                 sm={6}
@@ -50,7 +41,7 @@ const Order = () => {
                 className="align-items-start justify-content-start"
                 key={index}
               >
-                <a className="my-3 product_card" href={`/detail?id=${item._id}`}>
+                <a className="my-3 product_card" href={`detail?id=${item._id}`}>
                   <img
                     src={item.image_url}
                     alt=""

@@ -86,7 +86,7 @@ function getForSaleProducts(option) {
         dispatch({
           type: "GET_FORSALE_PRODUCTS_SUCCESS",
           payload: {
-            productsData: res.data.docs,
+            forSale_productsData: res.data.docs,
             hasMore: hasMore,
           },
         });

@@ -3,6 +3,7 @@ let initialState = {
   moreCakesLoading: false,
   ingredient: null,
   productsData: [],
+  forSale_productsData: [],
   pageNum: 1,
   hasMore: false,
 };
@@ -33,19 +34,6 @@ const productReducer = (state = initialState, action) => {
         loading: false,
         ingredient: payload.ingredient,
         productsData: [...state.productsData, ...payload.productsData],
-        pageNum: payload.pageNum,
-        hasMore: payload.hasMore,
-      };
-
-    case "GET_FORSALE_PRODUCTS_REQUEST":
-      return { ...state };
-
-    case "GET_FORSALE_PRODUCTS_SUCCESS":
-      return {
-        ...state,
-        loading: false,
-        ingredient: payload.ingredient,
-        productsData: [...payload.productsData],
         pageNum: payload.pageNum,
         hasMore: payload.hasMore,
       };

@@ -6,6 +6,7 @@ const Product = require("../models/Product");
 const cloudinary = require("../middleware/cloudinary.js");
 const multer = require("multer");
 const fs = require("fs");
+const ObjectId = require("mongodb").ObjectId;
 
 if (!fs.existsSync("./temp")) {
   fs.mkdirSync("./temp");
@@ -108,19 +109,23 @@ router.get("/cakes/:ingredient", async (req, res) => {
 });
 
 // ORDER PAGE
-router.get("/order/list/:ingredient", async (req, res) => {
-  let { ingredient } = req.params;
+router.get("/order/list", async (req, res) => {
+  // let { ingredient } = req.params;
 
-  let query;
-  if (ingredient === "all") {
-    query = {
-      price: { $ne: null },
-    };
-  } else {
-    query = {
-      ingredient: ingredient,
-    };
-  }
+  // let query;
+  // if (ingredient === "all") {
+  //   query = {
+  //     price: { $ne: null },
+  //   };
+  // } else {
+  //   query = {
+  //     ingredient: ingredient,
+  //   };
+  // }
+
+  let query = {
+    price: { $ne: null },
+  };
 
   const option = {
     page: parseInt(req.query.page) || Number(1),
@@ -134,14 +139,15 @@ router.get("/order/list/:ingredient", async (req, res) => {
 
 router.get("/order/detail", async (req, res) => {
   let productId = req.query;
+  let o_id = new ObjectId(productId);
 
   console.log("productID::::::", productId);
 
-  Product.find({ _id: productId }).exec((err, productDetail) => {
+  Product.find({ _id: o_id }).exec((err, productDetail) => {
     if (err) return res.status(400).send(err);
     return res
       .status(200)
-      .send({ success: true, productDetail: productDetail });
+      .send({ success: true, productDetail: productDetail[0] });
   });
 });
 
