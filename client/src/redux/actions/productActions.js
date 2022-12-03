@@ -11,6 +11,7 @@ function getProducts(option) {
         }`
       )
       .then((res) => {
+        console.log("res:::::", res);
         console.log("res.data:::::", res.data);
 
         let hasMore;
