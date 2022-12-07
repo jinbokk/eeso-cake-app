@@ -1,6 +1,6 @@
 {
-  "name": "eeso-cake-app",
-  "version": "0.1.0",
+  "name": "eeso-cake-client",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -17,6 +17,7 @@
     "gsap": "^3.11.3",
     "http-proxy-middleware": "^2.0.6",
     "install": "^0.13.0",
+    "node-fetch": "^3.3.0",
     "npm": "^9.1.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
@@ -64,5 +65,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:4000"
 }
