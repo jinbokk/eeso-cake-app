@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
+const m2s = require("mongoose-to-swagger");
 
 const productSchema = new mongoose.Schema(
   {
@@ -20,3 +21,5 @@ const productSchema = new mongoose.Schema(
 productSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("Product", productSchema);
+const swaggerSchema = m2s(mongoose.model("Product", productSchema));
+console.log(swaggerSchema);
