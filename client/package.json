@@ -21,6 +21,7 @@
     "node-fetch": "^3.3.0",
     "npm": "^9.2.0",
     "react": "^18.2.0",
+    "react-scripts": "^5.0.1",
     "react-bootstrap": "^2.7.0",
     "react-countup": "^6.4.0",
     "react-dom": "^18.2.0",
@@ -39,9 +40,6 @@
     "redux-thunk": "^2.4.2",
     "swiper": "^8.4.5",
     "web-vitals": "^3.1.0"
-  },
-  "devDependencies": {
-    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
