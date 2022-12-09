@@ -2,7 +2,6 @@ import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./reducers/index";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import storage from "redux-persist/lib/storage";
 import storageSession from "redux-persist/lib/storage/session";
 import persistReducer from "redux-persist/es/persistReducer";
 
@@ -16,7 +15,7 @@ const persistConfig = {
   version: 1,
   // localStorage에 저장합니다.
   // sessionStorage에 저장합니다.
-  storage: storage,
+  storage: storageSession,
   // reducer 중에 "특정" reducer만 localstorage에 저장합니다.
   // whitelist: ["특정"]
   whitelist: ["user"],
