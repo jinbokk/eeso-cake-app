@@ -9,6 +9,9 @@ const cookieParser = require("cookie-parser");
 const createError = require("http-errors");
 const logger = require("morgan");
 
+// const refreshToken = require("./middleware/tokenRefresher");
+// refreshToken();
+
 const app = express();
 
 // view engine setup
