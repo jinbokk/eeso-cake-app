@@ -23,7 +23,7 @@ const Instagram = () => {
 
   const { width, height } = useWindowDimensions();
 
-  const { instaLoading, userProfileData, userFeedsData } = useSelector(
+  const { loading, media_count, feedData } = useSelector(
     (state) => state.instagram
   );
 
@@ -38,7 +38,7 @@ const Instagram = () => {
       <Row className="sub_banner_container w-75 m-auto d-flex justify-content-center align-items-center">
         <h2 style={{ textAlign: "center" }}>- 이소케이크 인스타그램 -</h2>
 
-        {instaLoading ? (
+        {loading ? (
           <Loading
             width={"100vw"}
             height={"100vh"}
@@ -53,7 +53,7 @@ const Instagram = () => {
               <Col sm={12} lg={"auto"} className="text-nowrap">
                 <CountUp
                   start={1}
-                  end={userProfileData.media_count}
+                  end={media_count}
                   duration={3}
                   suffix=" 개"
                   useEasing={true}
@@ -79,7 +79,7 @@ const Instagram = () => {
                 loop={true}
                 className="custom_swiper_container"
               >
-                {userFeedsData.data.map((item, index) => (
+                {feedData.map((item, index) => (
                   <SwiperSlide
                     key={index}
                     className="d-flex justify-content-center"
@@ -110,7 +110,7 @@ const Instagram = () => {
               </Swiper>
             ) : (
               <div className="instaFeed_container_top">
-                {userFeedsData.data.map((item, index) => {
+                {feedData.map((item, index) => {
                   if (item.children) {
                     return (
                       <a

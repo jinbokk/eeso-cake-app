@@ -1,40 +1,45 @@
-import { RenderAfterNavermapsLoaded, NaverMap, Marker } from "react-naver-maps";
-import React from "react";
-
+import React, { useEffect } from "react";
 import "./css/map.css";
 
 const Map = () => {
+  const { naver } = window;
+
+  useEffect(() => {
+    const container = document.getElementById("map"); // 지도를 표시할 div
+
+    const position = new naver.maps.LatLng(
+      37.73715829851119,
+      127.08922349318145
+    );
+    const mapOptions = {
+      center: position,
+      zoom: 17,
+      minZoom: 6,
+      // zoomControl: true,
+      // zoomControlOptions: {
+      //   position: naver.maps.Position.TOP_RIGHT,
+      // },
+    };
+
+    const map = new naver.maps.Map(container, mapOptions);
+
+    const markerOptions = {
+      position: new naver.maps.LatLng(37.736626531464026, 127.09147039297518),
+      map: map,
+      icon: {
+        url: "icons/map_icon.png",
+        origin: new naver.maps.Point(0, 0),
+      },
+      animation: naver.maps.Animation.BOUNCE,
+    };
+
+    const marker = new naver.maps.Marker(markerOptions);
+  }, []);
+
   return (
-    <RenderAfterNavermapsLoaded
-      ncpClientId={process.env.REACT_APP_NAVER_CLIENT_ID}
-      error={<p>Maps Load Error</p>}
-      loading={<p>Maps Loading...</p>}
-    >
-      <NaverMap
-        mapDivId={"maps-getting-started-uncontrolled"} // default: react-naver-map
-        style={{
-          height: "400px",
-          margin: "25px 0",
-        }}
-        defaultCenter={{ lat: 37.73715829851119, lng: 127.08922349318145 }}
-        defaultZoom={17}
-        // scaleControl={true}
-        // logoControl={true}
-        mapDataControl={true}
-        // zoomControl={true}
-        mapTypeControl={true}
-        borderWidth={0}
-      >
-        <Marker
-          position={{ lat: 37.736626531464026, lng: 127.09147039297518 }}
-          animation={1}
-          icon={{
-            url: "/icons/map_icon.png",
-            size: { width: 100, height: 110 },
-          }}
-        />
-      </NaverMap>
-    </RenderAfterNavermapsLoaded>
+    <div>
+      <div id="map" style={{ width: "100%", height: "600px" }}></div>
+    </div>
   );
 };
 

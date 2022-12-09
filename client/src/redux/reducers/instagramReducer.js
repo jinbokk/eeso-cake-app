@@ -1,7 +1,7 @@
 let initialState = {
-  instaLoading: true,
-  userProfileData: undefined,
-  userFeedsData: undefined,
+  loading: true,
+  media_count: undefined,
+  feedData: undefined,
 };
 
 const instagramReducer = (state = initialState, action) => {
@@ -14,9 +14,9 @@ const instagramReducer = (state = initialState, action) => {
     case "GET_INSTA_DATA_SUCCESS":
       return {
         ...state,
-        instaLoading: false,
-        userProfileData: payload.userProfileJson.data,
-        userFeedsData: payload.userFeedsJson.data,
+        loading: false,
+        media_count: payload.profileJson.media_count,
+        feedData: payload.feedJson.data,
       };
 
     default:

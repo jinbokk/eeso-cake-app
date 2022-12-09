@@ -20,7 +20,7 @@ li {
   align-items: center;
   position: fixed;
   top: 0;
-  z-index: 100;
+  z-index: 10000;
   background-color: var(--bg);
   font-family: var(--nav-font);
   font-size: var(--nav-font-size);

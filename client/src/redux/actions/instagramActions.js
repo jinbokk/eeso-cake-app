@@ -1,38 +1,38 @@
 import axios from "axios";
 
-const api_instagram = axios.create({
-  baseURL: process.env.REACT_APP_INSTAGRAM_API_BASE_URL,
-  headers: { "Content-Type": "application/json" },
-});
-
-
 function getInstaData() {
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_INSTA_DATA_REQUEST" });
 
-      const getUserProfile = api_instagram.get(
-        `/me?fields=media_count&access_token=${process.env.REACT_APP_INSTAGRAM_API_ACCESS_TOKEN}`
-      );
+      const getProfileData = axios
+        .get(`/api/instagram/profile`)
+        .then((res) => res.data.data);
 
-      const getUserFeeds = api_instagram.get(
-        `/me/media?fields=caption,media_url,permalink,timestamp,children{media_url}&limit=12&access_token=${process.env.REACT_APP_INSTAGRAM_API_ACCESS_TOKEN}`
-      );
+      const getFeedData = axios
+        .get(`/api/instagram/feed`)
+        .then((res) => res.data.data);
 
-      const [userProfileJson, userFeedsJson] = await Promise.all([
-        getUserProfile,
-        getUserFeeds,
+      const [profileDataJson, feedJson] = await Promise.all([
+        getProfileData,
+        getFeedData,
       ]);
+
+      console.log("1", profileDataJson);
+      console.log("1", feedJson);
 
       dispatch({
         type: "GET_INSTA_DATA_SUCCESS",
         payload: {
-          userProfileJson: userProfileJson,
-          userFeedsJson: userFeedsJson,
+          profileJson: profileDataJson,
+          feedJson: feedJson,
         },
       });
+
+      console.log("2", profileDataJson);
+      console.log("2", feedJson);
     } catch (error) {
-      dispatch({ type: "GET_INSTA_DATA_FAILURE", payload: { error } });
+      console.log(error);
     }
   };
 }

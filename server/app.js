@@ -44,6 +44,10 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpec));
 app.use("/api", require("./routes/api"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/products", require("./routes/products"));
+app.use("/api/instagram", require("./routes/instagram"));
+
+// const instaApiBaseURL = process.env.INSTAGRAM_API_BASE_URL;
+// app.use(instaApiBaseURL, require("./routes/instagram"));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

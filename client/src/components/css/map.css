@@ -1,6 +1,9 @@
-#react-naver-map {
-  outline: none;
+#map {
   border-radius: 2%;
-  opacity: 0.8;
+  opacity: 0.9;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+}
+
+#map:focus-visible {
+  outline: none;
 }
