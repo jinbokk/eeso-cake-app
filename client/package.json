@@ -1,7 +1,6 @@
 {
   "name": "eeso-cake-client",
   "version": "0.0.0",
-  "homepage": "eeso-cake.com",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
