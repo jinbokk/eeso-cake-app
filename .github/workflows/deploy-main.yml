@@ -1,7 +1,7 @@
 name: remote ssh command for deploy
 on:
   push:
-    branches: [master]
+    branches: [ master ]
 jobs:
   build:
     name: Build
@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: executing remote ssh commands using key
         uses: appleboy/ssh-action@master
+        debug: true
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
