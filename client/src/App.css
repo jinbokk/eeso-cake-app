@@ -7,24 +7,6 @@
   font-display: block;
 }
 
-/* @font-face {
-  font-family: "GmarketSans";
-  src: url("/public/fonts/GmarketSansTTFMedium.woff2") format("woff2"),
-    url("/public/fonts/GmarketSansTTFMedium.woff") format("woff");
-  font-weight: 500;
-  font-style: normal;
-  font-display: block;
-} */
-
-/* @font-face {
-  font-family: "Cafe24Simplehae";
-  src: url("/public/fonts/Cafe24Simplehae.woff2") format("woff2"),
-    url("/public/fonts/Cafe24Simplehae.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-} */
-
 @font-face {
   font-family: "MoodyAdolescent";
   src: url("/public/fonts/MoodyAdolescent-Regular.woff2") format("woff2"),
@@ -60,42 +42,6 @@
   font-style: normal;
   font-display: block;
 }
-
-/* @font-face {
-  font-family: "S-Core Dream 4";
-  src: url("/public/fonts/S-CoreDream-4Regular.woff2") format("woff2"),
-    url("/public/fonts/S-CoreDream-4Regular.woff") format("woff");
-  font-weight: 200;
-  font-style: normal;
-  font-display: block;
-} */
-
-/* @font-face {
-  font-family: "Ownglyph";
-  src: url("/public/fonts/OwnglyphMinhyeChae.woff2") format("woff2"),
-    url("/public/fonts/OwnglyphMinhyeChae.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-} */
-
-/* @font-face {
-  font-family: "VITRO INSPIRE TTF";
-  src: url("/public/fonts/VITRO-INSPIRE-TTF.woff2") format("woff2"),
-    url("/public/fonts/VITRO-INSPIRE-TTF.woff") format("woff");
-  font-weight: 900;
-  font-style: normal;
-  font-display: block;
-} */
-
-/* @font-face {
-  font-family: "VITRO PRIDE TTF";
-  src: url("/public/fonts/VITRO-PRIDE-TTF.woff2") format("woff2"),
-    url("/public/fonts/VITRO-PRIDE-TTF.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-} */
 
 html,
 body {
