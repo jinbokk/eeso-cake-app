@@ -151,7 +151,7 @@ const Footer = () => {
             <Col lg={4} className="px-3">
               <div className="info_title mb-2">
                 <img
-                  src="/icons/footer/person_2.png"
+                  src="/icons/footer/person.png"
                   alt=""
                   className="info_icon"
                 />
