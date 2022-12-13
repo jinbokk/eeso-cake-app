@@ -13,7 +13,7 @@ const productReducer = (state = initialState, action) => {
 
   switch (type) {
     case "GET_PRODUCTS_REQUEST":
-      return { ...state };
+      return { ...state, loading: true, productsData: [] };
 
     case "GET_PRODUCTS_SUCCESS":
       return {
@@ -26,7 +26,7 @@ const productReducer = (state = initialState, action) => {
       };
 
     case "GET_MORE_PRODUCTS_REQUEST":
-      return { ...state };
+      return { ...state, moreCakesLoading: true };
 
     case "GET_MORE_PRODUCTS_SUCCESS":
       return {
@@ -36,6 +36,7 @@ const productReducer = (state = initialState, action) => {
         productsData: [...state.productsData, ...payload.productsData],
         pageNum: payload.pageNum,
         hasMore: payload.hasMore,
+        moreCakesLoading: false,
       };
 
     default:

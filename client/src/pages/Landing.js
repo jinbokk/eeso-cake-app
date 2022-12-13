@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper";
+import { motion } from "framer-motion";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -66,7 +66,11 @@ const Landing = (props) => {
   }, []);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <Container ref={el} className="landing_container">
         <Row className="row_1 justify-content-center align-items-center">
           <Col
@@ -172,7 +176,7 @@ const Landing = (props) => {
           </Col>
         </Row>
       </Container> */}
-    </>
+    </motion.div>
   );
 };
 

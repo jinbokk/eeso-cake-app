@@ -14,7 +14,7 @@ const Subnav = ({ option }) => {
       { title: "# 전체 보기", link: "" },
       { title: "# 돔 디자인", link: "?design=dome" },
       { title: "# 초승달 디자인", link: "?design=crescent" },
-      { title: "# 리스 디자인", link: "?design=wreath" }, 
+      { title: "# 리스 디자인", link: "?design=wreath" },
     ];
   }
 
@@ -52,43 +52,45 @@ const Subnav = ({ option }) => {
 
   return (
     <>
-      <Container className="filter_container">
-        {subnav_items.map((item, index) => (
-          <NavLink
-            to={item.link}
-            key={index}
-            className="filter_button"
-            style={
-              ({ isActive }) => {
-                if (item.link.split("=")[1]) {
-                  return isActive && query === item.link.split("=")[1]
-                    ? activeStyle
-                    : null;
-                } else {
-                  return isActive && query === null ? activeStyle : null;
+      <Container className="filter_container_top">
+        <div className="filter_container">
+          {subnav_items.map((item, index) => (
+            <NavLink
+              to={item.link}
+              key={index}
+              className="filter_button"
+              style={
+                ({ isActive }) => {
+                  if (item.link.split("=")[1]) {
+                    return isActive && query === item.link.split("=")[1]
+                      ? activeStyle
+                      : null;
+                  } else {
+                    return isActive && query === null ? activeStyle : null;
+                  }
                 }
+                // {
+                //   if (isActive && query === item.link.split("=")[1]) {
+                //     return activeStyle;
+                //   } else if (isActive && query === null) {
+                //     return activeStyle;
+                //   }
+                // }
+
+                // isActive && query === item.link.split("=")[1] ? activeStyle : null
               }
-              // {
-              //   if (isActive && query === item.link.split("=")[1]) {
-              //     return activeStyle;
-              //   } else if (isActive && query === null) {
-              //     return activeStyle;
+
+              // onClick={(e) => {
+              //   console.log(e.target.href.split("=")[1]);
+              //   if (e.target.href.split("=")[1] === activeQuery) {
+              //     console.log("querry correct");
               //   }
-              // }
-
-              // isActive && query === item.link.split("=")[1] ? activeStyle : null
-            }
-
-            // onClick={(e) => {
-            //   console.log(e.target.href.split("=")[1])navli;
-            //   if (e.target.href.split("=")[1] === activeQuery) {
-            //     console.log("querry correct");
-            //   }
-            // }}
-          >
-            {item.title}
-          </NavLink>
-        ))}
+              // }}
+            >
+              {item.title}
+            </NavLink>
+          ))}
+        </div>
       </Container>
     </>
   );

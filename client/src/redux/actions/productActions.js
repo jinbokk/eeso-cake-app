@@ -1,10 +1,5 @@
 import axios from "axios";
 
-const headers = {
-  "Accept": "application/json",
-  "Content-Type": "application/json",
-};
-
 function getProducts(option) {
   return async (dispatch) => {
     dispatch({ type: "GET_PRODUCTS_REQUEST" });
@@ -13,8 +8,7 @@ function getProducts(option) {
       .get(
         `/api/products/cakes/${option.ingredient}${
           option.design ? `?design=${option.design}` : ""
-        }`,
-        headers
+        }`
       )
       .then((res) => {
         console.log("res:::::", res);
@@ -49,8 +43,7 @@ function getMoreProducts(option) {
           option.design && option.page
             ? `&page=${option.page}`
             : `?page=${option.page}`
-        }`,
-        headers
+        }`
       )
       .then((res) => {
         console.log("res.data:::::", res.data);
@@ -78,7 +71,7 @@ function getForSaleProducts(option) {
     dispatch({ type: "GET_FORSALE_PRODUCTS_REQUEST" });
 
     axios
-      .get(`/api/products/order/${option.ingredient}`, headers)
+      .get(`/api/products/order/${option.ingredient}`)
       .then((res) => {
         console.log("res.data:::::", res.data);
 

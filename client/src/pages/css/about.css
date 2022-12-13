@@ -12,6 +12,7 @@
 .about_text_container {
   padding: 20px;
   line-height: 40px;
+  text-align: center;
 }
 
 .text_accent {

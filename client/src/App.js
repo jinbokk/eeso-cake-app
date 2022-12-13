@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useState, useLayoutEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -52,6 +53,8 @@ function App() {
     }
   }, [isLandingPageView]);
 
+  const location = useLocation();
+
   return (
     <>
       {!isLandingPageView ? (
@@ -61,7 +64,7 @@ function App() {
           <Suspense fallback={<Loading />}>
             <Navbar />
             <Sidebar />
-            <Routes>
+            <Routes location={location} key={location.pathname}>
               <Route exact path="/" element={<AuthHome />} />
               <Route exact path="/login" element={<AuthLogin />} />
               <Route exact path="/register" element={<AuthRegister />} />

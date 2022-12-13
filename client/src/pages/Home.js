@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useWindowDimensions from "../hooks/useWindowDimensions";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -29,9 +32,86 @@ const Home = () => {
 
   const { width, height } = useWindowDimensions();
 
+  const ref = useRef(null);
+  gsap.registerPlugin(ScrollTrigger);
+
+  useEffect(() => {
+    const element = ref.current;
+    gsap.fromTo(
+      element.querySelector(".gsap_first"),
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: element.querySelector(".gsap_first"),
+          start: "top center",
+          // markers: true,
+          // end: "bottom center",
+          // scrub: false,
+        },
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    const element = ref.current;
+    gsap.fromTo(
+      element.querySelector(".gsap_second"),
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: element.querySelector(".gsap_second"),
+          // markers: true,
+          start: "top center",
+          end: "bottom center",
+          // scrub: false,
+        },
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    const element = ref.current;
+    gsap.fromTo(
+      element.querySelector(".gsap_third"),
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: element.querySelector(".gsap_third"),
+          // markers: true,
+          start: "top center",
+          end: "bottom center",
+          // scrub: false,
+        },
+      }
+    );
+  }, []);
+
   return (
-    <>
-      <Container fluid className="home_container_top">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ ease: "easeOut", duration: 0.5 }}
+      exit={{ opacity: 0, y: "-20px" }}
+    >
+      <Container fluid className="home_container_top" ref={ref}>
         <Row className="main_banner_container m-0">
           <Col>
             <div className="main_banner_text">
@@ -68,7 +148,7 @@ const Home = () => {
           </Col>
         </Row>
 
-        <Row>
+        <Row className="gsap_first">
           <Col className="my-3">
             <hr data-content="고객님을 위한 다양한 케이크가 준비되어 있습니다" />
           </Col>
@@ -103,7 +183,10 @@ const Home = () => {
                           className="d-flex justify-content-center"
                         >
                           <img
-                            src={item.image_url}
+                            src={item.image_url.replace(
+                              "upload/",
+                              "upload/q_50/"
+                            )}
                             alt=""
                             className="home_swiper_image"
                           />
@@ -115,15 +198,17 @@ const Home = () => {
               </Col>
             </>
           ) : (
-            <Container className="home_cakes_image_container">
+            <Container>
               <Row>
-                {productsData.slice(0, 19).map((item, index) => (
+                {productsData.slice(0, 18).map((item, index) => (
                   <Col
-                    className="d-flex justify-content-center m-0"
+                    md={3}
+                    lg={2}
+                    className="home_cakes_image_container p-2"
                     key={index}
                   >
                     <img
-                      src={item.image_url}
+                      src={item.image_url.replace("upload/", "upload/q_50/")}
                       alt=""
                       className="home_cakes_image"
                     />
@@ -135,58 +220,63 @@ const Home = () => {
         </Row>
 
         <Row>
-          <Col className="my-3">
-            <hr data-content="건강하게, 맛있게" />
-          </Col>
-        </Row>
+          <Row>
+            <Col className="my-3">
+              <hr data-content="건강하게, 맛있게" />
+            </Col>
+          </Row>
 
-        <Row className="sub_banner_container_top mx-0">
-          <Col lg={7} className="p-0 mb-3">
-            <img
-              src="/images/home_sub_banner.jpg"
-              alt=""
-              className="sub_banner_image"
-            />
-          </Col>
+          <Row className="sub_banner_container_top mx-0 gsap_second">
+            <Col lg={7} className="p-0 mb-3">
+              <img
+                src="/images/home_sub_banner.jpg"
+                alt=""
+                className="sub_banner_image"
+              />
+            </Col>
 
-          <Col lg={5} className="d-flex flex-column my-3">
-            <Row className="d-flex flex-column">
-              <Col className="justify-content-center">
-                <div className="underline">케이크도 건강해야 합니다</div>
-              </Col>
+            <Col lg={5} className="d-flex flex-column my-3">
+              <Row className="d-flex flex-column">
+                <Col className="justify-content-center">
+                  <div className="underline">케이크도 건강해야 합니다</div>
+                </Col>
 
-              <Col className="d-flex flex-row justify-content-around my-5">
-                <div className="d-flex flex-column align-items-center">
-                  <div className="sub_banner_text_lg">無</div>
-                  <div className="sub_banner_text_sm">합성제</div>
-                </div>
+                <Col className="d-flex flex-row justify-content-center my-5">
+                  <div className="d-flex flex-column align-items-center mx-4">
+                    <div className="sub_banner_text_lg">無</div>
+                    <div className="sub_banner_text_sm">합성제</div>
+                  </div>
 
-                <div className="d-flex flex-column align-items-center">
-                  <div className="sub_banner_text_lg">無</div>
-                  <div className="sub_banner_text_sm">보존제</div>
-                </div>
+                  <div className="d-flex flex-column align-items-center mx-4">
+                    <div className="sub_banner_text_lg">無</div>
+                    <div className="sub_banner_text_sm">보존제</div>
+                  </div>
 
-                <div className="d-flex flex-column align-items-center">
-                  <div className="sub_banner_text_lg">無</div>
-                  <div className="sub_banner_text_sm">유화제</div>
-                </div>
-              </Col>
+                  <div className="d-flex flex-column align-items-center mx-4">
+                    <div className="sub_banner_text_lg">無</div>
+                    <div className="sub_banner_text_sm">유화제</div>
+                  </div>
+                </Col>
 
-              <Col className="text-center">
-                <div className="sub_banner_text_sm">
-                  이소케이크에서는, 합성제 보존제 유화제 등을 사용하지 않고
-                </div>
-                <div className="sub_banner_text_sm">
-                  수시로 갓 구워낸 시트와 유생크림만을 사용합니다
-                </div>
-              </Col>
-            </Row>
-          </Col>
+                <Col className="text-center">
+                  <div className="sub_banner_text_sm">
+                    이소케이크에서는, 합성제 보존제 유화제 등을 사용하지 않고
+                  </div>
+                  <div className="sub_banner_text_sm">
+                    수시로 갓 구워낸 시트와 유생크림만을 사용합니다
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Row>
       </Container>
 
-      <Instagram />
-    </>
+      <Row className="gsap_third">
+        <hr data-content="이소케이크 인스타그램" />
+        <Instagram css />
+      </Row>
+    </motion.div>
   );
 };
 

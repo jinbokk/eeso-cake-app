@@ -3,6 +3,9 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
 import { Container, Row, Col } from "react-bootstrap";
+import { MdLooksOne } from "react-icons/md";
+import { MdLooksTwo } from "react-icons/md";
+import { motion } from "framer-motion";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -26,11 +29,16 @@ const GuideBread = () => {
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: "20px" }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ ease: "easeOut", duration: 0.5 }}
+      exit={{ opacity: 0, y: "-20px" }}
+    >
       <Container className="guide_container w-60 p-5">
         <Row>
           <Col className="text-center">
-            <h1 className="mb-4 guide_title">빵 케이크 가이드</h1>
+            <h1 className="mb-5 guide_title">빵 케이크 가이드</h1>
             <h3 className="mb-4 guide_sub_title">
               심플한 레터링 케이크부터 귀여운 피규어 케이크, 먹을 수 있는 포토
               케이크까지
@@ -226,15 +234,17 @@ const GuideBread = () => {
             md={12}
             className="d-flex flex-column justify-content-center align-items-center text-center"
           >
-            <p>
-              <div>택 1 ) </div>
-              <div>바닐라 빵시트 / 생크림 샌드 ( 기본형 )</div>
-            </p>
-            <p>
-              <div>택 2 ) </div>
-              <div>초코 빵시트 / 초코 생크림 샌드 ( +3,000원 )</div>
-            </p>
-            <p>* 프랑스산 발로나 초코 파우더를 사용합니다 :)</p>
+            <div className="d-flex justify-content-center align-items-center mb-3">
+              <span className="mx-1">옵션</span> <MdLooksOne size="24" />
+            </div>
+            <div className="mb-5">바닐라 빵시트 / 생크림 샌드 ( 기본형 )</div>
+            <div className="d-flex justify-content-center align-items-center mb-3">
+              <span className="mx-1">옵션</span> <MdLooksTwo size="24" />
+            </div>
+            <div className="mb-3">
+              초코 빵시트 / 초코 생크림 샌드 ( +3,000원 )
+            </div>
+            <div>* 프랑스산 발로나 초코 파우더를 사용합니다 :)</div>
           </Col>
         </Row>
 
@@ -270,7 +280,7 @@ const GuideBread = () => {
           </Col>
         </Row>
       </Container>
-    </>
+    </motion.div>
   );
 };
 

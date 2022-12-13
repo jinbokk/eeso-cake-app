@@ -3,10 +3,17 @@ import Map from "../components/Map";
 
 import "./css/contact.css";
 import { Container, Row, Col } from "react-bootstrap";
+import { GrNavigate } from "react-icons/gr";
+import { motion } from "framer-motion";
 
 const Contact = () => {
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: "20px" }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ ease: "easeOut", duration: 0.5 }}
+      exit={{ opacity: 0, y: "-20px" }}
+    >
       <div className="contact_container">
         <Row style={{ width: "100%" }}></Row>
 
@@ -20,19 +27,24 @@ const Contact = () => {
           </Col>
 
           <Col lg={7}>
-            <div className="fw-bold mt-4">LOCATION / HOURS</div>
-            <div>
-              <a
-                href="https://map.naver.com/v5/search/%EC%9D%B4%EC%86%8C%EC%BC%80%EC%9D%B4%ED%81%AC/place/661959504?c=14147586.5818935,4542283.8149681,16.63,0,0,0,dh&placePath=%3Fentry%253Dbmp"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="location_link fw-bold"
-              >
-                경기도 의정부시 민락동 754-7 (승지로30번길 20)
-              </a>
-            </div>
+            <Row className="mb-3">
+              <div className="fw-bold mt-4">LOCATION / HOURS</div>
+              <div>
+                <a
+                  href="https://map.naver.com/v5/search/%EC%9D%B4%EC%86%8C%EC%BC%80%EC%9D%B4%ED%81%AC/place/661959504?c=14147586.5818935,4542283.8149681,16.63,0,0,0,dh&placePath=%3Fentry%253Dbmp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="location_link fw-bold"
+                >
+                  <GrNavigate style={{ marginRight: "10px" }} />
+                  경기도 의정부시 민락동 754-7 (승지로30번길 20)
+                </a>
+              </div>
+            </Row>
 
-            <Map />
+            <Row className="mb-3">
+              <Map />
+            </Row>
 
             <Row className="contact_text_container">
               <Col lg={6} className="mb-3">
@@ -57,7 +69,7 @@ const Contact = () => {
           </Col>
         </Row>
       </div>
-    </>
+    </motion.div>
   );
 };
 

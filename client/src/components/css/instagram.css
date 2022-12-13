@@ -4,6 +4,9 @@
 
 .instaFeed_counter_accent {
   color: var(--bg-accent);
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 10px;
 }
 
 .instaFeed_container_top {
@@ -16,8 +19,8 @@
 }
 
 .instaFeed_counter {
-  padding: 30px;
   text-align: center;
+  font-size: 1.3rem;
 }
 
 .instaFeed_container {
@@ -72,7 +75,8 @@
   color: var(--bg-accent);
   opacity: 0.8;
   transition: 0.2s;
-  /* animation: gelatine 0.7s infinite; */
+  font-weight: bold;
+  animation: gelatine 0.7s;
 }
 
 .instaFeed_image {

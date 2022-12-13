@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import "./css/cakes.css";
 
@@ -234,7 +235,12 @@ const Cakes = () => {
       {loading ? (
         <Loading width={"100vw"} height={"100vh"} text={loadingText} />
       ) : (
-        <>
+        <motion.div
+          initial={{ opacity: 0, y: "20px" }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ease: "easeOut", duration: 0.5 }}
+          exit={{ opacity: 0, y: "-20px" }}
+        >
           <Container>
             <Row>
               {productsData.map((item, index) => {
@@ -250,7 +256,7 @@ const Cakes = () => {
                     >
                       <img
                         ref={lastCakeElementRef}
-                        src={item.image_url}
+                        src={item.image_url.replace("upload/", "upload/q_50/")}
                         alt=""
                         className="cake_image"
                         onClick={(event) => {
@@ -275,7 +281,7 @@ const Cakes = () => {
                       key={index}
                     >
                       <img
-                        src={item.image_url}
+                        src={item.image_url.replace("upload/", "upload/q_50/")}
                         alt=""
                         className="cake_image"
                         onClick={(event) => {
@@ -301,7 +307,7 @@ const Cakes = () => {
               text={"이미지 가져오는 중..."}
             />
           ) : null}
-        </>
+        </motion.div>
       )}
     </>
   );

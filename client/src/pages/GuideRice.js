@@ -3,6 +3,7 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
 import { Container, Row, Col } from "react-bootstrap";
+import { motion } from "framer-motion";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -26,11 +27,16 @@ const GuideRice = () => {
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: "20px" }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ ease: "easeOut", duration: 0.5 }}
+      exit={{ opacity: 0, y: "-20px" }}
+    >
       <Container className="guide_container w-60 p-5">
         <Row>
           <Col className="text-center">
-            <h1 className="mb-4 guide_title">떡 케이크 가이드</h1>
+            <h1 className="mb-5 guide_title">떡 케이크 가이드</h1>
             <h3 className="guide_sub_title">
               설기떡 위에 앙금으로 만든 꽃을 올린 아름다운 케이크
             </h3>
@@ -323,7 +329,7 @@ const GuideRice = () => {
           </Col>
         </Row>
       </Container>
-    </>
+    </motion.div>
   );
 };
 

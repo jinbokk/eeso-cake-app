@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
+import { motion } from "framer-motion";
 
 import {
   Button,
@@ -122,7 +123,12 @@ export default function UploadProduct() {
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: "20px" }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ ease: "easeOut", duration: 0.5 }}
+      exit={{ opacity: 0, y: "-20px" }}
+    >
       {!isAdmin ? null : (
         <Container className="py-5">
           <form
@@ -343,6 +349,6 @@ export default function UploadProduct() {
           </form>
         </Container>
       )}
-    </>
+    </motion.div>
   );
 }

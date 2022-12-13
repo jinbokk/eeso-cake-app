@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+import { motion } from "framer-motion";
 
 import Loading from "../components/Loading";
 import { forSaleProductAction } from "../redux/actions/forSaleProductAction";
@@ -22,7 +23,13 @@ const Order = () => {
   }, []);
 
   return (
-    <div className="pt-5">
+    <motion.div
+      className="pt-5"
+      initial={{ opacity: 0, y: "20px" }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ ease: "easeOut", duration: 0.5 }}
+      exit={{ opacity: 0, y: "-20px" }}
+    >
       {loading ? (
         <Loading
           width={"100vw"}
@@ -56,7 +63,7 @@ const Order = () => {
           </Row>
         </Container>
       )}
-    </div>
+    </motion.div>
   );
 };
 

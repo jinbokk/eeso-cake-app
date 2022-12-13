@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userActions } from "../redux/actions/userActions";
+import { motion } from "framer-motion";
 
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import "./css/login.css";
@@ -122,122 +123,141 @@ function Register() {
   };
 
   return (
-    <Container className="login_container">
-      <img className="login_logo" src="/images/banner_bgremoved.png" alt="" />
-      <Form className="form_container" onSubmit={submitHandler}>
-        <Form.Group className="mb-3" controlId="Name">
-          <Form.Label style={{ fontWeight: "bold" }}>
-            성함
-            <span
-              style={{ color: "red", fontWeight: "lighter", marginLeft: "6px" }}
-            >
-              *
-            </span>
-          </Form.Label>
-          <Form.Control
-            type="name"
-            placeholder="성함을 입력해 주세요."
-            onChange={(e) => setName(e.target.value)}
-            onKeyPress={(e) => {
-              e.key === "Enter" && e.preventDefault();
-            }}
-            onBlur={nameCheckHandler}
-          />
+    <motion.div
+      initial={{ opacity: 0, y: "20px" }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ ease: "easeOut", duration: 0.5 }}
+      exit={{ opacity: 0, y: "-20px" }}
+    >
+      <Container className="login_container">
+        <img className="login_logo" src="/images/banner_bgremoved.png" alt="" />
+        <Form className="form_container" onSubmit={submitHandler}>
+          <Form.Group className="mb-3" controlId="Name">
+            <Form.Label style={{ fontWeight: "bold" }}>
+              성함
+              <span
+                style={{
+                  color: "red",
+                  fontWeight: "lighter",
+                  marginLeft: "6px",
+                }}
+              >
+                *
+              </span>
+            </Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="성함을 입력해 주세요."
+              onChange={(e) => setName(e.target.value)}
+              onKeyPress={(e) => {
+                e.key === "Enter" && e.preventDefault();
+              }}
+              onBlur={nameCheckHandler}
+            />
 
-          {isNameWrong.result ? (
-            <div style={{ color: "red" }}>성함을 확인해 주세요</div>
-          ) : isNameWrong.checkMark ? (
-            <span className="checked">
-              <BsFillCheckCircleFill />
-            </span>
-          ) : null}
-        </Form.Group>
+            {isNameWrong.result ? (
+              <div style={{ color: "red" }}>성함을 확인해 주세요</div>
+            ) : isNameWrong.checkMark ? (
+              <span className="checked">
+                <BsFillCheckCircleFill />
+              </span>
+            ) : null}
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="Email">
-          <Form.Label style={{ fontWeight: "bold" }}>
-            이메일
-            <span
-              style={{ color: "red", fontWeight: "lighter", marginLeft: "6px" }}
-            >
-              *
-            </span>
-          </Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="이메일을 입력해 주세요."
-            onChange={(e) => setEmail(e.target.value)}
-            onKeyPress={(e) => {
-              e.key === "Enter" && e.preventDefault();
-            }}
-            onBlur={emailCheckHandler}
-          />
-          {isEmailWrong.result ? (
-            <div style={{ color: "red" }}>이메일을 확인해 주세요</div>
-          ) : isEmailWrong.checkMark ? (
-            <span className="checked">
-              <BsFillCheckCircleFill />
-            </span>
-          ) : null}
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="Email">
+            <Form.Label style={{ fontWeight: "bold" }}>
+              이메일
+              <span
+                style={{
+                  color: "red",
+                  fontWeight: "lighter",
+                  marginLeft: "6px",
+                }}
+              >
+                *
+              </span>
+            </Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="이메일을 입력해 주세요."
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyPress={(e) => {
+                e.key === "Enter" && e.preventDefault();
+              }}
+              onBlur={emailCheckHandler}
+            />
+            {isEmailWrong.result ? (
+              <div style={{ color: "red" }}>이메일을 확인해 주세요</div>
+            ) : isEmailWrong.checkMark ? (
+              <span className="checked">
+                <BsFillCheckCircleFill />
+              </span>
+            ) : null}
+          </Form.Group>
 
-        <Form.Group controlId="Password">
-          <Form.Label style={{ fontWeight: "bold" }}>
-            비밀번호
-            <span
-              style={{ color: "red", fontWeight: "lighter", marginLeft: "6px" }}
-            >
-              *
-            </span>
-          </Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="비밀번호를 입력해 주세요."
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyPress={(e) => {
-              e.key === "Enter" && e.preventDefault();
-            }}
-            onBlur={passwordCheckHandler}
-          />
-          {isPasswordWrong.result ? (
-            <div style={{ color: "red" }}>비밀번호를 확인해 주세요</div>
-          ) : isPasswordWrong.checkMark ? (
-            <span className="checked">
-              <BsFillCheckCircleFill />
-            </span>
-          ) : null}
-        </Form.Group>
-        <div style={{ opacity: "0.7", fontSize: "0.7rem" }}>
-          8자리 이상의 영어 대문자, 소문자, 숫자, 특수문자 조합
-        </div>
+          <Form.Group controlId="Password">
+            <Form.Label style={{ fontWeight: "bold" }}>
+              비밀번호
+              <span
+                style={{
+                  color: "red",
+                  fontWeight: "lighter",
+                  marginLeft: "6px",
+                }}
+              >
+                *
+              </span>
+            </Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="비밀번호를 입력해 주세요."
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={(e) => {
+                e.key === "Enter" && e.preventDefault();
+              }}
+              onBlur={passwordCheckHandler}
+            />
+            {isPasswordWrong.result ? (
+              <div style={{ color: "red" }}>비밀번호를 확인해 주세요</div>
+            ) : isPasswordWrong.checkMark ? (
+              <span className="checked">
+                <BsFillCheckCircleFill />
+              </span>
+            ) : null}
+          </Form.Group>
+          <div style={{ opacity: "0.7", fontSize: "0.7rem" }}>
+            8자리 이상의 영어 대문자, 소문자, 숫자, 특수문자 조합
+          </div>
 
-        <Form.Group className="my-2" controlId="PasswordConfirm">
-          <Form.Control
-            type="password"
-            placeholder="비밀번호 확인"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            onKeyPress={(e) => {
-              e.key === "Enter" && e.preventDefault();
-            }}
-            onBlur={cpasswordCheckHandler}
-          />
-          {isCPasswordWrong.result ? (
-            <div style={{ color: "red" }}>비밀번호가 일치하지 않습니다</div>
-          ) : isCPasswordWrong.checkMark ? (
-            <span className="checked">
-              <BsFillCheckCircleFill />
-            </span>
-          ) : null}
-        </Form.Group>
+          <Form.Group className="my-2" controlId="PasswordConfirm">
+            <Form.Control
+              type="password"
+              placeholder="비밀번호 확인"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onKeyPress={(e) => {
+                e.key === "Enter" && e.preventDefault();
+              }}
+              onBlur={cpasswordCheckHandler}
+            />
+            {isCPasswordWrong.result ? (
+              <div style={{ color: "red" }}>비밀번호가 일치하지 않습니다</div>
+            ) : isCPasswordWrong.checkMark ? (
+              <span className="checked">
+                <BsFillCheckCircleFill />
+              </span>
+            ) : null}
+          </Form.Group>
 
-        <Button
-          className="login_button mt-4 w-100"
-          variant="primary"
-          type="submit"
-        >
-          회원가입
-        </Button>
-      </Form>
-    </Container>
+          <Button
+            className="login_button mt-4 w-100"
+            variant="primary"
+            type="submit"
+          >
+            회원가입
+          </Button>
+        </Form>
+      </Container>
+    </motion.div>
   );
 }
 
