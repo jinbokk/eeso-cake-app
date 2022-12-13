@@ -3,6 +3,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
+const history = require("connect-history-api-fallback");
 const path = require("path");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -13,6 +14,7 @@ const logger = require("morgan");
 // refreshToken();
 
 const app = express();
+app.use(history());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -75,8 +77,9 @@ if (process.env.NODE_ENV === "production") {
   // app.use(express.static("client/build"));
 
   // index.html for all page routes html
-  app.get('*', function (req, res){  
-    res.sendFile(path.resolve(__dirname, 'public', 'index.html')) })
+  app.get("*", function (req, res) {
+    res.sendFile(path.resolve(__dirname, "public", "index.html"));
+  });
 }
 
 module.exports = app;

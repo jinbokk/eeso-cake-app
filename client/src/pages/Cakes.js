@@ -105,44 +105,100 @@ const Cakes = () => {
 
   /////  /////  /////  /////
 
-  const titleChanger = (design) => {
-    let title;
+  const titleChanger = (design, index, modal) => {
+    let string;
+
+    if (modal) {
+      string = "modal_";
+    } else {
+      string = "";
+    }
 
     if (design === "dome" || design === "crescent" || design === "wreath") {
       return null;
     }
 
     if (design === "letter") {
-      title = "레터링";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          레터링
+        </span>
+      );
     } else if (design === "topper") {
-      title = "토퍼";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          토퍼
+        </span>
+      );
     } else if (design === "bouquet") {
-      title = "꽃다발";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          꽃다발
+        </span>
+      );
     } else if (design === "figure") {
-      title = "피규어";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          피규어
+        </span>
+      );
     } else if (design === "photo") {
-      title = "포토";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          포토
+        </span>
+      );
     } else if (design === "fresh_flower") {
-      title = "생화";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          생화
+        </span>
+      );
     } else if (design === "money") {
-      title = "돈";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          돈
+        </span>
+      );
     } else if (design === "3D") {
-      title = "입체";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          입체
+        </span>
+      );
     } else if (design === "tiara") {
-      title = "티아라";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          티아라
+        </span>
+      );
     } else if (design === "party") {
-      title = "파티";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          파티
+        </span>
+      );
     } else if (design === "snack") {
-      title = "과자";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          과자
+        </span>
+      );
     } else if (design === "lotto") {
-      title = "로또";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          로또
+        </span>
+      );
     } else if (design === "duck") {
-      title = "오리삼형제";
+      return (
+        <span key={index} className={`${string}design_tag`}>
+          오리형제
+        </span>
+      );
     } else {
       return null;
     }
-
-    return title;
   };
 
   return (
@@ -169,11 +225,7 @@ const Cakes = () => {
           <div className="modal_design_tag_container">
             {data &&
               data.design.map((design, index) => {
-                return (
-                  <span key={index} className="modal_design_tag">
-                    {titleChanger(design)}
-                  </span>
-                );
+                return titleChanger(design, index, true);
               })}
           </div>
         </Modal.Body>
@@ -207,11 +259,7 @@ const Cakes = () => {
                       />
                       <div className="design_tag_container">
                         {item.design.map((design, index) => {
-                          return (
-                            <span key={index} className="design_tag">
-                              {titleChanger(design)}
-                            </span>
-                          );
+                          return titleChanger(design, index);
                         })}
                       </div>
                     </Col>
@@ -236,11 +284,7 @@ const Cakes = () => {
                       />
                       <div className="design_tag_container">
                         {item.design.map((design, index) => {
-                          return (
-                            <span key={index} className="design_tag">
-                              {titleChanger(design)}
-                            </span>
-                          );
+                          return titleChanger(design, index);
                         })}
                       </div>
                     </Col>
