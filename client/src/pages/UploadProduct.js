@@ -139,7 +139,7 @@ export default function UploadProduct() {
                 <section className="image_uploader">
                   <div className="upload_image" {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p style={{ fontSize: "5em" }}>+</p>
+                    <p style={{ fontSize: "5rem" }}>+</p>
                   </div>
                   <aside className="preview_image_container">
                     {images.map((item, index) => (

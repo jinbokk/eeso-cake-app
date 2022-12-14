@@ -224,7 +224,7 @@ function Register() {
               </span>
             ) : null}
           </Form.Group>
-          <div style={{ opacity: "0.7", fontSize: "0.7em" }}>
+          <div style={{ opacity: "0.7", fontSize: "0.7rem" }}>
             8자리 이상의 영어 대문자, 소문자, 숫자, 특수문자 조합
           </div>
 

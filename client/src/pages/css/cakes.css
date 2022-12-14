@@ -33,11 +33,11 @@
   position: relative;
   bottom: 55px;
   background-color: var(--bg-accent);
-  border-radius: 1em;
-  padding: 0 0.8em;
-  margin: 0 0.5em;
+  border-radius: 1rem;
+  padding: 0 0.8rem;
+  margin: 0 0.5rem;
   color: var(--bg);
-  font-size: 0.9em;
+  font-size: 0.9rem;
   opacity: 0;
   pointer-events: none;
   transition: 0.3s;
@@ -85,11 +85,11 @@
   position: relative;
   bottom: 70px;
   background-color: var(--bg-accent);
-  border-radius: 1em;
-  padding: 0.1em 1.2em;
-  margin: 0 1em;
+  border-radius: 1rem;
+  padding: 0.1em 1.2rem;
+  margin: 0 1rem;
   color: var(--bg);
-  font-size: 1.2em;
+  font-size: 1.2rem;
   pointer-events: none;
   animation: fadeIn 0.4s ease-in;
 }
@@ -100,7 +100,7 @@
   }
   .modal_design_tag {
     bottom: 50px;
-    padding: 0 1em;
-    font-size: 0.5em;
+    padding: 0 1rem;
+    font-size: 0.5rem;
   }
 }

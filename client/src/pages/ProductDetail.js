@@ -155,7 +155,7 @@ const ProductDetail = () => {
                     //     style={{
                     //       color: "red",
                     //       textAlign: "center",
-                    //       padding: "1em",
+                    //       padding: "1rem",
                     //     }}
                     //   >
                     //     현재일 기준 2일 이후 예약이 가능합니다
