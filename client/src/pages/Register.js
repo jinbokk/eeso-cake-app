@@ -126,8 +126,7 @@ function Register() {
     <motion.div
       initial={{ opacity: 0, y: "20px" }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ ease: "easeOut", duration: 0.5 }}
-      exit={{ opacity: 0, y: "-20px" }}
+      // exit={{ opacity: 0 }}
     >
       <Container className="login_container">
         <img className="login_logo" src="/images/banner_bgremoved.png" alt="" />
@@ -225,7 +224,7 @@ function Register() {
               </span>
             ) : null}
           </Form.Group>
-          <div style={{ opacity: "0.7", fontSize: "0.7rem" }}>
+          <div style={{ opacity: "0.7", fontSize: "0.7em" }}>
             8자리 이상의 영어 대문자, 소문자, 숫자, 특수문자 조합
           </div>
 

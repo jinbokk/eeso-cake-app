@@ -1,6 +1,6 @@
 .home_container_top {
   font-family: var(--main-font);
-  font-size: 1.2rem;
+  font-size: 1.2em;
   padding: 0 !important;
 }
 
@@ -24,7 +24,7 @@
   max-width: 80%;
   margin: auto;
   z-index: 2;
-  font-size: 10rem;
+  font-size: 10em;
   color: var(--bg);
   text-shadow: 7px 7px 10px rgb(0, 0, 0, 0.6);
   display: flex;
@@ -34,7 +34,7 @@
 }
 
 .main_banner_text_accent {
-  font-size: 14rem;
+  font-size: 14em;
   font-family: BetterGrade !important;
 }
 
@@ -54,8 +54,8 @@
 }
 
 .logo_banner_catchphrase {
-  font-size: 1.8rem;
-  margin: 1rem;
+  font-size: 1.8em;
+  margin: 1em;
   color: white;
 }
 
@@ -137,19 +137,19 @@
 .sub_banner_text_lg {
   display: inline-block;
   line-height: 100%;
-  font-size: 5.5rem;
-  margin-bottom: 2rem;
+  font-size: 5.5em;
+  margin-bottom: 2em;
 }
 
 .sub_banner_text_sm {
   display: inline-block;
   line-height: 150%;
-  font-size: 1.5rem;
+  font-size: 1.5em;
 }
 
 .underline {
   text-align: center;
-  font-size: 2rem;
+  font-size: 2em;
   font-weight: bold;
   margin-bottom: 25px;
   text-decoration: underline 2px var(--bg-accent);
@@ -172,11 +172,11 @@
   }
 
   .main_banner_text {
-    font-size: 7rem;
+    font-size: 7em;
   }
 
   .main_banner_text_accent {
-    font-size: 9rem;
+    font-size: 9em;
   }
 
   .logo_banner_img {
@@ -184,20 +184,20 @@
   }
 
   .logo_banner_catchphrase {
-    font-size: 1rem;
-    margin: 0.3rem;
+    font-size: 1em;
+    margin: 0.3em;
   }
 
   .sub_banner_text_lg {
-    font-size: 3.5rem;
-    margin-bottom: 2rem;
+    font-size: 3.5em;
+    margin-bottom: 2em;
   }
 
   .sub_banner_text_sm {
-    font-size: 1rem;
+    font-size: 1em;
   }
 
   .underline {
-    font-size: 1.7rem;
+    font-size: 1.7em;
   }
 }

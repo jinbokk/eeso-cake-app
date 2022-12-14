@@ -4,16 +4,16 @@
   justify-content: center;
   align-items: center;
   font-family: var(--main-font);
-  font-size: 1.08rem;
+  font-size: 1.08em;
   margin: auto;
 }
 
 .guide_title {
-  font-size: 2.5rem;
+  font-size: 2.5em;
 }
 
 .guide_sub_title {
-  font-size: 1.2rem;
+  font-size: 1.2em;
 }
 
 .cakes_size_image {
@@ -99,7 +99,7 @@
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  font-size: 1.5rem;
+  font-size: 1.5em;
 }
 
 /* .row > div {

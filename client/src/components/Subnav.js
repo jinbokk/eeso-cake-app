@@ -32,18 +32,8 @@ const Subnav = ({ option }) => {
   }
 
   if (option === "tart") {
-    subnav_items = [
-      { title: "# 전체 보기", link: "" },
-      // { title: "# 숫자 타르트", link: "?design=number" },
-    ];
+    subnav_items = [{ title: "# 전체 보기", link: "" }];
   }
-
-  // if (option === "guide") {
-  //   subnav_items = [
-  //     { title: "# 떡 케이크 안내", link: "rice" },
-  //     { title: "# 빵 케이크 안내", link: "bread" },
-  //   ];
-  // }
 
   let activeStyle = {
     backgroundColor: "var(--bg-accent)",
@@ -59,33 +49,15 @@ const Subnav = ({ option }) => {
               to={item.link}
               key={index}
               className="filter_button"
-              style={
-                ({ isActive }) => {
-                  if (item.link.split("=")[1]) {
-                    return isActive && query === item.link.split("=")[1]
-                      ? activeStyle
-                      : null;
-                  } else {
-                    return isActive && query === null ? activeStyle : null;
-                  }
+              style={({ isActive }) => {
+                if (item.link.split("=")[1]) {
+                  return isActive && query === item.link.split("=")[1]
+                    ? activeStyle
+                    : null;
+                } else {
+                  return isActive && query === null ? activeStyle : null;
                 }
-                // {
-                //   if (isActive && query === item.link.split("=")[1]) {
-                //     return activeStyle;
-                //   } else if (isActive && query === null) {
-                //     return activeStyle;
-                //   }
-                // }
-
-                // isActive && query === item.link.split("=")[1] ? activeStyle : null
-              }
-
-              // onClick={(e) => {
-              //   console.log(e.target.href.split("=")[1]);
-              //   if (e.target.href.split("=")[1] === activeQuery) {
-              //     console.log("querry correct");
-              //   }
-              // }}
+              }}
             >
               {item.title}
             </NavLink>

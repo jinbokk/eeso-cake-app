@@ -16,6 +16,7 @@ const Cakes = () => {
   const dispatch = useDispatch();
 
   const isFirstRun = useRef(true);
+
   const { loading, moreCakesLoading, productsData, hasMore } = useSelector(
     (state) => state.product
   );
@@ -39,10 +40,6 @@ const Cakes = () => {
 
   useEffect(() => {
     if (!isFirstRun.current && !loading && page !== 1) {
-      console.log(page);
-
-      console.log(window.location);
-
       let url =
         window.location.origin +
         `/cakes/${ingredient}` +
@@ -93,13 +90,12 @@ const Cakes = () => {
   /////  /////  /////  /////
 
   // const values = [true, "sm-down", "md-down", "lg-down", "xl-down", "xxl-down"];
-  const [fullscreen, setFullscreen] = useState(true);
+  // const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
   const [data, setData] = useState(undefined);
 
   function handleShow(event, data, breakpoint) {
-    console.log(event.currentTarget);
-    setFullscreen(breakpoint);
+    // setFullscreen(breakpoint);
     setShow(true);
     setData(data);
   }
@@ -107,103 +103,38 @@ const Cakes = () => {
   /////  /////  /////  /////
 
   const titleChanger = (design, index, modal) => {
-    let string;
+    if (design === "dome" || design === "crescent" || design === "wreath")
+      design = null;
 
-    if (modal) {
-      string = "modal_";
-    } else {
-      string = "";
-    }
+    if (design === "letter") design = "레터링";
+    else if (design === "topper") design = "토퍼";
+    else if (design === "bouquet") design = "꽃다발";
+    else if (design === "figure") design = "피규어";
+    else if (design === "photo") design = "포토";
+    else if (design === "fresh_flower") design = "생화";
+    else if (design === "money") design = "돈";
+    else if (design === "3D") design = "입체";
+    else if (design === "tiara") design = "티아라";
+    else if (design === "party") design = "파티";
+    else if (design === "snack") design = "과자";
+    else if (design === "lotto") design = "로또";
+    else if (design === "duck") design = "오리형제";
 
-    if (design === "dome" || design === "crescent" || design === "wreath") {
-      return null;
-    }
-
-    if (design === "letter") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          레터링
-        </span>
-      );
-    } else if (design === "topper") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          토퍼
-        </span>
-      );
-    } else if (design === "bouquet") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          꽃다발
-        </span>
-      );
-    } else if (design === "figure") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          피규어
-        </span>
-      );
-    } else if (design === "photo") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          포토
-        </span>
-      );
-    } else if (design === "fresh_flower") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          생화
-        </span>
-      );
-    } else if (design === "money") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          돈
-        </span>
-      );
-    } else if (design === "3D") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          입체
-        </span>
-      );
-    } else if (design === "tiara") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          티아라
-        </span>
-      );
-    } else if (design === "party") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          파티
-        </span>
-      );
-    } else if (design === "snack") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          과자
-        </span>
-      );
-    } else if (design === "lotto") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          로또
-        </span>
-      );
-    } else if (design === "duck") {
-      return (
-        <span key={index} className={`${string}design_tag`}>
-          오리형제
-        </span>
-      );
-    } else {
-      return null;
-    }
+    return design ? (
+      <span key={index} className={modal ? "modal_design_tag" : "design_tag"}>
+        {design}
+      </span>
+    ) : null;
   };
 
   return (
     <>
+      {/* <motion.div
+        initial={isFirstRun.current ? { opacity: 0, y: "20px" } : false}
+        animate={{ opacity: 1, y: 0 }}
+        // exit={{ opacity: 0 }}
+      ></motion.div> */}
+      
       <Subnav option={ingredient} />
 
       <Modal
@@ -231,15 +162,13 @@ const Cakes = () => {
           </div>
         </Modal.Body>
       </Modal>
-
       {loading ? (
         <Loading width={"100vw"} height={"100vh"} text={loadingText} />
       ) : (
         <motion.div
           initial={{ opacity: 0, y: "20px" }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ ease: "easeOut", duration: 0.5 }}
-          exit={{ opacity: 0, y: "-20px" }}
+          // exit={{ opacity: 0 }}
         >
           <Container>
             <Row>

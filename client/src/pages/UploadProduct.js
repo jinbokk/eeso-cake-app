@@ -126,8 +126,7 @@ export default function UploadProduct() {
     <motion.div
       initial={{ opacity: 0, y: "20px" }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ ease: "easeOut", duration: 0.5 }}
-      exit={{ opacity: 0, y: "-20px" }}
+      // exit={{ opacity: 0 }}
     >
       {!isAdmin ? null : (
         <Container className="py-5">
@@ -140,7 +139,7 @@ export default function UploadProduct() {
                 <section className="image_uploader">
                   <div className="upload_image" {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p style={{ fontSize: "5rem" }}>+</p>
+                    <p style={{ fontSize: "5em" }}>+</p>
                   </div>
                   <aside className="preview_image_container">
                     {images.map((item, index) => (

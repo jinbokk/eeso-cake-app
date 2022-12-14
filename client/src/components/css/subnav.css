@@ -16,10 +16,10 @@
 }
 
 .filter_button {
-  font-size: 1rem;
+  font-size: 1em;
   white-space: nowrap;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.5em 1em;
   margin: 0 10px;
   background-color: transparent;
   border: 1px solid var(--bg-accent);

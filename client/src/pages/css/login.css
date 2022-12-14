@@ -22,8 +22,8 @@
 .form_container > div > input {
   border-radius: 0;
   border-color: pink;
-  height: 3.5rem;
-  padding: 0 1.2rem;
+  height: 3.5em;
+  padding: 0 1.2em;
 }
 
 .form_container > div > input:focus {
@@ -42,9 +42,9 @@
 }
 
 .form-check > input {
-  height: 1.2rem;
-  width: 1.2rem;
-  margin-right: 0.6rem;
+  height: 1.2em;
+  width: 1.2em;
+  margin-right: 0.6em;
 }
 
 .form-check-input,
@@ -64,7 +64,7 @@
 .login_button {
   background-color: pink !important;
   border: none !important;
-  height: 3.5rem;
+  height: 3.5em;
   color: rgba(33, 37, 41, 0.7) !important;
   font-weight: bold !important;
   /* color: black !important; */
@@ -102,6 +102,6 @@
 
 @media screen and (max-width: 992px) {
   .help_link {
-    margin: 1rem 0;
+    margin: 1em 0;
   }
 }

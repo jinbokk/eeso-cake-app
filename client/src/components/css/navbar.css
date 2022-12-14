@@ -250,7 +250,7 @@ li {
 .user_container {
   margin-left: auto;
   white-space: nowrap;
-  font-size: 1rem;
+  font-size: 1em;
 }
 
 /* Responsive */
@@ -291,7 +291,7 @@ li {
   .nav_menu {
     height: 55px;
     width: 90vw;
-    padding: 0.8rem 1.5rem;
+    padding: 0.8em 1.5em;
   }
 }
 
@@ -407,7 +407,7 @@ li {
   /* font-size: var(--font-size) !important; */
   font-weight: bold;
   box-shadow: none !important;
-  padding: 0.8rem 1.5rem !important;
+  padding: 0.8em 1.5em !important;
   height: 55px;
 }
 

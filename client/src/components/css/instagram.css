@@ -4,7 +4,7 @@
 
 .instaFeed_counter_accent {
   color: var(--bg-accent);
-  font-size: 2rem;
+  font-size: 2em;
   font-weight: bold;
   margin: 0 10px;
 }
@@ -20,7 +20,7 @@
 
 .instaFeed_counter {
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1.3em;
 }
 
 .instaFeed_container {
@@ -91,13 +91,13 @@
 }
 
 .instaFeed_caption {
-  height: 9rem;
+  height: 9em;
   line-height: 1.7em;
   display: -webkit-box;
   overflow: hidden;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
-  font-size: 0.9rem;
+  font-size: 0.9em;
   text-overflow: ellipsis;
   /* word-wrap: break-word; */
   word-wrap: break-all;
@@ -106,7 +106,7 @@
 }
 
 .instaFeed_read_more {
-  font-size: 0.9rem;
+  font-size: 0.9em;
   padding: 10px;
   text-align: right;
   opacity: 0.5;
@@ -114,7 +114,7 @@
 }
 
 .instaFeed_timestamp {
-  font-size: 0.9rem;
+  font-size: 0.9em;
   padding-bottom: 10px;
   opacity: 0.4;
   text-align: right;
@@ -124,6 +124,6 @@
 
 @media screen and (max-width: 992px) {
   .instaFeed_counter {
-    font-size: 1rem;
+    font-size: 1em;
   }
 }

@@ -11,8 +11,6 @@ function getProducts(option) {
         }`
       )
       .then((res) => {
-        console.log("res:::::", res);
-        console.log("res.data:::::", res.data);
 
         let hasMore;
 
@@ -66,35 +64,7 @@ function getMoreProducts(option) {
   };
 }
 
-function getForSaleProducts(option) {
-  return async (dispatch) => {
-    dispatch({ type: "GET_FORSALE_PRODUCTS_REQUEST" });
-
-    axios
-      .get(`/api/products/order/${option.ingredient}`)
-      .then((res) => {
-        console.log("res.data:::::", res.data);
-
-        let hasMore;
-
-        if (res.data.hasNextPage) {
-          console.log("hasMore!");
-          hasMore = true;
-        }
-
-        dispatch({
-          type: "GET_FORSALE_PRODUCTS_SUCCESS",
-          payload: {
-            forSale_productsData: res.data.docs,
-            hasMore: hasMore,
-          },
-        });
-      });
-  };
-}
-
 export const productActions = {
   getProducts,
   getMoreProducts,
-  getForSaleProducts,
 };

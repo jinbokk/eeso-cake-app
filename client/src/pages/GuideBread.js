@@ -32,8 +32,7 @@ const GuideBread = () => {
     <motion.div
       initial={{ opacity: 0, y: "20px" }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ ease: "easeOut", duration: 0.5 }}
-      exit={{ opacity: 0, y: "-20px" }}
+      // exit={{ opacity: 0 }}
     >
       <Container className="guide_container w-60 p-5">
         <Row>

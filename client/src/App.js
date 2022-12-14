@@ -1,6 +1,6 @@
-import React, { Suspense, useEffect, useState, useLayoutEffect } from "react";
+import React, { Suspense, useState, useLayoutEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+// import { AnimatePresence } from "framer-motion";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -64,12 +64,17 @@ function App() {
           <Suspense fallback={<Loading />}>
             <Navbar />
             <Sidebar />
+            {/* <AnimatePresence> */}
             <Routes location={location} key={location.pathname}>
               <Route exact path="/" element={<AuthHome />} />
               <Route exact path="/login" element={<AuthLogin />} />
               <Route exact path="/register" element={<AuthRegister />} />
               <Route exact path="/about" element={<AuthAbout />} />
-              <Route exact path="/cakes/:ingredient" element={<AuthCakes />} />
+              <Route
+                exact
+                path="/cakes/:ingredient"
+                element={<AuthCakes />}
+              />
               <Route exact path="/order/list" element={<AuthOrder />} />
               <Route
                 exact
@@ -81,6 +86,7 @@ function App() {
               <Route exact path="/contact" element={<AuthContact />} />
               <Route exact path="/upload" element={<AuthUploadProduct />} />
             </Routes>
+            {/* </AnimatePresence> */}
             <Footer />
           </Suspense>
         </>
