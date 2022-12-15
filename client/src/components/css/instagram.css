@@ -92,17 +92,29 @@
 
 .instaFeed_caption {
   height: 9rem;
-  line-height: 1.7rem;
+  line-height: 1.75rem;
   display: -webkit-box;
-  overflow: hidden;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
   font-size: 0.9rem;
-  text-overflow: ellipsis;
+  overflow: scroll;
+  /* -webkit-line-clamp: 5; */
+  /* -webkit-box-orient: vertical; */
+  /* text-overflow: ellipsis; */
   /* word-wrap: break-word; */
-  word-wrap: break-all;
+  /* word-wrap: break-all; */
   text-align: left;
   opacity: 0.8;
+}
+
+/* .instaFeed_caption::before {
+  content: "";
+  position: absolute;
+  height: 9rem;
+  width: max-content;
+  background: red;
+} */
+
+.instaFeed_caption::-webkit-scrollbar {
+  display: none;
 }
 
 .instaFeed_read_more {

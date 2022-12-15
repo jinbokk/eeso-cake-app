@@ -26,7 +26,7 @@ const Contact = () => {
           </Col>
 
           <Col lg={7}>
-            <Row className="mb-3">
+            <Row className="mb-4">
               <div className="fw-bold mt-4">LOCATION / HOURS</div>
               <div>
                 <a
@@ -41,13 +41,15 @@ const Contact = () => {
               </div>
             </Row>
 
-            <Row className="mb-3">
+            <Row className="mb-4">
               <Map />
             </Row>
 
             <Row className="contact_text_container">
               <Col lg={6} className="mb-3">
-                <div className="fw-bold">가게 앞 정차 가능, 주차 불가</div>
+                <div className="fw-bold text-danger">
+                  가게 앞 정차 가능, 주차 불가
+                </div>
                 <div>대중교통 이용시</div>
                 <div>
                   의정부 <span className="by_subway">경전철 탑석역</span> 하차
@@ -55,11 +57,11 @@ const Contact = () => {
                 </div>
                 <div>
                   의정부 <span className="by_bus">청구아파트 버스정류소</span>{" "}
-                  하차 후, 7분 내 도보 이동
+                  하차 하차 후, 7분 내 도보 이동
                 </div>
               </Col>
               <Col lg={6}>
-                <div className="fw-bold">매주 월요일 휴무</div>
+                <div className="fw-bold text-danger">매주 월요일 휴무</div>
                 <div>화요일 ~ 금요일 : 11:00 ~ 19:30</div>
                 <div>토요일 : 10:00 ~ 16:00</div>
                 <div>일요일 : 10:00 ~ 12:00</div>

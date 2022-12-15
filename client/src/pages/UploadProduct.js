@@ -40,15 +40,15 @@ export default function UploadProduct() {
   const [ingredient, setIngredient] = useState("");
   const [design, setDesign] = useState([]);
 
-  const layerHandler = (event, layer) => {
+  const layerHandler = (layer) => {
     setLayer(layer);
   };
 
-  const ingredientHandler = (event, ingredient) => {
+  const ingredientHandler = (ingredient) => {
     setIngredient(ingredient);
   };
 
-  const designHandler = (event, design) => {
+  const designHandler = (design) => {
     setDesign(design);
   };
 
@@ -139,7 +139,7 @@ export default function UploadProduct() {
                 <section className="image_uploader">
                   <div className="upload_image" {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p style={{ fontSize: "5rem" }}>+</p>
+                    <div style={{ fontSize: "5rem" }}>+</div>
                   </div>
                   <aside className="preview_image_container">
                     {images.map((item, index) => (
@@ -209,9 +209,9 @@ export default function UploadProduct() {
                             className="my-4"
                             size="large"
                             value={ingredient}
-                            onChange={(event, value) => {
-                              onChange(value);
-                              ingredientHandler(event, value);
+                            onChange={(e) => {
+                              onChange(e.target.value);
+                              ingredientHandler(e);
                             }}
                             exclusive
                             {...field}
@@ -236,9 +236,9 @@ export default function UploadProduct() {
                             className="my-4"
                             size="large"
                             value={layer}
-                            onChange={(event, value) => {
-                              onChange(value);
-                              layerHandler(event, value);
+                            onChange={(e) => {
+                              onChange(e.target.value);
+                              layerHandler(e);
                             }}
                             exclusive
                             {...field}
@@ -266,9 +266,9 @@ export default function UploadProduct() {
                               className="mb-4"
                               size="large"
                               value={design}
-                              onChange={(event, value) => {
-                                onChange(value);
-                                designHandler(event, value);
+                              onChange={(e) => {
+                                onChange(e.target.value);
+                                designHandler(e);
                               }}
                               {...field}
                             >
@@ -293,9 +293,9 @@ export default function UploadProduct() {
                         className="d-flex flex-wrap"
                         size="large"
                         value={design}
-                        onChange={(event, value) => {
-                          onChange(value);
-                          designHandler(event, value);
+                        onChange={(e) => {
+                          onChange(e.target.value);
+                          designHandler(e);
                         }}
                         {...field}
                       >

@@ -4,7 +4,7 @@
 }
 
 .about_banner_img {
-  width: 800px;
+  width: 800px !important;
   object-fit: contain;
   margin-top: 50px;
 }

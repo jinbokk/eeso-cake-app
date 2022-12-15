@@ -15,16 +15,16 @@ const About = () => {
       // exit={{ opacity: 0 }}
     >
       <Container className="about_container_top mt-5">
-        <Row className="mb-5">
-          <img className="about_banner_img" src="/images/banner.jpg" alt="" />
-        </Row>
-
         <Row>
           <Col>
             <h2 style={{ textAlign: "center", margin: "50px 0" }}>
-              안녕하세요, 이소케이크 입니다 :)
+              안녕하세요, 이소케이크 입니다
             </h2>
           </Col>
+        </Row>
+
+        <Row className="mb-5 justify-content-center">
+          <img className="about_banner_img" src="/images/banner.jpg" alt="" />
         </Row>
 
         <Row className="align-items-start">
@@ -75,9 +75,9 @@ const About = () => {
 
         <Row>
           <Col>
-            <p style={{ textAlign: "end", marginTop: "50px" }}>
+            <div style={{ textAlign: "end", marginTop: "50px" }}>
               대표 이소정 올림
-            </p>
+            </div>
           </Col>
         </Row>
       </Container>
