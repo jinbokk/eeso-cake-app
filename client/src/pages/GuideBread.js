@@ -82,7 +82,7 @@ const GuideBread = () => {
                 수 있습니다.
               </div>
               <div className="opacity-50">
-                ( 배송비용 별도 9,000원~2만원이상 )
+                ( 배송비 별도 9,000원~2만원이상 )
               </div>
             </p>
             <p>

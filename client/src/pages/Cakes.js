@@ -129,12 +129,6 @@ const Cakes = () => {
 
   return (
     <>
-      {/* <motion.div
-        initial={isFirstRun.current ? { opacity: 0, y: "20px" } : false}
-        animate={{ opacity: 1, y: 0 }}
-        // exit={{ opacity: 0 }}
-      ></motion.div> */}
-      
       <Subnav option={ingredient} />
 
       <Modal
@@ -150,7 +144,7 @@ const Cakes = () => {
 
         <Modal.Body>
           <img
-            src={data && data.image_url}
+            src={data && data.image_url.replace("upload/", "upload/q_50/")}
             alt=""
             className="modal_cake_image"
           />
@@ -162,6 +156,7 @@ const Cakes = () => {
           </div>
         </Modal.Body>
       </Modal>
+
       {loading ? (
         <Loading width={"100vw"} height={"100vh"} text={loadingText} />
       ) : (
@@ -173,58 +168,35 @@ const Cakes = () => {
           <Container>
             <Row>
               {productsData.map((item, index) => {
-                if (productsData.length === index + 1) {
-                  return (
-                    <Col
-                      xs={6}
-                      sm={6}
-                      md={4}
-                      lg={3}
-                      className="images_container m-0"
-                      key={index}
-                    >
-                      <img
-                        ref={lastCakeElementRef}
-                        src={item.image_url.replace("upload/", "upload/q_50/")}
-                        alt=""
-                        className="cake_image"
-                        onClick={(event) => {
-                          handleShow(event, item, "sm-down");
-                        }}
-                      />
-                      <div className="design_tag_container">
-                        {item.design.map((design, index) => {
-                          return titleChanger(design, index);
-                        })}
-                      </div>
-                    </Col>
-                  );
-                } else {
-                  return (
-                    <Col
-                      xs={6}
-                      sm={6}
-                      md={4}
-                      lg={3}
-                      className="images_container m-0"
-                      key={index}
-                    >
-                      <img
-                        src={item.image_url.replace("upload/", "upload/q_50/")}
-                        alt=""
-                        className="cake_image"
-                        onClick={(event) => {
-                          handleShow(event, item, "sm-down");
-                        }}
-                      />
-                      <div className="design_tag_container">
-                        {item.design.map((design, index) => {
-                          return titleChanger(design, index);
-                        })}
-                      </div>
-                    </Col>
-                  );
-                }
+                return (
+                  <Col
+                    xs={6}
+                    sm={6}
+                    md={4}
+                    lg={3}
+                    className="images_container m-0"
+                    key={index}
+                  >
+                    <img
+                      ref={
+                        productsData.length === index + 1
+                          ? lastCakeElementRef
+                          : null
+                      }
+                      src={item.image_url.replace("upload/", "upload/q_50/")}
+                      alt=""
+                      className="cake_image"
+                      onClick={(event) => {
+                        handleShow(event, item, "sm-down");
+                      }}
+                    />
+                    <div className="design_tag_container">
+                      {item.design.map((design, index) => {
+                        return titleChanger(design, index);
+                      })}
+                    </div>
+                  </Col>
+                );
               })}
             </Row>
           </Container>

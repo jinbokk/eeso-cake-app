@@ -11,7 +11,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
-export default function DatePicker() {
+export default function DatePicker(field) {
   // const [value, setValue] = useState(dayjs("2014-08-18T21:11:54"));
   const [value, setValue] = useState(undefined);
 
@@ -34,7 +34,7 @@ export default function DatePicker() {
         <MobileDatePicker
           disablePast={true}
           label="Date mobile"
-          inputFormat="YYYY/DD/MM"
+          inputFormat="YYYY/MM/DD"
           value={value}
           onChange={handleChange}
           renderInput={(params) => <TextField {...params} />}
@@ -46,11 +46,21 @@ export default function DatePicker() {
           renderInput={(params) => <TextField {...params} />}
         />
         <DateTimePicker
+          name="datetime"
+          className={"form-control"}
+          // selected={startDate}
+          displayStaticWrapperAs="mobile"
+          onChange={(date) => field.onChange(date)}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          timeCaption="time"
+          dateFormat="MM-dd-yyyy h:mm"
           disablePast={true}
           label="Date&Time picker"
           value={value}
-          onChange={handleChange}
           renderInput={(params) => <TextField {...params} />}
+          minutesStep={5}
         />
       </Stack>
     </LocalizationProvider>

@@ -184,7 +184,7 @@ export default function UploadProduct() {
                         variant="outlined"
                         InputProps={{
                           startAdornment: (
-                            <InputAdornment position="start">₩</InputAdornment>
+                            <InputAdornment position="start">원</InputAdornment>
                           ),
                           endAdornment: (
                             <InputAdornment position="end">원</InputAdornment>
