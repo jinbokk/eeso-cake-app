@@ -127,7 +127,7 @@ const Home = () => {
           </Col>
         </Row>
 
-        <Row className="logo_banner_container">
+        <Row className="logo_banner_container mx-0">
           <Col lg={12} className="d-flex justify-content-center">
             <img
               src="/images/banner_transparent.png"
@@ -148,7 +148,7 @@ const Home = () => {
           </Col>
         </Row>
 
-        <Row className="gsap_first">
+        <Row className="gsap_first mx-0">
           <Col className="my-3">
             <hr data-content="고객님을 위한 다양한 케이크가 준비되어 있습니다" />
           </Col>
@@ -219,14 +219,14 @@ const Home = () => {
           )}
         </Row>
 
-        <Row>
+        <Row className="mx-0">
           <Row>
             <Col className="my-3">
               <hr data-content="건강하게, 맛있게" />
             </Col>
           </Row>
 
-          <Row className="sub_banner_container_top mx-0 gsap_second">
+          <Row className="sub_banner_container_top mx-0 px-0 gsap_second">
             <Col lg={7} className="p-0 mb-3">
               <img
                 src="/images/home_sub_banner.jpg"
@@ -272,7 +272,7 @@ const Home = () => {
         </Row>
       </Container>
 
-      <Row className="gsap_third">
+      <Row className="gsap_third mx-0">
         <hr data-content="이소케이크 인스타그램" />
         <Instagram css />
       </Row>

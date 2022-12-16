@@ -2,6 +2,8 @@
   font-family: var(--main-font);
   font-size: 1.2rem;
   padding: 0 !important;
+  position: relative;
+  top: calc(var(--nav-height) * -1);
 }
 
 .main_banner_container {
@@ -9,8 +11,8 @@
   justify-content: center;
   align-items: center;
   width: 100vw;
+  height: 100vh;
   position: relative;
-  height: calc(100vh - var(--nav-height));
   background-image: url(/public/images/home_main_banner.jpg);
   /* background-attachment: local, scroll; */
   background-attachment: fixed;

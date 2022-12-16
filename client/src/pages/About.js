@@ -14,7 +14,7 @@ const About = () => {
       animate={{ opacity: 1, y: 0 }}
       // exit={{ opacity: 0 }}
     >
-      <Container className="about_container_top mt-5">
+      <Container className="about_container_top">
         <Row>
           <Col>
             <h2 style={{ textAlign: "center", margin: "50px 0" }}>
