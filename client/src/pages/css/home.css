@@ -62,9 +62,19 @@
 }
 
 .glow {
+  color: white;
   text-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 20px #ff93b3, 0 0 30px #e65f8c,
     0 0 30px #e73689;
   user-select: none;
+}
+
+.glow_svg {
+  -webkit-filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 10px #fff)
+    drop-shadow(0 0 20px #ff93b3) drop-shadow(0 0 30px #e73689);
+  filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 10px #fff)
+    drop-shadow(0 0 20px #ff93b3) drop-shadow(0 0 30px #e73689);
+  position: relative;
+  bottom: 10px;
 }
 
 .glow > span {
@@ -160,6 +170,28 @@
 
 .sub_banner_container {
   width: 70%;
+}
+
+.party_banner_container {
+  /* width: 50vw !important; */
+  text-align: center;
+  position: relative;
+  left: 0;
+}
+.party_text {
+  position: absolute;
+  display: inline;
+  line-height: 150%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+}
+
+.party_banner {
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
 }
 
 /* responsive */

@@ -39,10 +39,13 @@ import { ko } from "date-fns/locale";
 import "./css/productDetail.css";
 import Instagram from "../components/Instagram";
 
-const ProductDetail = () => {
+const ProductDetail = ({ match }) => {
   const dispatch = useDispatch();
-  const [searchParams] = useSearchParams();
-  const productId = searchParams.get("id");
+  // const [searchParams] = useSearchParams();
+  // const productId = searchParams.get("productId");
+  const { productId } = useParams();
+
+  console.log("productId :::::", productId);
 
   const { loading, productDetail } = useSelector(
     (state) => state.forSaleProduct
@@ -51,6 +54,24 @@ const ProductDetail = () => {
   useEffect(() => {
     dispatch(forSaleProductAction.getDetail(productId));
   }, []);
+
+  //imageLoading
+  const [imageLoading, setImageLoading] = useState(false);
+  const loadImage = (src) =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+
+  useEffect(() => {
+    loadImage(productDetail && productDetail.image_url).then(
+      setImageLoading(true)
+    );
+  }, []);
+  // img.src = productDetail && productDetail.image_url;
+  // console.log(imageLoading);
 
   //theme
   const theme = createTheme({
@@ -284,7 +305,7 @@ const ProductDetail = () => {
       animate={{ opacity: 1, y: 0 }}
       // exit={{ opacity: 0 }}
     >
-      {loading ? (
+      {loading || imageLoading === false ? (
         <Loading text="상품 세부정보 가져오는 중" />
       ) : (
         <>
@@ -719,6 +740,15 @@ const ProductDetail = () => {
                       onClick={() => optionConfirmHandler()}
                     >
                       옵션선택 완료
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      type="button"
+                      style={{ height: "50px" }}
+                      onClick={() => optionConfirmHandler()}
+                    >
+                      장바구니에 담기
                     </Button>
                   </ThemeProvider>
                 </Col>

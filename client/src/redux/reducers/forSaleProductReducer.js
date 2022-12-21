@@ -19,7 +19,7 @@ const forSaleProductReducer = (state = initialState, action) => {
       };
 
     case "GET_DETAIL_REQUEST":
-      return { ...state };
+      return { ...state, productDetail: {} };
 
     case "GET_DETAIL_SUCCESS":
       return {

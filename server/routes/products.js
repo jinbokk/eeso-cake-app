@@ -137,8 +137,8 @@ router.get("/order/list", async (req, res) => {
   return res.status(200).json(results);
 });
 
-router.get("/order/detail", async (req, res) => {
-  let productId = req.query;
+router.get("/order/list/detail/:productId", async (req, res) => {
+  let { productId } = req.params;
   let o_id = new ObjectId(productId);
 
   console.log("productID::::::", productId);

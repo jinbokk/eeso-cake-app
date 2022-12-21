@@ -21,7 +21,7 @@ function getDetail(productId) {
   return async (dispatch) => {
     dispatch({ type: "GET_DETAIL_REQUEST" });
 
-    axios.get(`/api/products/order/detail?id=${productId}`).then((res) => {
+    axios.get(`/api/products/order/list/detail/${productId}`).then((res) => {
       if (res.data.success) {
         console.log(res.data);
         console.log(res.data.productDetail);

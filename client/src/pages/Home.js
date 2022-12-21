@@ -17,6 +17,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Autoplay } from "swiper";
 import Instagram from "../components/Instagram";
+import { BsStars } from "react-icons/bs";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -148,6 +149,58 @@ const Home = () => {
           </Col>
         </Row>
 
+        <Row className="mx-0">
+          <Row>
+            <Col className="my-3">
+              <hr data-content="건강하게, 맛있게" />
+            </Col>
+          </Row>
+
+          <Row className="sub_banner_container_top mx-0 px-0 gsap_second">
+            <Col lg={7} className="p-0 mb-3">
+              <img
+                src="/images/home_sub_banner.jpg"
+                alt=""
+                className="sub_banner_image"
+              />
+            </Col>
+
+            <Col lg={5} className="d-flex flex-column my-3">
+              <Row className="d-flex flex-column">
+                <Col className="justify-content-center">
+                  <div className="underline">케이크도 건강해야 합니다</div>
+                </Col>
+
+                <Col className="d-flex flex-row justify-content-center my-5">
+                  <div className="d-flex flex-column align-items-center mx-4">
+                    <div className="sub_banner_text_lg">無</div>
+                    <div className="sub_banner_text_sm">합성제</div>
+                  </div>
+
+                  <div className="d-flex flex-column align-items-center mx-4">
+                    <div className="sub_banner_text_lg">無</div>
+                    <div className="sub_banner_text_sm">보존제</div>
+                  </div>
+
+                  <div className="d-flex flex-column align-items-center mx-4">
+                    <div className="sub_banner_text_lg">無</div>
+                    <div className="sub_banner_text_sm">유화제</div>
+                  </div>
+                </Col>
+
+                <Col className="text-center">
+                  <div className="sub_banner_text_sm">
+                    이소케이크에서는, 합성제 보존제 유화제 등을 사용하지 않고
+                  </div>
+                  <div className="sub_banner_text_sm">
+                    수시로 갓 구워낸 시트와 유생크림만을 사용합니다
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Row>
+
         <Row className="gsap_first mx-0">
           <Col className="my-3">
             <hr data-content="고객님을 위한 다양한 케이크가 준비되어 있습니다" />
@@ -219,56 +272,18 @@ const Home = () => {
           )}
         </Row>
 
-        <Row className="mx-0">
-          <Row>
-            <Col className="my-3">
-              <hr data-content="건강하게, 맛있게" />
-            </Col>
-          </Row>
-
-          <Row className="sub_banner_container_top mx-0 px-0 gsap_second">
-            <Col lg={7} className="p-0 mb-3">
-              <img
-                src="/images/home_sub_banner.jpg"
-                alt=""
-                className="sub_banner_image"
-              />
-            </Col>
-
-            <Col lg={5} className="d-flex flex-column my-3">
-              <Row className="d-flex flex-column">
-                <Col className="justify-content-center">
-                  <div className="underline">케이크도 건강해야 합니다</div>
-                </Col>
-
-                <Col className="d-flex flex-row justify-content-center my-5">
-                  <div className="d-flex flex-column align-items-center mx-4">
-                    <div className="sub_banner_text_lg">無</div>
-                    <div className="sub_banner_text_sm">합성제</div>
-                  </div>
-
-                  <div className="d-flex flex-column align-items-center mx-4">
-                    <div className="sub_banner_text_lg">無</div>
-                    <div className="sub_banner_text_sm">보존제</div>
-                  </div>
-
-                  <div className="d-flex flex-column align-items-center mx-4">
-                    <div className="sub_banner_text_lg">無</div>
-                    <div className="sub_banner_text_sm">유화제</div>
-                  </div>
-                </Col>
-
-                <Col className="text-center">
-                  <div className="sub_banner_text_sm">
-                    이소케이크에서는, 합성제 보존제 유화제 등을 사용하지 않고
-                  </div>
-                  <div className="sub_banner_text_sm">
-                    수시로 갓 구워낸 시트와 유생크림만을 사용합니다
-                  </div>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+        <Row>
+          <Col className="my-3">
+            <hr data-content="다양한 소품들로 더욱 즐겁게" />
+          </Col>
+          <Col>
+            <div className="party_banner_container">
+              <div className="party_text glow">
+                더욱 특별한 순간을 만들어 보세요 <BsStars className="glow_svg" />
+              </div>
+              <img src="/images/party_2.png" alt="" className="party_banner" />
+            </div>
+          </Col>
         </Row>
       </Container>
 

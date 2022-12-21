@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, NavLink, useSearchParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { motion } from "framer-motion";
 
@@ -47,7 +47,10 @@ const Order = () => {
                 className="align-items-start justify-content-start"
                 key={index}
               >
-                <a className="my-3 product_card" href={`detail?id=${item._id}`}>
+                <NavLink
+                  className="my-3 product_card"
+                  to={`detail/${item._id}`}
+                >
                   <img
                     src={item.image_url}
                     alt=""
@@ -56,7 +59,7 @@ const Order = () => {
                   <h4 className="text-start fw-bold px-3">{item.title}</h4>
                   <div className="text-start px-3">{item.description}</div>
                   <h4 className="text-end px-4 mt-auto mb-4">₩ {item.price}</h4>
-                </a>
+                </NavLink>
               </Col>
             ))}
           </Row>

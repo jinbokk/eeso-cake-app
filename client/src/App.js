@@ -70,15 +70,11 @@ function App() {
               <Route exact path="/login" element={<AuthLogin />} />
               <Route exact path="/register" element={<AuthRegister />} />
               <Route exact path="/about" element={<AuthAbout />} />
-              <Route
-                exact
-                path="/cakes/:ingredient"
-                element={<AuthCakes />}
-              />
+              <Route exact path="/cakes/:ingredient" element={<AuthCakes />} />
               <Route exact path="/order/list" element={<AuthOrder />} />
               <Route
                 exact
-                path="/order/detail"
+                path="/order/list/detail/:productId"
                 element={<AuthProductDetail />}
               />
               <Route exact path="/guide/rice" element={<AuthGuideRice />} />

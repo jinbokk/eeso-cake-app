@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    minglength: 5,
+    minlength: 5,
     // required: true,
   },
   gender: {
@@ -33,6 +33,8 @@ const userSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  cart: { type: Array, default: [] },
+  history: { type: Array, default: [] },
   token: {
     type: String,
   },
