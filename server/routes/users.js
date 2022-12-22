@@ -83,4 +83,60 @@ router.get("/logout", auth, (req, res) => {
   );
 });
 
+router.post("/addToCart", auth, (req, res) => {
+  // 1. user Collection 정보 가져오기
+  // user정보는 auth 미들웨어를 통해 받아올 수 있다
+
+  // 2. 가져온 정보에서 cart에 넣으려 하는 상품이 이미 있는지 확인
+  User.findOne({ _id: req.user._id }, (err, userInfo) => {
+    let duplicate = false;
+    userInfo.cart.forEach((item) => {
+      if (item.id === req.body.productId) {
+        duplicate = true;
+      }
+    });
+
+    if (duplicate) {
+      User.findOneAndUpdate(
+        {
+          _id: req.user._id,
+          "cart.id": req.body.productId,
+        },
+        { $inc: { "cart.$.quantity": 1 } },
+        { new: true }, // 쿼리를 돌면서 update된 유저 정보를 받기위해 new:true 옵션을 준 것이다.
+        (err, userInfo) => {
+          console.log(userInfo);
+          if (err) return res.status(400).json({ success: false, err });
+          return res.status(200).send(userInfo.cart);
+        }
+      );
+    } else {
+      // 2-b. 상품이 없을때
+      User.findOneAndUpdate(
+        {
+          _id: req.user._id,
+        },
+        {
+          $push: {
+            cart: {
+              id: req.body.productId,
+              quantity: 1,
+              date: Date.now(),
+            },
+          },
+        },
+        { new: true },
+        (err, userInfo) => {
+          if (err) return res.status(400).json({ success: false, err });
+          res.status(200).send(userInfo.cart);
+        }
+      );
+    }
+  });
+
+  // 2-a. 상품이 이미 있을때
+
+  // 2-c. 상품 정보가 유효하지 않을때 (시즌 상품 등) 경우도 추가해야한다!!!!
+});
+
 module.exports = router;

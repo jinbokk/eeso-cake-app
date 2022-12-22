@@ -18,6 +18,8 @@ function getForSaleProducts() {
 }
 
 function getDetail(productId) {
+  console.log("productId::::::::::::::::::::;;", productId);
+
   return async (dispatch) => {
     dispatch({ type: "GET_DETAIL_REQUEST" });
 
@@ -39,7 +41,7 @@ function getDetail(productId) {
   };
 }
 
-export const forSaleProductAction = {
+export const forSaleProductActions = {
   getForSaleProducts,
   getDetail,
 };

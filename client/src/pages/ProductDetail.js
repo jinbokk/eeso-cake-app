@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
-import { forSaleProductAction } from "../redux/actions/forSaleProductAction";
+import { forSaleProductActions } from "../redux/actions/forSaleProductActions";
+import { userActions } from "../redux/actions/userActions";
+
 import Loading from "../components/Loading";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -52,26 +54,8 @@ const ProductDetail = ({ match }) => {
   );
 
   useEffect(() => {
-    dispatch(forSaleProductAction.getDetail(productId));
+    dispatch(forSaleProductActions.getDetail(productId));
   }, []);
-
-  //imageLoading
-  const [imageLoading, setImageLoading] = useState(false);
-  const loadImage = (src) =>
-    new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-      img.src = src;
-    });
-
-  useEffect(() => {
-    loadImage(productDetail && productDetail.image_url).then(
-      setImageLoading(true)
-    );
-  }, []);
-  // img.src = productDetail && productDetail.image_url;
-  // console.log(imageLoading);
 
   //theme
   const theme = createTheme({
@@ -290,6 +274,12 @@ const ProductDetail = ({ match }) => {
     console.log(option);
   };
 
+  const addToCartHandler = () => {
+    console.log("장바구니 추가 클릭");
+    dispatch(userActions.addToCart(productId));
+    console.log("장바구니 추가 요청보냄");
+  };
+
   const onSubmit = (data) => {
     console.log(data);
     // if (data.수령_방법 === "택배") {
@@ -305,7 +295,7 @@ const ProductDetail = ({ match }) => {
       animate={{ opacity: 1, y: 0 }}
       // exit={{ opacity: 0 }}
     >
-      {loading || imageLoading === false ? (
+      {loading || !productDetail.image_url ? (
         <Loading text="상품 세부정보 가져오는 중" />
       ) : (
         <>
@@ -746,7 +736,7 @@ const ProductDetail = ({ match }) => {
                       variant="contained"
                       type="button"
                       style={{ height: "50px" }}
-                      onClick={() => optionConfirmHandler()}
+                      onClick={() => addToCartHandler()}
                     >
                       장바구니에 담기
                     </Button>

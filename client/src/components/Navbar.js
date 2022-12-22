@@ -14,7 +14,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const { width, height } = useWindowDimensions();
 
-  const { loginResult } = useSelector((state) => state.user);
+  const { loginResult, authUserData } = useSelector((state) => state.user);
 
   const logoutHandler = () => {
     axios.get(`/api/users/logout`).then((res) => {
@@ -154,7 +154,8 @@ const Navbar = () => {
               <div>
                 <div className="util_container">
                   <div className="user_container mx-5">
-                    {loginResult && loginResult.loginSuccess ? (
+                    {(loginResult && loginResult.loginSuccess) ||
+                    (authUserData && authUserData._id) ? (
                       <NavLink to="/" onClick={logoutHandler}>
                         로그아웃
                       </NavLink>

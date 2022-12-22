@@ -5,7 +5,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { motion } from "framer-motion";
 
 import Loading from "../components/Loading";
-import { forSaleProductAction } from "../redux/actions/forSaleProductAction";
+import { forSaleProductActions } from "../redux/actions/forSaleProductActions";
 import "./css/order.css";
 
 const Order = () => {
@@ -18,7 +18,7 @@ const Order = () => {
   );
 
   useEffect(() => {
-    dispatch(forSaleProductAction.getForSaleProducts());
+    dispatch(forSaleProductActions.getForSaleProducts());
     isFirstRun.current = false;
   }, []);
 
