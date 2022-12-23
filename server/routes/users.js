@@ -42,7 +42,7 @@ router.post("/login", (req, res) => {
   // 1. find email on DB
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user)
-      return res.status(400).json({
+      return res.send({
         loginSuccess: false,
         message: "해당 이메일로 가입된 계정이 없습니다.",
       });
@@ -50,7 +50,7 @@ router.post("/login", (req, res) => {
     // 2. if email checked, then check password verify
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch)
-        return res.status(400).json({
+        return res.send({
           loginSuccess: false,
           message: "비밀번호가 일치하지 않습니다.",
         });

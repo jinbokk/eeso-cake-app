@@ -1,17 +1,32 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
 import { userActions } from "../redux/actions/userActions";
 import { motion } from "framer-motion";
+import { AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
 
 import "./css/login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [passwordType, setPasswordType] = useState("password");
+
+  const togglePasswordVisibility = () => {
+    setVisible((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (visible) {
+      setPasswordType("text");
+    } else {
+      setPasswordType("password");
+    }
+  }, [visible]);
 
   // react-redux
   const dispatch = useDispatch();
@@ -27,7 +42,6 @@ function Login() {
   }, [loginResult]);
 
   // react-router-dom
-
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -58,16 +72,29 @@ function Login() {
             <Form.Control
               type="email"
               placeholder="이메일을 입력해 주세요."
+              className="input_area_email"
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="Password">
-            <Form.Control
-              type="password"
-              placeholder="비밀번호를 입력해 주세요."
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <Form.Group
+            className="mb-3 d-flex align-items-center"
+            controlId="Password"
+          >
+            <InputGroup>
+              <Form.Control
+                type={passwordType}
+                className="input_area_password"
+                placeholder="비밀번호를 입력해 주세요."
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputGroup.Text
+                className="input_area_button"
+                onClick={togglePasswordVisibility}
+              >
+                {visible ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+              </InputGroup.Text>
+            </InputGroup>
           </Form.Group>
           <Form.Group className="mb-3" controlId="Checkbox">
             <Row>
@@ -76,7 +103,7 @@ function Login() {
               </Col>
               <Col lg={6}>
                 <div className="help_link">
-                  <a>비밀번호를 잊으셨나요?</a>
+                  <NavLink>비밀번호를 잊으셨나요?</NavLink>
                   <span className="mx-2">/</span>
                   <NavLink to="/register">회원가입</NavLink>
                 </div>

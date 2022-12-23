@@ -25,8 +25,8 @@ const Navbar = () => {
       if (res.data.logoutSuccess) {
         const confirm = window.confirm("로그아웃 하시겠습니까?");
         if (confirm) {
-          dispatch({ type: "LOGIN_USER", payload: undefined });
-          window.location.reload();
+          dispatch({ type: "LOGOUT_USER", payload: undefined });
+          // window.location.reload();
         } else {
           return;
         }

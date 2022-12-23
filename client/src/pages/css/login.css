@@ -19,21 +19,37 @@
   max-width: 500px;
 }
 
-.form_container > div > input {
-  border-radius: 0;
-  border-color: pink;
-  height: 3.5rem;
-  padding: 0 1.2rem;
+.input_area_email,
+.input_area_password {
+  border-radius: 0 !important;
+  border-color: pink !important;
+  height: 3.5rem !important;
+  padding: 0 1.2rem !important;
 }
 
-.form_container > div > input:focus {
-  box-shadow: none;
-  border-color: pink;
+.input_area_email {
+  position: relative !important;
+  bottom: -1px !important;
 }
 
-.form_container > div:first-child > input {
-  position: relative;
-  bottom: -1px;
+.input_area_password {
+  border-right: none !important;
+}
+
+.input_area_email:focus,
+.input_area_password:focus {
+  box-shadow: none !important;
+  border-color: pink !important;
+}
+
+.input_area_button {
+  cursor: pointer;
+  border-radius: 0 !important;
+  border-color: pink !important;
+  background-color: white !important;
+  border-left: none !important;
+  font-size: 1.5rem !important;
+  padding: 0 20px !important;
 }
 
 .form-check {

@@ -22,7 +22,13 @@ function loginUser(dataToSubmit) {
     try {
       const loginResult = await axios
         .post("/api/users/login", dataToSubmit)
-        .then((res) => res.data);
+        .then((res) => {
+          if (res.data.loginSuccess === false) {
+            return alert(res.data.message);
+          } else {
+            return res.data;
+          }
+        });
 
       dispatch({
         type: "LOGIN_USER",
@@ -54,10 +60,9 @@ function logoutUser() {
 function auth() {
   return async (dispatch) => {
     try {
-      const authUserData = await axios.get("/api/users/auth").then((res) => {
-        console.log(res.data);
-        // res.data;
-      });
+      const authUserData = await axios
+        .get("/api/users/auth")
+        .then((res) => res.data);
 
       dispatch({
         type: "AUTH_USER",
