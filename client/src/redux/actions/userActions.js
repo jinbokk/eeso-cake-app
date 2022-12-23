@@ -34,21 +34,30 @@ function loginUser(dataToSubmit) {
   };
 }
 
-// function logoutUser() {
-//   const req = axios.get(`${USER_SERVER}/logout`).then((res) => res.data);
+function logoutUser() {
+  return async (dispatch) => {
+    try {
+      const logoutResult = await axios
+        .get("/api/users/logout")
+        .then((res) => res.data);
 
-//   return {
-//     type: LOGOUT_USER,
-//     payload: req,
-//   };
-// }
+      dispatch({
+        type: "LOGOUT_USER",
+        payload: logoutResult,
+      });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
 
 function auth() {
   return async (dispatch) => {
     try {
-      const authUserData = await axios
-        .get("/api/users/auth")
-        .then((res) => res.data);
+      const authUserData = await axios.get("/api/users/auth").then((res) => {
+        console.log(res.data);
+        // res.data;
+      });
 
       dispatch({
         type: "AUTH_USER",
@@ -61,23 +70,79 @@ function auth() {
 }
 
 function addToCart(productId) {
-  console.log("productId:::::", productId);
-
   let body = {
     productId: productId,
   };
 
   return async (dispatch) => {
     try {
-      const request = await axios
+      const addToCartResult = await axios
         .post("/api/users/addToCart", body)
         .then((res) => res.data);
 
-      console.log("request::::", request);
-
       dispatch({
         type: "ADD_TO_CART",
-        payload: request,
+        payload: addToCartResult,
+      });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
+function removeFromCart(productId) {
+  return async (dispatch) => {
+    try {
+      const removeCartItemsResult = await axios
+        .get(`/api/users/remove-from-cart?id=${productId}`)
+        .then((res) => {
+          // productDetail과 cart 정보를 조합하여 cartDetail을 만든다
+          res.data.cart.forEach((cartItem) => {
+            res.data.productDetail.forEach((productDetail, index) => {
+              if (cartItem.id === productDetail._id) {
+                res.data.productDetail[index].quantity = cartItem.quantity;
+              }
+            });
+          });
+          return res.data;
+        });
+
+      dispatch({
+        type: "REMOVE_CART_ITEMS",
+        payload: removeCartItemsResult,
+      });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
+function getCartItems(cartItems, userCart) {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: "GET_CART_ITEMS_REQUEST",
+      });
+
+      const getCartItemsResult = await axios
+        .get(`/api/products/products-by-id?id=${cartItems}`)
+        .then((res) => {
+          // 1.cartItems들에 해당하는 정보들을 Product Collection에서 가져온다
+          userCart.forEach((cartItem) => {
+            res.data.forEach((productDetail, index) => {
+              if (cartItem.id === productDetail._id) {
+                // 2. Quantity 정보를 넣어준다.
+                res.data[index].quantity = cartItem.quantity;
+              }
+            });
+          });
+
+          return res.data;
+        });
+
+      dispatch({
+        type: "GET_CART_ITEMS_SUCCESS",
+        payload: getCartItemsResult,
       });
     } catch (error) {
       console.log("error occurred : ", error);
@@ -88,7 +153,9 @@ function addToCart(productId) {
 export const userActions = {
   registerUser,
   loginUser,
-  //   logoutUser,
+  logoutUser,
   auth,
   addToCart,
+  removeFromCart,
+  getCartItems,
 };

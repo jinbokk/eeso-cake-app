@@ -12,6 +12,7 @@ import About from "./pages/About";
 import Cakes from "./pages/Cakes";
 import Order from "./pages/Order";
 import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
 import GuideRice from "./pages/GuideRice";
 import GuideBread from "./pages/GuideBread";
 import Contact from "./pages/Contact";
@@ -25,6 +26,10 @@ import "./App.css";
 
 function App() {
   // Hoc Auth
+  //  --- Auth option ---
+  //   1. null : 아무나 출입 가능
+  //   2. true : 로그인 한 유저만 출입 가능
+  //   3. false : 로그인 한 유저는 출입 불가
   const AuthLogin = Auth(Login, false);
   const AuthRegister = Auth(Register, false);
   const AuthHome = Auth(Home, null);
@@ -32,6 +37,7 @@ function App() {
   const AuthCakes = Auth(Cakes, null);
   const AuthOrder = Auth(Order, null);
   const AuthProductDetail = Auth(ProductDetail, null);
+  const AuthCart = Auth(Cart, true);
   const AuthGuideRice = Auth(GuideRice, null);
   const AuthGuideBread = Auth(GuideBread, null);
   const AuthContact = Auth(Contact, null);
@@ -77,6 +83,7 @@ function App() {
                 path="/order/list/detail/:productId"
                 element={<AuthProductDetail />}
               />
+              <Route exact path="/user/cart" element={<AuthCart />} />
               <Route exact path="/guide/rice" element={<AuthGuideRice />} />
               <Route exact path="/guide/bread" element={<AuthGuideBread />} />
               <Route exact path="/contact" element={<AuthContact />} />

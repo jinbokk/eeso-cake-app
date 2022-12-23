@@ -148,7 +148,7 @@ function Register() {
               type="name"
               placeholder="성함을 입력해 주세요."
               onChange={(e) => setName(e.target.value)}
-              onKeyPress={(e) => {
+              onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault();
               }}
               onBlur={nameCheckHandler}
@@ -180,7 +180,7 @@ function Register() {
               type="email"
               placeholder="이메일을 입력해 주세요."
               onChange={(e) => setEmail(e.target.value)}
-              onKeyPress={(e) => {
+              onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault();
               }}
               onBlur={emailCheckHandler}
@@ -211,7 +211,7 @@ function Register() {
               type="password"
               placeholder="비밀번호를 입력해 주세요."
               onChange={(e) => setPassword(e.target.value)}
-              onKeyPress={(e) => {
+              onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault();
               }}
               onBlur={passwordCheckHandler}
@@ -233,7 +233,7 @@ function Register() {
               type="password"
               placeholder="비밀번호 확인"
               onChange={(e) => setConfirmPassword(e.target.value)}
-              onKeyPress={(e) => {
+              onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault();
               }}
               onBlur={cpasswordCheckHandler}

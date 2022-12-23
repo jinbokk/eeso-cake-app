@@ -20,6 +20,8 @@ const productSchema = new mongoose.Schema(
 
 productSchema.plugin(mongoosePaginate);
 
-module.exports = mongoose.model("Product", productSchema);
+const Product = mongoose.model("Product", productSchema);
+
+module.exports = { Product };
 // const swaggerSchema = m2s(mongoose.model("Product", productSchema));
 // console.log(swaggerSchema);

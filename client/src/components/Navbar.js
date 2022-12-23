@@ -8,6 +8,9 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import NavbarAside from "./NavbarAside";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { BsCart4 } from "react-icons/bs";
+import { Badge } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -16,13 +19,19 @@ const Navbar = () => {
 
   const { loginResult, authUserData } = useSelector((state) => state.user);
 
-  const logoutHandler = () => {
+  const logoutHandler = (e) => {
+    e.preventDefault();
     axios.get(`/api/users/logout`).then((res) => {
       if (res.data.logoutSuccess) {
-        dispatch({ type: "LOGIN_USER", payload: undefined });
-        return alert("로그아웃 되었습니다");
+        const confirm = window.confirm("로그아웃 하시겠습니까?");
+        if (confirm) {
+          dispatch({ type: "LOGIN_USER", payload: undefined });
+          window.location.reload();
+        } else {
+          return;
+        }
       } else {
-        return alert("로그아웃에 실패하였습니다");
+        alert("로그아웃에 실패하였습니다");
       }
     });
   };
@@ -45,6 +54,15 @@ const Navbar = () => {
   let activeStyle = {
     color: "var(--bg-accent)",
   };
+
+  const StyledBadge = styled(Badge)(() => ({
+    "& .MuiBadge-badge": {
+      right: -8,
+      top: 15,
+      border: `2px solid var(--bg)`,
+      padding: "0 4px",
+    },
+  }));
 
   return (
     <>
@@ -156,9 +174,16 @@ const Navbar = () => {
                   <div className="user_container mx-5">
                     {(loginResult && loginResult.loginSuccess) ||
                     (authUserData && authUserData._id) ? (
-                      <NavLink to="/" onClick={logoutHandler}>
-                        로그아웃
-                      </NavLink>
+                      <>
+                        <NavLink to="/" onClick={logoutHandler}>
+                          로그아웃
+                        </NavLink>
+                        <NavLink to="/user/cart" style={{ marginLeft: "1rem" }}>
+                          <StyledBadge badgeContent={999} color="error">
+                            <BsCart4 className="cartIcon" />
+                          </StyledBadge>
+                        </NavLink>
+                      </>
                     ) : (
                       <>
                         <NavLink

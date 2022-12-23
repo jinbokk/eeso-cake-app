@@ -2,7 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/Product");
+const { Product } = require("../models/Product");
 const cloudinary = require("../middleware/cloudinary.js");
 const multer = require("multer");
 const fs = require("fs");
@@ -142,13 +142,26 @@ router.get("/order/list/detail/:productId", async (req, res) => {
   let { productId } = req.params;
   let o_id = new ObjectId(productId);
 
-  console.log("productID::::::", productId);
-
   Product.find({ _id: o_id }).exec((err, productDetail) => {
     if (err) return res.status(400).send(err);
-    return res
-      .status(200)
-      .send({ success: true, productDetail: productDetail[0] });
+    return res.status(200).send(productDetail[0]);
+  });
+});
+
+// CART PAGE
+router.get("/products-by-id", async (req, res) => {
+  let productIds = req.query.id;
+
+  // id = 123,456,789 ... 이런 형태를
+  // id = ['123','456','789'] ... 이런 형태로 바꾸는 작업
+  let idsArray = req.query.id.split(",");
+  productIds = idsArray.map((item) => {
+    return item;
+  });
+
+  Product.find({ _id: { $in: productIds } }).exec((err, productDetail) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json(productDetail);
   });
 });
 

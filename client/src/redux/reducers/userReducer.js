@@ -3,6 +3,7 @@ let initialState = {
   loginResult: undefined,
   authUserData: undefined,
   cart: undefined,
+  cartDetail: undefined,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -15,11 +16,23 @@ const userReducer = (state = initialState, action) => {
     case "LOGIN_USER":
       return { ...state, loginResult: payload };
 
+    case "LOGOUT_USER":
+      return { ...state, loginResult: payload };
+
     case "AUTH_USER":
       return { ...state, authUserData: payload };
 
     case "ADD_TO_CART":
       return { ...state, cart: payload };
+
+    case "GET_CART_ITEMS_REQUEST":
+      return { ...state, loading: true };
+
+    case "GET_CART_ITEMS_SUCCESS":
+      return { ...state, loading: false, cartDetail: payload };
+
+    case "REMOVE_CART_ITEMS":
+      return { ...state, cartDetail: payload };
 
     default:
       return state;

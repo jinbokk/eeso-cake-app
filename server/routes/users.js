@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { User } = require("../models/User");
+const { Product } = require("../models/Product");
 const { auth } = require("../middleware/auth");
 
 router.get("/auth", auth, (req, res) => {
@@ -14,6 +15,8 @@ router.get("/auth", auth, (req, res) => {
     location: req.user.location,
     role: req.user.role,
     image: req.user.image,
+    cart: req.user.cart,
+    history: req.user.history,
   });
 });
 
@@ -22,7 +25,7 @@ router.post("/register", (req, res) => {
 
   user.save((err, doc) => {
     if (err)
-      return res.json({
+      return res.status(400).json({
         registerSuccess: false,
         message:
           err.code === 11000
@@ -39,7 +42,7 @@ router.post("/login", (req, res) => {
   // 1. find email on DB
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user)
-      return res.json({
+      return res.status(400).json({
         loginSuccess: false,
         message: "해당 이메일로 가입된 계정이 없습니다.",
       });
@@ -47,7 +50,7 @@ router.post("/login", (req, res) => {
     // 2. if email checked, then check password verify
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch)
-        return res.json({
+        return res.status(400).json({
           loginSuccess: false,
           message: "비밀번호가 일치하지 않습니다.",
         });
@@ -75,7 +78,7 @@ router.get("/logout", auth, (req, res) => {
     { _id: req.user._id },
     { token: "", tokenExp: "" },
     (err, doc) => {
-      if (err) return res.json({ logoutSuccess: false, err });
+      if (err) return res.status(400).json({ logoutSuccess: false, err });
       return res.status(200).send({
         logoutSuccess: true,
       });
@@ -96,6 +99,7 @@ router.post("/addToCart", auth, (req, res) => {
       }
     });
 
+    // 2-a. 상품이 이미 있을때
     if (duplicate) {
       User.findOneAndUpdate(
         {
@@ -132,11 +136,40 @@ router.post("/addToCart", auth, (req, res) => {
         }
       );
     }
+
+    // 2-c. 상품 정보가 유효하지 않을때 (시즌 상품 등) 경우도 추가해야한다!!!!
   });
+});
 
-  // 2-a. 상품이 이미 있을때
+router.get("/remove-from-cart", auth, (req, res) => {
+  // 1. cart 안의 상품들 중 지우고자 하는 상품을 찾아 지운다
+  User.findOneAndUpdate(
+    {
+      _id: req.user._id,
+    },
+    {
+      $pull: {
+        cart: {
+          id: req.query.id,
+        },
+      },
+    },
+    { new: true },
+    (err, userInfo) => {
+      // 2. product Collection의 정보를 새로고침하여 가져온다 (redux-store에 담긴 cartDetail의 기반이 되는 정보를 새로고침 하는 것)
+      let cart = userInfo.cart;
+      let productIds = cart.map((item) => {
+        return item.id;
+      });
 
-  // 2-c. 상품 정보가 유효하지 않을때 (시즌 상품 등) 경우도 추가해야한다!!!!
+      Product.find({ _id: { $in: productIds } }).exec((err, productDetail) => {
+        if (err) return res.status(400).send(err);
+        return res.status(200).json({ productDetail, cart });
+        // productDetail을 만들때, product collection에는 quantity 정보가 없어서 user collection과 합치는 작업을 했었는데
+        // 위 작업을 똑같이 반복하기 위해 productDetail과 cart정보를 함께 보내는 것이다.
+      });
+    }
+  );
 });
 
 module.exports = router;

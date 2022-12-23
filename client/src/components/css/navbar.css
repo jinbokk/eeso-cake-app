@@ -253,6 +253,13 @@ li {
   font-size: 1rem;
 }
 
+.cartIcon {
+  transform: scaleX(-1);
+  font-size: 1.5rem;
+  position: relative;
+  bottom: 3px;
+}
+
 /* Responsive */
 
 @media screen and (max-width: 992px) {

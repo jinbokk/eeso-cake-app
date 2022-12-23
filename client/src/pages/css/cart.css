@@ -1,0 +1,51 @@
+.empty_msg {
+  padding-top: 5rem;
+  font-size: 2rem;
+  color: gray;
+  user-select: none;
+  height: 50vh;
+}
+
+.item_thumbnail {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.item_thumbnail:hover {
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.item_title {
+  text-decoration: underline 1px rgba(0, 0, 0, 0);
+  text-underline-offset: 7px;
+  transition: 0.2s;
+}
+
+.item_title:hover {
+  text-decoration-color: rgba(0, 0, 0, 1);
+  text-underline-offset: 7px;
+  transition: 0.2s;
+}
+
+.delete_button {
+  font-size: 2.2rem;
+  color: gray;
+  cursor: pointer;
+  padding: 5px;
+  transition: 0.3s;
+}
+
+.delete_button:hover {
+  color: black;
+  transition: 0.3s;
+}
+
+.total_text {
+  user-select: none;
+  font-size: 1.5rem;
+  padding: 10px;
+}
