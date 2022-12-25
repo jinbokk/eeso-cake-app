@@ -275,9 +275,7 @@ const ProductDetail = ({ match }) => {
   };
 
   const addToCartHandler = () => {
-    console.log("장바구니 추가 클릭");
     dispatch(userActions.addToCart(productId));
-    console.log("장바구니 추가 요청보냄");
   };
 
   const onSubmit = (data) => {

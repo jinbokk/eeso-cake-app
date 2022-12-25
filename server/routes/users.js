@@ -78,7 +78,8 @@ router.get("/logout", auth, (req, res) => {
     { _id: req.user._id },
     { token: "", tokenExp: "" },
     (err, doc) => {
-      if (err) return res.status(400).json({ logoutSuccess: false, err });
+      if (err)
+        return res.status(400).json({ logoutSuccess: false, message: err });
       return res.status(200).send({
         logoutSuccess: true,
       });
@@ -93,6 +94,7 @@ router.post("/addToCart", auth, (req, res) => {
   // 2. 가져온 정보에서 cart에 넣으려 하는 상품이 이미 있는지 확인
   User.findOne({ _id: req.user._id }, (err, userInfo) => {
     let duplicate = false;
+    
     userInfo.cart.forEach((item) => {
       if (item.id === req.body.productId) {
         duplicate = true;

@@ -11,6 +11,7 @@ import axios from "axios";
 import { BsCart4 } from "react-icons/bs";
 import { Badge } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { userActions } from "../redux/actions/userActions";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -21,19 +22,8 @@ const Navbar = () => {
 
   const logoutHandler = (e) => {
     e.preventDefault();
-    axios.get(`/api/users/logout`).then((res) => {
-      if (res.data.logoutSuccess) {
-        const confirm = window.confirm("로그아웃 하시겠습니까?");
-        if (confirm) {
-          dispatch({ type: "LOGOUT_USER", payload: undefined });
-          // window.location.reload();
-        } else {
-          return;
-        }
-      } else {
-        alert("로그아웃에 실패하였습니다");
-      }
-    });
+    const confirm = window.confirm("로그아웃 하시겠습니까?");
+    dispatch(userActions.logoutUser(confirm));
   };
 
   const handleScroll = () => {

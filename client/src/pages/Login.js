@@ -15,6 +15,17 @@ function Login() {
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [passwordType, setPasswordType] = useState("password");
+  const [rememberMe, setRememberMe] = useState(undefined);
+  const rememberEmail = window.localStorage.getItem("rememberEmail");
+
+  useEffect(() => {
+    if (rememberEmail) {
+      setRememberMe(true);
+      setEmail(rememberEmail);
+    } else {
+      setRememberMe(false);
+    }
+  }, []);
 
   const togglePasswordVisibility = () => {
     setVisible((prev) => !prev);
@@ -34,9 +45,9 @@ function Login() {
   const { loginResult } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (loginResult && loginResult.loginSuccess) {
+    if (loginResult && loginResult.loginSuccess === true) {
       navigate(-1);
-    } else if (loginResult && !loginResult.loginSuccess) {
+    } else if (loginResult && loginResult.loginSuccess === false) {
       alert(loginResult.message);
     }
   }, [loginResult]);
@@ -48,6 +59,7 @@ function Login() {
     let body = {
       email: email,
       password: password,
+      rememberMe: { activeRememberMe: rememberMe, email: email },
     };
 
     if (body.email === "") {
@@ -72,6 +84,7 @@ function Login() {
             <Form.Control
               type="email"
               placeholder="이메일을 입력해 주세요."
+              defaultValue={rememberEmail ? rememberEmail : ""}
               className="input_area_email"
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -92,14 +105,27 @@ function Login() {
                 className="input_area_button"
                 onClick={togglePasswordVisibility}
               >
-                {visible ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                {password !== "" ? (
+                  visible ? (
+                    <AiOutlineEyeInvisible />
+                  ) : (
+                    <AiOutlineEye />
+                  )
+                ) : null}
               </InputGroup.Text>
             </InputGroup>
           </Form.Group>
           <Form.Group className="mb-3" controlId="Checkbox">
             <Row>
               <Col lg={6}>
-                <Form.Check type="checkbox" label="이메일 기억하기" />
+                <Form.Check
+                  type="checkbox"
+                  defaultChecked={rememberMe}
+                  label="이메일 기억하기"
+                  onClick={(e) => {
+                    setRememberMe(e.target.checked);
+                  }}
+                />
               </Col>
               <Col lg={6}>
                 <div className="help_link">

@@ -26,7 +26,16 @@ function loginUser(dataToSubmit) {
           if (res.data.loginSuccess === false) {
             return alert(res.data.message);
           } else {
-            return res.data;
+            if (dataToSubmit.rememberMe.activeRememberMe) {
+              window.localStorage.setItem(
+                "rememberEmail",
+                dataToSubmit.rememberMe.email
+              );
+              return res.data;
+            } else {
+              window.localStorage.removeItem("rememberEmail");
+              return res.data;
+            }
           }
         });
 
@@ -40,18 +49,35 @@ function loginUser(dataToSubmit) {
   };
 }
 
-function logoutUser() {
+function logoutUser(confirm) {
   return async (dispatch) => {
     try {
-      const logoutResult = await axios
-        .get("/api/users/logout")
-        .then((res) => res.data);
+      if (confirm) {
+        const logoutResult = await axios
+          .get("/api/users/logout")
+          .then((res) => {
+            if (res.data.logoutSuccess === false) {
+              return alert(res.data.message);
+            } else {
+              return res.data;
+            }
+          });
 
-      dispatch({
-        type: "LOGOUT_USER",
-        payload: logoutResult,
-      });
+        if (logoutResult.logoutSuccess === true) {
+          dispatch({
+            type: "LOGOUT_USER",
+            payload: {
+              loginResult: undefined,
+              authUserData: { isAuth: false },
+            },
+          });
+          alert("로그아웃 되었습니다");
+        }
+      } else {
+        return;
+      }
     } catch (error) {
+      alert("로그아웃에 실패하였습니다");
       console.log("error occurred : ", error);
     }
   };
@@ -83,7 +109,9 @@ function addToCart(productId) {
     try {
       const addToCartResult = await axios
         .post("/api/users/addToCart", body)
-        .then((res) => res.data);
+        .then((res) => {
+          return res.data;
+        });
 
       dispatch({
         type: "ADD_TO_CART",
@@ -114,7 +142,7 @@ function removeFromCart(productId) {
 
       dispatch({
         type: "REMOVE_CART_ITEMS",
-        payload: removeCartItemsResult,
+        payload: removeCartItemsResult.productDetail,
       });
     } catch (error) {
       console.log("error occurred : ", error);
@@ -125,10 +153,6 @@ function removeFromCart(productId) {
 function getCartItems(cartItems, userCart) {
   return async (dispatch) => {
     try {
-      dispatch({
-        type: "GET_CART_ITEMS_REQUEST",
-      });
-
       const getCartItemsResult = await axios
         .get(`/api/products/products-by-id?id=${cartItems}`)
         .then((res) => {
@@ -142,11 +166,12 @@ function getCartItems(cartItems, userCart) {
             });
           });
 
+          console.log(res.data);
           return res.data;
         });
 
       dispatch({
-        type: "GET_CART_ITEMS_SUCCESS",
+        type: "GET_CART_ITEMS",
         payload: getCartItemsResult,
       });
     } catch (error) {
