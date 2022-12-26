@@ -63,7 +63,8 @@ function App() {
 
   return (
     <>
-      {!isLandingPageView ? (
+      {/* {!isLandingPageView ? ( */}
+      {isLandingPageView ? (
         <Landing setIsLandingPageView={setIsLandingPageView} />
       ) : (
         <>

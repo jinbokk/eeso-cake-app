@@ -116,95 +116,95 @@ const Cart = () => {
           님의 장바구니
         </h1>
       </Container>
-      {!cartDetail ? (
+      {/* {!cartDetail ? (
         <Loading text={"장바구니 가져오는 중..."} />
-      ) : (
-        <Container>
-          {cartDetail && cartDetail.length > 0 ? (
-            <>
-              <Row className="my-4">
-                <Col className="flex-row justify-content-end align-items-center">
-                  <BsCartCheck className="m-2" /> Cart
-                  <AiOutlineRight className="m-2" />
-                  <MdPayment className="m-2" /> Payment
-                  <AiOutlineRight className="m-2" />
-                  <BsCheck2Circle className="m-2" /> Order Complete
-                </Col>
-              </Row>
-              {cartDetail.map((item, index) => (
-                <Row key={index} className="border-top py-4">
-                  <Col className="flex-row justify-content-center align-items-center">
-                    <NavLink to={`/order/list/detail/${item._id}`}>
-                      <img
-                        src={item.image_url}
-                        alt=""
-                        className="item_thumbnail"
-                      />
-                    </NavLink>
-                  </Col>
-                  <Col className="flex-row justify-content-center align-items-center">
-                    <NavLink
-                      to={`/order/list/detail/${item._id}`}
-                      className="item_title"
-                    >
-                      {item.title}
-                    </NavLink>
-                  </Col>
-                  <Col className="flex-row justify-content-center align-items-center">
-                    <QuantityButton variant="contained">
-                      <div style={{ fontSize: "1.5rem" }}>-</div>
-                    </QuantityButton>
-                    <div className="mx-3 user-select-none">{item.quantity}</div>
-                    <QuantityButton variant="contained">
-                      <div style={{ fontSize: "1.5rem" }}>+</div>
-                    </QuantityButton>
-                  </Col>
-                  <Col className="flex-row justify-content-center align-items-center user-select-none">
-                    ₩ {(item.price * item.quantity).toLocaleString("ko-KR")}
-                  </Col>
-                  <Col
-                    className="flex-row justify-content-center align-items-center"
-                    onClick={() => removeFromCart(item._id)}
-                  >
-                    <AiOutlineClose className="delete_button" />
-                  </Col>
-                </Row>
-              ))}
-              <Row>
-                <Col className="border-top p-5 justify-content-center align-items-center">
-                  <div className="total_text">총 수량 : {totalQuantity} 개</div>
-                  <div className="total_text">
-                    주문 금액 : ₩ {totalPrice.toLocaleString("ko-KR")}
-                  </div>
-                </Col>
-              </Row>
-
-              <Row className="py-5 border-top w-auto justify-content-center">
-                <Col className="align-items-center">
-                  <ShoppingButton variant="outlined">
-                    쇼핑하러 가기
-                  </ShoppingButton>
-                </Col>
-                <Col className="align-items-center">
-                  <OrderButton variant="contained">선택상품 주문</OrderButton>
-                </Col>
-                <Col className="align-items-center">
-                  <OrderButton variant="contained">전체 주문</OrderButton>
-                </Col>
-              </Row>
-            </>
-          ) : (
-            <Row className="border-top empty_msg">
-              <Col className="justify-content-center align-items-center">
-                <div>장바구니가 비어있습니다</div>
-                {/* <NavLink to="/">
-                    <div>이소케이크 둘러보기</div>
-                    </NavLink> */}
+      ) : ( */}
+      <Container>
+        {cartDetail && cartDetail.length > 0 ? (
+          <>
+            <Row className="my-4">
+              <Col className="flex-row justify-content-end align-items-center">
+                <BsCartCheck className="m-2" /> Cart
+                <AiOutlineRight className="m-2" />
+                <MdPayment className="m-2" /> Payment
+                <AiOutlineRight className="m-2" />
+                <BsCheck2Circle className="m-2" /> Order Complete
               </Col>
             </Row>
-          )}
-        </Container>
-      )}
+            {cartDetail.map((item, index) => (
+              <Row key={index} className="border-top py-4">
+                <Col className="flex-row justify-content-center align-items-center">
+                  <NavLink to={`/order/list/detail/${item._id}`}>
+                    <img
+                      src={item.image_url}
+                      alt=""
+                      className="item_thumbnail"
+                    />
+                  </NavLink>
+                </Col>
+                <Col className="flex-row justify-content-center align-items-center">
+                  <NavLink
+                    to={`/order/list/detail/${item._id}`}
+                    className="item_title"
+                  >
+                    {item.title}
+                  </NavLink>
+                </Col>
+                <Col className="flex-row justify-content-center align-items-center">
+                  <QuantityButton variant="contained">
+                    <div style={{ fontSize: "1.5rem" }}>-</div>
+                  </QuantityButton>
+                  <div className="mx-3 user-select-none">{item.quantity}</div>
+                  <QuantityButton variant="contained">
+                    <div style={{ fontSize: "1.5rem" }}>+</div>
+                  </QuantityButton>
+                </Col>
+                <Col className="flex-row justify-content-center align-items-center user-select-none">
+                  ₩ {(item.price * item.quantity).toLocaleString("ko-KR")}
+                </Col>
+                <Col
+                  className="flex-row justify-content-center align-items-center"
+                  onClick={() => removeFromCart(item._id)}
+                >
+                  <AiOutlineClose className="delete_button" />
+                </Col>
+              </Row>
+            ))}
+            <Row>
+              <Col className="border-top p-5 justify-content-center align-items-center">
+                <div className="total_text">총 수량 : {totalQuantity} 개</div>
+                <div className="total_text">
+                  주문 금액 : ₩ {totalPrice.toLocaleString("ko-KR")}
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="py-5 border-top w-auto justify-content-center">
+              <Col className="align-items-center">
+                <ShoppingButton variant="outlined">
+                  쇼핑하러 가기
+                </ShoppingButton>
+              </Col>
+              <Col className="align-items-center">
+                <OrderButton variant="contained">선택상품 주문</OrderButton>
+              </Col>
+              <Col className="align-items-center">
+                <OrderButton variant="contained">전체 주문</OrderButton>
+              </Col>
+            </Row>
+          </>
+        ) : (
+          <Row className="border-top empty_msg">
+            <Col className="justify-content-center align-items-center">
+              <div>장바구니가 비어있습니다</div>
+              {/* <NavLink to="/">
+                    <div>이소케이크 둘러보기</div>
+                    </NavLink> */}
+            </Col>
+          </Row>
+        )}
+      </Container>
+      {/* )} */}
     </ThemeProvider>
   );
 };

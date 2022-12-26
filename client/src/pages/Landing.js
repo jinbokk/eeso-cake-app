@@ -72,48 +72,39 @@ const Landing = (props) => {
       exit={{ opacity: 0 }}
     >
       <Container ref={el} className="landing_container">
-        <Row className="row_1 justify-content-center align-items-center">
-          <Col
-            xs={"auto"}
-            s={"auto"}
-            md={"auto"}
-            lg={6}
-            className="col_1 d-flex flex-column justify-content-center"
-          >
-            <div>
-              <h2 className="landing_h2 ease_in_left_1 mb-3">
-                Design Cake Shop
-              </h2>
-              <h1 className="landing_h1 ease_in_left_2 mb-5 ">EESO CAKE</h1>
-            </div>
+        <Row className="justify-content-center align-items-center w-75 h-100 m-auto">
+          <Col xs={12} lg={6} className="text-center">
+            <div className="title_section text-start">
+              <div>
+                <h2 className="landing_h2 ease_in_left_1 mb-3">
+                  Design Cake Shop
+                </h2>
+                <h1 className="landing_h1 ease_in_left_2 mb-5 ">EESO CAKE</h1>
+              </div>
 
-            <div className="ease_in_left_3 mb-5">
-              <h3 className="landing_h3">안녕하세요, 이소케이크 입니다</h3>
-              <h3 className="landing_h3">특별하고 소중한 날,</h3>
-              <h3 className="landing_h3">
-                고객님의 행복을 위해 최선을 다하겠습니다
-              </h3>
-            </div>
+              <div className="ease_in_left_3 mb-5">
+                <h3 className="landing_h3">안녕하세요, 이소케이크 입니다</h3>
+                <h3 className="landing_h3">특별하고 소중한 날,</h3>
+                <h3 className="landing_h3">
+                  고객님의 행복을 위해 최선을 다하겠습니다
+                </h3>
+              </div>
 
-            <button
-              className="landing_button ease_in_bottom_2"
-              onClick={() => props.setIsLandingPageView(true)}
-            >
-              SHOP NOW
-            </button>
+              <button
+                className="landing_button ease_in_bottom_2"
+                onClick={() => props.setIsLandingPageView(true)}
+              >
+                SHOP NOW
+              </button>
+            </div>
           </Col>
 
-          <Col
-            xs={"auto"}
-            s={"auto"}
-            md={"auto"}
-            lg={6}
-            className="col_2 ease_in_right_1"
-          >
+          <Col xs={12} lg={6} className="image_section ease_in_right_1">
             <Swiper
               effect={"fade"}
               fadeEffect={{ crossFade: true }}
               spaceBetween={500}
+              // autoHeight={true}
               autoplay={{
                 delay: 4500,
                 disableOnInteraction: false,
@@ -121,28 +112,27 @@ const Landing = (props) => {
               speed={500}
               modules={[Autoplay, EffectFade]}
               loop={true}
-              className="col_2_swiper_container"
             >
               <SwiperSlide>
                 <img
-                  src="/images/landing_test_3.png"
-                  className="landing_image_background_removed ease_in_right_2"
+                  src="/images/landing_3.png"
+                  className="landing_product_img ease_in_right_2"
                   alt=""
-                ></img>
+                />
               </SwiperSlide>
               <SwiperSlide>
                 <img
-                  src="/images/landing_test.png"
-                  className="landing_image_background_removed ease_in_right_2 bear_test"
+                  src="/images/landing_1.png"
+                  className="landing_product_img ease_in_right_2"
                   alt=""
-                ></img>
+                />
               </SwiperSlide>
               <SwiperSlide>
                 <img
-                  src="/images/landing_test_2.png"
-                  className="landing_image_background_removed ease_in_right_2"
+                  src="/images/landing_2.png"
+                  className="landing_product_img ease_in_right_2"
                   alt=""
-                ></img>
+                />
               </SwiperSlide>
             </Swiper>
           </Col>
