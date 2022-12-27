@@ -55,7 +55,7 @@ const Instagram = () => {
 
   return (
     <Row className="p-0 m-0" ref={ref}>
-      <Row className="sub_banner_container w-75 m-auto d-flex justify-content-center align-items-center">
+      <Row className="w-75 m-auto d-flex justify-content-center align-items-center">
         {loading ? (
           <Loading
             width={"100vw"}

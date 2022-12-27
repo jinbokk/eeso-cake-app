@@ -16,6 +16,16 @@ const Landing = (props) => {
   // gsap
   const el = useRef();
   const q = gsap.utils.selector(el);
+
+  // const onMouseEnterHandler = (e) => {
+  //   e.target.style.transition = "0.5s";
+  //   e.target.style.transform = "scale(1.1)";
+  // };
+  // const onMouseLeaveHandler = (e) => {
+  //   e.target.style.transition = "0.5s";
+  //   e.target.style.transform = "scale(1)";
+  // };
+
   useEffect(() => {
     gsap.fromTo(
       q(".ease_in_right_1"),
@@ -71,11 +81,29 @@ const Landing = (props) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      {/* <img
+        // src="/images/ribbon.png"
+        src="/images/ribbon2.png"
+        alt=""
+        className="ribbon"
+      /> */}
+
+      {/* <video
+        className="ribbon_video"
+        src="/videos/ribbon.mov"
+      /> */}
+
       <Container ref={el} className="landing_container">
         <Row className="justify-content-center align-items-center w-75 h-100 m-auto">
           <Col xs={12} lg={6} className="text-center">
             <div className="title_section text-start">
               <div>
+                <img
+                  src="/logo512.png"
+                  // src="/images/deco_cake.png"
+                  alt=""
+                  className="landing_logo ease_in_left_1"
+                />
                 <h2 className="landing_h2 ease_in_left_1 mb-3">
                   Design Cake Shop
                 </h2>
@@ -92,6 +120,8 @@ const Landing = (props) => {
 
               <button
                 className="landing_button ease_in_bottom_2"
+                // onMouseEnter={onMouseEnterHandler}
+                // onMouseLeave={onMouseLeaveHandler}
                 onClick={() => props.setIsLandingPageView(true)}
               >
                 SHOP NOW
