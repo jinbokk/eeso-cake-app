@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./css/map.css";
 
 const Map = () => {
@@ -13,7 +13,7 @@ const Map = () => {
     );
     const mapOptions = {
       center: position,
-      zoom: 17,
+      zoom: 16,
       minZoom: 6,
       // zoomControl: true,
       // zoomControlOptions: {
@@ -38,7 +38,7 @@ const Map = () => {
 
   return (
     <div>
-      <div id="map" style={{ width: "100%", height: "600px" }}></div>
+      <div id="map" style={{ width: "100%", height: "55vh" }}></div>
     </div>
   );
 };

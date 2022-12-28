@@ -14,17 +14,7 @@ const Contact = () => {
       // exit={{ opacity: 0 }}
     >
       <div className="contact_container">
-        <Row style={{ width: "100%" }}></Row>
-
         <Row className="align-items-center">
-          <Col lg={5} className="d-flex justify-content-center">
-            <img
-              src="/images/contact/avatar.png"
-              alt=""
-              className="dummy_image"
-            />
-          </Col>
-
           <Col lg={7}>
             <Row className="mb-4">
               <div className="fw-bold mt-4">LOCATION / HOURS</div>
@@ -67,6 +57,31 @@ const Contact = () => {
                 <div>일요일 : 10:00 ~ 12:00</div>
               </Col>
             </Row>
+          </Col>
+
+          <Col
+            lg={5}
+            className="d-flex flex-column align-items-center justify-content-center"
+          >
+            <img
+              src="/images/contact/contact.png"
+              alt=""
+              className="contact_image"
+            />
+            <div>모든 예약 문의 및 디자인 상담은 </div>
+            <div>
+              카카오톡 채널
+              <a
+                href="https://pf.kakao.com/_ZyKnd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-2 link"
+              >
+                @이소케이크
+              </a>
+              로 진행 중 입니다
+            </div>
+            <div>이소케이크는 언제나 고객님의 연락을 기다리고 있습니다</div>
           </Col>
         </Row>
       </div>

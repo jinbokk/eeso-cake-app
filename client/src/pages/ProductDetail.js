@@ -132,33 +132,33 @@ const ProductDetail = ({ match }) => {
   const [timeError, setTimeError] = useState(undefined);
 
   // topper
-  const [topper, setTopper] = useState(undefined);
+  const [topper, setTopper] = useState(false);
   const topperHandler = (value) => {
     setTopper(value);
     console.log(value);
   };
 
-  const [topperText, setTopperText] = useState();
+  const [topperText, setTopperText] = useState("");
   const topperTextHandler = (value) => {
     setTopperText(value);
     console.log(value);
   };
 
   // lettering
-  const [lettering, setLettering] = useState();
+  const [lettering, setLettering] = useState(false);
   const letteringHandler = (value) => {
     setLettering(value);
     console.log(value);
   };
 
-  const [letteringText, setLetteringText] = useState();
+  const [letteringText, setLetteringText] = useState("");
   const letteringTextHandler = (value) => {
     setLetteringText(value);
     console.log(value);
   };
 
   // request
-  const [request, setRequest] = useState(undefined);
+  const [request, setRequest] = useState("");
   const requestHandler = (value) => {
     setRequest(value);
     console.log(value);
@@ -270,7 +270,7 @@ const ProductDetail = ({ match }) => {
     let totalPrice = Number(productDetail.price) + optionPrice;
     console.log("total ::::", totalPrice);
 
-    option.push(orderForm);
+    setOption((prev) => [...prev, orderForm]);
     console.log(option);
   };
 
@@ -334,13 +334,13 @@ const ProductDetail = ({ match }) => {
                     </Col>
                   </Row>
                 </Col>
-                <Col lg={5}>
-                  <h1>{productDetail.title}</h1>
-                  <h5>{productDetail.description}</h5>
-                  <h1>₩ {productDetail.price}</h1>
+                <Col lg={5} className="ps-5">
+                  <h1 className="mb-3">{productDetail.title}</h1>
+                  <h5 className="mb-4">{productDetail.description}</h5>
+                  <h1 className="text-end">₩ {productDetail.price}</h1>
 
                   <ThemeProvider theme={theme}>
-                    <div>
+                    <div className="d-flex justify-content-between align-items-center my-3">
                       <span>수령 방법</span>
                       <Controller
                         control={control}
@@ -348,7 +348,6 @@ const ProductDetail = ({ match }) => {
                         render={({ field: { onChange, value, ...field } }) => (
                           <ToggleButtonGroup
                             color="secondary"
-                            className="my-4"
                             size="medium"
                             value={value}
                             onChange={(e) => {
@@ -358,8 +357,8 @@ const ProductDetail = ({ match }) => {
                             exclusive
                             {...field}
                           >
-                            <ToggleButton value="직접 방문">
-                              직접 방문
+                            <ToggleButton value="방문 수령">
+                              방문 수령
                             </ToggleButton>
                             <ToggleButton value="택배" disabled>
                               택배
@@ -373,7 +372,7 @@ const ProductDetail = ({ match }) => {
                       dateAdapter={AdapterDateFns}
                       adapterLocale={ko}
                     >
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex justify-content-between align-items-center my-3">
                         <span style={{ whiteSpace: "nowrap" }}>수령 날짜</span>
                         <Controller
                           control={control}
@@ -422,7 +421,7 @@ const ProductDetail = ({ match }) => {
                         />
                       </div>
 
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex justify-content-between align-items-center my-3">
                         <span style={{ whiteSpace: "nowrap" }}>수령 시간</span>
                         <Controller
                           control={control}
@@ -505,16 +504,16 @@ const ProductDetail = ({ match }) => {
                       </div>
                     </LocalizationProvider>
 
-                    <div>
-                      <span>레터링 추가</span>
+                    <div className="d-flex justify-content-between align-items-center my-3">
+                      <span>케이크판 레터링</span>
                       <Controller
                         control={control}
                         name="레터링_추가"
                         render={({ field: { onChange, value, ...field } }) => (
                           <ToggleButtonGroup
                             color="secondary"
-                            className="my-4"
                             size="medium"
+                            defaultValue={false}
                             value={value}
                             onChange={(e) => {
                               onChange(e.target.value);
@@ -523,14 +522,18 @@ const ProductDetail = ({ match }) => {
                             exclusive
                             {...field}
                           >
-                            <ToggleButton value="Y">Y</ToggleButton>
-                            <ToggleButton value="N">N</ToggleButton>
+                            <ToggleButton value="Y">추가 하기</ToggleButton>
+                            <ToggleButton value="N">추가하지 않기</ToggleButton>
                           </ToggleButtonGroup>
                         )}
                       />
                     </div>
 
-                    <div>
+                    <div
+                      className={
+                        lettering === "Y" ? "input_visible" : "input_hide"
+                      }
+                    >
                       <span>
                         레터링 문구 {`(${letteringLength}/15)`}
                         <span
@@ -566,23 +569,22 @@ const ProductDetail = ({ match }) => {
                             }}
                             variant="outlined"
                             style={{ width: "100%" }}
-                            className="my-4"
                             {...field}
                           />
                         )}
                       />
                     </div>
 
-                    <div>
-                      <span>토퍼 추가</span>
+                    <div className="d-flex justify-content-between align-items-center my-3">
+                      <span>디자인 토퍼</span>
                       <Controller
                         control={control}
                         name="토퍼_추가"
                         render={({ field: { onChange, value, ...field } }) => (
                           <ToggleButtonGroup
                             color="secondary"
-                            className="my-4"
                             size="medium"
+                            // defaultValue={false}
                             value={value}
                             onChange={(e) => {
                               onChange(e.target.value);
@@ -591,14 +593,18 @@ const ProductDetail = ({ match }) => {
                             exclusive
                             {...field}
                           >
-                            <ToggleButton value="Y">Y</ToggleButton>
-                            <ToggleButton value="N">N</ToggleButton>
+                            <ToggleButton value="Y">추가 하기</ToggleButton>
+                            <ToggleButton value="N">추가하지 않기</ToggleButton>
                           </ToggleButtonGroup>
                         )}
                       />
                     </div>
 
-                    <div>
+                    <div
+                      className={
+                        topper === "Y" ? "input_visible" : "input_hide"
+                      }
+                    >
                       <span>
                         토퍼 문구 {`(${topperLength}/15)`}
                         <span
@@ -632,7 +638,6 @@ const ProductDetail = ({ match }) => {
                             }}
                             variant="outlined"
                             style={{ width: "100%" }}
-                            className="my-4"
                             {...field}
                           />
                         )}
@@ -663,7 +668,6 @@ const ProductDetail = ({ match }) => {
                             // label="레터링 추가 요청은 반영되지 않습니다"
                             variant="outlined"
                             style={{ width: "100%" }}
-                            className="my-4"
                             value={value}
                             onChange={(e) => {
                               onChange(e.target.value);

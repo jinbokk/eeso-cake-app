@@ -72,3 +72,13 @@
 .order_preview {
   border-bottom: 1px solid red;
 }
+
+.input_visible {
+  display: block;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.input_hide {
+  display: none;
+}

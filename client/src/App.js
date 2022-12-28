@@ -13,6 +13,7 @@ import Cakes from "./pages/Cakes";
 import Order from "./pages/Order";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
+import Payment from "./pages/Payment";
 import GuideRice from "./pages/GuideRice";
 import GuideBread from "./pages/GuideBread";
 import Contact from "./pages/Contact";
@@ -38,6 +39,7 @@ function App() {
   const AuthOrder = Auth(Order, null);
   const AuthProductDetail = Auth(ProductDetail, null);
   const AuthCart = Auth(Cart, true);
+  const AuthPayment = Auth(Payment, true);
   const AuthGuideRice = Auth(GuideRice, null);
   const AuthGuideBread = Auth(GuideBread, null);
   const AuthContact = Auth(Contact, null);
@@ -84,6 +86,7 @@ function App() {
                 element={<AuthProductDetail />}
               />
               <Route exact path="/user/cart" element={<AuthCart />} />
+              <Route exact path="/user/payment" element={<AuthPayment />} />
               <Route exact path="/guide/rice" element={<AuthGuideRice />} />
               <Route exact path="/guide/bread" element={<AuthGuideBread />} />
               <Route exact path="/contact" element={<AuthContact />} />

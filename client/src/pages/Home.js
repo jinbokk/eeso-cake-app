@@ -149,52 +149,44 @@ const Home = () => {
           </Col>
         </Row>
 
-        <Row className="mx-0">
+        <Row className="sub_banner_container mx-0 px-0 gsap_second">
           {/* <Row>
             <Col className="my-3">
               <hr data-content="건강하게, 맛있게" />
             </Col>
           </Row> */}
 
-          <div className="sub_banner_container mx-0 px-0 gsap_second">
-            <img
-              src="/images/sub_banner.jpeg"
-              alt=""
-              className="sub_banner_image"
-            />
+          <Row className="d-flex flex-column sub_banner_text_container">
+            <Col className="justify-content-center align-items-center">
+              <div className="underline">케이크도 건강해야 합니다</div>
+            </Col>
 
-            <Row className="d-flex flex-column sub_banner_text_container">
-              <Col className="justify-content-center">
-                <div className="underline">케이크도 건강해야 합니다</div>
-              </Col>
+            <Col className="d-flex flex-row justify-content-center sub_banner_text_container_1">
+              <div className="d-flex flex-column align-items-center mx-4">
+                <div className="sub_banner_text_lg">無</div>
+                <div className="sub_banner_text_sm">합성제</div>
+              </div>
 
-              <Col className="d-flex flex-row justify-content-center my-5">
-                <div className="d-flex flex-column align-items-center mx-4">
-                  <div className="sub_banner_text_lg">無</div>
-                  <div className="sub_banner_text_sm">합성제</div>
-                </div>
+              <div className="d-flex flex-column align-items-center mx-4">
+                <div className="sub_banner_text_lg">無</div>
+                <div className="sub_banner_text_sm">보존제</div>
+              </div>
 
-                <div className="d-flex flex-column align-items-center mx-4">
-                  <div className="sub_banner_text_lg">無</div>
-                  <div className="sub_banner_text_sm">보존제</div>
-                </div>
+              <div className="d-flex flex-column align-items-center mx-4">
+                <div className="sub_banner_text_lg">無</div>
+                <div className="sub_banner_text_sm">유화제</div>
+              </div>
+            </Col>
 
-                <div className="d-flex flex-column align-items-center mx-4">
-                  <div className="sub_banner_text_lg">無</div>
-                  <div className="sub_banner_text_sm">유화제</div>
-                </div>
-              </Col>
-
-              <Col className="text-center">
-                <div className="sub_banner_text_sm">
-                  이소케이크에서는, 합성제 보존제 유화제 등을 사용하지 않고
-                </div>
-                <div className="sub_banner_text_sm">
-                  수시로 갓 구워낸 시트와 유생크림만을 사용합니다
-                </div>
-              </Col>
-            </Row>
-          </div>
+            <Col className="sub_banner_text_container_2">
+              <div className="sub_banner_text_sm">
+                이소케이크에서는 합성제, 보존제, 유화제 등을 사용하지 않고
+              </div>
+              <div className="sub_banner_text_sm">
+                수시로 갓 구워낸 시트와 유생크림만을 사용합니다
+              </div>
+            </Col>
+          </Row>
         </Row>
 
         <Row className="gsap_first mx-0">
@@ -204,7 +196,7 @@ const Home = () => {
 
           {width < 992 ? (
             <>
-              <Col>
+              <Col className="p-0">
                 {loading ? (
                   <Loading
                     width={"100vw"}
@@ -268,17 +260,20 @@ const Home = () => {
           )}
         </Row>
 
-        <Row>
-          <Col className="my-3">
-            <hr data-content="다양한 소품들로 더욱 즐겁게" />
-          </Col>
-          <Col>
-            <div className="party_banner_container">
-              <div className="party_text glow">
-                더욱 특별한 순간을 만들어 보세요{" "}
-                <BsStars className="glow_svg" />
+        <Row className="mt-5">
+          {/* <hr data-content="다양한 소품들로 더욱 즐겁게" /> */}
+          <Col className="p-0 party_banner_container">
+            <div className="party_text">
+              {/* <div className="underline mb-5">순간을 더욱 빛내줄 소품들</div> */}
+              <div>매장에 구비된 다양한 디자인 소품들과</div>
+              <div>세상에 단 하나뿐인 주문 제작 토퍼까지</div>
+              <div>
+                더욱 특별한 순간을 만들어 보세요
+                <BsStars
+                  style={{ position: "relative", bottom: "8px" }}
+                  className="mx-2"
+                />
               </div>
-              <img src="/images/party_2.png" alt="" className="party_banner" />
             </div>
           </Col>
         </Row>

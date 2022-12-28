@@ -12,6 +12,8 @@ import { NavLink } from "react-router-dom";
 import Loading from "../components/Loading";
 
 import "./css/cart.css";
+import Paypal from "../components/utils/Paypal";
+import CartTable from "./CartTable";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -120,17 +122,18 @@ const Cart = () => {
         <Loading text={"장바구니 가져오는 중..."} />
       ) : ( */}
       <Container>
+        <Row className="my-4">
+          <Col className="flex-row justify-content-end align-items-center">
+            <BsCartCheck className="m-2 text-danger" />
+            <span className="fw-bold text-danger">Cart</span>
+            <AiOutlineRight className="m-2 text-danger" />
+            <MdPayment className="m-2" /> <span>Payment</span>
+            <AiOutlineRight className="m-2" />
+            <BsCheck2Circle className="m-2" /> <span>Order Complete</span>
+          </Col>
+        </Row>
         {cartDetail && cartDetail.length > 0 ? (
           <>
-            <Row className="my-4">
-              <Col className="flex-row justify-content-end align-items-center">
-                <BsCartCheck className="m-2" /> Cart
-                <AiOutlineRight className="m-2" />
-                <MdPayment className="m-2" /> Payment
-                <AiOutlineRight className="m-2" />
-                <BsCheck2Circle className="m-2" /> Order Complete
-              </Col>
-            </Row>
             {cartDetail.map((item, index) => (
               <Row key={index} className="border-top py-4">
                 <Col className="flex-row justify-content-center align-items-center">
@@ -189,8 +192,13 @@ const Cart = () => {
                 <OrderButton variant="contained">선택상품 주문</OrderButton>
               </Col>
               <Col className="align-items-center">
-                <OrderButton variant="contained">전체 주문</OrderButton>
+                <NavLink to="/user/payment">
+                  <OrderButton variant="contained">전체 주문</OrderButton>
+                </NavLink>
               </Col>
+              {/* <Col className="align-items-center">
+                <Paypal />
+              </Col> */}
             </Row>
           </>
         ) : (
@@ -203,6 +211,7 @@ const Cart = () => {
             </Col>
           </Row>
         )}
+        <CartTable />
       </Container>
       {/* )} */}
     </ThemeProvider>
