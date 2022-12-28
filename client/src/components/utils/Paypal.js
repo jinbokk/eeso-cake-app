@@ -5,8 +5,7 @@ import {
 } from "@paypal/react-paypal-js";
 
 const initialOptions = {
-  "client-id":
-    "AeD5S412na1slGAd1JG9mYPStTUONDAJq_7rTadDKcLfdJ0FBoWg0kUIqmfauXpqnRUZXsOAxTHXXQcb",
+  "client-id": "test",
   // currency: "KRW",
   // intent: "capture",
   // "data-client-token": "abc123xyz==",
