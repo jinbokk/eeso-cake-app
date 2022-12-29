@@ -165,7 +165,7 @@ const Navbar = () => {
                     {(loginResult && loginResult.loginSuccess) ||
                     (authUserData && authUserData._id) ? (
                       <>
-                        <NavLink to="/" onClick={logoutHandler}>
+                        <NavLink to="/" onClick={logoutHandler} className="mx-3">
                           로그아웃
                         </NavLink>
                         <NavLink to="/user/cart" style={{ marginLeft: "1rem" }}>
@@ -239,7 +239,15 @@ const Navbar = () => {
         </div>
       </div>
 
-      {width < 992 ? <NavbarAside /> : null}
+      {width < 992 ? (
+        <NavbarAside
+          loginResult={loginResult}
+          authUserData={authUserData}
+          logoutHandler={logoutHandler}
+          StyledBadge={StyledBadge}
+          BsCart4={BsCart4}
+        />
+      ) : null}
     </>
   );
 };

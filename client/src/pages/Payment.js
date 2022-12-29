@@ -50,7 +50,6 @@ function Row(props) {
         <TableCell>
           주문 옵션
           <IconButton
-            aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
           >
@@ -69,7 +68,7 @@ function Row(props) {
               <Typography variant="h6" gutterBottom component="div">
                 History
               </Typography>
-              <Table size="small" aria-label="purchases">
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell>Date</TableCell>
@@ -130,7 +129,7 @@ const rows = [
 export default function Payment() {
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell />

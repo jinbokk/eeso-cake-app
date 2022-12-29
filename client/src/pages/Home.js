@@ -113,7 +113,7 @@ const Home = () => {
       exit={{ opacity: 0, y: "-20px" }}
     >
       <Container fluid className="home_container_top" ref={ref}>
-        <Row className="main_banner_container m-0">
+        <Row className="main_banner_container m-0 p-0">
           <Col>
             <div className="main_banner_text">
               <div className="glow">
@@ -149,7 +149,7 @@ const Home = () => {
           </Col>
         </Row>
 
-        <Row className="sub_banner_container mx-0 px-0 gsap_second">
+        <Row className="sub_banner_container mx-0 px-0 gsap_first">
           {/* <Row>
             <Col className="my-3">
               <hr data-content="건강하게, 맛있게" />
@@ -189,7 +189,7 @@ const Home = () => {
           </Row>
         </Row>
 
-        <Row className="gsap_first mx-0">
+        <Row className="gsap_second w-100">
           <Col className="my-3">
             <hr data-content="고객님을 위한 다양한 케이크가 준비되어 있습니다" />
           </Col>
@@ -258,24 +258,125 @@ const Home = () => {
               </Row>
             </Container>
           )}
-        </Row>
-
-        <Row className="mt-5">
-          {/* <hr data-content="다양한 소품들로 더욱 즐겁게" /> */}
-          <Col className="p-0 party_banner_container">
-            <div className="party_text">
-              {/* <div className="underline mb-5">순간을 더욱 빛내줄 소품들</div> */}
-              <div>매장에 구비된 다양한 디자인 소품들과</div>
-              <div>세상에 단 하나뿐인 주문 제작 토퍼까지</div>
-              <div>
-                더욱 특별한 순간을 만들어 보세요
-                <BsStars
-                  style={{ position: "relative", bottom: "8px" }}
-                  className="mx-2"
-                />
+          <Row className="mt-5 mx-0">
+            {/* <hr data-content="다양한 소품들로 더욱 즐겁게" /> */}
+            <Col className="party_banner_container">
+              <div className="deco_image_container">
+                {width < 992 ? (
+                  <div>
+                    {/* <Swiper
+                      slidesPerView={1}
+                      spaceBetween={5}
+                      speed={2000}
+                      autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
+                      }}
+                      freeMode={true}
+                      modules={[FreeMode, Autoplay]}
+                      loop={true}
+                      className="custom_swiper_container"
+                    >
+                      <SwiperSlide className="d-flex justify-content-center">
+                        <img
+                          src="/images/deco/deco_1.png"
+                          alt=""
+                          className="deco_image"
+                        />
+                      </SwiperSlide>
+                      <SwiperSlide className="d-flex justify-content-center">
+                        <img
+                          src="/images/deco/deco_2.png"
+                          alt=""
+                          className="deco_image"
+                        />
+                      </SwiperSlide>
+                      <SwiperSlide className="d-flex justify-content-center">
+                        <img
+                          src="/images/deco/deco_3.png"
+                          alt=""
+                          className="deco_image"
+                        />
+                      </SwiperSlide>
+                      <SwiperSlide className="d-flex justify-content-center">
+                        <img
+                          src="/images/deco/deco_4.png"
+                          alt=""
+                          className="deco_image"
+                        />
+                      </SwiperSlide>
+                      <SwiperSlide className="d-flex justify-content-center">
+                        <img
+                          src="/images/deco/deco_5.png"
+                          alt=""
+                          className="deco_image"
+                        />
+                      </SwiperSlide>
+                      <SwiperSlide className="d-flex justify-content-center">
+                        <img
+                          src="/images/deco/deco_6.png"
+                          alt=""
+                          className="deco_image"
+                        />
+                      </SwiperSlide>
+                    </Swiper> */}
+                  </div>
+                ) : (
+                  <>
+                    <div>
+                      <img
+                        src="/images/deco/deco_1.png"
+                        alt=""
+                        className="deco_image"
+                      />
+                      <img
+                        src="/images/deco/deco_2.png"
+                        alt=""
+                        className="deco_image"
+                      />
+                      <img
+                        src="/images/deco/deco_3.png"
+                        alt=""
+                        className="deco_image"
+                      />
+                    </div>
+                    <div style={{ marginLeft: "5%"}}>
+                      <img
+                        src="/images/deco/deco_4.png"
+                        alt=""
+                        className="deco_image"
+                      />
+                      <img
+                        src="/images/deco/deco_5.png"
+                        alt=""
+                        className="deco_image"
+                      />
+                      <img
+                        src="/images/deco/deco_6.png"
+                        alt=""
+                        className="deco_image"
+                      />
+                    </div>
+                  </>
+                )}
               </div>
-            </div>
-          </Col>
+
+              <div className="party_text">
+                {/* <div className="underline mb-5">순간을 더욱 빛내줄 소품들</div> */}
+                <div>
+                  매장에 구비된 다양한 디자인 소품들과, 세상에 단 하나뿐인 주문
+                  제작 토퍼까지
+                </div>
+                <div>
+                  특별한 날, 더욱 특별한 순간을 만들어 보세요
+                  <BsStars
+                    style={{ position: "relative", bottom: "8px" }}
+                    className="mx-2"
+                  />
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Row>
       </Container>
 

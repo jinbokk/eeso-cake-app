@@ -2,17 +2,11 @@
   font-family: var(--main-font);
   font-size: 1.2rem;
   padding: 0 !important;
-  position: relative;
-  top: calc(var(--nav-height) * -1);
 }
 
 .main_banner_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100vw;
   height: 100vh;
-  position: relative;
   background-image: url(/public/images/home_main_banner.jpg);
   /* background-attachment: local, scroll; */
   background-attachment: fixed;
@@ -126,7 +120,7 @@
   justify-content: space-around;
   width: 100vw;
   height: 100vh;
-  background-image: url(/public/images/sub_banner.jpeg);
+  background-image: url(/public/images/sub_banner.png);
   background-size: cover;
   margin: 0 !important;
 }
@@ -172,17 +166,17 @@
 .party_banner_container {
   text-align: center;
   position: relative;
-  left: 0;
   background-image: url(/public/images/cake_deco_lg.png);
   background-size: cover;
-  height: 30vh;
+  background-repeat: no-repeat;
+  height: 80vh;
   width: 100vw;
 }
 
 .party_text {
   position: absolute;
   top: 50%;
-  left: 7%;
+  left: 10%;
   transform: translateY(-50%);
   line-height: 250%;
   font-size: 1.3rem;
@@ -190,11 +184,27 @@
   text-align: start;
 }
 
+.deco_image_container {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  padding: 5rem;
+}
+
+.deco_image {
+  width: 220px;
+  margin: 1rem;
+}
+
 /* responsive */
 
 @media screen and (max-width: 992px) {
   .main_banner_container {
-    height: calc(70vh - var(--nav-height));
+    height: 75vh;
     background-size: cover;
     background-position: top left -150px;
   }
@@ -252,10 +262,19 @@
   }
 
   .party_banner_container {
-    height: 20vh;
+    height: 25vh;
   }
 
   .party_text {
+    z-index: 10;
     font-size: 1rem;
+    width: 70%;
+    word-break: keep-all;
+  }
+
+  .deco_image {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
   }
 }

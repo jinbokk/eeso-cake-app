@@ -4,9 +4,10 @@ import { NavLink } from "react-router-dom";
 import NavDropdown from "./NavDropdown";
 
 import Accordion from "react-bootstrap/Accordion";
+import { display } from "@mui/system";
 // import "./css/custom.scss";
 
-const NavbarAside = () => {
+const NavbarAside = (props) => {
   const [toggleHandler, setToggleHandler] = useState(false);
 
   let activeStyle = {
@@ -131,6 +132,59 @@ const NavbarAside = () => {
 
         <Row>
           <Col>
+            <div className="text-center pb-5">
+              {(props.loginResult && props.loginResult.loginSuccess) ||
+              (props.authUserData && props.authUserData._id) ? (
+                <>
+                  <NavLink
+                    to="/"
+                    onClick={(e) => {
+                      setToggleHandler(false);
+                      props.logoutHandler(e);
+                    }}
+                    style={{ position: "relative", top: "2px" }}
+                  >
+                    로그아웃
+                  </NavLink>
+                  <NavLink
+                    to="/user/cart"
+                    style={{
+                      marginLeft: "2rem",
+                    }}
+                  >
+                    <props.StyledBadge badgeContent={999} color="error">
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <divm style={{ marginRight: "5px" }}>장바구니</divm>
+                        <props.BsCart4 className="cartIcon" />
+                      </div>
+                    </props.StyledBadge>
+                  </NavLink>
+                </>
+              ) : (
+                <>
+                  <NavLink
+                    to="/login"
+                    style={({ isActive }) => (isActive ? activeStyle : null)}
+                    onClick={(e) => {
+                      setToggleHandler(false);
+                    }}
+                  >
+                    로그인
+                  </NavLink>
+                  <span className="mx-2">/</span>
+                  <NavLink
+                    to="/register"
+                    style={({ isActive }) => (isActive ? activeStyle : null)}
+                    onClick={(e) => {
+                      setToggleHandler(false);
+                    }}
+                  >
+                    회원가입
+                  </NavLink>
+                </>
+              )}
+            </div>
+
             <div className="util_containerAside">
               <div>
                 <a

@@ -1,18 +1,17 @@
 .detail_container {
   /* height: 100vh; */
+  padding-top: 4rem;
+}
+
+.detail_container > * {
+  font-family: var(--main-font) !important;
 }
 
 .image_container {
   position: sticky;
+  padding: 0 3rem !important;
   height: fit-content;
   top: calc(var(--nav-height) + 1.5rem);
-}
-
-@media screen and (max-width: 992px) {
-  .image_container {
-    position: relative;
-    top: 0;
-  }
 }
 
 .detail_img {
@@ -27,6 +26,7 @@
   font-size: 0.5rem;
   color: gray;
   text-align: end;
+  white-space: nowrap;
 }
 
 .plus_tag {
@@ -45,6 +45,15 @@
 }
 
 @media screen and (max-width: 992px) {
+  .image_container {
+    position: relative;
+    top: 0;
+  }
+
+  .detail_img {
+    height: 40vh;
+  }
+
   .plus_tag {
     flex-direction: column;
     background-color: transparent;
@@ -69,14 +78,34 @@
   display: none !important;
 }
 
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  width: 100%;
+}
+
+.option_menu_section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid pink;
+}
+
+.option_menu_text {
+  font-size: 1rem;
+}
+
+.controller_container {
+  width: 60%;
+}
+
 .order_preview {
   border-bottom: 1px solid red;
 }
 
 .input_visible {
   display: block;
-  margin-top: 1.5rem;
-  margin-bottom: 2.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .input_hide {

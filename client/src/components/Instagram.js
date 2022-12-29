@@ -103,7 +103,7 @@ const Instagram = () => {
                 {feedData.map((item, index) => (
                   <SwiperSlide
                     key={index}
-                    className="d-flex justify-content-center"
+                    className="d-flex justify-contentcd -center"
                   >
                     <a
                       className="instaFeed_container"

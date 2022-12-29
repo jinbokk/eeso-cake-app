@@ -26,8 +26,7 @@ li {
   font-size: var(--nav-font-size);
   font-weight: bold;
   width: 100vw;
-  /* height: var(--nav-height); */
-  height: auto;
+  height: var(--nav-height);
   /* border-bottom: 1px solid rgba(255, 2, 2, 0.08); */
 }
 
@@ -52,7 +51,8 @@ li {
 
 .nav_menu {
   cursor: pointer;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   transition: 0.2s;
   padding: 20px;
   z-index: 10000;
@@ -128,6 +128,7 @@ li {
 
 .user_container > a {
   transition: 0.3s;
+  font-size: 1.1rem;
 }
 
 .user_container > span {
@@ -250,7 +251,6 @@ li {
 .user_container {
   margin-left: auto;
   white-space: nowrap;
-  font-size: 1rem;
 }
 
 .cartIcon {
@@ -263,10 +263,6 @@ li {
 /* Responsive */
 
 @media screen and (max-width: 992px) {
-  /* .nav_container_top {
-    height: calc(var(--nav-height) - 10px);
-  } */
-
   .main_logo {
     height: 65px;
     padding: 15px;
@@ -317,7 +313,8 @@ li {
   right: -100vw;
   width: 100vw;
   height: 100vh;
-  background-color: bisque;
+  background-color: var(--bg);
+  /* background-color: bisque; */
   transition: 0.5s;
 }
 
@@ -336,8 +333,8 @@ li {
 
 .nav_mobile_bar_container {
   position: fixed;
-  right: 0px;
-  top: 0px;
+  right: 15px;
+  top: 5px;
   z-index: 10000;
   width: calc(var(--nav-height) - 10px);
   height: calc(var(--nav-height) - 10px);
