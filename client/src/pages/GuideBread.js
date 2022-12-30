@@ -254,6 +254,30 @@ const GuideBread = () => {
         </Row>
 
         <Row style={{ width: "100%" }}>
+          <hr data-content="패키지" />
+        </Row>
+
+        <Row>
+          <Col md={12}>
+            <div className="d-flex flex-column align-items-center justify-content-center my-3">
+              <div className="d-flex justify-content-center align-items-center mb-3">
+                <span className="mx-1">옵션</span> <MdLooksOne size="24" />
+              </div>
+              <div> 종이 상자 패키지 (기본 패키지)</div>
+            </div>
+          </Col>
+
+          <Col md={12}>
+            <div className="d-flex flex-column align-items-center justify-content-center my-3">
+              <div className="d-flex justify-content-center align-items-center mb-3">
+                <span className="mx-1">옵션</span> <MdLooksTwo size="24" />
+              </div>
+              <div> 투명 아크릴 패키지</div>
+            </div>
+          </Col>
+        </Row>
+
+        <Row style={{ width: "100%" }}>
           <hr />
         </Row>
 

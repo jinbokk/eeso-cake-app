@@ -154,7 +154,7 @@ const NavbarAside = (props) => {
                   >
                     <props.StyledBadge badgeContent={999} color="error">
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <divm style={{ marginRight: "5px" }}>장바구니</divm>
+                        <div style={{ marginRight: "5px" }}>장바구니</div>
                         <props.BsCart4 className="cartIcon" />
                       </div>
                     </props.StyledBadge>

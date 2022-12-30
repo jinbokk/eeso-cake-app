@@ -17,14 +17,16 @@ import {
   ToggleButton,
   TextField,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import { red } from "@mui/material/colors";
+import { brown } from "@mui/material/colors";
 
 import GuideBread from "./GuideBread";
 import GuideRice from "./GuideRice";
 import { BsStars, BsCart4 } from "react-icons/bs";
-import { MdCake, MdRateReview } from "react-icons/md";
+import { MdCake, MdRateReview, MdPayment } from "react-icons/md";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
 ////////////////////////////////////////
@@ -41,11 +43,11 @@ import { ko } from "date-fns/locale";
 
 ////////////////////////////////////////
 
-import "./css/productDetail.css";
+import "./css/orderDetail.css";
 import Instagram from "../components/Instagram";
 import { textAlign } from "@mui/system";
 
-const ProductDetail = ({ match }) => {
+const OrderDetail = ({ match }) => {
   const dispatch = useDispatch();
   // const [searchParams] = useSearchParams();
   // const productId = searchParams.get("productId");
@@ -65,16 +67,48 @@ const ProductDetail = ({ match }) => {
   const theme = createTheme({
     palette: {
       primary: {
-        main: red[700],
+        main: brown[300],
       },
-      secondary: {
-        main: red[500],
+      button: {
+        main: brown[500],
       },
     },
   });
 
+  const CustumToggleButton = styled(ToggleButton)(() => ({
+    border: "1px solid",
+    color: brown[400],
+    borderColor: "rgba(0, 0, 0, 0.25)",
+    boxShadow: "none",
+    "&.Mui-disabled": {
+      border: "1px solid",
+      borderColor: "rgba(0, 0, 0, 0.25)",
+    },
+    "&.Mui-selected, &.Mui-selected:hover": {
+      color: "white",
+      backgroundColor: brown[300],
+    },
+
+    "&:hover": {
+      boxShadow: "none",
+    },
+  }));
+
+  const QuantityButton = styled(Button)(() => ({
+    width: "10px",
+    minWidth: 0,
+    height: "10px",
+    padding: "10px",
+    boxShadow: "none",
+
+    "&:hover": {
+      boxShadow: "none",
+    },
+  }));
+
   // delivery
   const [delivery, setDelivery] = useState(undefined);
+
   const deliveryHandler = (value) => {
     console.log(delivery);
     setDelivery(value);
@@ -82,41 +116,36 @@ const ProductDetail = ({ match }) => {
 
   // date
   const [dateOpen, setDateOpen] = useState(false);
-  const [date, setDate] = useState(undefined);
-  const dateHandler = (value) => {
-    // const date = new Date(value);
-    // const weekday = ["일", "월", "화", "수", "목", "금", "토"];
-    // const modifiedDate =
-    //   date.getFullYear() +
-    //   "년 " +
-    //   (date.getMonth() + 1) +
-    //   "월 " +
-    //   date.getDate() +
-    //   "일 " +
-    //   `(${weekday[date.getDay()]})`;
+  const [date, setDate] = useState(null);
+  const [modifiedDate, setModifiedDate] = useState(undefined);
 
-    const date = new Date(value);
+  const dateHandler = (event) => {
+    setDate(event);
+    const date = new Date(event);
     const modifiedDate = format(date, "yyyy년 MM월 dd일 (eee)", { locale: ko });
-    setDate(modifiedDate);
+    setModifiedDate(modifiedDate);
   };
 
   //  time
   const [timeOpen, setTimeOpen] = useState(false);
-  const [time, setTime] = useState(undefined);
+  const [time, setTime] = useState(null);
+  const [modifiedTime, setModifiedTime] = useState(undefined);
   const [minTime, setMinTime] = useState(undefined);
   const [maxTime, setMaxTime] = useState(undefined);
-  const timeHandler = (value) => {
-    const date = new Date(value);
+
+  const timeHandler = (event) => {
+    setTime(event);
+    const date = new Date(event);
     const modifiedTime = format(date, "a hh : mm", { locale: ko });
-    setTime(modifiedTime);
+    setModifiedTime(modifiedTime);
   };
 
-  const storeHourHandler = (date) => {
+  const storeHourHandler = (event) => {
     // 평일     am 11:00 ~  pm 7:30
     // 토요일   am 10:00 ~  pm 4:00
     // 일요일   am 10:00 ~  pm 12:00
 
-    const selectedDay = format(date, "eee", { locale: ko });
+    const selectedDay = format(event, "eee", { locale: ko });
     console.log("selectedDay", selectedDay);
 
     if (selectedDay === "토") {
@@ -166,7 +195,6 @@ const ProductDetail = ({ match }) => {
   const [request, setRequest] = useState("");
   const requestHandler = (value) => {
     setRequest(value);
-    console.log(value);
   };
 
   // textCheck
@@ -193,41 +221,18 @@ const ProductDetail = ({ match }) => {
     }
   };
 
-  // // optionPrice
-
-  // // const [optionPrice, setOptionPrice] = useState(
-  // //   productDetail && productDetail.price
-  // // );
-
-  // const optionPrice = useRef();
-
-  // optionPrice.current = productDetail.price;
-
-  // console.log(optionPrice);
-
-  // console.log(optionPrice);
-  // const optionPriceHandler = (value) => {
-  //   if (value === "Y") {
-  //     optionPrice.current = optionPrice.current + 3000;
-  //     console.log(optionPrice);
-  //   }
-  //   if (topperLength > 10) {
-  //     optionPrice.current = optionPrice.current + 3000;
-  //     console.log(optionPrice);
-  //   }
-  // };
-
   ////////////////////////////////
 
   let orderForm = {
     수령_방법: delivery,
-    수령_날짜: date,
-    수령_시간: time,
+    수령_날짜: modifiedDate,
+    수령_시간: modifiedTime,
     레터링_추가: lettering,
     레터링_문구: letteringText,
     토퍼_추가: topper,
     토퍼_문구: topperText,
     요청_사항: request,
+    수량: 1,
   };
 
   const { handleSubmit, control } = useForm();
@@ -258,6 +263,7 @@ const ProductDetail = ({ match }) => {
 
   const [option, setOption] = useState([]);
   const [optionPrice, setOptionPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const optionConfirmHandler = () => {
     if (orderForm.토퍼_문구 && orderForm.토퍼_문구.length !== 0) {
@@ -272,11 +278,38 @@ const ProductDetail = ({ match }) => {
       setTopperLengthError(true);
     }
 
-    let totalPrice = Number(productDetail.price) + optionPrice;
-    console.log("total ::::", totalPrice);
-
+    let totalPrice = (Number(productDetail.price) + optionPrice).toLocaleString(
+      "ko-KR"
+    );
+    setTotalPrice(totalPrice);
     setOption((prev) => [...prev, orderForm]);
-    console.log(option);
+
+    // form reset
+    setDelivery(null);
+
+    setDate(null);
+    setModifiedDate(null);
+
+    setTime(null);
+    setModifiedTime(null);
+
+    setTopper(null);
+    setTopperText("");
+
+    setLettering(null);
+    setLetteringText("");
+
+    setRequest("");
+  };
+
+  const optionRemoveHandler = (optionIndex) => {
+    const confirm = window.confirm("해당 옵션을 지우시겠습니까?");
+
+    if (confirm) {
+      setOption(option.filter((item, index) => index !== optionIndex));
+    } else {
+      return;
+    }
   };
 
   const addToCartHandler = () => {
@@ -284,7 +317,8 @@ const ProductDetail = ({ match }) => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log("submit 완료::::", data);
+
     // if (data.수령_방법 === "택배") {
     //   data.수령_시간 = null;
     // }
@@ -309,7 +343,9 @@ const ProductDetail = ({ match }) => {
                   <div style={{ padding: "0 3rem" }}>
                     <h1 className="mb-3 fw-bold">{productDetail.title}</h1>
                     <h5 className="mb-4">{productDetail.description}</h5>
-                    <h1 className="mb-4">₩ {productDetail.price}</h1>
+                    <h1 className="mb-4">
+                      ₩ {productDetail.price.toLocaleString("ko-KR")}
+                    </h1>
                   </div>
                 ) : null}
 
@@ -353,7 +389,9 @@ const ProductDetail = ({ match }) => {
                     <>
                       <h1 className="mb-3 fw-bold">{productDetail.title}</h1>
                       <h5 className="mb-4">{productDetail.description}</h5>
-                      <h1 className="mb-4">₩ {productDetail.price}</h1>
+                      <h1 className="mb-4">
+                        ₩ {Number(productDetail.price).toLocaleString("ko-KR")}
+                      </h1>
                     </>
                   ) : null}
 
@@ -374,9 +412,10 @@ const ProductDetail = ({ match }) => {
                               field: { onChange, value, ...field },
                             }) => (
                               <ToggleButtonGroup
-                                color="secondary"
+                                color="button"
                                 size="medium"
-                                value={value}
+                                value={delivery}
+                                // value={value}
                                 onChange={(e) => {
                                   onChange(e.target.value);
                                   deliveryHandler(e.target.value);
@@ -388,33 +427,36 @@ const ProductDetail = ({ match }) => {
                                 }}
                                 {...field}
                               >
-                                <ToggleButton value="방문 수령">
+                                <CustumToggleButton value="방문 수령">
                                   <div
                                     style={{
                                       fontSize: "1rem",
+                                      pointerEvents: "none",
                                     }}
                                   >
                                     방문 수령
                                   </div>
-                                </ToggleButton>
-                                <ToggleButton value="차량 배송">
+                                </CustumToggleButton>
+                                <CustumToggleButton value="차량 배송">
                                   <div
                                     style={{
                                       fontSize: "1rem",
+                                      pointerEvents: "none",
                                     }}
                                   >
                                     차량 배송
                                   </div>
-                                </ToggleButton>
-                                <ToggleButton value="택배" disabled>
+                                </CustumToggleButton>
+                                <CustumToggleButton value="택배" disabled>
                                   <div
                                     style={{
                                       fontSize: "1rem",
+                                      pointerEvents: "none",
                                     }}
                                   >
                                     택배
                                   </div>
-                                </ToggleButton>
+                                </CustumToggleButton>
                               </ToggleButtonGroup>
                             )}
                           />
@@ -488,21 +530,17 @@ const ProductDetail = ({ match }) => {
                             }) => (
                               <DesktopDatePicker
                                 {...field}
-                                sx={{
-                                  "& .MuiPickersDay": {
-                                    backgroundColor: "red",
-                                  },
-                                }}
+                                className="mui_x_custom"
                                 minDate={addDays(new Date(), 3)}
                                 maxDate={addDays(new Date(), 14)}
                                 inputFormat="yyyy.MM.dd (eee)"
                                 disableMaskedInput
                                 dayOfWeekFormatter={(day) => `${day}`}
-                                value={value}
-                                onChange={(e) => {
-                                  onChange(e);
-                                  dateHandler(e);
-                                  storeHourHandler(e);
+                                value={date}
+                                onChange={(event) => {
+                                  onChange(event);
+                                  dateHandler(event);
+                                  storeHourHandler(event);
                                 }}
                                 fullWidth
                                 open={dateOpen}
@@ -542,32 +580,32 @@ const ProductDetail = ({ match }) => {
                             }) => (
                               <TimePicker
                                 {...field}
+                                className="mui_x_custom"
                                 sx={{
-                                  "& .MuiPickersToolbar-content": {
+                                  "&.MuiPickersToolbar-content": {
                                     flexDirection: "row-reverse",
                                     justifyContent: "center",
                                   },
-                                  "& .MuiTimePickerToolbar-ampmLabel": {
+                                  "&.MuiTimePickerToolbar-ampmLabel": {
                                     padding: "4px",
                                   },
-                                  "& .MuiTimePickerToolbar-ampmLabel.Mui-selected":
+                                  "&.MuiTimePickerToolbar-ampmLabel.Mui-selected":
                                     {
                                       color: pink[300],
                                     },
-                                  "& .MuiTimePickerToolbar-ampmSelection": {
+                                  "&.MuiTimePickerToolbar-ampmSelection": {
                                     flexDirection: "row",
                                     marginRight: "10px",
                                   },
                                 }}
                                 disableMaskedInput
-                                // orientation="landscape"
-                                value={delivery === "택배" ? null : value}
+                                value={delivery === "택배" ? null : time}
                                 minTime={minTime}
                                 maxTime={maxTime}
                                 inputFormat="a hh:mm"
-                                onChange={(e) => {
-                                  onChange(e);
-                                  timeHandler(e);
+                                onChange={(event) => {
+                                  onChange(event);
+                                  timeHandler(event);
                                 }}
                                 disabled={delivery === "택배" ? true : false}
                                 fullWidth
@@ -631,10 +669,10 @@ const ProductDetail = ({ match }) => {
                               field: { onChange, value, ...field },
                             }) => (
                               <ToggleButtonGroup
-                                color="secondary"
+                                color="button"
                                 size="medium"
                                 defaultValue={false}
-                                value={value}
+                                value={lettering}
                                 onChange={(e) => {
                                   onChange(e.target.value);
                                   letteringHandler(e.target.value);
@@ -646,7 +684,7 @@ const ProductDetail = ({ match }) => {
                                 }}
                                 {...field}
                               >
-                                <ToggleButton value="Y">
+                                <CustumToggleButton value="Y">
                                   <div
                                     style={{
                                       fontSize: "1rem",
@@ -655,8 +693,8 @@ const ProductDetail = ({ match }) => {
                                   >
                                     추가 하기
                                   </div>
-                                </ToggleButton>
-                                <ToggleButton value="N">
+                                </CustumToggleButton>
+                                <CustumToggleButton value="N">
                                   <div
                                     style={{
                                       fontSize: "1rem",
@@ -665,7 +703,7 @@ const ProductDetail = ({ match }) => {
                                   >
                                     추가하지 않기
                                   </div>
-                                </ToggleButton>
+                                </CustumToggleButton>
                               </ToggleButtonGroup>
                             )}
                           />
@@ -700,7 +738,7 @@ const ProductDetail = ({ match }) => {
                               // label="최대 15자 까지 입력 가능합니다"
                               placeholder="최대 15자 까지 입력 가능합니다"
                               inputProps={{ maxLength: 15 }}
-                              value={value}
+                              value={letteringText}
                               error={letteringLengthError ? true : false}
                               helperText={
                                 letteringLengthError
@@ -732,10 +770,10 @@ const ProductDetail = ({ match }) => {
                               field: { onChange, value, ...field },
                             }) => (
                               <ToggleButtonGroup
-                                color="secondary"
+                                color="button"
                                 size="medium"
                                 // defaultValue={false}
-                                value={value}
+                                value={topper}
                                 onChange={(e) => {
                                   onChange(e.target.value);
                                   topperHandler(e.target.value);
@@ -747,24 +785,26 @@ const ProductDetail = ({ match }) => {
                                 }}
                                 {...field}
                               >
-                                <ToggleButton value="Y">
+                                <CustumToggleButton value="Y">
                                   <div
                                     style={{
                                       fontSize: "1rem",
+                                      pointerEvents: "none",
                                     }}
                                   >
                                     추가 하기
                                   </div>
-                                </ToggleButton>
-                                <ToggleButton value="N">
+                                </CustumToggleButton>
+                                <CustumToggleButton value="N">
                                   <div
                                     style={{
                                       fontSize: "1rem",
+                                      pointerEvents: "none",
                                     }}
                                   >
                                     추가하지 않기
                                   </div>
-                                </ToggleButton>
+                                </CustumToggleButton>
                               </ToggleButtonGroup>
                             )}
                           />
@@ -800,7 +840,7 @@ const ProductDetail = ({ match }) => {
                               // label="최대 15자 까지 입력 가능합니다"
                               placeholder="최대 15자 까지 입력 가능합니다"
                               inputProps={{ maxLength: 15 }}
-                              value={value}
+                              value={topperText}
                               error={topperLengthError ? true : false}
                               helperText={
                                 topperLengthError
@@ -847,7 +887,7 @@ const ProductDetail = ({ match }) => {
                             fullWidth
                             variant="outlined"
                             style={{ width: "100%" }}
-                            value={value}
+                            value={request}
                             onChange={(e) => {
                               onChange(e.target.value);
                               requestHandler(e.target.value);
@@ -876,98 +916,159 @@ const ProductDetail = ({ match }) => {
                       </div>
                     </Button>
 
-                    {option !== [] ? (
+                    {option.length > 0 ? (
                       <>
                         {option.map((item, index) => {
                           return (
                             <Row
                               key={index}
-                              className="order_preview align-items-center"
+                              className="order_preview align-items-center p-3"
                             >
-                              {/* <div>{index + 1} 번</div> */}
-                              <Col>
-                                <div>
-                                  <span className="me-2">수령 방법 :</span>
-                                  <span>{item.수령_방법}</span>
+                              <Col className="d-flex flex-row justify-content-between mb-2">
+                                <div className="fw-bold">
+                                  {productDetail.title}
                                 </div>
-                                <div>
-                                  <span className="me-2">수령 날짜 :</span>
-                                  <span>{item.수령_날짜}</span>
+
+                                <div className="d-flex flex-row justify-content-center align-items-center">
+                                  <QuantityButton
+                                    variant="contained"
+                                    onClick={() => (item.수량 = item.수량 + 1)}
+                                  >
+                                    <div style={{ fontSize: "1.5rem" }}>-</div>
+                                  </QuantityButton>
+                                  <div className="mx-3 user-select-none">
+                                    {item.수량}
+                                  </div>
+                                  <QuantityButton variant="contained">
+                                    <div style={{ fontSize: "1.5rem" }}>+</div>
+                                  </QuantityButton>
                                 </div>
-                                <div>
-                                  <span className="me-2">수령 시간 :</span>
-                                  <span>{item.수령_시간}</span>
+
+                                <div
+                                  className="remove_button"
+                                  onClick={() => optionRemoveHandler(index)}
+                                >
+                                  X
                                 </div>
                               </Col>
+
+                              <Col lg={12} className="mb-2">
+                                <div>
+                                  <span>
+                                    {item.수령_방법} / {item.수령_날짜} /{" "}
+                                    {item.수령_시간}
+                                  </span>
+                                </div>
+                              </Col>
+
                               <Col>
-                                <div>
-                                  <span className="me-2">레터링 추가 :</span>
-                                  <span>{item.레터링_추가}</span>
-                                </div>
-                                <div>
-                                  <span className="me-2">레터링 문구 :</span>
-                                  <span>{item.레터링_문구}</span>
-                                </div>
-                                <div>
-                                  <span className="me-2">토퍼 추가 :</span>
-                                  <span>{item.토퍼_추가}</span>
-                                </div>
-                                <div>
-                                  <span className="me-2">토퍼 문구 :</span>
-                                  <span>{item.토퍼_문구}</span>
-                                </div>
-                                <div>
-                                  <span className="me-2">요청 사항 :</span>
-                                  <span>{item.요청_사항}</span>
-                                </div>
+                                {item.레터링_추가 ? (
+                                  <div>
+                                    <span className="me-2">
+                                      케이크 판 레터링 / {item.레터링_문구}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <div>케이크판 레터링 / 없음</div>
+                                )}
+
+                                {item.토퍼_추가 ? (
+                                  <div>
+                                    <span className="me-2">
+                                      디자인 토퍼 문구 / {item.토퍼_문구}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <div>디자인 토퍼 / 없음</div>
+                                )}
+
+                                {item.요청_사항 ? (
+                                  <div>
+                                    <span className="me-2">
+                                      요청 사항 / {item.요청_사항}
+                                    </span>
+                                  </div>
+                                ) : null}
                               </Col>
                             </Row>
                           );
                         })}
 
-                        {/* <Row>
-                      <Col>총 금액</Col>
-                      <Col>{Number(productDetail.price) + optionPrice}</Col>
-                    </Row> */}
-
-                        <Button
-                          variant="contained"
-                          type="button"
-                          style={{ height: "50px" }}
-                          onClick={() => addToCartHandler()}
-                          fullWidth
+                        <Row
+                          className="p-5"
+                          style={{ fontSize: "1.5rem", fontWeight: "bold" }}
                         >
-                          <BsCart4
-                            size={25}
-                            style={{
-                              marginRight: "5px",
-                              position: "relative",
-                              bottom: "3px",
-                            }}
-                          />
-                          <div
-                            style={{ fontSize: "1rem", pointerEvents: "none" }}
-                          >
-                            장바구니에 담기
-                          </div>
-                        </Button>
+                          <Col className="justify-content-center align-items-center">
+                            주문 금액
+                          </Col>
+                          <Col className="align-items-center">
+                            <span
+                              style={{ fontSize: "1.1rem", opacity: "0.6" }}
+                            >
+                              총 수량 x개
+                            </span>
+                            <span>₩ {totalPrice}</span>
+                          </Col>
+                        </Row>
+
+                        <Row>
+                          <Col>
+                            <Button
+                              variant="contained"
+                              type="button"
+                              style={{ height: "50px" }}
+                              onClick={() => addToCartHandler()}
+                              fullWidth
+                            >
+                              <MdPayment
+                                size={25}
+                                style={{
+                                  marginRight: "5px",
+                                  position: "relative",
+                                }}
+                              />
+                              <div
+                                style={{
+                                  fontSize: "1rem",
+                                  pointerEvents: "none",
+                                }}
+                              >
+                                주문하기
+                              </div>
+                            </Button>
+                          </Col>
+                          <Col>
+                            <Button
+                              variant="contained"
+                              type="submit"
+                              style={{ height: "50px" }}
+                              onClick={() => addToCartHandler()}
+                              fullWidth
+                            >
+                              <BsCart4
+                                size={25}
+                                style={{
+                                  marginRight: "5px",
+                                  position: "relative",
+                                  bottom: "3px",
+                                }}
+                              />
+                              <div
+                                style={{
+                                  fontSize: "1rem",
+                                  pointerEvents: "none",
+                                }}
+                              >
+                                장바구니
+                              </div>
+                            </Button>
+                          </Col>
+                        </Row>
                       </>
                     ) : null}
                   </ThemeProvider>
                 </Col>
               </Row>
-
-              {/* <Row>
-                <Col>
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    style={{ height: "50px" }}
-                  >
-                    옵션선택 완료
-                  </Button>
-                </Col>
-              </Row> */}
             </form>
           </Container>
 
@@ -984,4 +1085,4 @@ const ProductDetail = ({ match }) => {
   );
 };
 
-export default ProductDetail;
+export default OrderDetail;

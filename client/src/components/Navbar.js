@@ -153,6 +153,13 @@ const Navbar = () => {
               </NavLink>
 
               <NavLink
+                to="/customer/faq"
+                style={({ isActive }) => (isActive ? activeStyle : null)}
+              >
+                <div className="nav_menu">FAQ</div>
+              </NavLink>
+
+              <NavLink
                 to="/contact"
                 style={({ isActive }) => (isActive ? activeStyle : null)}
               >
@@ -165,7 +172,11 @@ const Navbar = () => {
                     {(loginResult && loginResult.loginSuccess) ||
                     (authUserData && authUserData._id) ? (
                       <>
-                        <NavLink to="/" onClick={logoutHandler} className="mx-3">
+                        <NavLink
+                          to="/"
+                          onClick={logoutHandler}
+                          className="mx-3"
+                        >
                           로그아웃
                         </NavLink>
                         <NavLink to="/user/cart" style={{ marginLeft: "1rem" }}>

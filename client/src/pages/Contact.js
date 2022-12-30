@@ -13,7 +13,7 @@ const Contact = () => {
       animate={{ opacity: 1, y: 0 }}
       // exit={{ opacity: 0 }}
     >
-      <div className="contact_container">
+      <Container className="contact_container">
         <Row className="align-items-center">
           <Col lg={7}>
             <Row className="mb-4">
@@ -42,12 +42,12 @@ const Contact = () => {
                 </div>
                 <div>대중교통 이용시</div>
                 <div>
-                  의정부 <span className="by_subway">경전철 탑석역</span> 하차
-                  후, 7분 내 도보 이동
+                  <span className="by_subway">경전철 탑석역</span> 하차 후, 7분
+                  내 도보 이동
                 </div>
                 <div>
-                  의정부 <span className="by_bus">청구아파트 버스정류소</span>{" "}
-                  하차 하차 후, 7분 내 도보 이동
+                  <span className="by_bus">청구아파트 버스정류소</span> 하차
+                  하차 후, 7분 내 도보 이동
                 </div>
               </Col>
               <Col lg={6}>
@@ -68,7 +68,7 @@ const Contact = () => {
               alt=""
               className="contact_image"
             />
-            <div>모든 예약 문의 및 디자인 상담은 </div>
+            <div>홈페이지 주문 외, 모든 예약 문의 및 디자인 상담은 </div>
             <div>
               카카오톡 채널
               <a
@@ -84,7 +84,7 @@ const Contact = () => {
             <div>이소케이크는 언제나 고객님의 연락을 기다리고 있습니다</div>
           </Col>
         </Row>
-      </div>
+      </Container>
     </motion.div>
   );
 };

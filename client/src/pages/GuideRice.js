@@ -4,6 +4,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
 import { Container, Row, Col } from "react-bootstrap";
 import { motion } from "framer-motion";
+import { MdLooksOne } from "react-icons/md";
+import { MdLooksTwo } from "react-icons/md";
+import { MdLooks3 } from "react-icons/md";
+import { MdLooks4 } from "react-icons/md";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -255,26 +259,38 @@ const GuideRice = () => {
 
         <Row>
           <Col md={12}>
-            <div className="d-flex justify-content-center my-3">
-              백설기 (기본설기)
+            <div className="d-flex flex-column align-items-center justify-content-center my-3">
+              <div className="d-flex justify-content-center align-items-center mb-3">
+                <span className="mx-1">옵션</span> <MdLooksOne size="24" />
+              </div>
+              <div>백설기 (기본설기)</div>
             </div>
           </Col>
 
           <Col md={12}>
-            <div className="d-flex justify-content-center my-3">
-              *BEST 흑임자 설기 (흑임자 잼 / 쿠앤크 색감)
+            <div className="d-flex flex-column align-items-center justify-content-center my-3">
+              <div className="d-flex justify-content-center align-items-center mb-3">
+                <span className="mx-1">옵션</span> <MdLooksTwo size="24" />
+              </div>
+              <div>흑임자 설기 (흑임자 잼 / 쿠앤크 색감)</div>
             </div>
           </Col>
 
           <Col md={12}>
-            <div className="d-flex justify-content-center my-3">
-              단호박 설기 (단호박 필링 / 노란 설기 )
+            <div className="d-flex flex-column align-items-center justify-content-center my-3">
+              <div className="d-flex justify-content-center align-items-center mb-3">
+                <span className="mx-1">옵션</span> <MdLooks3 size="24" />
+              </div>
+              <div>단호박 설기 (단호박 필링 / 노란 설기 )</div>
             </div>
           </Col>
 
           <Col md={12}>
-            <div className="d-flex justify-content-center my-3">
-              초코 설기 ( 초코칩 필링 / 브라운 설기 )
+            <div className="d-flex flex-column align-items-center justify-content-center my-3">
+              <div className="d-flex justify-content-center align-items-center mb-3">
+                <span className="mx-1">옵션</span> <MdLooks4 size="24" />
+              </div>
+              <div>초코 설기 ( 초코칩 필링 / 브라운 설기 )</div>
             </div>
           </Col>
         </Row>
@@ -285,14 +301,20 @@ const GuideRice = () => {
 
         <Row>
           <Col md={12}>
-            <div className="d-flex justify-content-center my-3">
-              종이 상자 패키지 (기본 패키지)
+            <div className="d-flex flex-column align-items-center justify-content-center my-3">
+              <div className="d-flex justify-content-center align-items-center mb-3">
+                <span className="mx-1">옵션</span> <MdLooksOne size="24" />
+              </div>
+              <div> 종이 상자 패키지 (기본 패키지)</div>
             </div>
           </Col>
 
           <Col md={12}>
-            <div className="d-flex justify-content-center my-3">
-              투명 상자 패키지
+            <div className="d-flex flex-column align-items-center justify-content-center my-3">
+              <div className="d-flex justify-content-center align-items-center mb-3">
+                <span className="mx-1">옵션</span> <MdLooksTwo size="24" />
+              </div>
+              <div> 투명 아크릴 패키지</div>
             </div>
           </Col>
         </Row>

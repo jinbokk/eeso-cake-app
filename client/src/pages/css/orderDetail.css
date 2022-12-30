@@ -82,16 +82,20 @@
   width: 100%;
 }
 
+.mui_x_custom * {
+  font-family: var(--main-font) !important;
+}
+
 .option_menu_section {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 0;
-  border-bottom: 1px solid pink;
+  border-bottom: 1px solid rgba(129, 58, 8, 0.3);
 }
 
 .option_menu_text {
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .controller_container {
@@ -99,7 +103,7 @@
 }
 
 .order_preview {
-  border-bottom: 1px solid red;
+  border-bottom: 2px solid rgba(129, 58, 8, 0.5);
 }
 
 .input_visible {
@@ -110,4 +114,9 @@
 
 .input_hide {
   display: none;
+}
+
+.remove_button {
+  padding: 0 10px;
+  cursor: pointer;
 }

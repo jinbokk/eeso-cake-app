@@ -11,12 +11,13 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Cakes from "./pages/Cakes";
 import Order from "./pages/Order";
-import ProductDetail from "./pages/ProductDetail";
+import OrderDetail from "./pages/OrderDetail";
 import Cart from "./pages/Cart";
 import Payment from "./pages/Payment";
 import GuideRice from "./pages/GuideRice";
 import GuideBread from "./pages/GuideBread";
 import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
 import Loading from "./components/Loading";
 import Footer from "./components/Footer";
 import UploadProduct from "./pages/UploadProduct";
@@ -37,11 +38,12 @@ function App() {
   const AuthAbout = Auth(About, null);
   const AuthCakes = Auth(Cakes, null);
   const AuthOrder = Auth(Order, null);
-  const AuthProductDetail = Auth(ProductDetail, null);
+  const AuthOrderDetail = Auth(OrderDetail, null);
   const AuthCart = Auth(Cart, true);
   const AuthPayment = Auth(Payment, true);
   const AuthGuideRice = Auth(GuideRice, null);
   const AuthGuideBread = Auth(GuideBread, null);
+  const AuthFAQ = Auth(FAQ, null);
   const AuthContact = Auth(Contact, null);
   const AuthUploadProduct = Auth(UploadProduct, true, true);
 
@@ -83,12 +85,13 @@ function App() {
               <Route
                 exact
                 path="/order/list/detail/:productId"
-                element={<AuthProductDetail />}
+                element={<AuthOrderDetail />}
               />
               <Route exact path="/user/cart" element={<AuthCart />} />
               <Route exact path="/user/payment" element={<AuthPayment />} />
               <Route exact path="/guide/rice" element={<AuthGuideRice />} />
               <Route exact path="/guide/bread" element={<AuthGuideBread />} />
+              <Route exact path="/customer/faq" element={<AuthFAQ />} />
               <Route exact path="/contact" element={<AuthContact />} />
               <Route exact path="/upload" element={<AuthUploadProduct />} />
             </Routes>
