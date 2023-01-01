@@ -120,3 +120,8 @@
   padding: 0 10px;
   cursor: pointer;
 }
+
+.disabled_text {
+  font-size: 0.5rem;
+  color: gray;
+}

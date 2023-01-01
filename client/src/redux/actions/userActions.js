@@ -100,9 +100,10 @@ function auth() {
   };
 }
 
-function addToCart(productId) {
+function addToCart(productId, option) {
   let body = {
     productId: productId,
+    option: option,
   };
 
   return async (dispatch) => {

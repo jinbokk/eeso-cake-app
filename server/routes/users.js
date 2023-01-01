@@ -94,7 +94,7 @@ router.post("/addToCart", auth, (req, res) => {
   // 2. 가져온 정보에서 cart에 넣으려 하는 상품이 이미 있는지 확인
   User.findOne({ _id: req.user._id }, (err, userInfo) => {
     let duplicate = false;
-    
+
     userInfo.cart.forEach((item) => {
       if (item.id === req.body.productId) {
         duplicate = true;
@@ -127,7 +127,8 @@ router.post("/addToCart", auth, (req, res) => {
             cart: {
               id: req.body.productId,
               quantity: 1,
-              date: Date.now(),
+              option: { $each: req.body.option },
+              added: new Date().toLocaleString("ko-KR"),
             },
           },
         },

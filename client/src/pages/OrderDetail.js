@@ -141,9 +141,9 @@ const OrderDetail = ({ match }) => {
   };
 
   const storeHourHandler = (event) => {
-    // 평일     am 11:00 ~  pm 7:30
-    // 토요일   am 10:00 ~  pm 4:00
-    // 일요일   am 10:00 ~  pm 12:00
+    // 평일     am 11:00 ~ pm 7:30
+    // 토요일   am 10:00 ~ pm 4:00
+    // 일요일   am 10:00 ~ pm 12:00
 
     const selectedDay = format(event, "eee", { locale: ko });
     console.log("selectedDay", selectedDay);
@@ -313,7 +313,7 @@ const OrderDetail = ({ match }) => {
   };
 
   const addToCartHandler = () => {
-    dispatch(userActions.addToCart(productId));
+    dispatch(userActions.addToCart(productId, option));
   };
 
   const onSubmit = (data) => {
@@ -962,24 +962,28 @@ const OrderDetail = ({ match }) => {
                               </Col>
 
                               <Col>
-                                {item.레터링_추가 ? (
+                                {item.레터링_추가 === "Y" ? (
                                   <div>
                                     <span className="me-2">
                                       케이크 판 레터링 / {item.레터링_문구}
                                     </span>
                                   </div>
                                 ) : (
-                                  <div>케이크판 레터링 / 없음</div>
+                                  <div className="disabled_text">
+                                    케이크판 레터링 / 추가하지 않기
+                                  </div>
                                 )}
 
-                                {item.토퍼_추가 ? (
+                                {item.토퍼_추가 === "Y" ? (
                                   <div>
                                     <span className="me-2">
                                       디자인 토퍼 문구 / {item.토퍼_문구}
                                     </span>
                                   </div>
                                 ) : (
-                                  <div>디자인 토퍼 / 없음</div>
+                                  <div className="disabled_text">
+                                    디자인 토퍼 / 추가하지 않기
+                                  </div>
                                 )}
 
                                 {item.요청_사항 ? (
