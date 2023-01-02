@@ -104,6 +104,7 @@ function addToCart(productId, option) {
   let body = {
     productId: productId,
     option: option,
+    added: new Date().toLocaleString("ko-KR"),
   };
 
   return async (dispatch) => {

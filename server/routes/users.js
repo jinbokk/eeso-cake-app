@@ -24,7 +24,7 @@ router.post("/register", (req, res) => {
   const user = new User(req.body);
 
   user.save((err, doc) => {
-    if (err)
+    if (err) {
       return res.status(400).json({
         registerSuccess: false,
         message:
@@ -32,9 +32,11 @@ router.post("/register", (req, res) => {
             ? "동일한 이메일로 가입된 계정이 존재합니다."
             : "회원가입에 실패하였습니다.",
       });
-    return res.status(200).json({
-      registerSuccess: true,
-    });
+    } else {
+      return res.status(200).json({
+        registerSuccess: true,
+      });
+    }
   });
 });
 
@@ -57,17 +59,20 @@ router.post("/login", (req, res) => {
 
       // 3. if password checked, then generate token
       user.generateToken((err, user) => {
-        if (err) return res.status(400).send(err);
-
-        // save token to cookie or localStorage
-        // where is the best safe storage is grayZone
-        // this time, i will use cookie
-
-        res.cookie("w_authExp", user.tokenExp);
-        res.cookie("w_auth", user.token).status(200).json({
-          loginSuccess: true,
-          userId: user._id,
-        });
+        if (err) {
+          return res.status(400).send(err);
+        } else {
+          // save token to cookie or localStorage
+          // where is the best safe storage is grayZone
+          // this time, i will use cookie
+          return (
+            res.cookie("w_authExp", user.tokenExp),
+            res.cookie("w_auth", user.token).status(200).json({
+              loginSuccess: true,
+              userId: user._id,
+            })
+          );
+        }
       });
     });
   });
@@ -78,16 +83,94 @@ router.get("/logout", auth, (req, res) => {
     { _id: req.user._id },
     { token: "", tokenExp: "" },
     (err, doc) => {
-      if (err)
+      if (err) {
         return res.status(400).json({ logoutSuccess: false, message: err });
-      return res.status(200).send({
-        logoutSuccess: true,
-      });
+      } else {
+        return res.status(200).send({
+          logoutSuccess: true,
+        });
+      }
     }
   );
 });
 
-router.post("/addToCart", auth, (req, res) => {
+// router.post("/addToCart", auth, (req, res) => {
+//   // 1. user Collection 정보 가져오기
+//   // user정보는 auth 미들웨어를 통해 받아올 수 있다
+
+//   // 2. 가져온 정보에서 cart에 넣으려 하는 상품이 이미 있는지 확인
+//   User.findOne({ _id: req.user._id }, (err, userInfo) => {
+//     let duplicate = false;
+
+//     userInfo.cart.forEach((item) => {
+//       if (item.id === req.body.productId) {
+//         duplicate = true;
+//       }
+//     });
+
+//     // 2-a. 상품이 이미 있을때
+//     if (duplicate) {
+//       User.findOneAndUpdate(
+//         {
+//           _id: req.user._id,
+//           "cart.id": req.body.productId,
+//         },
+//         { $inc: { "cart.$.quantity": 1 } },
+//         { new: true }, // 쿼리를 돌면서 update된 유저 정보를 받기위해 new:true 옵션을 준 것이다.
+//         (err, userInfo) => {
+//           console.log(userInfo);
+//           if (err) {
+//             return res.status(400).json({ success: false, err });
+//           } else {
+//             return res.status(200).send(userInfo.cart);
+//           }
+//         }
+//       );
+//     } else {
+//       // 2-b. 상품이 없을때
+//       // findOneAndUpdate 로는 요청이 겹쳐 헤더 오류가 발생...
+//       // 공식문서 참고하여 updateMany로 해결하긴 했는데 이게 맞는걸까?
+//       for (let i = 1; i <= req.body.option.length; i++) {
+//         User.updateMany(
+//           {
+//             _id: req.user._id,
+//           },
+//           {
+//             $push: {
+//               cart: {
+//                 id: `${req.body.productId}-option${[i]}`,
+//                 quantity: 1,
+//                 option: req.body.option[i - 1],
+//                 added: req.body.added,
+//               },
+//             },
+//           },
+//           {
+//             new: true,
+//             upsert: true,
+//             arrayFilters: req.body.option,
+//           },
+//           (err, userInfo) => {
+//             if (err) {
+//               return res.status(400).json({ success: false, err });
+//             } else {
+//               return res.status(200).send(userInfo.cart);
+//             }
+//           }
+//         );
+//       }
+//     }
+//     // 2-c. 상품 정보가 유효하지 않을때 (시즌 상품 등) 경우도 추가해야한다!!!!
+//   });
+// });
+
+router.post("/addToCart", auth, async (req, res) => {
+  // 진복+ product DB 먼저 조회해보자
+
+  const rootProductDoc = await Product.findOne({
+    _id: req.body.productId,
+  }).exec();
+
   // 1. user Collection 정보 가져오기
   // user정보는 auth 미들웨어를 통해 받아올 수 있다
 
@@ -112,34 +195,48 @@ router.post("/addToCart", auth, (req, res) => {
         { new: true }, // 쿼리를 돌면서 update된 유저 정보를 받기위해 new:true 옵션을 준 것이다.
         (err, userInfo) => {
           console.log(userInfo);
-          if (err) return res.status(400).json({ success: false, err });
-          return res.status(200).send(userInfo.cart);
+          if (err) {
+            return res.status(400).json({ success: false, err });
+          } else {
+            return res.status(200).send(userInfo.cart);
+          }
         }
       );
     } else {
       // 2-b. 상품이 없을때
-      User.findOneAndUpdate(
-        {
-          _id: req.user._id,
-        },
-        {
-          $push: {
-            cart: {
-              id: req.body.productId,
-              quantity: 1,
-              option: { $each: req.body.option },
-              added: new Date().toLocaleString("ko-KR"),
+      // findOneAndUpdate 로는 요청이 겹쳐 헤더 오류가 발생...
+      // 공식문서 참고하여 updateMany로 해결하긴 했는데 이게 맞는걸까?
+      for (let i = 1; i <= req.body.option.length; i++) {
+        User.updateMany(
+          {
+            _id: req.user._id,
+          },
+          {
+            $push: {
+              cart: {
+                rootProductDoc: rootProductDoc,
+                id: `${rootProductDoc.title}-option${[i]}`,
+                quantity: 1,
+                option: req.body.option[i - 1],
+                added: req.body.added,
+              },
             },
           },
-        },
-        { new: true },
-        (err, userInfo) => {
-          if (err) return res.status(400).json({ success: false, err });
-          res.status(200).send(userInfo.cart);
-        }
-      );
+          {
+            new: true,
+            upsert: true,
+            arrayFilters: req.body.option,
+          },
+          (err, userInfo) => {
+            if (err) {
+              return res.status(400).json({ success: false, err });
+            } else {
+              return res.status(200).send(userInfo.cart);
+            }
+          }
+        );
+      }
     }
-
     // 2-c. 상품 정보가 유효하지 않을때 (시즌 상품 등) 경우도 추가해야한다!!!!
   });
 });
@@ -166,10 +263,13 @@ router.get("/remove-from-cart", auth, (req, res) => {
       });
 
       Product.find({ _id: { $in: productIds } }).exec((err, productDetail) => {
-        if (err) return res.status(400).send(err);
-        return res.status(200).json({ productDetail, cart });
-        // productDetail을 만들때, product collection에는 quantity 정보가 없어서 user collection과 합치는 작업을 했었는데
-        // 위 작업을 똑같이 반복하기 위해 productDetail과 cart정보를 함께 보내는 것이다.
+        if (err) {
+          return res.status(400).send(err);
+        } else {
+          return res.status(200).json({ productDetail, cart });
+          // productDetail을 만들때, product collection에는 quantity 정보가 없어서 user collection과 합치는 작업을 했었는데
+          // 위 작업을 똑같이 반복하기 위해 productDetail과 cart정보를 함께 보내는 것이다.
+        }
       });
     }
   );

@@ -132,26 +132,67 @@ const Cart = () => {
             <BsCheck2Circle className="m-2" /> <span>Order Complete</span>
           </Col>
         </Row>
-        {cartDetail && cartDetail.length > 0 ? (
+        {authUserData && authUserData.cart.length > 0 ? (
           <>
-            {cartDetail.map((item, index) => (
+            {authUserData.cart.map((item, index) => (
               <Row key={index} className="border-top py-4">
                 <Col className="flex-row justify-content-center align-items-center">
-                  <NavLink to={`/order/list/detail/${item._id}`}>
+                  <NavLink to={`/order/list/detail/${item.rootProductDoc._id}`}>
                     <img
-                      src={item.image_url}
+                      src={item.rootProductDoc.image_url}
                       alt=""
                       className="item_thumbnail"
                     />
                   </NavLink>
                 </Col>
-                <Col className="flex-row justify-content-center align-items-center">
+                <Col className="justify-content-center align-items-center">
                   <NavLink
-                    to={`/order/list/detail/${item._id}`}
+                    to={`/order/list/detail/${item.rootProductDoc._id}`}
                     className="item_title"
                   >
-                    {item.title}
+                    {item.rootProductDoc.title}
                   </NavLink>
+
+                  <div>
+                    <div>
+                      <span>
+                        {item.option.수령_방법} / {item.option.수령_날짜} /{" "}
+                        {item.option.수령_시간}
+                      </span>
+                    </div>
+
+                    {item.option.레터링_추가 === "Y" ? (
+                      <div>
+                        <span className="me-2">
+                          케이크 판 레터링 / {item.option.레터링_문구}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="disabled_text">
+                        케이크판 레터링 / 추가하지 않기
+                      </div>
+                    )}
+
+                    {item.option.토퍼_추가 === "Y" ? (
+                      <div>
+                        <span className="me-2">
+                          디자인 토퍼 문구 / {item.option.토퍼_문구}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="disabled_text">
+                        디자인 토퍼 / 추가하지 않기
+                      </div>
+                    )}
+
+                    {item.option.요청_사항 ? (
+                      <div>
+                        <span className="disabled_text">
+                          요청 사항 / {item.option.요청_사항}
+                        </span>
+                      </div>
+                    ) : null}
+                  </div>
                 </Col>
                 <Col className="flex-row justify-content-center align-items-center">
                   <QuantityButton variant="contained">
@@ -163,7 +204,10 @@ const Cart = () => {
                   </QuantityButton>
                 </Col>
                 <Col className="flex-row justify-content-center align-items-center user-select-none">
-                  ₩ {(item.price * item.quantity).toLocaleString("ko-KR")}
+                  ₩{" "}
+                  {(item.rootProductDoc.price * item.quantity).toLocaleString(
+                    "ko-KR"
+                  )}
                 </Col>
                 <Col
                   className="flex-row justify-content-center align-items-center"
