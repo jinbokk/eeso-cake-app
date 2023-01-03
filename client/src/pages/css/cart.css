@@ -6,6 +6,17 @@
   height: 50vh;
 }
 
+.item_thumbnail_container:hover .item_thumbnail {
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.item_thumbnail_container:hover .item_title {
+  text-decoration-color: rgba(0, 0, 0, 1);
+  text-underline-offset: 7px;
+  transition: 0.2s;
+}
+
 .item_thumbnail {
   width: 150px;
   height: 150px;
@@ -14,19 +25,11 @@
   transition: 0.3s;
 }
 
-.item_thumbnail:hover {
-  opacity: 0.7;
-  transition: 0.3s;
-}
-
 .item_title {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-align: start;
   text-decoration: underline 1px rgba(0, 0, 0, 0);
-  text-underline-offset: 7px;
-  transition: 0.2s;
-}
-
-.item_title:hover {
-  text-decoration-color: rgba(0, 0, 0, 1);
   text-underline-offset: 7px;
   transition: 0.2s;
 }

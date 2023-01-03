@@ -131,20 +131,20 @@ function removeFromCart(productId) {
       const removeCartItemsResult = await axios
         .get(`/api/users/remove-from-cart?id=${productId}`)
         .then((res) => {
-          // productDetail과 cart 정보를 조합하여 cartDetail을 만든다
-          res.data.cart.forEach((cartItem) => {
-            res.data.productDetail.forEach((productDetail, index) => {
-              if (cartItem.id === productDetail._id) {
-                res.data.productDetail[index].quantity = cartItem.quantity;
-              }
-            });
-          });
+          // // productDetail과 cart 정보를 조합하여 cartDetail을 만든다
+          // res.data.cart.forEach((cartItem) => {
+          //   res.data.productDetail.forEach((productDetail, index) => {
+          //     if (cartItem.id === productDetail._id) {
+          //       res.data.productDetail[index].quantity = cartItem.quantity;
+          //     }
+          //   });
+          // });
           return res.data;
         });
 
       dispatch({
         type: "REMOVE_CART_ITEMS",
-        payload: removeCartItemsResult.productDetail,
+        payload: removeCartItemsResult,
       });
     } catch (error) {
       console.log("error occurred : ", error);

@@ -215,7 +215,7 @@ router.post("/addToCart", auth, async (req, res) => {
             $push: {
               cart: {
                 rootProductDoc: rootProductDoc,
-                id: `${rootProductDoc.title}-option${[i]}`,
+                id: `${rootProductDoc.id}-option${[i]}`,
                 quantity: 1,
                 option: req.body.option[i - 1],
                 added: req.body.added,
@@ -256,22 +256,29 @@ router.get("/remove-from-cart", auth, (req, res) => {
     },
     { new: true },
     (err, userInfo) => {
-      // 2. product Collection의 정보를 새로고침하여 가져온다 (redux-store에 담긴 cartDetail의 기반이 되는 정보를 새로고침 하는 것)
-      let cart = userInfo.cart;
-      let productIds = cart.map((item) => {
-        return item.id;
-      });
-
-      Product.find({ _id: { $in: productIds } }).exec((err, productDetail) => {
-        if (err) {
-          return res.status(400).send(err);
-        } else {
-          return res.status(200).json({ productDetail, cart });
-          // productDetail을 만들때, product collection에는 quantity 정보가 없어서 user collection과 합치는 작업을 했었는데
-          // 위 작업을 똑같이 반복하기 위해 productDetail과 cart정보를 함께 보내는 것이다.
-        }
-      });
+      if (err) {
+        return res.status(400).json({ success: false, err });
+      } else {
+        return res.status(200).send(userInfo.cart);
+      }
     }
+    // (err, userInfo) => {
+    //   // 2. product Collection의 정보를 새로고침하여 가져온다 (redux-store에 담긴 cartDetail의 기반이 되는 정보를 새로고침 하는 것)
+    //   let cart = userInfo.cart;
+    //   let productIds = cart.map((item) => {
+    //     return item.id;
+    //   });
+
+    //   Product.find({ _id: { $in: productIds } }).exec((err, productDetail) => {
+    //     if (err) {
+    //       return res.status(400).send(err);
+    //     } else {
+    //       return res.status(200).json({ productDetail, cart });
+    //       // productDetail을 만들때, product collection에는 quantity 정보가 없어서 user collection과 합치는 작업을 했었는데
+    //       // 위 작업을 똑같이 반복하기 위해 productDetail과 cart정보를 함께 보내는 것이다.
+    //     }
+    //   });
+    // }
   );
 });
 

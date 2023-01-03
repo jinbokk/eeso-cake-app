@@ -2,7 +2,7 @@ let initialState = {
   registerResult: undefined,
   loginResult: undefined,
   authUserData: undefined,
-  cartDetail: undefined,
+  // cartDetail: undefined,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -34,14 +34,13 @@ const userReducer = (state = initialState, action) => {
         authUserData: { ...state.authUserData, cart: payload },
       };
 
-    case "GET_CART_ITEMS":
-      return { ...state, cartDetail: payload };
+    // case "GET_CART_ITEMS":
+    //   return { ...state, cartDetail: payload };
 
     case "REMOVE_CART_ITEMS":
       return {
         ...state,
         authUserData: { ...state.authUserData, cart: payload },
-        cartDetail: payload,
       };
 
     default:

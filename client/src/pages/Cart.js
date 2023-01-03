@@ -17,44 +17,45 @@ import CartTable from "./CartTable";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { authUserData, cartDetail } = useSelector((state) => state.user);
+  const { authUserData } = useSelector((state) => state.user);
+  // const { authUserData, cartDetail } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    let cartItems = [];
+  // useEffect(() => {
+  //   let cartItems = [];
 
-    if (authUserData && authUserData.cart) {
-      if (authUserData.cart.length > 0) {
-        authUserData.cart.forEach((item) => {
-          cartItems.push(item.id);
-        });
-        dispatch(userActions.getCartItems(cartItems, authUserData.cart));
-      }
-    }
-  }, []);
+  //   if (authUserData && authUserData.cart) {
+  //     if (authUserData.cart.length > 0) {
+  //       authUserData.cart.forEach((item) => {
+  //         cartItems.push(item.id);
+  //       });
+  //       dispatch(userActions.getCartItems(cartItems, authUserData.cart));
+  //     }
+  //   }
+  // }, []);
 
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalQuantity, setTotalQuantity] = useState(0);
+  // const [totalPrice, setTotalPrice] = useState(0);
+  // const [totalQuantity, setTotalQuantity] = useState(0);
 
-  const calculateTotal = (cartDetail) => {
-    if (cartDetail && cartDetail.length > 0) {
-      let totalPrice = 0;
-      let totalQuantity = 0;
+  // const calculateTotal = (cartDetail) => {
+  //   if (cartDetail && cartDetail.length > 0) {
+  //     let totalPrice = 0;
+  //     let totalQuantity = 0;
 
-      cartDetail.forEach((item) => {
-        totalPrice += parseInt(item.price) * item.quantity;
-        totalQuantity += item.quantity;
-      });
+  //     cartDetail.forEach((item) => {
+  //       totalPrice += parseInt(item.price) * item.quantity;
+  //       totalQuantity += item.quantity;
+  //     });
 
-      setTotalPrice(totalPrice);
-      setTotalQuantity(totalQuantity);
-    } else {
-      return;
-    }
-  };
+  //     setTotalPrice(totalPrice);
+  //     setTotalQuantity(totalQuantity);
+  //   } else {
+  //     return;
+  //   }
+  // };
 
-  useEffect(() => {
-    calculateTotal(cartDetail);
-  }, [cartDetail]);
+  // useEffect(() => {
+  //   calculateTotal(cartDetail);
+  // }, [cartDetail]);
 
   const removeFromCart = (productId) => {
     dispatch(userActions.removeFromCart(productId));
@@ -136,34 +137,36 @@ const Cart = () => {
           <>
             {authUserData.cart.map((item, index) => (
               <Row key={index} className="border-top py-4">
-                <Col className="flex-row justify-content-center align-items-center">
+                <Col className="flex-row justify-content-center align-items-center item_thumbnail_container">
                   <NavLink to={`/order/list/detail/${item.rootProductDoc._id}`}>
-                    <img
-                      src={item.rootProductDoc.image_url}
-                      alt=""
-                      className="item_thumbnail"
-                    />
+                    <div>
+                      <img
+                        src={item.rootProductDoc.image_url}
+                        alt=""
+                        className="item_thumbnail"
+                      />
+                    </div>
                   </NavLink>
                 </Col>
-                <Col className="justify-content-center align-items-center">
-                  <NavLink
-                    to={`/order/list/detail/${item.rootProductDoc._id}`}
-                    className="item_title"
-                  >
-                    {item.rootProductDoc.title}
-                  </NavLink>
 
-                  <div>
+                <Col className="justify-content-center align-items-center">
+                  <div className="w-100">
+                    <div className="item_title">
+                      {item.rootProductDoc.title}
+                    </div>
+
                     <div>
-                      <span>
-                        {item.option.수령_방법} / {item.option.수령_날짜} /{" "}
-                        {item.option.수령_시간}
-                      </span>
+                      <div className="disabled_text">
+                        {item.option.수령_방법}
+                      </div>
+                      <div className="disabled_text">
+                        {item.option.수령_날짜} {item.option.수령_시간}
+                      </div>
                     </div>
 
                     {item.option.레터링_추가 === "Y" ? (
                       <div>
-                        <span className="me-2">
+                        <span className="disabled_text">
                           케이크 판 레터링 / {item.option.레터링_문구}
                         </span>
                       </div>
@@ -175,7 +178,7 @@ const Cart = () => {
 
                     {item.option.토퍼_추가 === "Y" ? (
                       <div>
-                        <span className="me-2">
+                        <span className="disabled_text">
                           디자인 토퍼 문구 / {item.option.토퍼_문구}
                         </span>
                       </div>
@@ -211,7 +214,7 @@ const Cart = () => {
                 </Col>
                 <Col
                   className="flex-row justify-content-center align-items-center"
-                  onClick={() => removeFromCart(item._id)}
+                  onClick={() => removeFromCart(item.id)}
                 >
                   <AiOutlineClose className="delete_button" />
                 </Col>
@@ -219,9 +222,11 @@ const Cart = () => {
             ))}
             <Row>
               <Col className="border-top p-5 justify-content-center align-items-center">
-                <div className="total_text">총 수량 : {totalQuantity} 개</div>
+                <div className="total_text">총 수량 : test 개</div>
+                {/* <div className="total_text">총 수량 : {totalQuantity} 개</div> */}
                 <div className="total_text">
-                  주문 금액 : ₩ {totalPrice.toLocaleString("ko-KR")}
+                  주문 금액 : ₩ test
+                  {/* 주문 금액 : ₩ {totalPrice.toLocaleString("ko-KR")} */}
                 </div>
               </Col>
             </Row>

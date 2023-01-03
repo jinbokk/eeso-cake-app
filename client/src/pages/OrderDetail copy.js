@@ -182,9 +182,21 @@ const OrderDetail = ({ match }) => {
     console.log(value);
   };
 
-  const [letteringText, setLetteringText] = useState("");
-  const letteringTextHandler = (value) => {
-    setLetteringText(value);
+  const [topLetteringText, setTopLetteringText] = useState("");
+  const topLetteringTextHandler = (value) => {
+    setTopLetteringText(value);
+    console.log(value);
+  };
+
+  const [sideLetteringText, setSideLetteringText] = useState("");
+  const sideLetteringTextHandler = (value) => {
+    setSideLetteringText(value);
+    console.log(value);
+  };
+
+  const [plateLetteringText, setPlateLetteringText] = useState("");
+  const plateLetteringTextHandler = (value) => {
+    setPlateLetteringText(value);
     console.log(value);
   };
 
@@ -225,7 +237,9 @@ const OrderDetail = ({ match }) => {
     수령_날짜: modifiedDate,
     수령_시간: modifiedTime,
     레터링_추가: lettering,
-    레터링_문구: letteringText,
+    윗면_레터링_문구: topLetteringText,
+    측면_레터링_문구: sideLetteringText,
+    케이크판_레터링_문구: plateLetteringText,
     토퍼_추가: topper,
     토퍼_문구: topperText,
     요청_사항: request,
@@ -320,7 +334,9 @@ const OrderDetail = ({ match }) => {
     setTopperText("");
 
     setLettering(null);
-    setLetteringText("");
+    setTopLetteringText("");
+    setSideLetteringText("");
+    setPlateLetteringText("");
 
     setRequest("");
   };
@@ -567,18 +583,12 @@ const OrderDetail = ({ match }) => {
                                 }}
                                 fullWidth
                                 open={dateOpen}
-                                onOpen={() => {
-                                  if (!delivery) {
-                                    setDateError(true);
-                                  } else {
-                                    setDateOpen(true);
-                                  }
-                                }}
+                                onOpen={() => setDateOpen(true)}
                                 onClose={() => setDateOpen(false)}
                                 renderInput={(params) => (
                                   <TextField
                                     {...params}
-                                    onClick={() => {
+                                    onClick={(e) => {
                                       if (!delivery) {
                                         setDateError(true);
                                       } else {
@@ -662,7 +672,7 @@ const OrderDetail = ({ match }) => {
                                 renderInput={(params) => (
                                   <TextField
                                     {...params}
-                                    onClick={() => {
+                                    onClick={(e) => {
                                       if (!date) {
                                         setTimeError(true);
                                       } else {
@@ -700,7 +710,7 @@ const OrderDetail = ({ match }) => {
                     <div className="d-block option_menu_section">
                       <div className="d-flex justify-content-between align-items-center">
                         <span className="option_menu_text">
-                          케이크 판 레터링
+                          케이크 레터링
                         </span>
                         <div className="controller_container">
                           <Controller
@@ -756,21 +766,22 @@ const OrderDetail = ({ match }) => {
                           lettering === "Y" ? "input_visible" : "input_hide"
                         }
                       >
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "red",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          * 레터링 문구는 간결할수록 예쁘게 작업 됩니다
+                        </div>
+
                         <div className="d-flex justify-content-between">
                           <div>레터링 문구 {`(${letteringLength}/15)`}</div>
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "red",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            * 레터링 문구는 간결할수록 예쁘게 작업 됩니다
-                          </div>
                         </div>
                         <Controller
                           control={control}
-                          name="레터링_문구"
+                          name="윗면_레터링_문구"
                           defaultValue=""
                           render={({
                             field: { onChange, value, ...field },
@@ -779,7 +790,7 @@ const OrderDetail = ({ match }) => {
                               // label="최대 15자 까지 입력 가능합니다"
                               placeholder="최대 15자 까지 입력 가능합니다"
                               inputProps={{ maxLength: 15 }}
-                              value={letteringText}
+                              value={topLetteringText}
                               error={letteringLengthError ? true : false}
                               helperText={
                                 letteringLengthError
@@ -788,7 +799,73 @@ const OrderDetail = ({ match }) => {
                               }
                               onChange={(e) => {
                                 onChange(e.target.value);
-                                letteringTextHandler(e.target.value);
+                                topLetteringTextHandler(e.target.value);
+                                LetteringLengthHandler(e.target.value);
+                              }}
+                              variant="outlined"
+                              fullWidth
+                              {...field}
+                            />
+                          )}
+                        />
+
+                        <div className="d-flex justify-content-between">
+                          <div>레터링 문구 {`(${letteringLength}/15)`}</div>
+                        </div>
+                        <Controller
+                          control={control}
+                          name="측면_레터링_문구"
+                          defaultValue=""
+                          render={({
+                            field: { onChange, value, ...field },
+                          }) => (
+                            <TextField
+                              // label="최대 15자 까지 입력 가능합니다"
+                              placeholder="최대 15자 까지 입력 가능합니다"
+                              inputProps={{ maxLength: 15 }}
+                              value={sideLetteringText}
+                              error={letteringLengthError ? true : false}
+                              helperText={
+                                letteringLengthError
+                                  ? "문구를 확인해 주세요"
+                                  : null
+                              }
+                              onChange={(e) => {
+                                onChange(e.target.value);
+                                sideLetteringTextHandler(e.target.value);
+                                LetteringLengthHandler(e.target.value);
+                              }}
+                              variant="outlined"
+                              fullWidth
+                              {...field}
+                            />
+                          )}
+                        />
+
+                        <div className="d-flex justify-content-between">
+                          <div>레터링 문구 {`(${letteringLength}/15)`}</div>
+                        </div>
+                        <Controller
+                          control={control}
+                          name="케이크판_레터링_문구"
+                          defaultValue=""
+                          render={({
+                            field: { onChange, value, ...field },
+                          }) => (
+                            <TextField
+                              // label="최대 15자 까지 입력 가능합니다"
+                              placeholder="최대 15자 까지 입력 가능합니다"
+                              inputProps={{ maxLength: 15 }}
+                              value={plateLetteringText}
+                              error={letteringLengthError ? true : false}
+                              helperText={
+                                letteringLengthError
+                                  ? "문구를 확인해 주세요"
+                                  : null
+                              }
+                              onChange={(e) => {
+                                onChange(e.target.value);
+                                plateLetteringTextHandler(e.target.value);
                                 LetteringLengthHandler(e.target.value);
                               }}
                               variant="outlined"
@@ -1011,7 +1088,7 @@ const OrderDetail = ({ match }) => {
                                   </div>
                                 ) : (
                                   <div className="disabled_text">
-                                    케이크 판 레터링 / 추가하지 않기
+                                    케이크판 레터링 / 추가하지 않기
                                   </div>
                                 )}
 
