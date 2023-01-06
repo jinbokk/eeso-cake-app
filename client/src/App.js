@@ -2,6 +2,7 @@ import React, { Suspense, useState, useLayoutEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 // import { AnimatePresence } from "framer-motion";
 
+import Auth from "./hoc/Auth";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
@@ -21,7 +22,6 @@ import FAQ from "./pages/FAQ";
 import Loading from "./components/Loading";
 import Footer from "./components/Footer";
 import UploadProduct from "./pages/UploadProduct";
-import Auth from "./hoc/Auth";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -63,8 +63,6 @@ function App() {
     }
   }, [isLandingPageView]);
 
-  const location = useLocation();
-
   return (
     <>
       {!isLandingPageView ? (
@@ -75,25 +73,24 @@ function App() {
             <Navbar />
             <Sidebar />
             {/* <AnimatePresence> */}
-            <Routes location={location} key={location.pathname}>
-              <Route exact path="/" element={<AuthHome />} />
-              <Route exact path="/login" element={<AuthLogin />} />
-              <Route exact path="/register" element={<AuthRegister />} />
-              <Route exact path="/about" element={<AuthAbout />} />
-              <Route exact path="/cakes/:ingredient" element={<AuthCakes />} />
-              <Route exact path="/order/list" element={<AuthOrder />} />
+            <Routes>
+              <Route path="/" element={<AuthHome />} />
+              <Route path="/login" element={<AuthLogin />} />
+              <Route path="/register" element={<AuthRegister />} />
+              <Route path="/about" element={<AuthAbout />} />
+              <Route path="/cakes/:ingredient" element={<AuthCakes />} />
+              <Route path="/order/list" element={<AuthOrder />} />
               <Route
-                exact
                 path="/order/list/detail/:productId"
                 element={<AuthOrderDetail />}
               />
-              <Route exact path="/user/cart" element={<AuthCart />} />
-              <Route exact path="/user/payment" element={<AuthPayment />} />
-              <Route exact path="/guide/rice" element={<AuthGuideRice />} />
-              <Route exact path="/guide/bread" element={<AuthGuideBread />} />
-              <Route exact path="/customer/faq" element={<AuthFAQ />} />
-              <Route exact path="/contact" element={<AuthContact />} />
-              <Route exact path="/upload" element={<AuthUploadProduct />} />
+              <Route path="/user/cart" element={<AuthCart />} />
+              <Route path="/user/payment" element={<AuthPayment />} />
+              <Route path="/guide/rice" element={<AuthGuideRice />} />
+              <Route path="/guide/bread" element={<AuthGuideBread />} />
+              <Route path="/customer/faq" element={<AuthFAQ />} />
+              <Route path="/contact" element={<AuthContact />} />
+              <Route path="/upload" element={<AuthUploadProduct />} />
             </Routes>
             {/* </AnimatePresence> */}
             <Footer />

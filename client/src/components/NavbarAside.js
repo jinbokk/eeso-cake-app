@@ -152,7 +152,10 @@ const NavbarAside = (props) => {
                       marginLeft: "2rem",
                     }}
                   >
-                    <props.StyledBadge badgeContent={999} color="error">
+                    <props.StyledBadge
+                      badgeContent={props.authUserData.cart.length}
+                      color="error"
+                    >
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <div style={{ marginRight: "5px" }}>장바구니</div>
                         <props.BsCart4 className="cartIcon" />

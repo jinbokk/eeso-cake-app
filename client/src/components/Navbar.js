@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import "./css/navbar.css";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import NavDropdown from "./NavDropdown";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import NavbarAside from "./NavbarAside";
@@ -15,13 +15,19 @@ import { userActions } from "../redux/actions/userActions";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const { width, height } = useWindowDimensions();
 
   const { loginResult, authUserData } = useSelector((state) => state.user);
+  // const [badgeCount, setBadgeCount] = useState(undefined);
+
+  // useEffect(() => {
+  //   console.log("authUserData.cart.length", authUserData.cart.length);
+  //   setBadgeCount(authUserData.cart.length);
+  // }, [authUserData]);
 
   const logoutHandler = (e) => {
-    e.preventDefault();
     const confirm = window.confirm("로그아웃 하시겠습니까?");
     dispatch(userActions.logoutUser(confirm));
   };

@@ -99,7 +99,7 @@ router.get("/cakes/:ingredient", async (req, res) => {
   }
 
   const option = {
-    page: parseInt(req.query.page) || Number(1),
+    page: parseInt(req.query.page) || parseInt(1),
     limit: 30,
   };
 
@@ -128,7 +128,7 @@ router.get("/order/list", async (req, res) => {
   };
 
   const option = {
-    page: parseInt(req.query.page) || Number(1),
+    page: parseInt(req.query.page) || parseInt(1),
     limit: 30,
   };
 

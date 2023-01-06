@@ -99,9 +99,9 @@ export default function UploadProduct() {
 
       formData.append("file", file[0]);
       formData.append("title", data.title);
-      formData.append("price", data.price);
+      formData.append("price", parseInt(data.price));
       formData.append("ingredient", data.ingredient);
-      formData.append("layer", data.layer);
+      formData.append("layer", parseInt(data.layer));
       formData.append("design", data.design);
       formData.append("description", data.description);
 

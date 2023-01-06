@@ -17,19 +17,19 @@ function registerUser(dataToSubmit) {
   };
 }
 
-function loginUser(dataToSubmit) {
+function loginUser(body) {
   return async (dispatch) => {
     try {
       const loginResult = await axios
-        .post("/api/users/login", dataToSubmit)
+        .post("/api/users/login", body)
         .then((res) => {
           if (res.data.loginSuccess === false) {
             return alert(res.data.message);
           } else {
-            if (dataToSubmit.rememberMe.activeRememberMe) {
+            if (body.rememberMe.activeRememberMe) {
               window.localStorage.setItem(
                 "rememberEmail",
-                dataToSubmit.rememberMe.email
+                body.rememberMe.email
               );
               return res.data;
             } else {
@@ -71,7 +71,7 @@ function logoutUser(confirm) {
               authUserData: { isAuth: false },
             },
           });
-          alert("로그아웃 되었습니다");
+          // window.location("/");
         }
       } else {
         return;
@@ -112,6 +112,7 @@ function addToCart(productId, option) {
       const addToCartResult = await axios
         .post("/api/users/addToCart", body)
         .then((res) => {
+          console.log("res:::::::::::", res);
           return res.data;
         });
 

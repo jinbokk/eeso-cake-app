@@ -94,43 +94,85 @@ router.get("/logout", auth, (req, res) => {
   );
 });
 
-// router.post("/addToCart", auth, (req, res) => {
-//   // 1. user Collection 정보 가져오기
-//   // user정보는 auth 미들웨어를 통해 받아올 수 있다
+// router.post("/addToCart", auth, async (req, res) => {
+//   const rootProductDoc = await Product.findOne({
+//     _id: req.body.productId,
+//   }).exec();
 
-//   // 2. 가져온 정보에서 cart에 넣으려 하는 상품이 이미 있는지 확인
-//   User.findOne({ _id: req.user._id }, (err, userInfo) => {
-//     let duplicate = false;
+//   User.findOne({ _id: req.user._id }, (err, result) => {
+//     req.body.option.forEach((createdOption, createdOptionIndex) => {
+//       if (result.cart.length > 0) {
+//         result.cart.forEach((existingCart, existingCartIndex) => {
+//           if (
+//             JSON.stringify(existingCart.option) ===
+//             JSON.stringify(createdOption)
+//           ) {
+//             console.log("옵션 중복 로직");
+//             console.log(
+//               "createdOptionIndex",
+//               createdOptionIndex,
+//               "existingCartIndex",
+//               existingCartIndex
+//             );
+//             User.updateMany(
+//               { _id: req.user._id, "cart.option": createdOption },
+//               {
+//                 $inc: { "cart.$.quantity": 1 },
+//               },
 
-//     userInfo.cart.forEach((item) => {
-//       if (item.id === req.body.productId) {
-//         duplicate = true;
-//       }
-//     });
-
-//     // 2-a. 상품이 이미 있을때
-//     if (duplicate) {
-//       User.findOneAndUpdate(
-//         {
-//           _id: req.user._id,
-//           "cart.id": req.body.productId,
-//         },
-//         { $inc: { "cart.$.quantity": 1 } },
-//         { new: true }, // 쿼리를 돌면서 update된 유저 정보를 받기위해 new:true 옵션을 준 것이다.
-//         (err, userInfo) => {
-//           console.log(userInfo);
-//           if (err) {
-//             return res.status(400).json({ success: false, err });
+//               {
+//                 new: true,
+//               },
+//               (err, result) => {
+//                 if (err) {
+//                   return res.status(400).json({ success: false, err });
+//                 } else {
+//                   return res.status(200).send(result.cart);
+//                 }
+//               }
+//             );
 //           } else {
-//             return res.status(200).send(userInfo.cart);
+//             console.log("옵션 중복아님 로직");
+//             console.log(
+//               "createdOptionIndex",
+//               createdOptionIndex,
+//               "existingCartIndex",
+//               existingCartIndex
+//             );
+
+//             //모두 조회해보고 없으면 추가하는 코드...
+
+//             //     User.updateMany(
+//             //       {
+//             //         _id: req.user._id,
+//             //       },
+//             //       {
+//             //         $push: {
+//             //           cart: {
+//             //             rootProductDoc: rootProductDoc,
+//             //             id: rootProductDoc.id,
+//             //             quantity: 1,
+//             //             option: createdOption,
+//             //             added: req.body.added,
+//             //           },
+//             //         },
+//             //       },
+//             //       {
+//             //         new: true,
+//             //       },
+//             //       (err, result) => {
+//             //         if (err) {
+//             //           return res.status(400).json({ success: false, err });
+//             //         } else {
+//             //           return res.status(200).send(result.cart);
+//             //         }
+//             //       }
+//             //     );
+//             return;
 //           }
-//         }
-//       );
-//     } else {
-//       // 2-b. 상품이 없을때
-//       // findOneAndUpdate 로는 요청이 겹쳐 헤더 오류가 발생...
-//       // 공식문서 참고하여 updateMany로 해결하긴 했는데 이게 맞는걸까?
-//       for (let i = 1; i <= req.body.option.length; i++) {
+//         });
+//       } else {
+//         console.log("옵션 중복아님 로직 (장바구니 비어있었을때)");
 //         User.updateMany(
 //           {
 //             _id: req.user._id,
@@ -138,106 +180,158 @@ router.get("/logout", auth, (req, res) => {
 //           {
 //             $push: {
 //               cart: {
-//                 id: `${req.body.productId}-option${[i]}`,
+//                 rootProductDoc: rootProductDoc,
+//                 id: rootProductDoc.id,
 //                 quantity: 1,
-//                 option: req.body.option[i - 1],
+//                 option: createdOption,
 //                 added: req.body.added,
 //               },
 //             },
 //           },
 //           {
 //             new: true,
-//             upsert: true,
-//             arrayFilters: req.body.option,
 //           },
-//           (err, userInfo) => {
+//           (err, result) => {
 //             if (err) {
 //               return res.status(400).json({ success: false, err });
 //             } else {
-//               return res.status(200).send(userInfo.cart);
+//               return res.status(200).send(result.cart);
 //             }
 //           }
 //         );
 //       }
+//     });
+//   });
+//   // +a. 상품 정보가 유효하지 않을때 (시즌 상품 등) 경우도 추가해야한다!!!!
+// });
+
+// router.post("/addToCart", auth, async (req, res) => {
+//   const rootProductDoc = await Product.findOne({
+//     _id: req.body.productId,
+//   }).exec();
+
+//   User.findOne({ _id: req.user._id }, (err, result) => {
+//     let existingOptionStr = result.cart.map((cartItem) => {
+//       return JSON.stringify(cartItem.option);
+//     });
+
+//     let createdOptionStr = JSON.stringify(req.body.option);
+
+//     let duplicateOption = req.body.option.filter((createdOption) => {
+//       return existingOptionStr.includes(JSON.stringify(createdOption));
+//     });
+
+//     let duplicateOptionStr = JSON.stringify(duplicateOption);
+//     // 중복되는 값만 찾았다.
+
+//     if (duplicateOption) {
+//       // 중복값이 "모두" 있다면, 업데이트 해준다
+//       console.log("중복 있음 로직");
+//       for (let i = 0; i < duplicateOption.length; i++) {
+//         User.updateMany(
+//           { _id: req.user._id, "cart.option": duplicateOption[i] },
+//           {
+//             $inc: { "cart.$.quantity": 1 },
+//           },
+
+//           {
+//             new: true,
+//             arrayFilters: [{ "cart.option": { $e: duplicateOptionStr[i] } }],
+//           },
+//           (err, result) => {
+//             if (err) {
+//               console.log("err::::::::::::::::::", err);
+//               return res.status(400).json({ success: false, err });
+//             } else {
+//               console.log("result::::::::::::::::::", result);
+//               return res.status(200).send(result.cart);
+//             }
+//           }
+//         );
+//       }
+//       // 중복값이 "일부" 있고, "일부" 없으면?
+//     } else {
+//       // 중복값이 "전혀" 없으면 새로 push한다
+//       console.log("중복 없음 로직");
+//       User.updateMany(
+//         {
+//           _id: req.user._id,
+//         },
+//         {
+//           $push: {
+//             cart: {
+//               rootProductDoc: rootProductDoc,
+//               id: rootProductDoc.id,
+//               quantity: 1,
+//               option: req.body.option,
+//               added: req.body.added,
+//             },
+//           },
+//         },
+//         {
+//           new: true,
+//           arrayFilters: [{ "cart.option": { $ne: createdOptionStr } }],
+//         },
+//         (err, result) => {
+//           if (err) {
+//             console.log("err::::::::::::::::::", err);
+//             return res.status(400).json({ success: false, err });
+//           } else {
+//             console.log("result::::::::::::::::::", result);
+//             return res.status(200).send(result.cart);
+//           }
+//         }
+//       );
 //     }
-//     // 2-c. 상품 정보가 유효하지 않을때 (시즌 상품 등) 경우도 추가해야한다!!!!
 //   });
 // });
 
 router.post("/addToCart", auth, async (req, res) => {
-  // 진복+ product DB 먼저 조회해보자
-
   const rootProductDoc = await Product.findOne({
     _id: req.body.productId,
   }).exec();
 
-  // 1. user Collection 정보 가져오기
-  // user정보는 auth 미들웨어를 통해 받아올 수 있다
-
-  // 2. 가져온 정보에서 cart에 넣으려 하는 상품이 이미 있는지 확인
-  User.findOne({ _id: req.user._id }, (err, userInfo) => {
-    let duplicate = false;
-
-    userInfo.cart.forEach((item) => {
-      if (item.id === req.body.productId) {
-        duplicate = true;
-      }
+  User.findOne({ _id: req.user._id }, (err, result) => {
+    let existingOptionStr = result.cart.map((cartItem) => {
+      return JSON.stringify(cartItem.option);
     });
 
-    // 2-a. 상품이 이미 있을때
-    if (duplicate) {
-      User.findOneAndUpdate(
-        {
-          _id: req.user._id,
-          "cart.id": req.body.productId,
-        },
-        { $inc: { "cart.$.quantity": 1 } },
-        { new: true }, // 쿼리를 돌면서 update된 유저 정보를 받기위해 new:true 옵션을 준 것이다.
-        (err, userInfo) => {
-          console.log(userInfo);
-          if (err) {
-            return res.status(400).json({ success: false, err });
-          } else {
-            return res.status(200).send(userInfo.cart);
-          }
-        }
-      );
-    } else {
-      // 2-b. 상품이 없을때
-      // findOneAndUpdate 로는 요청이 겹쳐 헤더 오류가 발생...
-      // 공식문서 참고하여 updateMany로 해결하긴 했는데 이게 맞는걸까?
-      for (let i = 1; i <= req.body.option.length; i++) {
+    let createdOptionStr = JSON.stringify(req.body.option);
+
+    let duplicateOption = req.body.option.filter((createdOption) => {
+      return existingOptionStr.includes(JSON.stringify(createdOption));
+    });
+
+    let duplicateOptionStr = JSON.stringify(duplicateOption);
+    // 중복되는 값만 찾았다.
+
+    if (duplicateOption) {
+      // 중복값이 "모두" 있다면, 업데이트 해준다
+      console.log("중복 있음 로직");
+      for (let i = 0; i < duplicateOption.length; i++) {
         User.updateMany(
+          { _id: req.user._id, "cart.option": duplicateOption[i] },
           {
-            _id: req.user._id,
+            $inc: { "cart.$.quantity": 1 },
           },
-          {
-            $push: {
-              cart: {
-                rootProductDoc: rootProductDoc,
-                id: `${rootProductDoc.id}-option${[i]}`,
-                quantity: 1,
-                option: req.body.option[i - 1],
-                added: req.body.added,
-              },
-            },
-          },
+
           {
             new: true,
-            upsert: true,
-            arrayFilters: req.body.option,
+            arrayFilters: [{ "cart.option": { $e: duplicateOptionStr[i] } }],
           },
-          (err, userInfo) => {
+          (err, result) => {
             if (err) {
+              console.log("err::::::::::::::::::", err);
               return res.status(400).json({ success: false, err });
             } else {
-              return res.status(200).send(userInfo.cart);
+              console.log("result::::::::::::::::::", result);
+              return res.status(200).send(result.cart);
             }
           }
         );
       }
+      // 중복값이 "일부" 있고, "일부" 없으면?
     }
-    // 2-c. 상품 정보가 유효하지 않을때 (시즌 상품 등) 경우도 추가해야한다!!!!
   });
 });
 
@@ -255,16 +349,18 @@ router.get("/remove-from-cart", auth, (req, res) => {
       },
     },
     { new: true },
-    (err, userInfo) => {
+    (err, result) => {
       if (err) {
+        console.log("err::::::::::::::::::", err);
         return res.status(400).json({ success: false, err });
       } else {
-        return res.status(200).send(userInfo.cart);
+        console.log("result::::::::::::::::::", result);
+        return res.status(200).send(result.cart);
       }
     }
-    // (err, userInfo) => {
+    // (err, result) => {
     //   // 2. product Collection의 정보를 새로고침하여 가져온다 (redux-store에 담긴 cartDetail의 기반이 되는 정보를 새로고침 하는 것)
-    //   let cart = userInfo.cart;
+    //   let cart = result.cart;
     //   let productIds = cart.map((item) => {
     //     return item.id;
     //   });

@@ -20,21 +20,21 @@ export default function Auth(SpecificComponent, option, adminRoute = null) {
 
     useEffect(() => {
       if (authUserData && !authUserData.isAuth) {
-        //로그인이 안되었는데,
+        // 로그인이 안되었는데,
         if (option) {
-          // 로그인한 유저만 출입 가능하다면
+          // 로그인한 유저만 출입 가능하다면 (option === true)
           navigate("/login");
         }
       } else {
-        if (adminRoute && authUserData && !authUserData.isAdmin) {
-          // 로그인을 했고, 관리자라우트에 관리자가 접근하려는데 관리자가 아니라면,
+        // 로그인이 되어 있고,
+        if (adminRoute && !authUserData.isAdmin) {
+          // 관리자라우트에 관리자가 접근하려는데 관리자가 아니라면,
           navigate("/");
           alert("관리자 전용 페이지 입니다");
-        } else {
-          // 로그인을 했고, 로그인 한 유저는 접근 불가한 페이지로 가려고 한다면,
-          if (option === false) {
-            navigate(-1);
-          }
+        }
+        if (option === false) {
+          // 로그인 한 유저는 접근 불가한 페이지로 가려고 한다면,
+          navigate(-1);
         }
       }
     }, [authUserData]);
@@ -45,7 +45,7 @@ export default function Auth(SpecificComponent, option, adminRoute = null) {
   return AuthenticationCheck;
 }
 
-// React Rouer v6부터 component={} 대신 element={}를 사용해야 한다.
+// React Router v6부터 component={} 대신 element={}를 사용해야 한다.
 // hoc는 엄연히 함수인데, element={}에는 함수가 들어갈 수 없기 때문에 오류가 발생한다. (컴포넌트만 넣을 수 있다)
 
 // solution 1

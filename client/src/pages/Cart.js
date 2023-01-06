@@ -114,10 +114,12 @@ const Cart = () => {
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <h1 className="my-5 text-center">
-          <span style={{ marginRight: "5px" }}>{authUserData.name}</span>
-          님의 장바구니
-        </h1>
+        {authUserData && authUserData.isAuth ? (
+          <h1 className="my-5 text-center">
+            <span style={{ marginRight: "5px" }}>{authUserData.name}</span>
+            님의 장바구니
+          </h1>
+        ) : null}
       </Container>
       {/* {!cartDetail ? (
         <Loading text={"장바구니 가져오는 중..."} />
@@ -133,7 +135,7 @@ const Cart = () => {
             <BsCheck2Circle className="m-2" /> <span>Order Complete</span>
           </Col>
         </Row>
-        {authUserData && authUserData.cart.length > 0 ? (
+        {authUserData && authUserData.isAuth && authUserData.cart.length > 0 ? (
           <>
             {authUserData.cart.map((item, index) => (
               <Row key={index} className="border-top py-4">
@@ -260,7 +262,7 @@ const Cart = () => {
             </Col>
           </Row>
         )}
-        <CartTable />
+        {/* <CartTable /> */}
       </Container>
       {/* )} */}
     </ThemeProvider>

@@ -315,7 +315,7 @@ const OrderDetail = ({ match }) => {
       setTopperLengthError(true);
     }
 
-    let totalPrice = (Number(productDetail.price) + optionPrice).toLocaleString(
+    let totalPrice = (parseInt(productDetail.price) + optionPrice).toLocaleString(
       "ko-KR"
     );
     setTotalPrice(totalPrice);
@@ -429,7 +429,7 @@ const OrderDetail = ({ match }) => {
                       <h1 className="mb-3 fw-bold">{productDetail.title}</h1>
                       <h5 className="mb-4">{productDetail.description}</h5>
                       <h1 className="mb-4">
-                        ₩ {Number(productDetail.price).toLocaleString("ko-KR")}
+                        ₩ {parseInt(productDetail.price).toLocaleString("ko-KR")}
                       </h1>
                     </>
                   ) : null}

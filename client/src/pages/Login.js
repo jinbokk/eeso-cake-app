@@ -97,6 +97,7 @@ function Login() {
             <InputGroup>
               <Form.Control
                 type={passwordType}
+                autoComplete="on"
                 className="input_area_password"
                 placeholder="비밀번호를 입력해 주세요."
                 onChange={(e) => setPassword(e.target.value)}

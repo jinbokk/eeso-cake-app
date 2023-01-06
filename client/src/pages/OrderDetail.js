@@ -301,7 +301,7 @@ const OrderDetail = ({ match }) => {
       setTopperLengthError(true);
     }
 
-    let totalPrice = (Number(productDetail.price) + optionPrice).toLocaleString(
+    let totalPrice = (parseInt(productDetail.price) + optionPrice).toLocaleString(
       "ko-KR"
     );
     setTotalPrice(totalPrice);
