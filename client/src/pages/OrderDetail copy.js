@@ -243,7 +243,6 @@ const OrderDetail = ({ match }) => {
     토퍼_추가: topper,
     토퍼_문구: topperText,
     요청_사항: request,
-    수량: 1,
   };
 
   const { handleSubmit, control } = useForm();

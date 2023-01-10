@@ -291,46 +291,140 @@ router.post("/addToCart", auth, async (req, res) => {
     _id: req.body.productId,
   }).exec();
 
+  const createdOption = req.body.option; // Array
+
   User.findOne({ _id: req.user._id }, (err, result) => {
-    let existingOptionStr = result.cart.map((cartItem) => {
-      return JSON.stringify(cartItem.option);
-    });
-
-    let createdOptionStr = JSON.stringify(req.body.option);
-
-    let duplicateOption = req.body.option.filter((createdOption) => {
-      return existingOptionStr.includes(JSON.stringify(createdOption));
-    });
-
-    let duplicateOptionStr = JSON.stringify(duplicateOption);
-    // 중복되는 값만 찾았다.
-
-    if (duplicateOption) {
-      // 중복값이 "모두" 있다면, 업데이트 해준다
-      console.log("중복 있음 로직");
-      for (let i = 0; i < duplicateOption.length; i++) {
+    if (result.cart.length === 0) {
+      // 우저 카트가 비어있을 경우
+      createdOption.forEach((createdOptionItem) => {
         User.updateMany(
-          { _id: req.user._id, "cart.option": duplicateOption[i] },
+          {
+            _id: req.user._id,
+          },
+          {
+            $push: {
+              cart: {
+                rootProductDoc: rootProductDoc,
+                option: createdOptionItem,
+                quantity: 1,
+                added: req.body.added,
+              },
+            },
+          },
+          {
+            new: true,
+          }
+          // (err, result) => {
+          //   if (err) {
+          //     console.log("err::::::::::::::::::", err);
+          //     return res.status(400).json({ success: false, err });
+          //   } else {
+          //     console.log("result::::::::::::::::::", result);
+          //     return res.status(200).send(result.cart);
+          //   }
+          // }
+        );
+      });
+    } else {
+      // 유저 카트가 비어있지 않을 경우
+
+      const existingOption = result.cart.map(
+        (existingCart) => existingCart.option
+      );
+      // console.log("existingOption", existingOption);
+      // const existingOptionStr = JSON.stringify(existingOption);
+      // console.log("existingOptionStr", existingOptionStr);
+
+      const createdOption = req.body.option;
+      // console.log("createdOption", createdOption);
+      // const createdOptionStr = JSON.stringify(createdOption);
+      // console.log("createdOptionStr", createdOptionStr);
+
+      const duplicateOption = createdOption.filter((createdOptionItem) =>
+        existingOption.some(
+          (existingOptionItem) =>
+            JSON.stringify(existingOptionItem) ===
+            JSON.stringify(createdOptionItem)
+        )
+      );
+
+      console.log("duplicateOption", duplicateOption);
+      // [] or 겹치는 옵션 걸러냄
+
+      const notDuplicateOption = createdOption.filter(
+        (createdOptionItem) =>
+          !existingOption.some(
+            (existingOptionItem) =>
+              JSON.stringify(existingOptionItem) ===
+              JSON.stringify(createdOptionItem)
+          )
+      );
+
+      console.log("notDuplicateOption", notDuplicateOption);
+      // 겹치지 않는 옵션
+
+      // 1. 겹치는 옵션만 있을때
+      // 2. 겹치는 옵션이 없을때
+      // 3. 겹치는 옵션과 겹치지 않는 옵션이 섞여있을때
+
+      // if (duplicateOption.length > 0) {
+      //   return res.status(200).send(true);
+      // }
+
+      duplicateOption.map((duplicateOptionItem) => {
+        User.updateOne(
+          {
+            _id: req.user._id,
+            "cart.option": duplicateOptionItem,
+          },
           {
             $inc: { "cart.$.quantity": 1 },
           },
-
           {
             new: true,
-            arrayFilters: [{ "cart.option": { $e: duplicateOptionStr[i] } }],
-          },
-          (err, result) => {
-            if (err) {
-              console.log("err::::::::::::::::::", err);
-              return res.status(400).json({ success: false, err });
-            } else {
-              console.log("result::::::::::::::::::", result);
-              return res.status(200).send(result.cart);
-            }
+            // arrayFilters: [{ item: createdOptionItem }],
           }
+          // (err, result) => {
+          //   if (err) {
+          //     console.log("err::::::::::::::::::", err);
+          //     return res.status(400).json({ success: false, err });
+          //   } else {
+          //     console.log("result::::::::::::::::::", result);
+          //     return res.status(200).send(result.cart);
+          //   }
+          // }
         );
-      }
-      // 중복값이 "일부" 있고, "일부" 없으면?
+      });
+
+      notDuplicateOption.map((notDuplicateOptionItem) => {
+        User.updateOne(
+          {
+            _id: req.user._id,
+          },
+          {
+            $push: {
+              cart: {
+                rootProductDoc: rootProductDoc,
+                option: notDuplicateOptionItem,
+                quantity: 1,
+                added: req.body.added,
+              },
+            },
+          },
+          {
+            new: true,
+          }
+          // (err, result) => {
+          //   if (err) {
+          //     console.log("err::::::::::::::::::", err);
+          //     return res.status(400).json({ success: false, err });
+          //   } else {
+          //     console.log("result::::::::::::::::::", result);
+          //     return res.status(200).send(result.cart);
+          //   }
+          // }
+        );
+      });
     }
   });
 });

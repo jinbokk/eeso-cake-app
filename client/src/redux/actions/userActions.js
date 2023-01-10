@@ -103,23 +103,23 @@ function auth() {
 function addToCart(productId, option) {
   let body = {
     productId: productId,
-    option: option,
+    option: option, //array 타입
     added: new Date().toLocaleString("ko-KR"),
   };
 
   return async (dispatch) => {
     try {
-      const addToCartResult = await axios
-        .post("/api/users/addToCart", body)
-        .then((res) => {
-          console.log("res:::::::::::", res);
-          return res.data;
-        });
+      // const addToCartResult = await axios
+      await axios.post("/api/users/addToCart", body);
+      //   .then((res) => {
+      //     console.log("res:::::::::::", res);
+      //     return res.data;
+      //   });
 
-      dispatch({
-        type: "ADD_TO_CART",
-        payload: addToCartResult,
-      });
+      // dispatch({
+      //   type: "ADD_TO_CART",
+      //   payload: addToCartResult,
+      // });
     } catch (error) {
       console.log("error occurred : ", error);
     }
