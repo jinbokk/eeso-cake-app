@@ -305,6 +305,9 @@ router.post("/addToCart", auth, async (req, res) => {
             $push: {
               cart: {
                 rootProductDoc: rootProductDoc,
+                id:
+                  rootProductDoc._id +
+                  `-${Math.random().toString(16).substr(2, 8)}`,
                 option: createdOptionItem,
                 quantity: 1,
                 added: req.body.added,
@@ -313,16 +316,16 @@ router.post("/addToCart", auth, async (req, res) => {
           },
           {
             new: true,
+          },
+          (err, result) => {
+            if (err) {
+              console.log("err::::::::::::::::::", err);
+              return res.status(400).json({ success: false, err });
+            } else {
+              console.log("result::::::::::::::::::", result);
+              return res.status(200).send(result.cart);
+            }
           }
-          // (err, result) => {
-          //   if (err) {
-          //     console.log("err::::::::::::::::::", err);
-          //     return res.status(400).json({ success: false, err });
-          //   } else {
-          //     console.log("result::::::::::::::::::", result);
-          //     return res.status(200).send(result.cart);
-          //   }
-          // }
         );
       });
     } else {
@@ -367,10 +370,6 @@ router.post("/addToCart", auth, async (req, res) => {
       // 2. 겹치는 옵션이 없을때
       // 3. 겹치는 옵션과 겹치지 않는 옵션이 섞여있을때
 
-      // if (duplicateOption.length > 0) {
-      //   return res.status(200).send(true);
-      // }
-
       duplicateOption.map((duplicateOptionItem) => {
         User.updateOne(
           {
@@ -382,17 +381,16 @@ router.post("/addToCart", auth, async (req, res) => {
           },
           {
             new: true,
-            // arrayFilters: [{ item: createdOptionItem }],
+          },
+          (err, result) => {
+            if (err) {
+              console.log("err::::::::::::::::::", err);
+              return res.status(400).json({ success: false, err });
+            } else {
+              console.log("result::::::::::::::::::", result);
+              return res.status(200).send(result.cart);
+            }
           }
-          // (err, result) => {
-          //   if (err) {
-          //     console.log("err::::::::::::::::::", err);
-          //     return res.status(400).json({ success: false, err });
-          //   } else {
-          //     console.log("result::::::::::::::::::", result);
-          //     return res.status(200).send(result.cart);
-          //   }
-          // }
         );
       });
 
@@ -405,6 +403,9 @@ router.post("/addToCart", auth, async (req, res) => {
             $push: {
               cart: {
                 rootProductDoc: rootProductDoc,
+                id:
+                  rootProductDoc._id +
+                  `-${Math.random().toString(16).substr(2, 8)}`,
                 option: notDuplicateOptionItem,
                 quantity: 1,
                 added: req.body.added,
@@ -413,16 +414,16 @@ router.post("/addToCart", auth, async (req, res) => {
           },
           {
             new: true,
+          },
+          (err, result) => {
+            if (err) {
+              console.log("err::::::::::::::::::", err);
+              return res.status(400).json({ success: false, err });
+            } else {
+              console.log("result::::::::::::::::::", result);
+              return res.status(200).send(result.cart);
+            }
           }
-          // (err, result) => {
-          //   if (err) {
-          //     console.log("err::::::::::::::::::", err);
-          //     return res.status(400).json({ success: false, err });
-          //   } else {
-          //     console.log("result::::::::::::::::::", result);
-          //     return res.status(200).send(result.cart);
-          //   }
-          // }
         );
       });
     }

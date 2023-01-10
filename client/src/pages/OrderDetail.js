@@ -300,9 +300,9 @@ const OrderDetail = ({ match }) => {
       setTopperLengthError(true);
     }
 
-    let totalPrice = (parseInt(productDetail.price) + optionPrice).toLocaleString(
-      "ko-KR"
-    );
+    let totalPrice = (
+      parseInt(productDetail.price) + optionPrice
+    ).toLocaleString("ko-KR");
     setTotalPrice(totalPrice);
     setOption((prev) => [...prev, orderForm]);
 
@@ -621,31 +621,16 @@ const OrderDetail = ({ match }) => {
                               <TimePicker
                                 {...field}
                                 className="mui_x_custom"
-                                sx={{
-                                  "&.MuiPickersToolbar-content": {
-                                    flexDirection: "row-reverse",
-                                    justifyContent: "center",
-                                  },
-                                  "&.MuiTimePickerToolbar-ampmLabel": {
-                                    padding: "4px",
-                                  },
-                                  "&.MuiTimePickerToolbar-ampmLabel.Mui-selected":
-                                    {
-                                      color: pink[300],
-                                    },
-                                  "&.MuiTimePickerToolbar-ampmSelection": {
-                                    flexDirection: "row",
-                                    marginRight: "10px",
-                                  },
-                                }}
-                                disableMaskedInput
                                 value={delivery === "택배" ? null : time}
                                 minTime={minTime}
                                 maxTime={maxTime}
+                                disableMaskedInput
                                 inputFormat="a hh:mm"
                                 onChange={(event) => {
                                   onChange(event);
                                   timeHandler(event);
+
+                                  console.log(event);
                                 }}
                                 disabled={delivery === "택배" ? true : false}
                                 fullWidth

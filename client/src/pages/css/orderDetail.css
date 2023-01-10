@@ -11,7 +11,7 @@
   position: sticky;
   padding: 0 3rem !important;
   height: fit-content;
-  top: calc(var(--nav-height) + 1.5rem);
+  top: calc(var(--nav-height) + 4rem);
 }
 
 .detail_img {
@@ -74,8 +74,25 @@
 
 .css-1hbyad5-MuiTypography-root,
 .MuiClockPicker-arrowSwitcher,
-.MuiPickersToolbar-penIconButton {
+.MuiPickersToolbar-penIconButton,
+.MuiTimePickerToolbar-ampmSelection {
   display: none !important;
+}
+
+.MuiClock-amButton {
+  position: absolute !important;
+  width: 3rem !important;
+  height: 3rem !important;
+  top: 22px !important;
+  left: 60% !important;
+}
+
+.MuiClock-pmButton {
+  position: absolute !important;
+  width: 3rem !important;
+  height: 3rem !important;
+  top: 22px !important;
+  left: 75% !important;
 }
 
 .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
