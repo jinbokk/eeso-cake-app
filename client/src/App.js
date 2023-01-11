@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Cakes from "./pages/Cakes";
 import Order from "./pages/Order";
+// import OrderDetail from "./pages/OrderDetail_deprecated";
 import OrderDetail from "./pages/OrderDetail";
 import Cart from "./pages/Cart";
 import Payment from "./pages/Payment";
@@ -25,6 +26,7 @@ import UploadProduct from "./pages/UploadProduct";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import TestOrderDetail from "./pages/OrderDetail";
 
 function App() {
   // Hoc Auth

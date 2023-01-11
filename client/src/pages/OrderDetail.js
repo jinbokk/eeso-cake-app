@@ -1,63 +1,53 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { forSaleProductActions } from "../redux/actions/forSaleProductActions";
 import { userActions } from "../redux/actions/userActions";
 
 import Loading from "../components/Loading";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import axios from "axios";
 import { motion } from "framer-motion";
 import { Container, Row, Col } from "react-bootstrap";
-import { useForm, Controller } from "react-hook-form";
-import Form from "react-bootstrap/Form";
-import {
-  Button,
-  ToggleButtonGroup,
-  ToggleButton,
-  TextField,
-} from "@mui/material";
+import { useForm } from "react-hook-form";
+
+import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { pink } from "@mui/material/colors";
-import { red } from "@mui/material/colors";
+
 import { brown } from "@mui/material/colors";
 
 import GuideBread from "./GuideBread";
 import GuideRice from "./GuideRice";
-import { BsStars, BsCart4 } from "react-icons/bs";
-import { MdCake, MdRateReview, MdPayment } from "react-icons/md";
+import { BsCart4 } from "react-icons/bs";
+import { MdPayment } from "react-icons/md";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
-////////////////////////////////////////
-
-// import DatePicker from "react-datepicker";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { format, addDays } from "date-fns";
-import { ko } from "date-fns/locale";
-
-////////////////////////////////////////
+import Delivery from "../components/productOrder/Delivery";
+import Lettering from "../components/productOrder/Lettering";
+import DesignTopper from "../components/productOrder/DesignTopper";
+import CustomerRequest from "../components/productOrder/CustomerRequest";
 
 import "./css/orderDetail.css";
-import Instagram from "../components/Instagram";
-import { textAlign } from "@mui/system";
 
 const OrderDetail = ({ match }) => {
   const dispatch = useDispatch();
-  // const [searchParams] = useSearchParams();
-  // const productId = searchParams.get("productId");
+
   const { productId } = useParams();
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const { loading, productDetail } = useSelector(
     (state) => state.forSaleProduct
   );
+
+  const {
+    deliveryType,
+    deliveryDate,
+    deliveryTime,
+    letteringText,
+    designTopperText,
+    customerRequestText,
+  } = useSelector((state) => state.order);
 
   useEffect(() => {
     dispatch(forSaleProductActions.getDetail(productId));
@@ -75,25 +65,6 @@ const OrderDetail = ({ match }) => {
     },
   });
 
-  const CustomToggleButton = styled(ToggleButton)(() => ({
-    border: "1px solid",
-    color: brown[400],
-    borderColor: "rgba(0, 0, 0, 0.25)",
-    boxShadow: "none",
-    "&.Mui-disabled": {
-      border: "1px solid",
-      borderColor: "rgba(0, 0, 0, 0.25)",
-    },
-    "&.Mui-selected, &.Mui-selected:hover": {
-      color: "white",
-      backgroundColor: brown[300],
-    },
-
-    "&:hover": {
-      boxShadow: "none",
-    },
-  }));
-
   const QuantityButton = styled(Button)(() => ({
     width: "10px",
     minWidth: 0,
@@ -105,130 +76,17 @@ const OrderDetail = ({ match }) => {
       boxShadow: "none",
     },
   }));
-
-  // delivery
-  const [delivery, setDelivery] = useState(undefined);
-
-  const deliveryHandler = (value) => {
-    console.log(delivery);
-    setDelivery(value);
-  };
-
-  // date
-  const [dateOpen, setDateOpen] = useState(false);
-  const [date, setDate] = useState(null);
-  const [modifiedDate, setModifiedDate] = useState(undefined);
-  const [dateError, setDateError] = useState(undefined);
-
-  const dateHandler = (event) => {
-    setDate(event);
-    const date = new Date(event);
-    const modifiedDate = format(date, "yyyy년 MM월 dd일 (eee)", { locale: ko });
-    setModifiedDate(modifiedDate);
-  };
-
-  //  time
-  const [timeOpen, setTimeOpen] = useState(false);
-  const [time, setTime] = useState(null);
-  const [modifiedTime, setModifiedTime] = useState(undefined);
-  const [minTime, setMinTime] = useState(undefined);
-  const [maxTime, setMaxTime] = useState(undefined);
-  const [timeError, setTimeError] = useState(undefined);
-
-  const timeHandler = (event) => {
-    setTime(event);
-    const date = new Date(event);
-    const modifiedTime = format(date, "a hh : mm", { locale: ko });
-    setModifiedTime(modifiedTime);
-  };
-
-  const storeHourHandler = (event) => {
-    // 평일     am 11:00 ~ pm 7:30
-    // 토요일   am 10:00 ~ pm 4:00
-    // 일요일   am 10:00 ~ pm 12:00
-
-    const selectedDay = format(event, "eee", { locale: ko });
-    console.log("selectedDay", selectedDay);
-
-    if (selectedDay === "토") {
-      setMinTime(new Date(0, 0, 0, 10));
-      setMaxTime(new Date(0, 0, 0, 16));
-    } else if (selectedDay === "일") {
-      setMinTime(new Date(0, 0, 0, 10));
-      setMaxTime(new Date(0, 0, 0, 12));
-    } else {
-      setMinTime(new Date(0, 0, 0, 11));
-      setMaxTime(new Date(0, 0, 0, 19, 30));
-    }
-  };
-
-  // topper
-  const [topper, setTopper] = useState(false);
-  const topperHandler = (value) => {
-    setTopper(value);
-    console.log(value);
-  };
-
-  const [topperText, setTopperText] = useState("");
-  const topperTextHandler = (value) => {
-    setTopperText(value);
-    console.log(value);
-  };
-
-  // lettering
-  const [lettering, setLettering] = useState(false);
-  const letteringHandler = (value) => {
-    setLettering(value);
-    console.log(value);
-  };
-
-  const [letteringText, setLetteringText] = useState("");
-  const letteringTextHandler = (value) => {
-    setLetteringText(value);
-    console.log(value);
-  };
-
-  // request
-  const [request, setRequest] = useState("");
-  const requestHandler = (value) => {
-    setRequest(value);
-  };
-
-  // textCheck
-  const [topperLength, setTopperLength] = useState(0);
-  const [topperLengthError, setTopperLengthError] = useState(false);
-  const topperLengthHandler = (value) => {
-    if (value.length > 15) {
-      setTopperLengthError(true);
-    } else {
-      setTopperLengthError(false);
-      setTopperLength(value.length);
-    }
-  };
-
-  const [letteringLength, setLetteringLength] = useState(0);
-  const [letteringLengthError, setLetteringLengthError] = useState(false);
-
-  const LetteringLengthHandler = (value) => {
-    if (value.length > 15) {
-      setLetteringLengthError(true);
-    } else {
-      setLetteringLengthError(false);
-      setLetteringLength(value.length);
-    }
-  };
-
   ////////////////////////////////
 
   let orderForm = {
-    수령_방법: delivery,
-    수령_날짜: modifiedDate,
-    수령_시간: modifiedTime,
-    레터링_추가: lettering,
+    수령_방법: deliveryType,
+    수령_날짜: deliveryDate,
+    수령_시간: deliveryTime,
+    레터링_추가: letteringText !== "" ? true : false,
     레터링_문구: letteringText,
-    토퍼_추가: topper,
-    토퍼_문구: topperText,
-    요청_사항: request,
+    토퍼_추가: designTopperText !== "" ? true : false,
+    토퍼_문구: designTopperText,
+    요청_사항: customerRequestText,
   };
 
   const { handleSubmit, control } = useForm();
@@ -261,43 +119,27 @@ const OrderDetail = ({ match }) => {
   const [optionPrice, setOptionPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const optionConfirmHandler = () => {
-    // let orderForm = {
-    //   수령_방법: delivery,
-    //   수령_날짜: modifiedDate,
-    //   수령_시간: modifiedTime,
-    //   레터링_추가: lettering,
-    //   레터링_문구: letteringText,
-    //   토퍼_추가: topper,
-    //   토퍼_문구: topperText,
-    //   요청_사항: request,
-    //   수량: 1,
-    // };
-
-    // if (!topper && !lettering) {
-    //   return alert(
-    //     "케이크 판 레터링 / 디자인 토퍼 추가 여부를 확인 해 주세요"
-    //   );
-    // } else if (!topper) {
-    //   return alert("디자인 토퍼 추가 여부를 선택해 주세요");
-    // } else if (!lettering) {
-    //   return alert("케이크 판 레터링 추가 여부를 선택해 주세요");
-    // }
-
-    if (!delivery || !date || !time || !lettering || !topper) {
-      return alert("옵션을 다시 확인 해 주세요");
-    }
-
-    if (orderForm.토퍼_문구 && orderForm.토퍼_문구.length !== 0) {
-      if (0 < orderForm.토퍼_문구.length && orderForm.토퍼_문구.length <= 10) {
-        console.log("6000원 플러스");
-        setOptionPrice((prevPrice) => prevPrice + 6000);
-      } else {
-        console.log("9000원 플러스");
-        setOptionPrice((prevPrice) => prevPrice + 9000);
-      }
-    } else {
+  // lengthCheck
+  const [topperLength, setTopperLength] = useState(0);
+  const [topperLengthError, setTopperLengthError] = useState(false);
+  const topperLengthHandler = (value) => {
+    if (value.length > 15) {
       setTopperLengthError(true);
+    } else {
+      setTopperLengthError(false);
+      setTopperLength(value.length);
+    }
+  };
+
+  const optionConfirmHandler = () => {
+    if (orderForm.토퍼_문구 && orderForm.토퍼_문구.length !== 0) {
+      // if (0 < orderForm.토퍼_문구.length && orderForm.토퍼_문구.length <= 10) {
+      //   console.log("6000원 플러스");
+      //   setOptionPrice((prevPrice) => prevPrice + 6000);
+      // } else {
+      //   console.log("9000원 플러스");
+      //   setOptionPrice((prevPrice) => prevPrice + 9000);
+      // }
     }
 
     let totalPrice = (
@@ -306,22 +148,11 @@ const OrderDetail = ({ match }) => {
     setTotalPrice(totalPrice);
     setOption((prev) => [...prev, orderForm]);
 
+    console.log("카트 담기 결과 ::::", orderForm);
+
     // form reset
-    setDelivery(null);
 
-    setDate(null);
-    setModifiedDate(null);
-
-    setTime(null);
-    setModifiedTime(null);
-
-    setTopper(null);
-    setTopperText("");
-
-    setLettering(null);
-    setLetteringText("");
-
-    setRequest("");
+    dispatch({ type: "RESET_FORM" });
   };
 
   const optionRemoveHandler = (optionIndex) => {
@@ -418,509 +249,10 @@ const OrderDetail = ({ match }) => {
                   ) : null}
 
                   <ThemeProvider theme={theme}>
-                    <div>
-                      <div className="option_menu_section">
-                        <div className="option_menu_text">
-                          <div>수령 방법</div>
-                          {/* <div className="warning">
-                            * 택배 서비스는 준비 중입니다
-                          </div> */}
-                        </div>
-                        <div className="controller_container">
-                          <Controller
-                            control={control}
-                            name="수령_방법"
-                            render={({
-                              field: { onChange, value, ...field },
-                            }) => (
-                              <ToggleButtonGroup
-                                color="button"
-                                size="medium"
-                                value={delivery}
-                                // value={value}
-                                onChange={(e) => {
-                                  onChange(e.target.value);
-                                  deliveryHandler(e.target.value);
-                                }}
-                                exclusive
-                                fullWidth
-                                style={{
-                                  whiteSpace: "nowrap",
-                                }}
-                                {...field}
-                              >
-                                <CustomToggleButton value="방문 수령">
-                                  <div
-                                    style={{
-                                      fontSize: "1rem",
-                                      pointerEvents: "none",
-                                    }}
-                                  >
-                                    방문 수령
-                                  </div>
-                                </CustomToggleButton>
-                                <CustomToggleButton value="차량 배송">
-                                  <div
-                                    style={{
-                                      fontSize: "1rem",
-                                      pointerEvents: "none",
-                                    }}
-                                  >
-                                    차량 배송
-                                  </div>
-                                </CustomToggleButton>
-                                <CustomToggleButton value="택배" disabled>
-                                  <div
-                                    style={{
-                                      fontSize: "1rem",
-                                      pointerEvents: "none",
-                                    }}
-                                  >
-                                    택배
-                                  </div>
-                                </CustomToggleButton>
-                              </ToggleButtonGroup>
-                            )}
-                          />
-                        </div>
-                      </div>
-
-                      {delivery === "차량 배송" ? (
-                        <div className="flex-column option_menu_section">
-                          <div
-                            style={{
-                              color: "red",
-                              fontWeight: "bold",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            차량배송 주의사항 안내
-                          </div>
-                          <div
-                            style={{ fontSize: "0.85rem", textAlign: "start" }}
-                          >
-                            <div>
-                              <div>
-                                케이크 배송은 파손 위험으로 인해 1:1 차량
-                                배송으로만 가능합니다
-                                <br></br>
-                                수령하실 곳의 상세 주소지를 하단 요청사항에 기재
-                                해 주시면
-                                <br></br>
-                                요금 조회후 안내를 도와 드리겠습니다
-                                <br></br>
-                              </div>
-
-                              <div className="py-3">
-                                요금 안내
-                                <div style={{ color: "red" }}>
-                                  * 서울 / 경기 외 장거리, 지방 차량 배송 불가
-                                </div>
-                                의정부 내 : ₩ 9,000 ~<br></br>
-                                서울 / 경기 : ₩ 10,000 ~ ₩ 50,000
-                              </div>
-
-                              <div>
-                                <span style={{ color: "red" }}>
-                                  픽업 후 이동 , 차량 배송건에 대한 파손 보상은
-                                  불가함을 안내드립니다
-                                </span>
-                                <br></br>
-                                부득이하게 픽업이 어려우신 고객님들께 권해드리며
-                                <br></br>
-                                케이크는 직접 픽업이 가장 안전함을 안내드립니다
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ) : null}
-                    </div>
-
-                    <LocalizationProvider
-                      dateAdapter={AdapterDateFns}
-                      adapterLocale={ko}
-                    >
-                      <div className="option_menu_section">
-                        <span className="option_menu_text">수령 날짜</span>
-                        <div className="controller_container">
-                          <Controller
-                            control={control}
-                            name="수령_날짜"
-                            defaultValue={null}
-                            render={({
-                              field: { onChange, value, ...field },
-                            }) => (
-                              <DesktopDatePicker
-                                {...field}
-                                className="mui_x_custom"
-                                minDate={addDays(new Date(), 3)}
-                                maxDate={addDays(new Date(), 14)}
-                                inputFormat="yyyy.MM.dd (eee)"
-                                disableMaskedInput
-                                dayOfWeekFormatter={(day) => `${day}`}
-                                value={date}
-                                onChange={(event) => {
-                                  onChange(event);
-                                  dateHandler(event);
-                                  storeHourHandler(event);
-                                }}
-                                fullWidth
-                                open={dateOpen}
-                                onOpen={() => {
-                                  if (!delivery) {
-                                    setDateError(true);
-                                  } else {
-                                    setDateOpen(true);
-                                  }
-                                }}
-                                onClose={() => setDateOpen(false)}
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    onClick={() => {
-                                      if (!delivery) {
-                                        setDateError(true);
-                                      } else {
-                                        setDateOpen(true);
-                                      }
-                                    }}
-                                    error={
-                                      dateError && !delivery ? true : false
-                                    }
-                                    helperText={
-                                      dateError && !delivery
-                                        ? "수령 방법을 먼저 선택해 주세요"
-                                        : null
-                                    }
-                                    inputProps={{
-                                      ...params.inputProps,
-                                      readOnly: true,
-                                      style: {
-                                        cursor: "pointer",
-                                      },
-                                      placeholder: "날짜를 선택해 주세요",
-                                    }}
-                                  />
-                                )}
-                              />
-                            )}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="option_menu_section">
-                        <span className="option_menu_text">수령 시간</span>
-                        <div className="controller_container">
-                          <Controller
-                            control={control}
-                            name="수령_시간"
-                            defaultValue={null}
-                            render={({
-                              field: { onChange, value, ...field },
-                            }) => (
-                              <TimePicker
-                                {...field}
-                                className="mui_x_custom"
-                                value={delivery === "택배" ? null : time}
-                                minTime={minTime}
-                                maxTime={maxTime}
-                                disableMaskedInput
-                                inputFormat="a hh:mm"
-                                onChange={(event) => {
-                                  onChange(event);
-                                  timeHandler(event);
-
-                                  console.log(event);
-                                }}
-                                disabled={delivery === "택배" ? true : false}
-                                fullWidth
-                                open={timeOpen}
-                                onOpen={() => {
-                                  if (!date) {
-                                    setTimeError(true);
-                                  } else {
-                                    setTimeOpen(true);
-                                  }
-                                }}
-                                onClose={() => setTimeOpen(false)}
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    onClick={() => {
-                                      if (!date) {
-                                        setTimeError(true);
-                                      } else {
-                                        setTimeOpen(true);
-                                      }
-                                    }}
-                                    error={timeError && !date ? true : false}
-                                    helperText={
-                                      timeError && !date
-                                        ? "날짜를 먼저 선택해 주세요"
-                                        : null
-                                    }
-                                    inputProps={{
-                                      ...params.inputProps,
-                                      readOnly: true,
-                                      style: {
-                                        cursor: "pointer",
-                                      },
-                                      placeholder:
-                                        delivery === "택배"
-                                          ? "택배 수령시 설정 불가"
-                                          : "시간을 선택해 주세요",
-                                    }}
-                                  />
-                                )}
-                                minutesStep={5}
-                                showToolbar
-                              />
-                            )}
-                          />
-                        </div>
-                      </div>
-                    </LocalizationProvider>
-
-                    <div className="d-block option_menu_section">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <span className="option_menu_text">
-                          케이크 판 레터링
-                        </span>
-                        <div className="controller_container">
-                          <Controller
-                            control={control}
-                            name="레터링_추가"
-                            render={({
-                              field: { onChange, value, ...field },
-                            }) => (
-                              <ToggleButtonGroup
-                                color="button"
-                                size="medium"
-                                defaultValue={false}
-                                value={lettering}
-                                onChange={(e) => {
-                                  onChange(e.target.value);
-                                  letteringHandler(e.target.value);
-                                }}
-                                exclusive
-                                fullWidth
-                                style={{
-                                  whiteSpace: "nowrap",
-                                }}
-                                {...field}
-                              >
-                                <CustomToggleButton value="Y">
-                                  <div
-                                    style={{
-                                      fontSize: "1rem",
-                                      pointerEvents: "none",
-                                    }}
-                                  >
-                                    추가 하기
-                                  </div>
-                                </CustomToggleButton>
-                                <CustomToggleButton value="N">
-                                  <div
-                                    style={{
-                                      fontSize: "1rem",
-                                      pointerEvents: "none",
-                                    }}
-                                  >
-                                    추가하지 않기
-                                  </div>
-                                </CustomToggleButton>
-                              </ToggleButtonGroup>
-                            )}
-                          />
-                        </div>
-                      </div>
-
-                      <div
-                        className={
-                          lettering === "Y" ? "input_visible" : "input_hide"
-                        }
-                      >
-                        <div className="d-flex justify-content-between">
-                          <div>레터링 문구 {`(${letteringLength}/15)`}</div>
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "red",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            * 레터링 문구는 간결할수록 예쁘게 작업 됩니다
-                          </div>
-                        </div>
-                        <Controller
-                          control={control}
-                          name="레터링_문구"
-                          defaultValue=""
-                          render={({
-                            field: { onChange, value, ...field },
-                          }) => (
-                            <TextField
-                              // label="최대 15자 까지 입력 가능합니다"
-                              placeholder="최대 15자 까지 입력 가능합니다"
-                              inputProps={{ maxLength: 15 }}
-                              value={letteringText}
-                              error={letteringLengthError ? true : false}
-                              helperText={
-                                letteringLengthError
-                                  ? "문구를 확인해 주세요"
-                                  : null
-                              }
-                              onChange={(e) => {
-                                onChange(e.target.value);
-                                letteringTextHandler(e.target.value);
-                                LetteringLengthHandler(e.target.value);
-                              }}
-                              variant="outlined"
-                              fullWidth
-                              {...field}
-                            />
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="d-block option_menu_section">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <span className="option_menu_text">디자인 토퍼</span>
-                        <div className="controller_container">
-                          <Controller
-                            control={control}
-                            name="토퍼_추가"
-                            render={({
-                              field: { onChange, value, ...field },
-                            }) => (
-                              <ToggleButtonGroup
-                                color="button"
-                                size="medium"
-                                // defaultValue={false}
-                                value={topper}
-                                onChange={(e) => {
-                                  onChange(e.target.value);
-                                  topperHandler(e.target.value);
-                                }}
-                                exclusive
-                                fullWidth
-                                style={{
-                                  whiteSpace: "nowrap",
-                                }}
-                                {...field}
-                              >
-                                <CustomToggleButton value="Y">
-                                  <div
-                                    style={{
-                                      fontSize: "1rem",
-                                      pointerEvents: "none",
-                                    }}
-                                  >
-                                    추가 하기
-                                  </div>
-                                </CustomToggleButton>
-                                <CustomToggleButton value="N">
-                                  <div
-                                    style={{
-                                      fontSize: "1rem",
-                                      pointerEvents: "none",
-                                    }}
-                                  >
-                                    추가하지 않기
-                                  </div>
-                                </CustomToggleButton>
-                              </ToggleButtonGroup>
-                            )}
-                          />
-                        </div>
-                      </div>
-
-                      <div
-                        className={
-                          topper === "Y" ? "input_visible" : "input_hide"
-                        }
-                      >
-                        <div className="d-flex justify-content-between">
-                          <div>토퍼 문구 {`(${topperLength}/15)`}</div>
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "red",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            * 10자 내 +6,000원 / 15자 내 +9,000원
-                          </div>
-                        </div>
-
-                        <Controller
-                          control={control}
-                          name="토퍼_문구"
-                          defaultValue=""
-                          render={({
-                            field: { onChange, value, ...field },
-                          }) => (
-                            <TextField
-                              // label="최대 15자 까지 입력 가능합니다"
-                              placeholder="최대 15자 까지 입력 가능합니다"
-                              inputProps={{ maxLength: 15 }}
-                              value={topperText}
-                              error={topperLengthError ? true : false}
-                              helperText={
-                                topperLengthError
-                                  ? "문구를 확인해 주세요"
-                                  : null
-                              }
-                              onChange={(e) => {
-                                onChange(e.target.value);
-                                topperTextHandler(e.target.value);
-                                topperLengthHandler(e.target.value);
-                              }}
-                              variant="outlined"
-                              fullWidth
-                              {...field}
-                            />
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="d-block border-0 option_menu_section">
-                      <div className="d-flex justify-content-between">
-                        <div>요청 사항</div>
-                        <div
-                          style={{
-                            fontSize: "0.8rem",
-                            color: "red",
-                            marginBottom: "1rem",
-                          }}
-                        >
-                          * 레터링 추가 요청은 반영되지 않습니다
-                        </div>
-                      </div>
-
-                      <Controller
-                        control={control}
-                        name="요청_사항"
-                        defaultValue=""
-                        render={({ field: { onChange, value, ...field } }) => (
-                          <TextField
-                            {...field}
-                            // multiline
-                            // label="레터링 추가 요청은 반영되지 않습니다"
-                            fullWidth
-                            variant="outlined"
-                            style={{ width: "100%" }}
-                            value={request}
-                            onChange={(e) => {
-                              onChange(e.target.value);
-                              requestHandler(e.target.value);
-                            }}
-                          />
-                        )}
-                      />
-                    </div>
+                    <Delivery control={control} />
+                    <Lettering control={control} />
+                    <DesignTopper control={control} />
+                    <CustomerRequest control={control} />
 
                     <Button
                       variant="contained"
@@ -987,7 +319,7 @@ const OrderDetail = ({ match }) => {
                               </Col>
 
                               <Col>
-                                {item.레터링_추가 === "Y" ? (
+                                {item.레터링_추가 ? (
                                   <div>
                                     <span className="me-2">
                                       케이크 판 레터링 / {item.레터링_문구}
@@ -999,7 +331,7 @@ const OrderDetail = ({ match }) => {
                                   </div>
                                 )}
 
-                                {item.토퍼_추가 === "Y" ? (
+                                {item.토퍼_추가 ? (
                                   <div>
                                     <span className="me-2">
                                       디자인 토퍼 문구 / {item.토퍼_문구}
