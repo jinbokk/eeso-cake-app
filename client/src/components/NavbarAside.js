@@ -153,7 +153,7 @@ const NavbarAside = (props) => {
                     }}
                   >
                     <props.StyledBadge
-                      badgeContent={props.authUserData.cart.length}
+                      badgeContent={props.authUserData.cart.length || null}
                       color="error"
                     >
                       <div style={{ display: "flex", alignItems: "center" }}>

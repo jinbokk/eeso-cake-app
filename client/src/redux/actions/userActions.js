@@ -1,16 +1,34 @@
 import axios from "axios";
 
-function registerUser(dataToSubmit) {
+function registerUser(body) {
   return async (dispatch) => {
     try {
       const registerResult = await axios
-        .post("/api/users/register", dataToSubmit)
+        .post("/api/users/register", body)
         .then((res) => res.data);
 
       dispatch({
         type: "REGISTER_USER",
         payload: registerResult,
       });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
+function duplicateEmailCheck(email) {
+  let body = {
+    email: email,
+  };
+
+  return async (dispatch) => {
+    try {
+      const emailCheckResult = await axios
+        .get(`/api/users/register/email-check/${email}`, body)
+        .then((res) => res.data);
+
+      return emailCheckResult;
     } catch (error) {
       console.log("error occurred : ", error);
     }
@@ -185,6 +203,7 @@ function getCartItems(cartItems, userCart) {
 
 export const userActions = {
   registerUser,
+  duplicateEmailCheck,
   loginUser,
   logoutUser,
   auth,

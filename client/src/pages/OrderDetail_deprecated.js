@@ -709,7 +709,7 @@ const OrderDetail = ({ match }) => {
                                 }}
                                 {...field}
                               >
-                                <CustomToggleButton value="Y">
+                                <CustomToggleButton value="추가 하기">
                                   <div
                                     style={{
                                       fontSize: "1rem",
@@ -719,7 +719,7 @@ const OrderDetail = ({ match }) => {
                                     추가 하기
                                   </div>
                                 </CustomToggleButton>
-                                <CustomToggleButton value="N">
+                                <CustomToggleButton value="추가하지 않기">
                                   <div
                                     style={{
                                       fontSize: "1rem",
@@ -737,7 +737,7 @@ const OrderDetail = ({ match }) => {
 
                       <div
                         className={
-                          lettering === "Y" ? "input_visible" : "input_hide"
+                          lettering === "추가 하기" ? "input_visible" : "input_hide"
                         }
                       >
                         <div className="d-flex justify-content-between">
@@ -810,7 +810,7 @@ const OrderDetail = ({ match }) => {
                                 }}
                                 {...field}
                               >
-                                <CustomToggleButton value="Y">
+                                <CustomToggleButton value="추가 하기">
                                   <div
                                     style={{
                                       fontSize: "1rem",
@@ -820,7 +820,7 @@ const OrderDetail = ({ match }) => {
                                     추가 하기
                                   </div>
                                 </CustomToggleButton>
-                                <CustomToggleButton value="N">
+                                <CustomToggleButton value="추가하지 않기">
                                   <div
                                     style={{
                                       fontSize: "1rem",
@@ -838,7 +838,7 @@ const OrderDetail = ({ match }) => {
 
                       <div
                         className={
-                          topper === "Y" ? "input_visible" : "input_hide"
+                          topper === "추가 하기" ? "input_visible" : "input_hide"
                         }
                       >
                         <div className="d-flex justify-content-between">
@@ -987,7 +987,7 @@ const OrderDetail = ({ match }) => {
                               </Col>
 
                               <Col>
-                                {item.레터링_추가 === "Y" ? (
+                                {item.레터링_추가 === "추가 하기" ? (
                                   <div>
                                     <span className="me-2">
                                       케이크 판 레터링 / {item.레터링_문구}
@@ -999,7 +999,7 @@ const OrderDetail = ({ match }) => {
                                   </div>
                                 )}
 
-                                {item.토퍼_추가 === "Y" ? (
+                                {item.토퍼_추가 === "추가 하기" ? (
                                   <div>
                                     <span className="me-2">
                                       디자인 토퍼 문구 / {item.토퍼_문구}

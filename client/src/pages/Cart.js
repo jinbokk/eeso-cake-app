@@ -166,7 +166,7 @@ const Cart = () => {
                       </div>
                     </div>
 
-                    {item.option.레터링_추가 === "Y" ? (
+                    {item.option.레터링_추가 === "추가 하기" ? (
                       <div>
                         <span className="disabled_text">
                           케이크 판 레터링 / {item.option.레터링_문구}
@@ -178,7 +178,7 @@ const Cart = () => {
                       </div>
                     )}
 
-                    {item.option.토퍼_추가 === "Y" ? (
+                    {item.option.토퍼_추가 === "추가 하기" ? (
                       <div>
                         <span className="disabled_text">
                           디자인 토퍼 문구 / {item.option.토퍼_문구}

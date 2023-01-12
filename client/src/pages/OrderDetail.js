@@ -29,7 +29,7 @@ import CustomerRequest from "../components/productOrder/CustomerRequest";
 
 import "./css/orderDetail.css";
 
-const OrderDetail = ({ match }) => {
+const OrderDetail = () => {
   const dispatch = useDispatch();
 
   const { productId } = useParams();
@@ -44,7 +44,9 @@ const OrderDetail = ({ match }) => {
     deliveryType,
     deliveryDate,
     deliveryTime,
+    letteringToggle,
     letteringText,
+    designTopperToggle,
     designTopperText,
     customerRequestText,
   } = useSelector((state) => state.order);
@@ -76,64 +78,39 @@ const OrderDetail = ({ match }) => {
       boxShadow: "none",
     },
   }));
-  ////////////////////////////////
 
   let orderForm = {
     수령_방법: deliveryType,
     수령_날짜: deliveryDate,
     수령_시간: deliveryTime,
-    레터링_추가: letteringText !== "" ? true : false,
+    레터링_추가: letteringToggle,
     레터링_문구: letteringText,
-    토퍼_추가: designTopperText !== "" ? true : false,
-    토퍼_문구: designTopperText,
+    디자인토퍼_추가: designTopperToggle,
+    디자인토퍼_문구: designTopperText,
     요청_사항: customerRequestText,
   };
 
   const { handleSubmit, control } = useForm();
 
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-
-  //   let body = {
-  //     수령_방법: 수령_방법,
-  //     수령_날짜: 수령_날짜,
-  //     수령_시간: 수령_시간,
-  //     레터링_추가: 레터링_추가,
-  //     레터링_문구: 레터링_문구,
-  //   };
-
-  //   if (body.수령_방법 === "") {
-  //     alert("수령 방법을 선택 해 주세요");
-  //   } else if (body.수령_날짜 === "") {
-  //     alert("수령 날짜를 선택 해 주세요");
-  //   } else if (body.수령_시간 === "") {
-  //     alert("픽업 시간을 선택 해 주세요");
-  //   } else if (body.레터링_추가 === "") {
-  //     alert("레터링 여부를 선택 해 주세요");
-  //   } else if (body.레터링_문구 === "") {
-  //     alert("레터링 문구를 선택 해 주세요");
-  //   }
-  // };
-
   const [option, setOption] = useState([]);
   const [optionPrice, setOptionPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // lengthCheck
-  const [topperLength, setTopperLength] = useState(0);
-  const [topperLengthError, setTopperLengthError] = useState(false);
-  const topperLengthHandler = (value) => {
-    if (value.length > 15) {
-      setTopperLengthError(true);
-    } else {
-      setTopperLengthError(false);
-      setTopperLength(value.length);
-    }
-  };
+  // // lengthCheck
+  // const [topperLength, setTopperLength] = useState(0);
+  // const [topperLengthError, setTopperLengthError] = useState(false);
+  // const topperLengthHandler = (value) => {
+  //   if (value.length > 15) {
+  //     setTopperLengthError(true);
+  //   } else {
+  //     setTopperLengthError(false);
+  //     setTopperLength(value.length);
+  //   }
+  // };
 
   const optionConfirmHandler = () => {
-    if (orderForm.토퍼_문구 && orderForm.토퍼_문구.length !== 0) {
-      // if (0 < orderForm.토퍼_문구.length && orderForm.토퍼_문구.length <= 10) {
+    if (orderForm.디자인토퍼_문구 && orderForm.디자인토퍼_문구.length !== 0) {
+      // if (0 < orderForm.디자인토퍼_문구.length && orderForm.디자인토퍼_문구.length <= 10) {
       //   console.log("6000원 플러스");
       //   setOptionPrice((prevPrice) => prevPrice + 6000);
       // } else {
@@ -142,17 +119,26 @@ const OrderDetail = ({ match }) => {
       // }
     }
 
-    let totalPrice = (
-      parseInt(productDetail.price) + optionPrice
-    ).toLocaleString("ko-KR");
-    setTotalPrice(totalPrice);
-    setOption((prev) => [...prev, orderForm]);
+    // let totalPrice = (
+    //   parseInt(productDetail.price) + optionPrice
+    // ).toLocaleString("ko-KR");
 
-    console.log("카트 담기 결과 ::::", orderForm);
+    // setTotalPrice(totalPrice);
 
-    // form reset
+    console.log("orderForm", orderForm);
 
-    dispatch({ type: "RESET_FORM" });
+    if (
+      !orderForm.수령_방법 ||
+      !orderForm.수령_날짜 ||
+      !orderForm.수령_시간 ||
+      (orderForm.레터링_추가 === "추가 하기" && !orderForm.레터링_문구) ||
+      (orderForm.디자인토퍼_추가 === "추가 하기" && !orderForm.디자인토퍼_문구)
+    ) {
+      alert("옵션을 다시 확인해 주세요");
+    } else {
+      setOption((prev) => [...prev, orderForm]);
+      dispatch({ type: "RESET_FORM" });
+    }
   };
 
   const optionRemoveHandler = (optionIndex) => {
@@ -319,11 +305,9 @@ const OrderDetail = ({ match }) => {
                               </Col>
 
                               <Col>
-                                {item.레터링_추가 ? (
-                                  <div>
-                                    <span className="me-2">
-                                      케이크 판 레터링 / {item.레터링_문구}
-                                    </span>
+                                {item.레터링_추가 === "추가 하기" ? (
+                                  <div className="me-2">
+                                    케이크 판 레터링 / {item.레터링_문구}
                                   </div>
                                 ) : (
                                   <div className="disabled_text">
@@ -331,11 +315,9 @@ const OrderDetail = ({ match }) => {
                                   </div>
                                 )}
 
-                                {item.토퍼_추가 ? (
-                                  <div>
-                                    <span className="me-2">
-                                      디자인 토퍼 문구 / {item.토퍼_문구}
-                                    </span>
+                                {item.디자인토퍼_추가 === "추가 하기" ? (
+                                  <div className="me-2">
+                                    디자인 토퍼 문구 / {item.디자인토퍼_문구}
                                   </div>
                                 ) : (
                                   <div className="disabled_text">
@@ -438,7 +420,6 @@ const OrderDetail = ({ match }) => {
             {productDetail.ingredient === "bread" || "event" ? (
               <GuideBread />
             ) : null}
-            {/* <Instagram /> */}
           </Container>
         </>
       )}

@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import "./css/navbar.css";
 
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import NavDropdown from "./NavDropdown";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import NavbarAside from "./NavbarAside";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { BsCart4 } from "react-icons/bs";
 import { Badge } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -15,17 +14,14 @@ import { userActions } from "../redux/actions/userActions";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const { loginResult, authUserData } = useSelector((state) => state.user);
-  // const [badgeCount, setBadgeCount] = useState(undefined);
 
-  // useEffect(() => {
-  //   console.log("authUserData.cart.length", authUserData.cart.length);
-  //   setBadgeCount(authUserData.cart.length);
-  // }, [authUserData]);
+  useEffect(() => {
+    console.log(authUserData);
+  }, [authUserData]);
 
   const logoutHandler = (e) => {
     const confirm = window.confirm("로그아웃 하시겠습니까?");
@@ -186,7 +182,10 @@ const Navbar = () => {
                           로그아웃
                         </NavLink>
                         <NavLink to="/user/cart" style={{ marginLeft: "1rem" }}>
-                          <StyledBadge badgeContent={999} color="error">
+                          <StyledBadge
+                            badgeContent={authUserData.cart.length || null}
+                            color="error"
+                          >
                             <BsCart4 className="cartIcon" />
                           </StyledBadge>
                         </NavLink>

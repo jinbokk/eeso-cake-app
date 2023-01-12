@@ -25,21 +25,37 @@ function setDeliveryTime(deliveryTime) {
 }
 
 // lettering
+function setLetteringToggle(letteringToggle) {
+  return async (dispatch) => {
+    dispatch({
+      type: "SET_LETTERING_TOGGLE",
+      payload: letteringToggle,
+    });
+  };
+}
 function setLetteringText(letteringText) {
   return async (dispatch) => {
     dispatch({
-      type: "SET_LETTERING",
+      type: "SET_LETTERING_TEXT",
       payload: letteringText,
     });
   };
 }
 
 // designTopper
-function setDesignTopperText(designTopperText) {
+function setDesignTopperToggle(designTopperToggle) {
   return async (dispatch) => {
     dispatch({
-      type: "SET_DESIGN_TOPPER",
-      payload: designTopperText,
+      type: "SET_DESIGN_TOPPER_TOGGLE",
+      payload: designTopperToggle,
+    });
+  };
+}
+function setDesignTopperText(DesignTopperText) {
+  return async (dispatch) => {
+    dispatch({
+      type: "SET_DESIGN_TOPPER_TEXT",
+      payload: DesignTopperText,
     });
   };
 }
@@ -58,7 +74,9 @@ export const orderActions = {
   setDeliveryType,
   setDeliveryDate,
   setDeliveryTime,
+  setLetteringToggle,
   setLetteringText,
+  setDesignTopperToggle,
   setDesignTopperText,
   setCustomerRequestText,
 };

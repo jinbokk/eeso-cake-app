@@ -2,7 +2,9 @@ let initialState = {
   deliveryType: undefined,
   deliveryDate: undefined,
   deliveryTime: undefined,
+  letteringToggle: undefined,
   letteringText: undefined,
+  designTopperToggle: undefined,
   designTopperText: undefined,
   customerRequestText: undefined,
 };
@@ -22,11 +24,15 @@ const orderReducer = (state = initialState, action) => {
       return { ...state, deliveryTime: payload };
 
     // lettering
-    case "SET_LETTERING":
+    case "SET_LETTERING_TOGGLE":
+      return { ...state, letteringToggle: payload };
+    case "SET_LETTERING_TEXT":
       return { ...state, letteringText: payload };
 
     // designTopper
-    case "SET_DESIGN_TOPPER":
+    case "SET_DESIGN_TOPPER_TOGGLE":
+      return { ...state, designTopperToggle: payload };
+    case "SET_DESIGN_TOPPER_TEXT":
       return { ...state, designTopperText: payload };
 
     // customerRequest

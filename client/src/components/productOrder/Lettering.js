@@ -35,6 +35,7 @@ const Lettering = ({ control }) => {
   const letteringToggleHandler = (value) => {
     setLetteringToggle(value);
     console.log(value);
+    dispatch(orderActions.setLetteringToggle(value));
   };
 
   const [letteringText, setLetteringText] = useState("");
@@ -83,7 +84,7 @@ const Lettering = ({ control }) => {
                   }}
                   {...field}
                 >
-                  <CustomToggleButton value="Y">
+                  <CustomToggleButton value="추가 하기">
                     <div
                       style={{
                         fontSize: "1rem",
@@ -93,7 +94,7 @@ const Lettering = ({ control }) => {
                       추가 하기
                     </div>
                   </CustomToggleButton>
-                  <CustomToggleButton value="N">
+                  <CustomToggleButton value="추가하지 않기">
                     <div
                       style={{
                         fontSize: "1rem",
@@ -110,7 +111,9 @@ const Lettering = ({ control }) => {
         </div>
 
         <div
-          className={letteringToggle === "Y" ? "input_visible" : "input_hide"}
+          className={
+            letteringToggle === "추가 하기" ? "input_visible" : "input_hide"
+          }
         >
           <div className="d-flex justify-content-between">
             <div>레터링 문구 {`(${letteringLength}/15)`}</div>

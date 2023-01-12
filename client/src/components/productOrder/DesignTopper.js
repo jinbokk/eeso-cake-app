@@ -31,10 +31,11 @@ const DesignTopper = ({ control }) => {
   }));
 
   // topper
-  const [topper, setTopper] = useState(false);
-  const topperHandler = (value) => {
-    setTopper(value);
+  const [topperToggle, setTopperToggle] = useState(false);
+  const topperToggleHandler = (value) => {
+    setTopperToggle(value);
     console.log(value);
+    dispatch(orderActions.setDesignTopperToggle(value));
   };
 
   const [topperText, setTopperText] = useState("");
@@ -70,10 +71,10 @@ const DesignTopper = ({ control }) => {
                   color="button"
                   size="medium"
                   // defaultValue={false}
-                  value={topper}
+                  value={topperToggle}
                   onChange={(e) => {
                     onChange(e.target.value);
-                    topperHandler(e.target.value);
+                    topperToggleHandler(e.target.value);
                   }}
                   exclusive
                   fullWidth
@@ -82,7 +83,7 @@ const DesignTopper = ({ control }) => {
                   }}
                   {...field}
                 >
-                  <CustomToggleButton value="Y">
+                  <CustomToggleButton value="추가 하기">
                     <div
                       style={{
                         fontSize: "1rem",
@@ -92,7 +93,7 @@ const DesignTopper = ({ control }) => {
                       추가 하기
                     </div>
                   </CustomToggleButton>
-                  <CustomToggleButton value="N">
+                  <CustomToggleButton value="추가하지 않기">
                     <div
                       style={{
                         fontSize: "1rem",
@@ -108,7 +109,7 @@ const DesignTopper = ({ control }) => {
           </div>
         </div>
 
-        <div className={topper === "Y" ? "input_visible" : "input_hide"}>
+        <div className={topperToggle === "추가 하기" ? "input_visible" : "input_hide"}>
           <div className="d-flex justify-content-between">
             <div>토퍼 문구 {`(${topperLength}/15)`}</div>
             <div
