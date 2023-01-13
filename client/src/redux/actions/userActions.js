@@ -17,6 +17,27 @@ function registerUser(body) {
   };
 }
 
+function unregisterUser(email) {
+  let body = {
+    email: email,
+  };
+
+  return async (dispatch) => {
+    try {
+      const unregisterResult = await axios
+        .post("/api/users/unregister", body)
+        .then((res) => res.data);
+
+        dispatch({
+          type: "UNREGISTER_USER",
+          payload: unregisterResult,
+        });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
 function duplicateEmailCheck(email) {
   let body = {
     email: email,
@@ -29,6 +50,24 @@ function duplicateEmailCheck(email) {
         .then((res) => res.data);
 
       return emailCheckResult;
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
+function duplicatePhoneNumberCheck(phoneNumber) {
+  let body = {
+    phoneNumber: phoneNumber,
+  };
+
+  return async (dispatch) => {
+    try {
+      const phoneNumberCheckResult = await axios
+        .get(`/api/users/register/phoneNumber-check/${phoneNumber}`, body)
+        .then((res) => res.data);
+
+      return phoneNumberCheckResult;
     } catch (error) {
       console.log("error occurred : ", error);
     }
@@ -203,7 +242,9 @@ function getCartItems(cartItems, userCart) {
 
 export const userActions = {
   registerUser,
+  unregisterUser,
   duplicateEmailCheck,
+  duplicatePhoneNumberCheck,
   loginUser,
   logoutUser,
   auth,

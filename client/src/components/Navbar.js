@@ -171,8 +171,7 @@ const Navbar = () => {
               <div>
                 <div className="util_container">
                   <div className="user_container mx-5">
-                    {(loginResult && loginResult.loginSuccess) ||
-                    (authUserData && authUserData._id) ? (
+                    {authUserData && authUserData.isAuth ? (
                       <>
                         <NavLink
                           to="/"
@@ -181,9 +180,21 @@ const Navbar = () => {
                         >
                           로그아웃
                         </NavLink>
-                        <NavLink to="/user/cart" style={{ marginLeft: "1rem" }}>
+                        <NavLink
+                          to="/user/mypage/order-history"
+                          className="mx-3"
+                        >
+                          마이페이지
+                        </NavLink>
+                        <NavLink
+                          to="/user/cart"
+                          style={{ marginLeft: "1.5rem" }}
+                        >
                           <StyledBadge
-                            badgeContent={authUserData.cart.length || null}
+                            badgeContent={
+                              (authUserData.cart && authUserData.cart.length) ||
+                              null
+                            }
                             color="error"
                           >
                             <BsCart4 className="cartIcon" />

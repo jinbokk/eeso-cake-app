@@ -44,7 +44,7 @@ function Register() {
   // email
   const [email, setEmail] = useState("");
   const [emailVerify, setEmailVerify] = useState(false);
-  const [isDuplicateEmail, setIsDuplicateEmail] = useState(false);
+  const [isDuplicateEmail, setIsDuplicateEmail] = useState(undefined);
 
   const emailRegex =
     /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
@@ -78,10 +78,8 @@ function Register() {
             setIsDuplicateEmail(isDuplicateEmail);
             if (isDuplicateEmail) {
               setEmailVerify(false);
-              // alert(`${email}\n이미 가입되어 있는 이메일입니다`);
             } else {
               setEmailVerify(true);
-              // alert(`${email}\n사용 가능한 이메일입니다`);
             }
           }
         );
@@ -154,6 +152,10 @@ function Register() {
     checkMark: false,
   });
 
+  const [phoneNumberVerify, setPhoneNumberVerify] = useState(false);
+  const [isDuplicatePhoneNumber, setIsDuplicatePhoneNumber] =
+    useState(undefined);
+
   const phoneNumberCheckHandler = (phoneNumber) => {
     if (phoneNumberVerifyCheck === false) {
       if (phoneNumber === "") {
@@ -162,6 +164,27 @@ function Register() {
       return setIsPhoneNumberWrong({ error: true, checkMark: false });
     } else {
       return setIsPhoneNumberWrong({ error: false, checkMark: true });
+    }
+  };
+
+  const duplicatePhoneNumberCheck = () => {
+    if (phoneNumber === "") {
+      return;
+    } else {
+      if (isPhoneNumberWrong.error) {
+        return;
+      } else {
+        dispatch(userActions.duplicatePhoneNumberCheck(phoneNumber)).then(
+          (isDuplicatePhoneNumber) => {
+            setIsDuplicatePhoneNumber(isDuplicatePhoneNumber);
+            if (isDuplicatePhoneNumber) {
+              setPhoneNumberVerify(false);
+            } else {
+              setPhoneNumberVerify(true);
+            }
+          }
+        );
+      }
     }
   };
 
@@ -204,7 +227,7 @@ function Register() {
       return alert("비밀번호를 확인해 주세요");
     }
 
-    let body = {
+    let registerForm = {
       email: email,
       password: password,
       name: name,
@@ -221,12 +244,14 @@ function Register() {
       isConfirmPasswordWrong.error ||
       isNameWrong.error ||
       gender === "" ||
+      phoneNumberVerify === false ||
+      isDuplicatePhoneNumber === true ||
       isPhoneNumberWrong.error ||
       fullAddress === ""
     ) {
       alert("회원정보를 다시 확인 해 주세요");
     } else {
-      dispatch(userActions.registerUser(body));
+      dispatch(userActions.registerUser(registerForm));
     }
   };
 
@@ -236,12 +261,12 @@ function Register() {
       animate={{ opacity: 1, y: 0 }}
       // exit={{ opacity: 0 }}
     >
-      <Container className="login_container">
+      <Container className="register_container">
         <img className="login_logo" src="/images/banner_bgremoved.png" alt="" />
         <Form className="form_container" onSubmit={submitHandler}>
           <Form.Group className="mb-5" controlId="Email">
             <Form.Label style={{ fontWeight: "bold" }}>
-              <span>이메일</span>
+              <span>아이디 (이메일)</span>
               <span
                 style={{
                   color: "red",
@@ -292,14 +317,14 @@ function Register() {
 
             {isEmailWrong.error ? (
               <div style={{ color: "red", fontSize: "13px" }}>
-                이메일을 확인해 주세요
+                아이디를 확인해 주세요
               </div>
             ) : null}
 
             <div>
               {isDuplicateEmail ? (
                 <div style={{ color: "red", fontSize: "13px" }}>
-                  이미 가입되어 있는 이메일 입니다
+                  이미 가입되어 있는 아이디 입니다
                 </div>
               ) : null}
             </div>
@@ -539,15 +564,33 @@ function Register() {
                       .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
                       .replace(/\-{1,2}$/g, "")
                   );
-                  setIsPhoneNumberWrong(false);
+                  setPhoneNumberVerify(false);
+                  setIsDuplicatePhoneNumber(false);
+                  setIsPhoneNumberWrong({
+                    error: false,
+                    checkMark: false,
+                  });
                 }}
                 onKeyDown={(e) => {
                   e.key === "Enter" && e.preventDefault();
                 }}
-                onBlur={(e) => phoneNumberCheckHandler(e.target.value)}
+                onBlur={(e) => {
+                  phoneNumberCheckHandler(e.target.value);
+                }}
               />
               <InputGroup.Text className="input_area_button">
-                {isPhoneNumberWrong.checkMark ? (
+                {!phoneNumberVerify ? (
+                  <div
+                    onClick={duplicatePhoneNumberCheck}
+                    className={
+                      isPhoneNumberWrong.error || phoneNumber === ""
+                        ? "check_btn disabled"
+                        : "check_btn"
+                    }
+                  >
+                    중복확인
+                  </div>
+                ) : isPhoneNumberWrong.checkMark && !isDuplicatePhoneNumber ? (
                   <BsFillCheckCircleFill className="checked" />
                 ) : null}
               </InputGroup.Text>
@@ -561,6 +604,17 @@ function Register() {
                 }}
               >
                 휴대폰 번호를 확인해 주세요
+              </div>
+            ) : null}
+
+            {isDuplicatePhoneNumber ? (
+              <div
+                style={{
+                  color: "red",
+                  fontSize: "13px",
+                }}
+              >
+                이미 가입되어 있는 휴대폰 번호입니다
               </div>
             ) : null}
           </Form.Group>

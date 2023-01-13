@@ -40,10 +40,40 @@ router.post("/register", (req, res) => {
   });
 });
 
+router.post("/unregister", (req, res) => {
+  User.findOne(
+    {
+      email: req.body.email,
+    },
+    (err, user) => {
+      if (!req.body.email || err) {
+        res.status(200).send(err);
+      } else {
+        user.deleteOne();
+        res.status(200).json({
+          unregisterSuccess: true,
+        });
+      }
+    }
+  );
+});
+
 router.get("/register/email-check/:email", (req, res) => {
   let { email } = req.params;
 
   User.findOne({ email: email }, (err, user) => {
+    if (user) {
+      return res.status(200).send(true);
+    } else {
+      return res.status(200).send(false);
+    }
+  });
+});
+
+router.get("/register/phoneNumber-check/:phoneNumber", (req, res) => {
+  let { phoneNumber } = req.params;
+
+  User.findOne({ phoneNumber: phoneNumber }, (err, user) => {
     if (user) {
       return res.status(200).send(true);
     } else {
@@ -98,7 +128,7 @@ router.get("/logout", auth, (req, res) => {
       if (err) {
         return res.status(400).json({ logoutSuccess: false, message: err });
       } else {
-        return res.status(200).send({
+        return res.status(200).json({
           logoutSuccess: true,
         });
       }

@@ -1,5 +1,6 @@
 let initialState = {
   registerResult: undefined,
+  unregisterResult: undefined,
   loginResult: undefined,
   authUserData: undefined,
   // cartDetail: undefined,
@@ -12,6 +13,9 @@ const userReducer = (state = initialState, action) => {
     case "REGISTER_USER":
       return { ...state, registerResult: payload };
 
+    case "UNREGISTER_USER":
+      return { ...state, loginResult: undefined, unregisterResult: payload };
+
     case "LOGIN_USER":
       return { ...state, loginResult: payload };
 
@@ -23,7 +27,7 @@ const userReducer = (state = initialState, action) => {
       };
 
     case "AUTH_USER":
-      return { ...state, authUserData: payload };
+      return { ...state, loginResult: undefined, authUserData: payload };
 
     // case "ADD_TO_CART":
     //   return { ...state, cart: payload };

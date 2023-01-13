@@ -14,6 +14,7 @@ import Cakes from "./pages/Cakes";
 import Order from "./pages/Order";
 // import OrderDetail from "./pages/OrderDetail_deprecated";
 import OrderDetail from "./pages/OrderDetail";
+import Mypage from "./pages/Mypage";
 import Cart from "./pages/Cart";
 import Payment from "./pages/Payment";
 import GuideRice from "./pages/GuideRice";
@@ -23,10 +24,15 @@ import FAQ from "./pages/FAQ";
 import Loading from "./components/Loading";
 import Footer from "./components/Footer";
 import UploadProduct from "./pages/UploadProduct";
+import OrderHistory from "./pages/mypage/OrderHistory";
+import OrderCancellationHistory from "./pages/mypage/OrderCancellationHistory";
+import Coupon from "./pages/mypage/Coupon";
+import Mileage from "./pages/mypage/Mileage";
+import EditProfile from "./pages/mypage/EditProfile";
+import Unregister from "./pages/mypage/Unregister";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import TestOrderDetail from "./pages/OrderDetail";
 
 function App() {
   // Hoc Auth
@@ -41,6 +47,7 @@ function App() {
   const AuthCakes = Auth(Cakes, null);
   const AuthOrder = Auth(Order, null);
   const AuthOrderDetail = Auth(OrderDetail, null);
+  const AuthMypage = Auth(Mypage, true);
   const AuthCart = Auth(Cart, true);
   const AuthPayment = Auth(Payment, true);
   const AuthGuideRice = Auth(GuideRice, null);
@@ -86,6 +93,18 @@ function App() {
                 path="/order/list/detail/:productId"
                 element={<AuthOrderDetail />}
               />
+              {/* <Route path="/user/mypage/:menu" element={<AuthMypage />} /> */}
+              <Route path="/user/mypage" element={<AuthMypage />}>
+                <Route path="order-history" element={<OrderHistory />} />
+                <Route
+                  path="order-cancellation-history"
+                  element={<OrderCancellationHistory />}
+                />
+                <Route path="coupon" element={<Coupon />} />
+                <Route path="mileage" element={<Mileage />} />
+                <Route path="edit-profile" element={<EditProfile />} />
+                <Route path="unregister" element={<Unregister />} />
+              </Route>
               <Route path="/user/cart" element={<AuthCart />} />
               <Route path="/user/payment" element={<AuthPayment />} />
               <Route path="/guide/rice" element={<AuthGuideRice />} />

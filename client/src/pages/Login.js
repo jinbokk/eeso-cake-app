@@ -80,7 +80,10 @@ function Login() {
       <Container className="login_container">
         <img className="login_logo" src="/images/banner_bgremoved.png" alt="" />
         <Form className="form_container" onSubmit={submitHandler}>
-          <Form.Group controlId="Email">
+          <Form.Group
+            controlId="Email"
+            style={{ borderRight: "1px solid pink" }}
+          >
             <Form.Control
               type="email"
               placeholder="이메일을 입력해 주세요."
@@ -108,9 +111,9 @@ function Login() {
               >
                 {password !== "" ? (
                   visible ? (
-                    <AiOutlineEyeInvisible/>
+                    <AiOutlineEyeInvisible />
                   ) : (
-                    <AiOutlineEye/>
+                    <AiOutlineEye />
                   )
                 ) : null}
               </InputGroup.Text>
@@ -122,7 +125,7 @@ function Login() {
                 <Form.Check
                   type="checkbox"
                   defaultChecked={rememberMe}
-                  label="이메일 기억하기"
+                  label="아이디 기억하기"
                   onClick={(e) => {
                     setRememberMe(e.target.checked);
                   }}

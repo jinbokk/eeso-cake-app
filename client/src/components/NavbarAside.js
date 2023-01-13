@@ -133,8 +133,7 @@ const NavbarAside = (props) => {
         <Row>
           <Col>
             <div className="text-center pb-5">
-              {(props.loginResult && props.loginResult.loginSuccess) ||
-              (props.authUserData && props.authUserData._id) ? (
+              {props.authUserData && props.authUserData.isAuth ? (
                 <>
                   <NavLink
                     to="/"
@@ -153,7 +152,11 @@ const NavbarAside = (props) => {
                     }}
                   >
                     <props.StyledBadge
-                      badgeContent={props.authUserData.cart.length || null}
+                      badgeContent={
+                        (props.authUserData.cart &&
+                          props.authUserData.cart.length) ||
+                        null
+                      }
                       color="error"
                     >
                       <div style={{ display: "flex", alignItems: "center" }}>

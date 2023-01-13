@@ -1,17 +1,18 @@
 .login_container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - var(--nav-height));
   justify-content: center;
   align-items: center;
   font-family: GowunBatang;
+  position: relative;
+  bottom: 4rem;
 }
 
 .login_logo {
   width: 80vw;
   max-width: 500px;
-  position: relative;
-  bottom: 70px;
+  margin: 7rem 0;
 }
 
 .form_container {
