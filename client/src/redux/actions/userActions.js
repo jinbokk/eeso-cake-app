@@ -17,21 +17,23 @@ function registerUser(body) {
   };
 }
 
-function unregisterUser(email) {
-  let body = {
-    email: email,
-  };
-
+function unregisterUser(body) {
   return async (dispatch) => {
     try {
       const unregisterResult = await axios
         .post("/api/users/unregister", body)
         .then((res) => res.data);
 
+      console.log("unregisterResult", unregisterResult);
+
+      if (!unregisterResult.unregisterResult) {
+        alert(unregisterResult.message);
+      } else {
         dispatch({
           type: "UNREGISTER_USER",
           payload: unregisterResult,
         });
+      }
     } catch (error) {
       console.log("error occurred : ", error);
     }

@@ -3,6 +3,7 @@ const router = express.Router();
 const { User } = require("../models/User");
 const { Product } = require("../models/Product");
 const { auth } = require("../middleware/auth");
+const bcrypt = require("bcrypt");
 
 router.get("/auth", auth, (req, res) => {
   res.status(200).json({
@@ -40,22 +41,41 @@ router.post("/register", (req, res) => {
   });
 });
 
-router.post("/unregister", (req, res) => {
-  User.findOne(
-    {
-      email: req.body.email,
-    },
-    (err, user) => {
-      if (!req.body.email || err) {
-        res.status(200).send(err);
-      } else {
-        user.deleteOne();
-        res.status(200).json({
-          unregisterSuccess: true,
-        });
+router.post("/unregister", async (req, res) => {
+  // 암호 대조 먼저 해주어야 한다
+
+  let user = await User.findOne({
+    email: req.body.email,
+  }).exec();
+
+  let existPassword = user.password;
+
+  let comparePassword = await bcrypt.compare(req.body.password, existPassword);
+
+  console.log("comparePassword:::", comparePassword);
+
+  if (comparePassword) {
+    User.findOne(
+      {
+        email: req.body.email,
+      },
+      (err, user) => {
+        if (!req.body.email || err) {
+          res.status(200).send(err);
+        } else {
+          user.deleteOne();
+          res.status(200).json({
+            unregisterSuccess: true,
+          });
+        }
       }
-    }
-  );
+    );
+  } else {
+    res.status(200).json({
+      unregisterSuccess: false,
+      message: "비밀번호가 틀립니다. 다시 입력해 주세요.",
+    });
+  }
 });
 
 router.get("/register/email-check/:email", (req, res) => {

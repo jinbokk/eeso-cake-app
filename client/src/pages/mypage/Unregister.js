@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Form, InputGroup, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { userActions } from "../../redux/actions/userActions";
 import { useNavigate } from "react-router";
 import { useOutletContext } from "react-router";
+import { AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Unregister = () => {
   const [title, setTitle] = useOutletContext();
@@ -16,82 +18,90 @@ const Unregister = () => {
   const navigate = useNavigate();
   const { authUserData } = useSelector((state) => state.user);
 
+  const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [passwordType, setPasswordType] = useState("password");
+
+  const togglePasswordVisibility = () => {
+    setVisible((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (visible) {
+      setPasswordType("text");
+    } else {
+      setPasswordType("password");
+    }
+  }, [visible]);
+
   const unregisterHandler = () => {
     const confirm = window.confirm("회원 탈퇴 하시겠습니까?");
     if (confirm) {
+      let body = {
+        email: authUserData.email,
+        password: password,
+      };
       navigate("/login");
-      dispatch(userActions.unregisterUser(authUserData.email));
+      dispatch(userActions.unregisterUser(body));
     } else {
       return;
     }
   };
 
   return (
-    <div>
-      <div>아이디 (이메일)</div>
-      <div>{authUserData && authUserData.email}</div>
-      <div>비밀번호</div>
-      {/* <Form.Group controlId="Password">
-        <Form.Label style={{ fontWeight: "bold", width: "100%" }}>
-          <div className="d-flex justify-content-between">
-            <div>
-              <span>비밀번호</span>
-              <span
-                style={{
-                  color: "red",
-                  fontWeight: "normal",
-                  marginLeft: "6px",
-                }}
-              >
-                *
-              </span>
-            </div>
-            <div
-              style={{
-                fontWeight: "normal",
-                fontSize: "13px",
-              }}
-            >
-              8자리 이상의 영어 대문자, 소문자, 숫자, 특수문자 조합
-            </div>
-          </div>
-        </Form.Label>
-        <InputGroup>
-          <Form.Control
-            type={passwordType}
-            value={password}
-            autoComplete="on"
-            className="input_area_password"
-            placeholder="비밀번호를 입력해 주세요"
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setConfirmPassword("");
-            }}
-            onKeyDown={(e) => {
-              e.key === "Enter" && e.preventDefault();
-            }}
-            onBlur={(e) => passwordCheckHandler(e.target.value)}
-          />
-          <InputGroup.Text
-            className="input_area_button"
-            onClick={togglePasswordVisibility}
-          >
-            {password !== "" ? (
-              visible ? (
-                <AiOutlineEyeInvisible className="mx-2" />
-              ) : (
-                <AiOutlineEye className="mx-2" />
-              )
-            ) : null}
-            {isPasswordWrong.checkMark ? (
-              <BsFillCheckCircleFill className="checked" />
-            ) : null}
-          </InputGroup.Text>
-        </InputGroup>
-      </Form.Group> */}
+    <Container>
+      <Form className="form_container" onSubmit={unregisterHandler}>
+        <div>아이디 (이메일)</div>
+        <Form.Group
+          className="mb-3 d-flex align-items-center"
+          controlId="Email"
+        >
+          <InputGroup style={{ width: "300px", borderRight: "1px solid pink" }}>
+            <Form.Control
+              value={authUserData && authUserData.email}
+              readOnly
+              disabled
+            />
+          </InputGroup>
+        </Form.Group>
 
-      <div onClick={unregisterHandler}>회원 탈퇴</div>
-    </div>
+        <div>비밀번호</div>
+        <Form.Group
+          className="mb-3 d-flex align-items-center"
+          controlId="Password"
+        >
+          <InputGroup style={{ width: "300px" }}>
+            <Form.Control
+              type={passwordType}
+              autoComplete="on"
+              className="input_area_password"
+              placeholder="비밀번호를 입력해 주세요."
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <InputGroup.Text
+              className="input_area_button"
+              onClick={togglePasswordVisibility}
+            >
+              {password !== "" ? (
+                visible ? (
+                  <AiOutlineEyeInvisible />
+                ) : (
+                  <AiOutlineEye />
+                )
+              ) : null}
+            </InputGroup.Text>
+          </InputGroup>
+        </Form.Group>
+
+        <Button
+          className="login_button mt-5"
+          style={{ width: "300px" }}
+          type="submit"
+        >
+          회원 탈퇴
+        </Button>
+      </Form>
+    </Container>
   );
 };
 

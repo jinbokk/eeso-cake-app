@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {
   Container,
+  Button,
+  Form,
   InputGroup,
   ButtonGroup,
   ToggleButton,
 } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userActions } from "../redux/actions/userActions";
