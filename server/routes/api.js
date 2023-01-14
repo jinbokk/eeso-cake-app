@@ -19,7 +19,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /api/products/order/list:
+ * /api/products/order:
  *   get:
  *     description: Welcome to swagger-jsdoc!
  *     parameters:
@@ -35,7 +35,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /api/products/order/list/detail/:productId:
+ * /api/products/order/detail/:productId:
  *   get:
  *     description: Welcome to swagger-jsdoc!
  *     parameters:

@@ -10,6 +10,7 @@ const Footer = () => {
           <Row className="w-auto m-auto">
             <Col
               lg={4}
+              xs={"auto"}
               className="d-flex align-items-center justify-content-start my-3"
             >
               <div>
@@ -30,6 +31,7 @@ const Footer = () => {
 
             <Col
               lg={4}
+              xs={"auto"}
               className="d-flex align-items-center justify-content-start my-3"
             >
               <div>
@@ -50,6 +52,7 @@ const Footer = () => {
 
             <Col
               lg={4}
+              xs={"auto"}
               className="d-flex align-items-center justify-content-start my-3"
             >
               <div>
@@ -126,7 +129,7 @@ const Footer = () => {
           </Row>
 
           <Row className="w-auto m-auto info_container">
-            <Col lg={4} className="px-3">
+            <Col lg={4} xs={6} className="px-3">
               <div className="info_title mb-2">
                 <img
                   src="/icons/footer/store.png"
@@ -135,7 +138,7 @@ const Footer = () => {
                 />
                 상호명
               </div>
-              <div className="mb-4">이소케이크</div>
+              <div className="mb-4 info_text">이소케이크</div>
 
               <div className="info_title mb-2">
                 <img
@@ -145,10 +148,10 @@ const Footer = () => {
                 />
                 사업자번호
               </div>
-              <div className="mb-4">430 - 39 - 00287</div>
+              <div className="mb-4 info_text">430 - 39 - 00287</div>
             </Col>
 
-            <Col lg={4} className="px-3">
+            <Col lg={4} xs={6} className="px-3">
               <div className="info_title mb-2">
                 <img
                   src="/icons/footer/person.png"
@@ -157,7 +160,7 @@ const Footer = () => {
                 />
                 대표자명
               </div>
-              <div className="mb-4">이소정</div>
+              <div className="mb-4 info_text">이소정</div>
               <div className="info_title mb-2">
                 <img
                   src="/icons/footer/phone.png"
@@ -166,10 +169,10 @@ const Footer = () => {
                 />
                 전화번호
               </div>
-              <div className="mb-4">0507 - 1424 - 1945</div>
+              <div className="mb-4 info_text">0507 - 1424 - 1945</div>
             </Col>
 
-            <Col lg={4} className="px-3">
+            <Col lg={4} xs={12} className="px-3">
               <div className="info_title mb-2">
                 <img
                   src="/icons/footer/time.png"
@@ -178,7 +181,9 @@ const Footer = () => {
                 />
                 영업 시간
               </div>
-              <div className="mb-4">11:00 ~ 18:00 / 매주 월요일 휴무</div>
+              <div className="mb-4 info_text">
+                11:00 ~ 18:00 / 매주 월요일 휴무
+              </div>
               <div className="info_title mb-2">
                 <img
                   src="/icons/footer/location.png"
@@ -187,7 +192,9 @@ const Footer = () => {
                 />
                 위치
               </div>
-              <div className="mb-4">경기 의정부시 승지로30번길 20 1층</div>
+              <div className="mb-4 info_text">
+                경기 의정부시 승지로30번길 20 1층
+              </div>
             </Col>
           </Row>
         </Container>

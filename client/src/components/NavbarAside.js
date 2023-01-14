@@ -119,6 +119,26 @@ const NavbarAside = (props) => {
 
               <Accordion.Item eventKey="4">
                 <NavLink
+                  to="/order"
+                  style={({ isActive }) => (isActive ? activeStyle : null)}
+                  onClick={() => setToggleHandler(false)}
+                >
+                  <div className="nav_menu">ORDER</div>
+                </NavLink>
+              </Accordion.Item>
+
+              <Accordion.Item eventKey="5">
+                <NavLink
+                  to="/faq"
+                  style={({ isActive }) => (isActive ? activeStyle : null)}
+                  onClick={() => setToggleHandler(false)}
+                >
+                  <div className="nav_menu">FAQ</div>
+                </NavLink>
+              </Accordion.Item>
+
+              <Accordion.Item eventKey="6">
+                <NavLink
                   to="/contact"
                   style={({ isActive }) => (isActive ? activeStyle : null)}
                   onClick={() => setToggleHandler(false)}
@@ -145,12 +165,23 @@ const NavbarAside = (props) => {
                   >
                     로그아웃
                   </NavLink>
+
                   <NavLink
-                    to="/user/cart"
+                    to="/"
+                    onClick={(e) => {
+                      setToggleHandler(false);
+                      props.logoutHandler(e);
+                    }}
                     style={{
-                      marginLeft: "2rem",
+                      position: "relative",
+                      top: "2px",
+                      margin: "0 10px",
                     }}
                   >
+                    마이페이지
+                  </NavLink>
+
+                  <NavLink to="/user/cart">
                     <props.StyledBadge
                       badgeContent={
                         (props.authUserData.cart &&

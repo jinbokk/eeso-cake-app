@@ -50,7 +50,7 @@ body {
 
 body {
   font-size: var(--font-size);
-  line-height: 2rem;
+  /* line-height: 2rem; */
   width: 100vw;
   background-color: var(--bg);
   word-break: keep-all !important;
@@ -69,7 +69,7 @@ hr {
   border: 0;
   color: black;
   text-align: center;
-  height: 1.5rem;
+  height: 16px;
   opacity: 1;
   margin: 3em 0 !important;
   font-size: 1.2rem;
@@ -94,8 +94,8 @@ hr::after {
   content: attr(data-content);
   position: relative;
   display: inline-block;
-  padding: 0 0.5rem;
-  line-height: 1.5rem;
+  padding: 0 10px;
+  line-height: 1rem;
   /* color: black; */
   color: var(--bg-accent);
   background-color: var(--bg);
@@ -113,7 +113,7 @@ a:hover {
 :root {
   --landing-font: GowunBatang;
   --main-font: GowunBatang;
-  --font-size: 15px;
+  --font-size: 12px;
   --nav-font: GowunBatang;
   --nav-font-size: 1rem;
   --nav-height: 70px;
@@ -128,3 +128,44 @@ a:hover {
   --swiper-theme-color: rgb(191, 47, 47) !important;
   --swiper-pagination-bullet-inactive-color: rgb(191, 47, 47) !important;
 }
+
+/* 
+    Base font size in 13px
+
+    1px = 0.076923rem
+    2px = 0.15385rem
+    3px = 0.23077rem
+    4px = 0.30769rem
+    5px = 0.38462rem
+    6px = 0.46154rem
+    7px = 0.53846rem
+    8px = 0.61538rem
+    9px = 0.69231rem
+    10px = 0.76923rem
+    11px = 0.84615rem
+    12px = 0.92308rem
+    13px = 1rem (base)
+    14px = 1.0769rem
+    15px = 1.1538rem
+    16px = 1.2308rem
+    17px = 1.3077rem
+    18px = 1.3846rem
+    19px = 1.4615rem
+    20px = 1.5385rem
+    22px = 1.6923rem
+    24px = 1.8462rem
+    26px = 2rem
+    28px = 2.1538rem
+    30px = 2.3077rem
+    32px = 2.4615rem
+    34px = 2.6154rem
+    36px = 2.7692rem
+    38px = 2.9231rem
+    40px = 3.0769rem
+    50px = 3.8462rem
+    60px = 4.6154rem
+    70px = 5.3846rem
+    80px = 6.1538rem
+    90px = 6.9231rem
+    100px = 7.6923rem
+  */

@@ -6,7 +6,7 @@
 .faq_title {
   display: flex;
   justify-content: start;
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 
 .faq_section:hover .faq_title {
@@ -18,7 +18,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  font-size: 1.3rem;
+  font-size: 1rem;
   line-height: 2.5rem;
 }
 

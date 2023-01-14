@@ -88,9 +88,9 @@ function App() {
               <Route path="/register" element={<AuthRegister />} />
               <Route path="/about" element={<AuthAbout />} />
               <Route path="/cakes/:ingredient" element={<AuthCakes />} />
-              <Route path="/order/list" element={<AuthOrder />} />
+              <Route path="/order" element={<AuthOrder />} />
               <Route
-                path="/order/list/detail/:productId"
+                path="/order/detail/:productId"
                 element={<AuthOrderDetail />}
               />
               {/* <Route path="/user/mypage/:menu" element={<AuthMypage />} /> */}
@@ -109,7 +109,7 @@ function App() {
               <Route path="/user/payment" element={<AuthPayment />} />
               <Route path="/guide/rice" element={<AuthGuideRice />} />
               <Route path="/guide/bread" element={<AuthGuideBread />} />
-              <Route path="/customer/faq" element={<AuthFAQ />} />
+              <Route path="/faq" element={<AuthFAQ />} />
               <Route path="/contact" element={<AuthContact />} />
               <Route path="/upload" element={<AuthUploadProduct />} />
             </Routes>

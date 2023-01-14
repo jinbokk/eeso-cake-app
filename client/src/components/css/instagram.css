@@ -94,7 +94,7 @@
   height: 9rem;
   line-height: 1.75rem;
   display: -webkit-box;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   overflow: scroll;
   /* -webkit-line-clamp: 5; */
   /* -webkit-box-orient: vertical; */
@@ -126,7 +126,7 @@
 }
 
 .instaFeed_timestamp {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   padding-bottom: 10px;
   opacity: 0.4;
   text-align: right;

@@ -157,7 +157,7 @@
 
 .underline {
   text-align: center;
-  font-size: 3rem;
+  font-size: 2.7rem;
   font-weight: bold;
   text-decoration: underline 2px var(--bg-accent);
   text-underline-offset: 20px;
@@ -179,7 +179,7 @@
   left: 10%;
   transform: translateY(-50%);
   line-height: 250%;
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   font-weight: bold;
   text-align: start;
 }

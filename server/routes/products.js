@@ -109,7 +109,7 @@ router.get("/cakes/:ingredient", async (req, res) => {
 });
 
 // ORDER PAGE
-router.get("/order/list", async (req, res) => {
+router.get("/order", async (req, res) => {
   // let { ingredient } = req.params;
 
   // let query;
@@ -138,7 +138,7 @@ router.get("/order/list", async (req, res) => {
 });
 
 // ORDER PRODUCT DETAIL PAGE
-router.get("/order/list/detail/:productId", async (req, res) => {
+router.get("/order/detail/:productId", async (req, res) => {
   let { productId } = req.params;
   let o_id = new ObjectId(productId);
 

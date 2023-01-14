@@ -140,7 +140,7 @@ const Cart = () => {
             {authUserData.cart.map((item, index) => (
               <Row key={index} className="border-top py-4">
                 <Col className="flex-row justify-content-center align-items-center item_thumbnail_container">
-                  <NavLink to={`/order/list/detail/${item.rootProductDoc._id}`}>
+                  <NavLink to={`/order/detail/${item.rootProductDoc._id}`}>
                     <div>
                       <img
                         src={item.rootProductDoc.image_url}

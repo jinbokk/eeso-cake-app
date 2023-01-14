@@ -30,6 +30,12 @@ li {
   /* border-bottom: 1px solid rgba(255, 2, 2, 0.08); */
 }
 
+@media screen and (max-width: 992px) {
+  .nav_container_top {
+    height: 60px;
+  }
+}
+
 .nav_container {
   display: flex;
   justify-content: flex-start;
@@ -343,6 +349,12 @@ li {
   cursor: pointer;
 }
 
+@media screen and (max-width: 992px) {
+  .nav_mobile_bar_container {
+    top: 0;
+  }
+}
+
 .nav_mobile_bar {
   position: absolute;
   top: 50%;
@@ -408,7 +420,6 @@ li {
 
 .accordion-button {
   font-size: var(--font-size) !important;
-  /* font-size: var(--font-size) !important; */
   font-weight: bold;
   box-shadow: none !important;
   padding: 0.8em 1.5em !important;
