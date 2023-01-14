@@ -156,10 +156,9 @@ const NavbarAside = (props) => {
               {props.authUserData && props.authUserData.isAuth ? (
                 <>
                   <NavLink
-                    to="/"
-                    onClick={(e) => {
+                    onClick={() => {
                       setToggleHandler(false);
-                      props.logoutHandler(e);
+                      props.logoutHandler();
                     }}
                     style={{ position: "relative", top: "2px" }}
                   >
@@ -167,10 +166,9 @@ const NavbarAside = (props) => {
                   </NavLink>
 
                   <NavLink
-                    to="/"
-                    onClick={(e) => {
+                    to="/user/mypage/order-history"
+                    onClick={() => {
                       setToggleHandler(false);
-                      props.logoutHandler(e);
                     }}
                     style={{
                       position: "relative",
@@ -181,7 +179,10 @@ const NavbarAside = (props) => {
                     마이페이지
                   </NavLink>
 
-                  <NavLink to="/user/cart">
+                  <NavLink
+                    to="/user/cart"
+                    onClick={() => setToggleHandler(false)}
+                  >
                     <props.StyledBadge
                       badgeContent={
                         (props.authUserData.cart &&
@@ -202,7 +203,7 @@ const NavbarAside = (props) => {
                   <NavLink
                     to="/login"
                     style={({ isActive }) => (isActive ? activeStyle : null)}
-                    onClick={(e) => {
+                    onClick={() => {
                       setToggleHandler(false);
                     }}
                   >
@@ -212,7 +213,7 @@ const NavbarAside = (props) => {
                   <NavLink
                     to="/register"
                     style={({ isActive }) => (isActive ? activeStyle : null)}
-                    onClick={(e) => {
+                    onClick={() => {
                       setToggleHandler(false);
                     }}
                   >
@@ -228,6 +229,7 @@ const NavbarAside = (props) => {
                   href="https://www.instagram.com/eeso_cake/?hl=ko"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => setToggleHandler(false)}
                 >
                   <img
                     src="/icons/instgram_mini.png"
@@ -241,6 +243,7 @@ const NavbarAside = (props) => {
                   href="https://blog.naver.com/eesocake"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => setToggleHandler(false)}
                 >
                   <img
                     src="/icons/naver_mini.png"
@@ -254,6 +257,7 @@ const NavbarAside = (props) => {
                   href="https://pf.kakao.com/_ZyKnd"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => setToggleHandler(false)}
                 >
                   <img
                     src="/icons/kakaotalk_mini.png"

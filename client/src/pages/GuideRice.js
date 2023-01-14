@@ -229,7 +229,7 @@ const GuideRice = () => {
               src="/images/rice_cake_design/rice_cake_crescent.png"
               alt=""
             />
-            <div className="m-3">초승달트 디자인</div>
+            <div className="m-3">초승달 디자인</div>
             <div className="text-center">
               여백의 미를 살린 세련된 케이크를 찾으시는 분들께 추천드려요!
             </div>

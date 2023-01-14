@@ -151,7 +151,7 @@ const GuideBread = () => {
         </Row>
 
         <Row>
-          <Col>
+          <Col className="p-0">
             {width > 992 ? (
               <img
                 src="/images/bread_cake_size/bread_cake_size_all.png"

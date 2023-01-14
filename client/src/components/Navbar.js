@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import "./css/navbar.css";
 
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import NavDropdown from "./NavDropdown";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import NavbarAside from "./NavbarAside";
@@ -23,9 +23,9 @@ const Navbar = () => {
     console.log(authUserData);
   }, [authUserData]);
 
-  const logoutHandler = (e) => {
+  const logoutHandler = () => {
     const confirm = window.confirm("로그아웃 하시겠습니까?");
-    dispatch(userActions.logoutUser(confirm));
+    dispatch(userActions.logoutUser(confirm))
   };
 
   const handleScroll = () => {
@@ -174,7 +174,6 @@ const Navbar = () => {
                     {authUserData && authUserData.isAuth ? (
                       <>
                         <NavLink
-                          to="/"
                           onClick={logoutHandler}
                           className="mx-3"
                         >

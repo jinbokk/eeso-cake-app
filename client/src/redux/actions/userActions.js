@@ -130,7 +130,8 @@ function logoutUser(confirm) {
               authUserData: { isAuth: false },
             },
           });
-          // window.location("/");
+          window.location.assign("/");
+          return;
         }
       } else {
         return;
