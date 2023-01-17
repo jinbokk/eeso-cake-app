@@ -45,3 +45,15 @@
 .btn-check:checked + .btn {
   background-color: pink !important;
 }
+
+.ToS_label_container {
+  display: flex;
+  justify-content: space-between;
+}
+.ToS_button {
+  cursor: pointer;
+}
+
+.ToS_button:hover {
+  text-decoration: underline 1px gray;
+}

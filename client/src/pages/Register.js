@@ -6,6 +6,7 @@ import {
   InputGroup,
   ButtonGroup,
   ToggleButton,
+  Modal,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -204,6 +205,29 @@ function Register() {
     { name: "여성", value: "여성" },
   ];
 
+  //ToS
+
+  // 이용약관 정보
+  const [terms, setTerms] = useState(false);
+  const [termsShow, setTermsShow] = useState(false);
+
+  const handleTermsClose = () => setTermsShow(false);
+  const handleTermsShow = () => setTermsShow(true);
+
+  // 개인정보 수집 및 이용 정보
+  const [privacyPolicy, setPrivacyPolicy] = useState(false);
+  const [privacyPolicyShow, setPrivacyPolicyShow] = useState(false);
+
+  const handlePrivacyPolicyClose = () => {
+    setPrivacyPolicyShow(false);
+  };
+  const handlePrivacyPolicyShow = () => {
+    setPrivacyPolicyShow(true);
+  };
+
+  // 이벤트 및 할인 소식 알림 동의
+  const [marketing, setMarketing] = useState(false);
+
   // react-redux
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -234,6 +258,7 @@ function Register() {
       gender: gender,
       phoneNumber: phoneNumber,
       address: fullAddress + " " + extraAddress,
+      marketing: marketing,
     };
 
     if (
@@ -247,7 +272,9 @@ function Register() {
       phoneNumberVerify === false ||
       isDuplicatePhoneNumber === true ||
       isPhoneNumberWrong.error ||
-      fullAddress === ""
+      fullAddress === "" ||
+      terms === false ||
+      privacyPolicy === false
     ) {
       alert("회원정보를 다시 확인 해 주세요");
     } else {
@@ -657,6 +684,90 @@ function Register() {
               />
             </InputGroup>
           </Form.Group>
+
+          <div key={`ToS`} className="mb-3">
+            <div className="ToS_label_container">
+              <Form.Check
+                type={"checkbox"}
+                id={`terms`}
+                label={`(필수) 이용약관 동의`}
+                onChange={(e) => {
+                  setTerms(e.target.checked);
+                }}
+              />
+              <div className="ToS_button" onClick={handleTermsShow}>
+                전문 보기
+              </div>
+            </div>
+
+            <div className="ToS_label_container">
+              <Form.Check
+                type={"checkbox"}
+                label={`(필수) 개인정보 처리방침 동의`}
+                id={`privacyPolicy`}
+                onChange={(e) => {
+                  setPrivacyPolicy(e.target.checked);
+                }}
+              />
+              <div className="ToS_button" onClick={handlePrivacyPolicyShow}>
+                전문 보기
+                {/* url 형식으로 해야한다. 타 사이트등에 인증용 등으로 활용하기 위해 */}
+              </div>
+            </div>
+
+            <div className="ToS_label_container">
+              <Form.Check
+                type={"checkbox"}
+                label={`(선택) 이벤트 및 할인 소식 알림 동의`}
+                id={`marketing`}
+                onChange={(e) => {
+                  setMarketing(e.target.checked);
+                }}
+              />
+            </div>
+          </div>
+
+          <>
+            <Modal show={termsShow} onHide={handleTermsClose} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>이용약관</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Woohoo, you're reading this text in a modal!
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleTermsClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleTermsClose}>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </>
+
+          <>
+            <Modal
+              show={privacyPolicyShow}
+              onHide={handlePrivacyPolicyClose}
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>개인정보 수집 및 이용</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div></div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handlePrivacyPolicyClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handlePrivacyPolicyClose}>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </>
 
           <Button className="login_button mt-5 w-100" type="submit">
             회원가입
