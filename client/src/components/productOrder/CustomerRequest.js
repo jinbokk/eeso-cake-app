@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { orderActions } from "../../redux/actions/orderActions";
 
-const CustomerRequest = ({ control }) => {
+const CustomerRequest = ({ control, option }) => {
   const dispatch = useDispatch();
 
   // request
@@ -13,6 +13,11 @@ const CustomerRequest = ({ control }) => {
     setRequest(value);
     dispatch(orderActions.setCustomerRequestText(value));
   };
+
+  // default when create option
+  useEffect(() => {
+    setRequest("");
+  }, [option]);
 
   return (
     <>

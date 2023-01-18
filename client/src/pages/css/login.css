@@ -89,6 +89,7 @@
 
 .help_link {
   opacity: 0.7;
+  text-align: end;
 }
 
 .help_link > a {

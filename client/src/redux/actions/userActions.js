@@ -169,17 +169,16 @@ function addToCart(productId, option) {
 
   return async (dispatch) => {
     try {
-      // const addToCartResult = await axios
-      await axios.post("/api/users/addToCart", body);
-      //   .then((res) => {
-      //     console.log("res:::::::::::", res);
-      //     return res.data;
-      //   });
+      const addToCartResult = await axios
+        .post("/api/users/addToCart", body)
+        .then((res) => {
+          console.log("res:::::::::::;", res);
+          return res.data;
+        });
 
-      // dispatch({
-      //   type: "ADD_TO_CART",
-      //   payload: addToCartResult,
-      // });
+      dispatch({
+        type: "ADD_TO_CART",
+      });
     } catch (error) {
       console.log("error occurred : ", error);
     }
@@ -213,29 +212,68 @@ function removeFromCart(productId) {
   };
 }
 
-function getCartItems(cartItems, userCart) {
+// function getCartItems(cartItems, userCart) {
+//   return async (dispatch) => {
+//     try {
+//       const getCartItemsResult = await axios
+//         .get(`/api/products/products-by-id?id=${cartItems}`)
+//         .then((res) => {
+//           // 1.cartItems들에 해당하는 정보들을 Product Collection에서 가져온다
+//           userCart.forEach((cartItem) => {
+//             res.data.forEach((productDetail, index) => {
+//               if (cartItem.id === productDetail._id) {
+//                 // 2. Quantity 정보를 넣어준다.
+//                 res.data[index].quantity = cartItem.quantity;
+//               }
+//             });
+//           });
+
+//           console.log(res.data);
+//           return res.data;
+//         });
+
+//       dispatch({
+//         type: "GET_CART_ITEMS",
+//         payload: getCartItemsResult,
+//       });
+//     } catch (error) {
+//       console.log("error occurred : ", error);
+//     }
+//   };
+// }
+
+function increaseQuantity(cartId) {
   return async (dispatch) => {
     try {
-      const getCartItemsResult = await axios
-        .get(`/api/products/products-by-id?id=${cartItems}`)
+      const increaseQuantityResult = await axios
+        .post(`/api/users/increaseQuantity?id=${cartId}`)
         .then((res) => {
-          // 1.cartItems들에 해당하는 정보들을 Product Collection에서 가져온다
-          userCart.forEach((cartItem) => {
-            res.data.forEach((productDetail, index) => {
-              if (cartItem.id === productDetail._id) {
-                // 2. Quantity 정보를 넣어준다.
-                res.data[index].quantity = cartItem.quantity;
-              }
-            });
-          });
+          return res.data;
+        });
 
+      dispatch({
+        type: "MODIFY_CART_QUANTITY",
+        payload: increaseQuantityResult,
+      });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
+function decreaseQuantity(cartId) {
+  return async (dispatch) => {
+    try {
+      const decreaseQuantityResult = await axios
+        .post(`/api/users/decreaseQuantity?id=${cartId}`)
+        .then((res) => {
           console.log(res.data);
           return res.data;
         });
 
       dispatch({
-        type: "GET_CART_ITEMS",
-        payload: getCartItemsResult,
+        type: "MODIFY_CART_QUANTITY",
+        payload: decreaseQuantityResult,
       });
     } catch (error) {
       console.log("error occurred : ", error);
@@ -253,5 +291,7 @@ export const userActions = {
   auth,
   addToCart,
   removeFromCart,
-  getCartItems,
+  // getCartItems,
+  increaseQuantity,
+  decreaseQuantity,
 };

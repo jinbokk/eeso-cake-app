@@ -10,12 +10,13 @@ router.get("/auth", auth, (req, res) => {
     _id: req.user._id,
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
-    name: req.user.name,
     email: req.user.email,
+    name: req.user.name,
     gender: req.user.gender,
-    location: req.user.location,
+    address: req.user.address,
+    phoneNumber: req.user.phoneNumber,
+    marketing: req.user.marketing,
     role: req.user.role,
-    image: req.user.image,
     cart: req.user.cart,
     history: req.user.history,
   });
@@ -193,7 +194,7 @@ router.post("/addToCart", auth, async (req, res) => {
               return res.status(400).json({ success: false, err });
             } else {
               console.log("result::::::::::::::::::", result);
-              return res.status(200).send(result.cart);
+              return res.status(200).send(result);
             }
           }
         );
@@ -258,7 +259,7 @@ router.post("/addToCart", auth, async (req, res) => {
               return res.status(400).json({ success: false, err });
             } else {
               console.log("result::::::::::::::::::", result);
-              return res.status(200).send(result.cart);
+              return res.status(200).send(result);
             }
           }
         );
@@ -291,7 +292,7 @@ router.post("/addToCart", auth, async (req, res) => {
               return res.status(400).json({ success: false, err });
             } else {
               console.log("result::::::::::::::::::", result);
-              return res.status(200).send(result.cart);
+              return res.status(200).send(result);
             }
           }
         );
@@ -314,6 +315,58 @@ router.get("/remove-from-cart", auth, (req, res) => {
       },
     },
     { new: true },
+    (err, result) => {
+      if (err) {
+        console.log("err::::::::::::::::::", err);
+        return res.status(400).json({ success: false, err });
+      } else {
+        console.log("result::::::::::::::::::", result);
+        return res.status(200).send(result.cart);
+      }
+    }
+  );
+});
+
+router.post("/increaseQuantity", auth, async (req, res) => {
+  let cartId = req.query.id;
+
+  User.findOneAndUpdate(
+    {
+      _id: req.user._id,
+      "cart.id": cartId,
+    },
+    {
+      $inc: { "cart.$.option.수량": 1 },
+    },
+    {
+      new: true,
+    },
+    (err, result) => {
+      if (err) {
+        console.log("err::::::::::::::::::", err);
+        return res.status(400).json({ success: false, err });
+      } else {
+        console.log("result::::::::::::::::::", result);
+        return res.status(200).send(result.cart);
+      }
+    }
+  );
+});
+
+router.post("/decreaseQuantity", auth, async (req, res) => {
+  let cartId = req.query.id;
+
+  User.findOneAndUpdate(
+    {
+      _id: req.user._id,
+      "cart.id": cartId,
+    },
+    {
+      $inc: { "cart.$.option.수량": -1 },
+    },
+    {
+      new: true,
+    },
     (err, result) => {
       if (err) {
         console.log("err::::::::::::::::::", err);

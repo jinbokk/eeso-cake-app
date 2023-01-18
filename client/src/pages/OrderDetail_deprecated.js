@@ -737,7 +737,9 @@ const OrderDetail = ({ match }) => {
 
                       <div
                         className={
-                          lettering === "추가 하기" ? "input_visible" : "input_hide"
+                          lettering === "추가 하기"
+                            ? "input_visible"
+                            : "input_hide"
                         }
                       >
                         <div className="d-flex justify-content-between">
@@ -838,7 +840,9 @@ const OrderDetail = ({ match }) => {
 
                       <div
                         className={
-                          topper === "추가 하기" ? "input_visible" : "input_hide"
+                          topper === "추가 하기"
+                            ? "input_visible"
+                            : "input_hide"
                         }
                       >
                         <div className="d-flex justify-content-between">
@@ -850,7 +854,7 @@ const OrderDetail = ({ match }) => {
                               marginBottom: "1rem",
                             }}
                           >
-                            * 10자 내 +6,000원 / 15자 내 +9,000원
+                            * 10자 내 +6,000원 / 11자 ~ 15자 +9,000원
                           </div>
                         </div>
 

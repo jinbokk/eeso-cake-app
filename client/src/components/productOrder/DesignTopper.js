@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { ToggleButtonGroup, ToggleButton, TextField } from "@mui/material";
@@ -8,7 +8,7 @@ import { brown } from "@mui/material/colors";
 import { Controller } from "react-hook-form";
 import { orderActions } from "../../redux/actions/orderActions";
 
-const DesignTopper = ({ control }) => {
+const DesignTopper = ({ control, option, setDesignTopperPrice }) => {
   const dispatch = useDispatch();
 
   const CustomToggleButton = styled(ToggleButton)(() => ({
@@ -54,8 +54,22 @@ const DesignTopper = ({ control }) => {
     } else {
       setTopperLengthError(false);
       setTopperLength(value.length);
+      if (value.length !== 0) {
+        if (value.length <= 10) {
+          setDesignTopperPrice(6000);
+        } else {
+          setDesignTopperPrice(9000);
+        }
+      } else {
+        setDesignTopperPrice(0);
+      }
     }
   };
+
+  useEffect(() => {
+    setTopperToggle(false);
+    setTopperText("");
+  }, [option]);
 
   return (
     <>
@@ -109,7 +123,11 @@ const DesignTopper = ({ control }) => {
           </div>
         </div>
 
-        <div className={topperToggle === "추가 하기" ? "input_visible" : "input_hide"}>
+        <div
+          className={
+            topperToggle === "추가 하기" ? "input_visible" : "input_hide"
+          }
+        >
           <div className="d-flex justify-content-between">
             <div>토퍼 문구 {`(${topperLength}/15)`}</div>
             <div
@@ -119,7 +137,7 @@ const DesignTopper = ({ control }) => {
                 marginBottom: "1rem",
               }}
             >
-              * 10자 내 +6,000원 / 15자 내 +9,000원
+              * 10자 내 +6,000원 / 11자 ~ 15자 +9,000원
             </div>
           </div>
 

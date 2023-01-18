@@ -19,10 +19,6 @@ const Navbar = () => {
 
   const { loginResult, authUserData } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    console.log(authUserData);
-  }, [authUserData]);
-
   const logoutHandler = () => {
     const confirm = window.confirm("로그아웃 하시겠습니까?");
     dispatch(userActions.logoutUser(confirm))

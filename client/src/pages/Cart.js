@@ -9,53 +9,12 @@ import { AiOutlineClose, AiOutlineRight } from "react-icons/ai";
 import { BsCheck2Circle, BsCartCheck } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 import { NavLink } from "react-router-dom";
-import Loading from "../components/Loading";
 
 import "./css/cart.css";
-import Paypal from "../components/utils/Paypal";
-import CartTable from "./CartTable";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const { authUserData } = useSelector((state) => state.user);
-  // const { authUserData, cartDetail } = useSelector((state) => state.user);
-
-  // useEffect(() => {
-  //   let cartItems = [];
-
-  //   if (authUserData && authUserData.cart) {
-  //     if (authUserData.cart.length > 0) {
-  //       authUserData.cart.forEach((item) => {
-  //         cartItems.push(item.id);
-  //       });
-  //       dispatch(userActions.getCartItems(cartItems, authUserData.cart));
-  //     }
-  //   }
-  // }, []);
-
-  // const [totalPrice, setTotalPrice] = useState(0);
-  // const [totalQuantity, setTotalQuantity] = useState(0);
-
-  // const calculateTotal = (cartDetail) => {
-  //   if (cartDetail && cartDetail.length > 0) {
-  //     let totalPrice = 0;
-  //     let totalQuantity = 0;
-
-  //     cartDetail.forEach((item) => {
-  //       totalPrice += parseInt(item.price) * item.quantity;
-  //       totalQuantity += item.quantity;
-  //     });
-
-  //     setTotalPrice(totalPrice);
-  //     setTotalQuantity(totalQuantity);
-  //   } else {
-  //     return;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   calculateTotal(cartDetail);
-  // }, [cartDetail]);
 
   const removeFromCart = (productId) => {
     dispatch(userActions.removeFromCart(productId));
@@ -178,10 +137,14 @@ const Cart = () => {
                       </div>
                     )}
 
-                    {item.option.토퍼_추가 === "추가 하기" ? (
+                    {item.option.디자인토퍼_추가 === "추가 하기" ? (
                       <div>
                         <span className="disabled_text">
-                          디자인 토퍼 문구 / {item.option.토퍼_문구}
+                          디자인 토퍼 문구 (+
+                          {item.option.디자인토퍼_추가금.toLocaleString(
+                            "ko-KR"
+                          )}
+                          원) / {item.option.디자인토퍼_문구}
                         </span>
                       </div>
                     ) : (
@@ -200,23 +163,45 @@ const Cart = () => {
                   </div>
                 </Col>
                 <Col className="flex-row justify-content-center align-items-center">
-                  <QuantityButton variant="contained">
+                  <QuantityButton
+                    variant="contained"
+                    onClick={() => {
+                      if (item.option.수량 > 1) {
+                        dispatch(userActions.decreaseQuantity(item.id));
+                      }
+                    }}
+                  >
                     <div style={{ fontSize: "1.5rem" }}>-</div>
                   </QuantityButton>
-                  <div className="mx-3 user-select-none">{item.quantity}</div>
-                  <QuantityButton variant="contained">
+                  <div className="mx-3 user-select-none">
+                    {item.option.수량}
+                  </div>
+                  <QuantityButton
+                    variant="contained"
+                    onClick={() => {
+                      dispatch(userActions.increaseQuantity(item.id));
+                    }}
+                  >
                     <div style={{ fontSize: "1.5rem" }}>+</div>
                   </QuantityButton>
                 </Col>
                 <Col className="flex-row justify-content-center align-items-center user-select-none">
                   ₩{" "}
-                  {(item.rootProductDoc.price * item.quantity).toLocaleString(
+                  {(item.option.수량 * item.option.가격).toLocaleString(
                     "ko-KR"
                   )}
                 </Col>
                 <Col
                   className="flex-row justify-content-center align-items-center"
-                  onClick={() => removeFromCart(item.id)}
+                  onClick={() => {
+                    if (
+                      window.confirm("해당 상품을 카트에서 제거하시겠습니까?")
+                    ) {
+                      removeFromCart(item.id);
+                    } else {
+                      return;
+                    }
+                  }}
                 >
                   <AiOutlineClose className="delete_button" />
                 </Col>
@@ -224,11 +209,26 @@ const Cart = () => {
             ))}
             <Row>
               <Col className="border-top p-5 justify-content-center align-items-center">
-                <div className="total_text">총 수량 : test 개</div>
-                {/* <div className="total_text">총 수량 : {totalQuantity} 개</div> */}
                 <div className="total_text">
-                  주문 금액 : ₩ test
-                  {/* 주문 금액 : ₩ {totalPrice.toLocaleString("ko-KR")} */}
+                  총 수량 :{" "}
+                  {authUserData &&
+                    authUserData.cart
+                      .reduce((accumulator, item) => {
+                        return accumulator + item.option.수량;
+                      }, 0)
+                      .toLocaleString("ko-KR")}{" "}
+                  개
+                </div>
+                <div className="total_text">
+                  주문 금액 : ₩{" "}
+                  {authUserData &&
+                    authUserData.cart
+                      .reduce((accumulator, item) => {
+                        return (
+                          accumulator + item.option.수량 * item.option.가격
+                        );
+                      }, 0)
+                      .toLocaleString("ko-KR")}
                 </div>
               </Col>
             </Row>

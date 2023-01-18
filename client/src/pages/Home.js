@@ -51,16 +51,10 @@ const Home = () => {
         scrollTrigger: {
           trigger: element.querySelector(".gsap_first"),
           start: "top center",
-          // markers: true,
-          // end: "bottom center",
-          // scrub: false,
         },
       }
     );
-  }, []);
 
-  useEffect(() => {
-    const element = ref.current;
     gsap.fromTo(
       element.querySelector(".gsap_second"),
       {
@@ -73,17 +67,12 @@ const Home = () => {
         duration: 1,
         scrollTrigger: {
           trigger: element.querySelector(".gsap_second"),
-          // markers: true,
           start: "top center",
           end: "bottom center",
-          // scrub: false,
         },
       }
     );
-  }, []);
 
-  useEffect(() => {
-    const element = ref.current;
     gsap.fromTo(
       element.querySelector(".gsap_third"),
       {
@@ -96,10 +85,26 @@ const Home = () => {
         duration: 1,
         scrollTrigger: {
           trigger: element.querySelector(".gsap_third"),
-          // markers: true,
           start: "top center",
           end: "bottom center",
-          // scrub: false,
+        },
+      }
+    );
+
+    gsap.fromTo(
+      element.querySelector(".gsap_fourth"),
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: element.querySelector(".gsap_fourth"),
+          start: "top center",
+          end: "bottom center",
         },
       }
     );
@@ -189,7 +194,7 @@ const Home = () => {
           </Row>
         </Row>
 
-        <Row className="gsap_second w-100">
+        <Row className="w-100">
           <Col className="my-3">
             <hr data-content="고객님을 위한 다양한 케이크가 준비되어 있습니다" />
           </Col>
@@ -216,7 +221,7 @@ const Home = () => {
                       freeMode={true}
                       modules={[FreeMode, Autoplay]}
                       loop={true}
-                      className="custom_swiper_container"
+                      className="custom_swiper_container gsap_second"
                     >
                       {productsData.map((item, index) => (
                         <SwiperSlide
@@ -240,7 +245,7 @@ const Home = () => {
             </>
           ) : (
             <Container>
-              <Row>
+              <Row className="gsap_second">
                 {productsData.slice(0, 18).map((item, index) => (
                   <Col
                     md={3}
@@ -258,70 +263,16 @@ const Home = () => {
               </Row>
             </Container>
           )}
-          <Row className="mt-5 mx-0">
-            {/* <hr data-content="다양한 소품들로 더욱 즐겁게" /> */}
-            <Col className="party_banner_container">
+        </Row>
+
+        <Row className="w-100">
+          <Col className="my-3">
+            <hr data-content="다양한 소품들로 더욱 즐겁게" />
+          </Col>
+          <Row className="mx-0 p-0">
+            <Col className="party_banner_container p-0 gsap_third">
               <div className="deco_image_container">
-                {width < 992 ? (
-                  <div>
-                    {/* <Swiper
-                      slidesPerView={1}
-                      spaceBetween={5}
-                      speed={2000}
-                      autoplay={{
-                        delay: 3000,
-                        disableOnInteraction: false,
-                      }}
-                      freeMode={true}
-                      modules={[FreeMode, Autoplay]}
-                      loop={true}
-                      className="custom_swiper_container"
-                    >
-                      <SwiperSlide className="d-flex justify-content-center">
-                        <img
-                          src="/images/deco/deco_1.png"
-                          alt=""
-                          className="deco_image"
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide className="d-flex justify-content-center">
-                        <img
-                          src="/images/deco/deco_2.png"
-                          alt=""
-                          className="deco_image"
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide className="d-flex justify-content-center">
-                        <img
-                          src="/images/deco/deco_3.png"
-                          alt=""
-                          className="deco_image"
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide className="d-flex justify-content-center">
-                        <img
-                          src="/images/deco/deco_4.png"
-                          alt=""
-                          className="deco_image"
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide className="d-flex justify-content-center">
-                        <img
-                          src="/images/deco/deco_5.png"
-                          alt=""
-                          className="deco_image"
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide className="d-flex justify-content-center">
-                        <img
-                          src="/images/deco/deco_6.png"
-                          alt=""
-                          className="deco_image"
-                        />
-                      </SwiperSlide>
-                    </Swiper> */}
-                  </div>
-                ) : (
+                {width < 992 ? null : (
                   <>
                     <div>
                       <img
@@ -340,7 +291,7 @@ const Home = () => {
                         className="deco_image"
                       />
                     </div>
-                    <div style={{ marginLeft: "5%"}}>
+                    <div style={{ marginLeft: "5%" }}>
                       <img
                         src="/images/deco/deco_4.png"
                         alt=""
@@ -380,9 +331,9 @@ const Home = () => {
         </Row>
       </Container>
 
-      <Row className="gsap_third mx-0">
+      <Row className=" mx-0">
         <hr data-content="이소케이크 인스타그램" />
-        <Instagram />
+        <Instagram className="gsap_fourth" />
       </Row>
     </motion.div>
   );

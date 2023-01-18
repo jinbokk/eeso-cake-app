@@ -16,8 +16,11 @@ import { motion } from "framer-motion";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
-import "./css/register.css";
 import Postcode from "../components/utils/Postcode";
+
+import Terms from "../components/Terms";
+import PrivacyPolicy from "../components/PrivacyPolicy";
+import "./css/register.css";
 
 function Register() {
   //name
@@ -728,19 +731,22 @@ function Register() {
           </div>
 
           <>
-            <Modal show={termsShow} onHide={handleTermsClose} centered>
+            <Modal
+              show={termsShow}
+              onHide={handleTermsClose}
+              centered
+              size="lg"
+              contentClassName="register_modal"
+            >
               <Modal.Header closeButton>
                 <Modal.Title>이용약관</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                Woohoo, you're reading this text in a modal!
+                <Terms />
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleTermsClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={handleTermsClose}>
-                  Save Changes
+                  닫기
                 </Button>
               </Modal.Footer>
             </Modal>
@@ -751,19 +757,18 @@ function Register() {
               show={privacyPolicyShow}
               onHide={handlePrivacyPolicyClose}
               centered
+              size="lg"
+              contentClassName="register_modal"
             >
               <Modal.Header closeButton>
                 <Modal.Title>개인정보 수집 및 이용</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <div></div>
+                <PrivacyPolicy />
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handlePrivacyPolicyClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={handlePrivacyPolicyClose}>
-                  Save Changes
+                  닫기
                 </Button>
               </Modal.Footer>
             </Modal>

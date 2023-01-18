@@ -27,9 +27,12 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  phoneNumber:{
+  phoneNumber: {
     type: String,
     required: true,
+  },
+  marketing: {
+    type: Boolean,
   },
   role: {
     type: Number,

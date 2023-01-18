@@ -79,6 +79,11 @@ const OrderDetail = () => {
     },
   }));
 
+  const { handleSubmit, control } = useForm();
+
+  const [option, setOption] = useState([]);
+  const [designTopperPrice, setDesignTopperPrice] = useState(0);
+
   let orderForm = {
     수령_방법: deliveryType,
     수령_날짜: deliveryDate,
@@ -87,14 +92,11 @@ const OrderDetail = () => {
     레터링_문구: letteringText,
     디자인토퍼_추가: designTopperToggle,
     디자인토퍼_문구: designTopperText,
+    디자인토퍼_추가금: designTopperPrice,
     요청_사항: customerRequestText,
+    수량: 1,
+    가격: parseInt(productDetail.price) + parseInt(designTopperPrice),
   };
-
-  const { handleSubmit, control } = useForm();
-
-  const [option, setOption] = useState([]);
-  const [optionPrice, setOptionPrice] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
 
   // // lengthCheck
   // const [topperLength, setTopperLength] = useState(0);
@@ -235,10 +237,14 @@ const OrderDetail = () => {
                   ) : null}
 
                   <ThemeProvider theme={theme}>
-                    <Delivery control={control} />
-                    <Lettering control={control} />
-                    <DesignTopper control={control} />
-                    <CustomerRequest control={control} />
+                    <Delivery control={control} option={option} />
+                    <Lettering control={control} option={option} />
+                    <DesignTopper
+                      control={control}
+                      option={option}
+                      setDesignTopperPrice={setDesignTopperPrice}
+                    />
+                    <CustomerRequest control={control} option={option} />
 
                     <Button
                       variant="contained"
@@ -275,14 +281,25 @@ const OrderDetail = () => {
                                 <div className="d-flex flex-row justify-content-center align-items-center">
                                   <QuantityButton
                                     variant="contained"
-                                    onClick={() => (item.수량 = item.수량 + 1)}
+                                    onClick={() => {
+                                      if (item.수량 > 1) {
+                                        item.수량 = item.수량 - 1;
+                                      }
+                                      setOption((prev) => [...prev]);
+                                    }}
                                   >
                                     <div style={{ fontSize: "1.5rem" }}>-</div>
                                   </QuantityButton>
                                   <div className="mx-3 user-select-none">
                                     {item.수량}
                                   </div>
-                                  <QuantityButton variant="contained">
+                                  <QuantityButton
+                                    variant="contained"
+                                    onClick={() => {
+                                      item.수량 = item.수량 + 1;
+                                      setOption((prev) => [...prev]);
+                                    }}
+                                  >
                                     <div style={{ fontSize: "1.5rem" }}>+</div>
                                   </QuantityButton>
                                 </div>
@@ -317,7 +334,9 @@ const OrderDetail = () => {
 
                                 {item.디자인토퍼_추가 === "추가 하기" ? (
                                   <div className="me-2">
-                                    디자인 토퍼 문구 / {item.디자인토퍼_문구}
+                                    디자인 토퍼 문구 (+
+                                    {designTopperPrice.toLocaleString("ko-KR")}
+                                    원) / {item.디자인토퍼_문구}
                                   </div>
                                 ) : (
                                   <div className="disabled_text">
@@ -332,6 +351,13 @@ const OrderDetail = () => {
                                     </span>
                                   </div>
                                 ) : null}
+
+                                <div style={{ textAlign: "end" }}>
+                                  ₩{" "}
+                                  {(item.수량 * item.가격).toLocaleString(
+                                    "ko-KR"
+                                  )}
+                                </div>
                               </Col>
                             </Row>
                           );
@@ -348,9 +374,26 @@ const OrderDetail = () => {
                             <span
                               style={{ fontSize: "1.1rem", opacity: "0.6" }}
                             >
-                              총 수량 x개
+                              총 수량
+                              <span style={{ margin: "0 5px" }}>
+                                {option
+                                  .reduce((accumulator, option) => {
+                                    return accumulator + option.수량;
+                                  }, 0)
+                                  .toLocaleString("ko-KR")}
+                              </span>
+                              개
                             </span>
-                            <span>₩ {totalPrice}</span>
+                            <span>
+                              ₩{" "}
+                              {option
+                                .reduce((accumulator, option) => {
+                                  return (
+                                    accumulator + option.수량 * option.가격
+                                  );
+                                }, 0)
+                                .toLocaleString("ko-KR")}
+                            </span>
                           </Col>
                         </Row>
 

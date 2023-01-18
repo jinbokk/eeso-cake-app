@@ -30,18 +30,21 @@ const userReducer = (state = initialState, action) => {
       return { ...state, loginResult: undefined, authUserData: payload };
 
     // case "ADD_TO_CART":
-    //   return { ...state, cart: payload };
-
-    case "ADD_TO_CART":
-      return {
-        ...state,
-        authUserData: { ...state.authUserData, cart: payload },
-      };
+    //   return {
+    //     ...state,
+    //     authUserData: { ...state.authUserData},
+    //   };
 
     // case "GET_CART_ITEMS":
     //   return { ...state, cartDetail: payload };
 
     case "REMOVE_CART_ITEMS":
+      return {
+        ...state,
+        authUserData: { ...state.authUserData, cart: payload },
+      };
+
+    case "MODIFY_CART_QUANTITY":
       return {
         ...state,
         authUserData: { ...state.authUserData, cart: payload },

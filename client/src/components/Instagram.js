@@ -23,7 +23,7 @@ const Instagram = () => {
     dispatch(instagramActions.getInstaData());
   }, []);
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const { loading, media_count, feedData } = useSelector(
     (state) => state.instagram
@@ -35,7 +35,7 @@ const Instagram = () => {
   useEffect(() => {
     const element = ref.current;
     gsap.fromTo(
-      element.querySelector(".sub_banner_container"),
+      element.querySelector(".fadeIn"),
       {
         opacity: 0,
         y: 20,
@@ -45,7 +45,7 @@ const Instagram = () => {
         y: 0,
         duration: 1,
         scrollTrigger: {
-          trigger: element.querySelector(".sub_banner_container"),
+          trigger: element.querySelector(".fadeIn"),
           start: "top center",
           end: "bottom center",
         },
@@ -55,7 +55,7 @@ const Instagram = () => {
 
   return (
     <Row className="p-0 m-0" ref={ref}>
-      <Row className="w-75 m-auto d-flex justify-content-center align-items-center">
+      <Row className="w-75 m-auto d-flex justify-content-center align-items-center fadeIn">
         {loading ? (
           <Loading
             width={"100vw"}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { ToggleButtonGroup, ToggleButton, TextField } from "@mui/material";
@@ -8,7 +8,7 @@ import { brown } from "@mui/material/colors";
 import { Controller } from "react-hook-form";
 import { orderActions } from "../../redux/actions/orderActions";
 
-const Lettering = ({ control }) => {
+const Lettering = ({ control, option }) => {
   const dispatch = useDispatch();
 
   const CustomToggleButton = styled(ToggleButton)(() => ({
@@ -57,6 +57,11 @@ const Lettering = ({ control }) => {
       setLetteringLength(value.length);
     }
   };
+
+  useEffect(() => {
+    setLetteringToggle(false);
+    setLetteringText("");
+  }, [option]);
 
   return (
     <>

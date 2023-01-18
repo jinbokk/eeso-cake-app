@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Controller } from "react-hook-form";
 
@@ -18,7 +18,7 @@ import { ko } from "date-fns/locale";
 
 import { orderActions } from "../../redux/actions/orderActions";
 
-const Delivery = ({ control }) => {
+const Delivery = ({ control, option }) => {
   const dispatch = useDispatch();
 
   const CustomToggleButton = styled(ToggleButton)(() => ({
@@ -98,6 +98,13 @@ const Delivery = ({ control }) => {
       setMaxTime(new Date(0, 0, 0, 19, 30));
     }
   };
+
+  // default when create option
+  useEffect(() => {
+    setDelivery(null);
+    setDate(null);
+    setTime(null);
+  }, [option]);
 
   return (
     <>
