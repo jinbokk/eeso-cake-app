@@ -160,11 +160,10 @@ function auth() {
   };
 }
 
-function addToCart(productId, option) {
+function addToCart(options) {
   let body = {
-    productId: productId,
-    option: option, //array 타입
-    added: new Date().toLocaleString("ko-KR"),
+    options: options,
+    // added: new Date().toLocaleString("ko-KR"),
   };
 
   return async (dispatch) => {

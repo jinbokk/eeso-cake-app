@@ -8,7 +8,7 @@ import { brown } from "@mui/material/colors";
 import { Controller } from "react-hook-form";
 import { orderActions } from "../../redux/actions/orderActions";
 
-const DesignTopper = ({ control, option, setDesignTopperPrice }) => {
+const DesignTopper = ({ control, options, setDesignTopperPrice }) => {
   const dispatch = useDispatch();
 
   const CustomToggleButton = styled(ToggleButton)(() => ({
@@ -69,7 +69,9 @@ const DesignTopper = ({ control, option, setDesignTopperPrice }) => {
   useEffect(() => {
     setTopperToggle(false);
     setTopperText("");
-  }, [option]);
+    setTopperLength(0);
+    setTopperLengthError(false);
+  }, [options]);
 
   return (
     <>

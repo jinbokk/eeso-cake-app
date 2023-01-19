@@ -157,31 +157,26 @@ router.get("/logout", auth, (req, res) => {
   );
 });
 
-router.post("/addToCart", auth, async (req, res) => {
-  const rootProductDoc = await Product.findOne({
-    _id: req.body.productId,
-  }).exec();
-
-  const createdOption = req.body.option; // Array
+router.post("/addToCart", auth, (req, res) => {
+  const createdOptions = req.body.options; // Array
 
   User.findOne({ _id: req.user._id }, (err, result) => {
     if (result.cart.length === 0) {
-      // 우저 카트가 비어있을 경우
-      createdOption.forEach((createdOptionItem) => {
-        User.updateMany(
+      // 유저 카트가 비어있을 경우
+      createdOptions.map((createdOptionItem) => {
+        User.findOneAndUpdate(
           {
             _id: req.user._id,
           },
           {
             $push: {
               cart: {
-                rootProductDoc: rootProductDoc,
-                id:
-                  rootProductDoc._id +
-                  `-${Math.random().toString(16).substr(2, 8)}`,
-                option: createdOptionItem,
-                quantity: 1,
-                added: req.body.added,
+                id: createdOptionItem.id,
+                title: createdOptionItem.title,
+                image_url: createdOptionItem.image_url,
+                option: createdOptionItem.option,
+                quantity: createdOptionItem.quantity,
+                price: createdOptionItem.price,
               },
             },
           },
@@ -190,11 +185,9 @@ router.post("/addToCart", auth, async (req, res) => {
           },
           (err, result) => {
             if (err) {
-              console.log("err::::::::::::::::::", err);
               return res.status(400).json({ success: false, err });
             } else {
-              console.log("result::::::::::::::::::", result);
-              return res.status(200).send(result);
+              console.log("result", result);
             }
           }
         );
@@ -202,35 +195,32 @@ router.post("/addToCart", auth, async (req, res) => {
     } else {
       // 유저 카트가 비어있지 않을 경우
 
-      const existingOption = result.cart.map(
-        (existingCart) => existingCart.option
-      );
+      // 카트 아이디 && 옵션 모두 일치하는지 판단.
+      const existingIndex = result.cart;
       // console.log("existingOption", existingOption);
       // const existingOptionStr = JSON.stringify(existingOption);
       // console.log("existingOptionStr", existingOptionStr);
 
-      const createdOption = req.body.option;
+      const createdIndex = req.body.options;
       // console.log("createdOption", createdOption);
       // const createdOptionStr = JSON.stringify(createdOption);
       // console.log("createdOptionStr", createdOptionStr);
 
-      const duplicateOption = createdOption.filter((createdOptionItem) =>
-        existingOption.some(
-          (existingOptionItem) =>
-            JSON.stringify(existingOptionItem) ===
-            JSON.stringify(createdOptionItem)
+      const duplicateOption = createdIndex.filter((createdOption) =>
+        existingIndex.some(
+          (existingOption) =>
+            JSON.stringify(existingOption) === JSON.stringify(createdOption)
         )
       );
 
       console.log("duplicateOption", duplicateOption);
       // [] or 겹치는 옵션 걸러냄
 
-      const notDuplicateOption = createdOption.filter(
-        (createdOptionItem) =>
-          !existingOption.some(
-            (existingOptionItem) =>
-              JSON.stringify(existingOptionItem) ===
-              JSON.stringify(createdOptionItem)
+      const notDuplicateOption = createdIndex.filter(
+        (createdOption) =>
+          !existingIndex.some(
+            (existingOption) =>
+              JSON.stringify(existingOption) === JSON.stringify(createdOption)
           )
       );
 
@@ -241,17 +231,22 @@ router.post("/addToCart", auth, async (req, res) => {
       // 2. 겹치는 옵션이 없을때
       // 3. 겹치는 옵션과 겹치지 않는 옵션이 섞여있을때
 
-      duplicateOption.map((duplicateOptionItem) => {
-        User.updateOne(
+      duplicateOption.map((duplicateItem) => {
+        User.findOneAndUpdate(
           {
             _id: req.user._id,
-            "cart.option": duplicateOptionItem,
           },
           {
-            $inc: { "cart.$.quantity": 1 },
+            $inc: { "cart.$[elem].quantity": 1 },
           },
           {
             new: true,
+            arrayFilters: [
+              {
+                "elem.title": duplicateItem.title,
+                "elem.option": duplicateItem.option,
+              },
+            ],
           },
           (err, result) => {
             if (err) {
@@ -259,27 +254,26 @@ router.post("/addToCart", auth, async (req, res) => {
               return res.status(400).json({ success: false, err });
             } else {
               console.log("result::::::::::::::::::", result);
-              return res.status(200).send(result);
+              // return res.status(200).send(result);
             }
           }
         );
       });
 
-      notDuplicateOption.map((notDuplicateOptionItem) => {
-        User.updateOne(
+      notDuplicateOption.map((notDuplicateItem) => {
+        User.findOneAndUpdate(
           {
             _id: req.user._id,
           },
           {
             $push: {
               cart: {
-                rootProductDoc: rootProductDoc,
-                id:
-                  rootProductDoc._id +
-                  `-${Math.random().toString(16).substr(2, 8)}`,
-                option: notDuplicateOptionItem,
-                quantity: 1,
-                added: req.body.added,
+                id: notDuplicateItem.id,
+                title: notDuplicateItem.title,
+                image_url: notDuplicateItem.image_url,
+                option: notDuplicateItem.option,
+                quantity: notDuplicateItem.quantity,
+                price: notDuplicateItem.price,
               },
             },
           },
@@ -292,7 +286,7 @@ router.post("/addToCart", auth, async (req, res) => {
               return res.status(400).json({ success: false, err });
             } else {
               console.log("result::::::::::::::::::", result);
-              return res.status(200).send(result);
+              // return res.status(200).send(result);
             }
           }
         );

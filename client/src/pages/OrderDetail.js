@@ -81,64 +81,40 @@ const OrderDetail = () => {
 
   const { handleSubmit, control } = useForm();
 
-  const [option, setOption] = useState([]);
+  const [options, setOptions] = useState([]);
   const [designTopperPrice, setDesignTopperPrice] = useState(0);
 
-  let orderForm = {
-    수령_방법: deliveryType,
-    수령_날짜: deliveryDate,
-    수령_시간: deliveryTime,
-    레터링_추가: letteringToggle,
-    레터링_문구: letteringText,
-    디자인토퍼_추가: designTopperToggle,
-    디자인토퍼_문구: designTopperText,
-    디자인토퍼_추가금: designTopperPrice,
-    요청_사항: customerRequestText,
-    수량: 1,
-    가격: parseInt(productDetail.price) + parseInt(designTopperPrice),
+  let createdCart = {
+    id: productDetail._id + `-${Math.random().toString(16).slice(2, 8)}`,
+    title: productDetail.title,
+    image_url: productDetail.image_url,
+    option: {
+      deliveryType: deliveryType,
+      deliveryDate: deliveryDate,
+      deliveryTime: deliveryTime,
+      letteringToggle: letteringToggle,
+      letteringText: letteringText,
+      designTopperToggle: designTopperToggle,
+      designTopperText: designTopperText,
+      customerRequestText: customerRequestText,
+    },
+    quantity: 1,
+    price: parseInt(productDetail.price) + parseInt(designTopperPrice),
   };
 
-  // // lengthCheck
-  // const [topperLength, setTopperLength] = useState(0);
-  // const [topperLengthError, setTopperLengthError] = useState(false);
-  // const topperLengthHandler = (value) => {
-  //   if (value.length > 15) {
-  //     setTopperLengthError(true);
-  //   } else {
-  //     setTopperLengthError(false);
-  //     setTopperLength(value.length);
-  //   }
-  // };
-
   const optionConfirmHandler = () => {
-    if (orderForm.디자인토퍼_문구 && orderForm.디자인토퍼_문구.length !== 0) {
-      // if (0 < orderForm.디자인토퍼_문구.length && orderForm.디자인토퍼_문구.length <= 10) {
-      //   console.log("6000원 플러스");
-      //   setOptionPrice((prevPrice) => prevPrice + 6000);
-      // } else {
-      //   console.log("9000원 플러스");
-      //   setOptionPrice((prevPrice) => prevPrice + 9000);
-      // }
-    }
-
-    // let totalPrice = (
-    //   parseInt(productDetail.price) + optionPrice
-    // ).toLocaleString("ko-KR");
-
-    // setTotalPrice(totalPrice);
-
-    console.log("orderForm", orderForm);
-
     if (
-      !orderForm.수령_방법 ||
-      !orderForm.수령_날짜 ||
-      !orderForm.수령_시간 ||
-      (orderForm.레터링_추가 === "추가 하기" && !orderForm.레터링_문구) ||
-      (orderForm.디자인토퍼_추가 === "추가 하기" && !orderForm.디자인토퍼_문구)
+      !createdCart.option.deliveryType ||
+      !createdCart.option.deliveryDate ||
+      !createdCart.option.deliveryTime ||
+      (createdCart.option.letteringToggle === "추가 하기" &&
+        !createdCart.option.letteringText) ||
+      (createdCart.option.designTopperToggle === "추가 하기" &&
+        !createdCart.option.designTopperText)
     ) {
       alert("옵션을 다시 확인해 주세요");
     } else {
-      setOption((prev) => [...prev, orderForm]);
+      setOptions((prev) => [...prev, createdCart]);
       dispatch({ type: "RESET_FORM" });
     }
   };
@@ -147,24 +123,18 @@ const OrderDetail = () => {
     const confirm = window.confirm("해당 옵션을 지우시겠습니까?");
 
     if (confirm) {
-      setOption(option.filter((item, index) => index !== optionIndex));
+      setOptions(options.filter((item, index) => index !== optionIndex));
     } else {
       return;
     }
   };
 
   const addToCartHandler = () => {
-    dispatch(userActions.addToCart(productId, option));
+    dispatch(userActions.addToCart(options));
   };
 
   const onSubmit = (data) => {
     console.log("submit 완료::::", data);
-
-    // if (data.수령_방법 === "택배") {
-    //   data.수령_시간 = null;
-    // }
-    // console.log(data);
-    // 어팬드시에 제외 하는 방향으로.
   };
 
   return (
@@ -237,14 +207,14 @@ const OrderDetail = () => {
                   ) : null}
 
                   <ThemeProvider theme={theme}>
-                    <Delivery control={control} option={option} />
-                    <Lettering control={control} option={option} />
+                    <Delivery control={control} options={options} />
+                    <Lettering control={control} options={options} />
                     <DesignTopper
                       control={control}
-                      option={option}
+                      options={options}
                       setDesignTopperPrice={setDesignTopperPrice}
                     />
-                    <CustomerRequest control={control} option={option} />
+                    <CustomerRequest control={control} options={options} />
 
                     <Button
                       variant="contained"
@@ -265,9 +235,9 @@ const OrderDetail = () => {
                       </div>
                     </Button>
 
-                    {option.length > 0 ? (
+                    {options.length > 0 ? (
                       <>
-                        {option.map((item, index) => {
+                        {options.map((item, index) => {
                           return (
                             <Row
                               key={index}
@@ -282,22 +252,22 @@ const OrderDetail = () => {
                                   <QuantityButton
                                     variant="contained"
                                     onClick={() => {
-                                      if (item.수량 > 1) {
-                                        item.수량 = item.수량 - 1;
+                                      if (item.quantity > 1) {
+                                        item.quantity = item.quantity - 1;
                                       }
-                                      setOption((prev) => [...prev]);
+                                      setOptions((prev) => [...prev]);
                                     }}
                                   >
                                     <div style={{ fontSize: "1.5rem" }}>-</div>
                                   </QuantityButton>
                                   <div className="mx-3 user-select-none">
-                                    {item.수량}
+                                    {item.quantity}
                                   </div>
                                   <QuantityButton
                                     variant="contained"
                                     onClick={() => {
-                                      item.수량 = item.수량 + 1;
-                                      setOption((prev) => [...prev]);
+                                      item.quantity = item.quantity + 1;
+                                      setOptions((prev) => [...prev]);
                                     }}
                                   >
                                     <div style={{ fontSize: "1.5rem" }}>+</div>
@@ -315,16 +285,18 @@ const OrderDetail = () => {
                               <Col lg={12} className="mb-2">
                                 <div>
                                   <span>
-                                    {item.수령_방법} / {item.수령_날짜} /{" "}
-                                    {item.수령_시간}
+                                    {item.option.deliveryType} /{" "}
+                                    {item.option.deliveryDate} /{" "}
+                                    {item.option.deliveryTime}
                                   </span>
                                 </div>
                               </Col>
 
                               <Col>
-                                {item.레터링_추가 === "추가 하기" ? (
+                                {item.option.letteringToggle === "추가 하기" ? (
                                   <div className="me-2">
-                                    케이크 판 레터링 / {item.레터링_문구}
+                                    케이크 판 레터링 /{" "}
+                                    {item.option.letteringText}
                                   </div>
                                 ) : (
                                   <div className="disabled_text">
@@ -332,11 +304,12 @@ const OrderDetail = () => {
                                   </div>
                                 )}
 
-                                {item.디자인토퍼_추가 === "추가 하기" ? (
+                                {item.option.designTopperToggle ===
+                                "추가 하기" ? (
                                   <div className="me-2">
                                     디자인 토퍼 문구 (+
                                     {designTopperPrice.toLocaleString("ko-KR")}
-                                    원) / {item.디자인토퍼_문구}
+                                    원) / {item.option.designTopperText}
                                   </div>
                                 ) : (
                                   <div className="disabled_text">
@@ -344,17 +317,18 @@ const OrderDetail = () => {
                                   </div>
                                 )}
 
-                                {item.요청_사항 ? (
+                                {item.option.customerRequestText ? (
                                   <div>
                                     <span className="me-2">
-                                      요청 사항 / {item.요청_사항}
+                                      요청 사항 /{" "}
+                                      {item.option.customerRequestText}
                                     </span>
                                   </div>
                                 ) : null}
 
                                 <div style={{ textAlign: "end" }}>
                                   ₩{" "}
-                                  {(item.수량 * item.가격).toLocaleString(
+                                  {(item.quantity * item.price).toLocaleString(
                                     "ko-KR"
                                   )}
                                 </div>
@@ -376,9 +350,9 @@ const OrderDetail = () => {
                             >
                               총 수량
                               <span style={{ margin: "0 5px" }}>
-                                {option
+                                {options
                                   .reduce((accumulator, option) => {
-                                    return accumulator + option.수량;
+                                    return accumulator + option.quantity;
                                   }, 0)
                                   .toLocaleString("ko-KR")}
                               </span>
@@ -386,10 +360,10 @@ const OrderDetail = () => {
                             </span>
                             <span>
                               ₩{" "}
-                              {option
+                              {options
                                 .reduce((accumulator, option) => {
                                   return (
-                                    accumulator + option.수량 * option.가격
+                                    accumulator + option.quantity * option.price
                                   );
                                 }, 0)
                                 .toLocaleString("ko-KR")}
