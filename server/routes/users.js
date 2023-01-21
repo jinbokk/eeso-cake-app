@@ -4,6 +4,8 @@ const { User } = require("../models/User");
 const { Product } = require("../models/Product");
 const { auth } = require("../middleware/auth");
 const bcrypt = require("bcrypt");
+const { mongo } = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
 
 router.get("/auth", auth, (req, res) => {
   res.status(200).json({
@@ -158,7 +160,9 @@ router.get("/logout", auth, (req, res) => {
 });
 
 router.post("/addToCart", auth, (req, res) => {
-  const createdOptions = req.body.options; // Array
+  const createdOptions = req.body.createdOption; // Array
+
+  console.log("createdOptions::::::", createdOptions);
 
   User.findOne({ _id: req.user._id }, (err, result) => {
     if (result.cart.length === 0) {
@@ -171,10 +175,19 @@ router.post("/addToCart", auth, (req, res) => {
           {
             $push: {
               cart: {
-                id: createdOptionItem.id,
+                _id: mongo.ObjectId(),
+                rootProductId: createdOptionItem.rootProductId,
                 title: createdOptionItem.title,
                 image_url: createdOptionItem.image_url,
-                option: createdOptionItem.option,
+                // option: createdOptionItem.option,
+                deliveryType: createdOptionItem.deliveryType,
+                deliveryDate: createdOptionItem.deliveryDate,
+                deliveryTime: createdOptionItem.deliveryTime,
+                letteringToggle: createdOptionItem.letteringToggle,
+                letteringText: createdOptionItem.letteringText,
+                designTopperToggle: createdOptionItem.designTopperToggle,
+                designTopperText: createdOptionItem.designTopperText,
+                customerRequestText: createdOptionItem.customerRequestText,
                 quantity: createdOptionItem.quantity,
                 price: createdOptionItem.price,
               },
@@ -268,10 +281,19 @@ router.post("/addToCart", auth, (req, res) => {
           {
             $push: {
               cart: {
-                id: notDuplicateItem.id,
+                _id: mongo.ObjectId(),
+                rootProductId: notDuplicateItem.rootProductId,
                 title: notDuplicateItem.title,
                 image_url: notDuplicateItem.image_url,
-                option: notDuplicateItem.option,
+                // option: notDuplicateItem.option,
+                deliveryType: notDuplicateItem.deliveryType,
+                deliveryDate: notDuplicateItem.deliveryDate,
+                deliveryTime: notDuplicateItem.deliveryTime,
+                letteringToggle: notDuplicateItem.letteringToggle,
+                letteringText: notDuplicateItem.letteringText,
+                designTopperToggle: notDuplicateItem.designTopperToggle,
+                designTopperText: notDuplicateItem.designTopperText,
+                customerRequestText: notDuplicateItem.customerRequestText,
                 quantity: notDuplicateItem.quantity,
                 price: notDuplicateItem.price,
               },
@@ -327,13 +349,17 @@ router.post("/increaseQuantity", auth, async (req, res) => {
   User.findOneAndUpdate(
     {
       _id: req.user._id,
-      "cart.id": cartId,
     },
     {
-      $inc: { "cart.$.option.수량": 1 },
+      $inc: { "cart.$[elem].quantity": 1 },
     },
     {
       new: true,
+      arrayFilters: [
+        {
+          "elem._id": ObjectId(cartId),
+        },
+      ],
     },
     (err, result) => {
       if (err) {
@@ -353,13 +379,17 @@ router.post("/decreaseQuantity", auth, async (req, res) => {
   User.findOneAndUpdate(
     {
       _id: req.user._id,
-      "cart.id": cartId,
     },
     {
-      $inc: { "cart.$.option.수량": -1 },
+      $inc: { "cart.$[elem].quantity": 1 },
     },
     {
       new: true,
+      arrayFilters: [
+        {
+          "elem._id": ObjectId(cartId),
+        },
+      ],
     },
     (err, result) => {
       if (err) {

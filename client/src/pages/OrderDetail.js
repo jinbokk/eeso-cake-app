@@ -81,40 +81,55 @@ const OrderDetail = () => {
 
   const { handleSubmit, control } = useForm();
 
-  const [options, setOptions] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [designTopperPrice, setDesignTopperPrice] = useState(0);
 
   let createdCart = {
-    id: productDetail._id + `-${Math.random().toString(16).slice(2, 8)}`,
+    rootProductId: productDetail._id,
     title: productDetail.title,
     image_url: productDetail.image_url,
-    option: {
-      deliveryType: deliveryType,
-      deliveryDate: deliveryDate,
-      deliveryTime: deliveryTime,
-      letteringToggle: letteringToggle,
-      letteringText: letteringText,
-      designTopperToggle: designTopperToggle,
-      designTopperText: designTopperText,
-      customerRequestText: customerRequestText,
-    },
+    deliveryType: deliveryType,
+    deliveryDate: deliveryDate,
+    deliveryTime: deliveryTime,
+    letteringToggle: letteringToggle,
+    letteringText: letteringText,
+    designTopperToggle: designTopperToggle,
+    designTopperText: designTopperText,
+    customerRequestText: customerRequestText,
     quantity: 1,
     price: parseInt(productDetail.price) + parseInt(designTopperPrice),
   };
+  // let createdCart = {
+  //   rootProductId: productDetail._id,
+  //   title: productDetail.title,
+  //   image_url: productDetail.image_url,
+  //   option: {
+  //     deliveryType: deliveryType,
+  //     deliveryDate: deliveryDate,
+  //     deliveryTime: deliveryTime,
+  //     letteringToggle: letteringToggle,
+  //     letteringText: letteringText,
+  //     designTopperToggle: designTopperToggle,
+  //     designTopperText: designTopperText,
+  //     customerRequestText: customerRequestText,
+  //   },
+  //   quantity: 1,
+  //   price: parseInt(productDetail.price) + parseInt(designTopperPrice),
+  // };
 
   const optionConfirmHandler = () => {
     if (
-      !createdCart.option.deliveryType ||
-      !createdCart.option.deliveryDate ||
-      !createdCart.option.deliveryTime ||
-      (createdCart.option.letteringToggle === "추가 하기" &&
-        !createdCart.option.letteringText) ||
-      (createdCart.option.designTopperToggle === "추가 하기" &&
-        !createdCart.option.designTopperText)
+      !createdCart.deliveryType ||
+      !createdCart.deliveryDate ||
+      !createdCart.deliveryTime ||
+      (createdCart.letteringToggle === "추가 하기" &&
+        !createdCart.letteringText) ||
+      (createdCart.designTopperToggle === "추가 하기" &&
+        !createdCart.designTopperText)
     ) {
       alert("옵션을 다시 확인해 주세요");
     } else {
-      setOptions((prev) => [...prev, createdCart]);
+      setCartItems((prev) => [...prev, createdCart]);
       dispatch({ type: "RESET_FORM" });
     }
   };
@@ -123,14 +138,14 @@ const OrderDetail = () => {
     const confirm = window.confirm("해당 옵션을 지우시겠습니까?");
 
     if (confirm) {
-      setOptions(options.filter((item, index) => index !== optionIndex));
+      setCartItems(cartItems.filter((item, index) => index !== optionIndex));
     } else {
       return;
     }
   };
 
   const addToCartHandler = () => {
-    dispatch(userActions.addToCart(options));
+    dispatch(userActions.addToCart(cartItems));
   };
 
   const onSubmit = (data) => {
@@ -207,14 +222,14 @@ const OrderDetail = () => {
                   ) : null}
 
                   <ThemeProvider theme={theme}>
-                    <Delivery control={control} options={options} />
-                    <Lettering control={control} options={options} />
+                    <Delivery control={control} cartItems={cartItems} />
+                    <Lettering control={control} cartItems={cartItems} />
                     <DesignTopper
                       control={control}
-                      options={options}
+                      cartItems={cartItems}
                       setDesignTopperPrice={setDesignTopperPrice}
                     />
-                    <CustomerRequest control={control} options={options} />
+                    <CustomerRequest control={control} cartItems={cartItems} />
 
                     <Button
                       variant="contained"
@@ -235,9 +250,9 @@ const OrderDetail = () => {
                       </div>
                     </Button>
 
-                    {options.length > 0 ? (
+                    {cartItems.length > 0 ? (
                       <>
-                        {options.map((item, index) => {
+                        {cartItems.map((item, index) => {
                           return (
                             <Row
                               key={index}
@@ -255,7 +270,7 @@ const OrderDetail = () => {
                                       if (item.quantity > 1) {
                                         item.quantity = item.quantity - 1;
                                       }
-                                      setOptions((prev) => [...prev]);
+                                      setCartItems((prev) => [...prev]);
                                     }}
                                   >
                                     <div style={{ fontSize: "1.5rem" }}>-</div>
@@ -267,7 +282,7 @@ const OrderDetail = () => {
                                     variant="contained"
                                     onClick={() => {
                                       item.quantity = item.quantity + 1;
-                                      setOptions((prev) => [...prev]);
+                                      setCartItems((prev) => [...prev]);
                                     }}
                                   >
                                     <div style={{ fontSize: "1.5rem" }}>+</div>
@@ -285,18 +300,18 @@ const OrderDetail = () => {
                               <Col lg={12} className="mb-2">
                                 <div>
                                   <span>
-                                    {item.option.deliveryType} /{" "}
-                                    {item.option.deliveryDate} /{" "}
-                                    {item.option.deliveryTime}
+                                    {item.deliveryType} /{" "}
+                                    {item.deliveryDate} /{" "}
+                                    {item.deliveryTime}
                                   </span>
                                 </div>
                               </Col>
 
                               <Col>
-                                {item.option.letteringToggle === "추가 하기" ? (
+                                {item.letteringToggle === "추가 하기" ? (
                                   <div className="me-2">
                                     케이크 판 레터링 /{" "}
-                                    {item.option.letteringText}
+                                    {item.letteringText}
                                   </div>
                                 ) : (
                                   <div className="disabled_text">
@@ -304,12 +319,12 @@ const OrderDetail = () => {
                                   </div>
                                 )}
 
-                                {item.option.designTopperToggle ===
+                                {item.designTopperToggle ===
                                 "추가 하기" ? (
                                   <div className="me-2">
                                     디자인 토퍼 문구 (+
                                     {designTopperPrice.toLocaleString("ko-KR")}
-                                    원) / {item.option.designTopperText}
+                                    원) / {item.designTopperText}
                                   </div>
                                 ) : (
                                   <div className="disabled_text">
@@ -317,11 +332,11 @@ const OrderDetail = () => {
                                   </div>
                                 )}
 
-                                {item.option.customerRequestText ? (
+                                {item.customerRequestText ? (
                                   <div>
                                     <span className="me-2">
                                       요청 사항 /{" "}
-                                      {item.option.customerRequestText}
+                                      {item.customerRequestText}
                                     </span>
                                   </div>
                                 ) : null}
@@ -350,7 +365,7 @@ const OrderDetail = () => {
                             >
                               총 수량
                               <span style={{ margin: "0 5px" }}>
-                                {options
+                                {cartItems
                                   .reduce((accumulator, option) => {
                                     return accumulator + option.quantity;
                                   }, 0)
@@ -360,7 +375,7 @@ const OrderDetail = () => {
                             </span>
                             <span>
                               ₩{" "}
-                              {options
+                              {cartItems
                                 .reduce((accumulator, option) => {
                                   return (
                                     accumulator + option.quantity * option.price

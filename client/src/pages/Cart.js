@@ -99,10 +99,10 @@ const Cart = () => {
             {authUserData.cart.map((item, index) => (
               <Row key={index} className="border-top py-4">
                 <Col className="flex-row justify-content-center align-items-center item_thumbnail_container">
-                  <NavLink to={`/order/detail/${item.rootProductDoc._id}`}>
+                  <NavLink to={`/order/detail/${item.rootProductId}`}>
                     <div>
                       <img
-                        src={item.rootProductDoc.image_url}
+                        src={item.image_url}
                         alt=""
                         className="item_thumbnail"
                       />
@@ -112,23 +112,19 @@ const Cart = () => {
 
                 <Col className="justify-content-center align-items-center">
                   <div className="w-100">
-                    <div className="item_title">
-                      {item.rootProductDoc.title}
-                    </div>
+                    <div className="item_title">{item.title}</div>
 
                     <div>
+                      <div className="disabled_text">{item.deliveryType}</div>
                       <div className="disabled_text">
-                        {item.option.수령_방법}
-                      </div>
-                      <div className="disabled_text">
-                        {item.option.수령_날짜} {item.option.수령_시간}
+                        {item.deliveryDate} {item.deliveryTime}
                       </div>
                     </div>
 
-                    {item.option.레터링_추가 === "추가 하기" ? (
+                    {item.letteringToggle === "추가 하기" ? (
                       <div>
                         <span className="disabled_text">
-                          케이크 판 레터링 / {item.option.레터링_문구}
+                          케이크 판 레터링 / {item.letteringText}
                         </span>
                       </div>
                     ) : (
@@ -137,14 +133,12 @@ const Cart = () => {
                       </div>
                     )}
 
-                    {item.option.디자인토퍼_추가 === "추가 하기" ? (
+                    {item.designTopperToggle === "추가 하기" ? (
                       <div>
                         <span className="disabled_text">
                           디자인 토퍼 문구 (+
-                          {item.option.디자인토퍼_추가금.toLocaleString(
-                            "ko-KR"
-                          )}
-                          원) / {item.option.디자인토퍼_문구}
+                          {item.디자인토퍼_추가금.toLocaleString("ko-KR")}
+                          원) / {item.designTopperText}
                         </span>
                       </div>
                     ) : (
@@ -153,10 +147,10 @@ const Cart = () => {
                       </div>
                     )}
 
-                    {item.option.요청_사항 ? (
+                    {item.customerRequestText ? (
                       <div>
                         <span className="disabled_text">
-                          요청 사항 / {item.option.요청_사항}
+                          요청 사항 / {item.customerRequestText}
                         </span>
                       </div>
                     ) : null}
@@ -166,30 +160,25 @@ const Cart = () => {
                   <QuantityButton
                     variant="contained"
                     onClick={() => {
-                      if (item.option.수량 > 1) {
-                        dispatch(userActions.decreaseQuantity(item.id));
+                      if (item.quantity > 1) {
+                        dispatch(userActions.decreaseQuantity(item._id));
                       }
                     }}
                   >
                     <div style={{ fontSize: "1.5rem" }}>-</div>
                   </QuantityButton>
-                  <div className="mx-3 user-select-none">
-                    {item.option.수량}
-                  </div>
+                  <div className="mx-3 user-select-none">{item.quantity}</div>
                   <QuantityButton
                     variant="contained"
                     onClick={() => {
-                      dispatch(userActions.increaseQuantity(item.id));
+                      dispatch(userActions.increaseQuantity(item._id));
                     }}
                   >
                     <div style={{ fontSize: "1.5rem" }}>+</div>
                   </QuantityButton>
                 </Col>
                 <Col className="flex-row justify-content-center align-items-center user-select-none">
-                  ₩{" "}
-                  {(item.option.수량 * item.option.가격).toLocaleString(
-                    "ko-KR"
-                  )}
+                  ₩ {(item.quantity * item.price).toLocaleString("ko-KR")}
                 </Col>
                 <Col
                   className="flex-row justify-content-center align-items-center"
@@ -214,7 +203,7 @@ const Cart = () => {
                   {authUserData &&
                     authUserData.cart
                       .reduce((accumulator, item) => {
-                        return accumulator + item.option.수량;
+                        return accumulator + item.수량;
                       }, 0)
                       .toLocaleString("ko-KR")}{" "}
                   개
@@ -224,9 +213,7 @@ const Cart = () => {
                   {authUserData &&
                     authUserData.cart
                       .reduce((accumulator, item) => {
-                        return (
-                          accumulator + item.option.수량 * item.option.가격
-                        );
+                        return accumulator + item.quantity * item.price;
                       }, 0)
                       .toLocaleString("ko-KR")}
                 </div>

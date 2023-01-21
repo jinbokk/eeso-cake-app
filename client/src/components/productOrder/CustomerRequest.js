@@ -4,7 +4,7 @@ import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { orderActions } from "../../redux/actions/orderActions";
 
-const CustomerRequest = ({ control, options }) => {
+const CustomerRequest = ({ control, cartItems }) => {
   const dispatch = useDispatch();
 
   // request
@@ -14,10 +14,10 @@ const CustomerRequest = ({ control, options }) => {
     dispatch(orderActions.setCustomerRequestText(value));
   };
 
-  // default when create options
+  // default when create cartItems
   useEffect(() => {
     setRequest("");
-  }, [options]);
+  }, [cartItems]);
 
   return (
     <>

@@ -8,7 +8,7 @@ import { brown } from "@mui/material/colors";
 import { Controller } from "react-hook-form";
 import { orderActions } from "../../redux/actions/orderActions";
 
-const Lettering = ({ control, options }) => {
+const Lettering = ({ control, cartItems }) => {
   const dispatch = useDispatch();
 
   const CustomToggleButton = styled(ToggleButton)(() => ({
@@ -63,7 +63,7 @@ const Lettering = ({ control, options }) => {
     setLetteringText("");
     setLetteringLength(0);
     setLetteringLengthError(false);
-  }, [options]);
+  }, [cartItems]);
 
   return (
     <>

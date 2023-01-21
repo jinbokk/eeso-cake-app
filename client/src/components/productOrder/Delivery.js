@@ -18,7 +18,7 @@ import { ko } from "date-fns/locale";
 
 import { orderActions } from "../../redux/actions/orderActions";
 
-const Delivery = ({ control, options }) => {
+const Delivery = ({ control, cartItems }) => {
   const dispatch = useDispatch();
 
   const CustomToggleButton = styled(ToggleButton)(() => ({
@@ -99,12 +99,12 @@ const Delivery = ({ control, options }) => {
     }
   };
 
-  // default when create options
+  // default when create cartItems
   useEffect(() => {
     setDelivery(null);
     setDate(null);
     setTime(null);
-  }, [options]);
+  }, [cartItems]);
 
   return (
     <>

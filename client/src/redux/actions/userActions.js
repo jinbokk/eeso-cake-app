@@ -160,10 +160,9 @@ function auth() {
   };
 }
 
-function addToCart(options) {
+function addToCart(createdOption) {
   let body = {
-    options: options,
-    // added: new Date().toLocaleString("ko-KR"),
+    createdOption: createdOption,
   };
 
   return async (dispatch) => {
