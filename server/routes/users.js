@@ -5,7 +5,7 @@ const { Product } = require("../models/Product");
 const { auth } = require("../middleware/auth");
 const bcrypt = require("bcrypt");
 const { mongo } = require("mongoose");
-const { v4: uuidv4 } = require("uuid");
+const ObjectId = require("mongodb").ObjectId;
 
 router.get("/auth", auth, (req, res) => {
   res.status(200).json({
@@ -210,19 +210,22 @@ router.post("/addToCart", auth, (req, res) => {
 
       // 카트 아이디 && 옵션 모두 일치하는지 판단.
       const existingIndex = result.cart;
-      // console.log("existingOption", existingOption);
-      // const existingOptionStr = JSON.stringify(existingOption);
-      // console.log("existingOptionStr", existingOptionStr);
-
-      const createdIndex = req.body.options;
-      // console.log("createdOption", createdOption);
-      // const createdOptionStr = JSON.stringify(createdOption);
-      // console.log("createdOptionStr", createdOptionStr);
+      const createdIndex = req.body.createdOption;
 
       const duplicateOption = createdIndex.filter((createdOption) =>
         existingIndex.some(
           (existingOption) =>
-            JSON.stringify(existingOption) === JSON.stringify(createdOption)
+            // JSON.stringify(existingOption) === JSON.stringify(createdOption)
+            existingOption.rootProductId === createdOption.rootProductId &&
+            existingOption.deliveryType === createdOption.deliveryType &&
+            existingOption.deliveryDate === createdOption.deliveryDate &&
+            existingOption.deliveryTime === createdOption.deliveryTime &&
+            existingOption.letteringToggle === createdOption.letteringToggle &&
+            existingOption.designTopperToggle ===
+              createdOption.designTopperToggle &&
+            existingOption.customerRequestText ===
+              createdOption.customerRequestText &&
+            existingOption.price === createdOption.price
         )
       );
 
@@ -233,7 +236,18 @@ router.post("/addToCart", auth, (req, res) => {
         (createdOption) =>
           !existingIndex.some(
             (existingOption) =>
-              JSON.stringify(existingOption) === JSON.stringify(createdOption)
+              // JSON.stringify(existingOption) === JSON.stringify(createdOption)
+              existingOption.rootProductId === createdOption.rootProductId &&
+              existingOption.deliveryType === createdOption.deliveryType &&
+              existingOption.deliveryDate === createdOption.deliveryDate &&
+              existingOption.deliveryTime === createdOption.deliveryTime &&
+              existingOption.letteringToggle ===
+                createdOption.letteringToggle &&
+              existingOption.designTopperToggle ===
+                createdOption.designTopperToggle &&
+              existingOption.customerRequestText ===
+                createdOption.customerRequestText &&
+              existingOption.price === createdOption.price
           )
       );
 
@@ -256,8 +270,16 @@ router.post("/addToCart", auth, (req, res) => {
             new: true,
             arrayFilters: [
               {
-                "elem.title": duplicateItem.title,
-                "elem.option": duplicateItem.option,
+                "elem.rootProductId": duplicateItem.rootProductId,
+                "elem.deliveryType": duplicateItem.deliveryType,
+                "elem.deliveryDate": duplicateItem.deliveryDate,
+                "elem.deliveryTime": duplicateItem.deliveryTime,
+                "elem.letteringToggle": duplicateItem.letteringToggle,
+                "elem.letteringText": duplicateItem.letteringText,
+                "elem.designTopperToggle": duplicateItem.designTopperToggle,
+                "elem.designTopperText": duplicateItem.designTopperText,
+                "elem.customerRequestText": duplicateItem.customerRequestText,
+                "elem.price": duplicateItem.price,
               },
             ],
           },
@@ -315,6 +337,14 @@ router.post("/addToCart", auth, (req, res) => {
       });
     }
   });
+
+  // findOne의 결과로 이후 로직을 탄 다음, 최종적으로 업데이트 된 document값을 dispatch로 넘겨주어
+  // 카트 갯수 state를 업데이트 할 수 있도록 해야한다
+
+  // 아래 경우는 업데이트 되기 전의 값을 넘기기 때문에 수정이 필요하다...
+  User.findOne({ _id: req.user._id }, (err, result) => {
+    return res.status(200).json({ updatedCart: result.cart, isUpdated: true });
+  });
 });
 
 router.get("/remove-from-cart", auth, (req, res) => {
@@ -345,6 +375,7 @@ router.get("/remove-from-cart", auth, (req, res) => {
 
 router.post("/increaseQuantity", auth, async (req, res) => {
   let cartId = req.query.id;
+  let cart_o_id = new ObjectId(cartId);
 
   User.findOneAndUpdate(
     {
@@ -357,7 +388,7 @@ router.post("/increaseQuantity", auth, async (req, res) => {
       new: true,
       arrayFilters: [
         {
-          "elem._id": ObjectId(cartId),
+          "elem._id": cart_o_id,
         },
       ],
     },
@@ -375,6 +406,7 @@ router.post("/increaseQuantity", auth, async (req, res) => {
 
 router.post("/decreaseQuantity", auth, async (req, res) => {
   let cartId = req.query.id;
+  let cart_o_id = new ObjectId(cartId);
 
   User.findOneAndUpdate(
     {
@@ -387,7 +419,7 @@ router.post("/decreaseQuantity", auth, async (req, res) => {
       new: true,
       arrayFilters: [
         {
-          "elem._id": ObjectId(cartId),
+          "elem._id": cart_o_id,
         },
       ],
     },

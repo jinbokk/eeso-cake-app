@@ -170,13 +170,19 @@ function addToCart(createdOption) {
       const addToCartResult = await axios
         .post("/api/users/addToCart", body)
         .then((res) => {
-          console.log("res:::::::::::;", res);
           return res.data;
         });
 
-      dispatch({
-        type: "ADD_TO_CART",
-      });
+      console.log("addToCartResult", addToCartResult);
+
+      if (addToCartResult.isUpdated) {
+        dispatch({
+          type: "ADD_TO_CART",
+          payload: addToCartResult.updatedCart,
+        });
+      } else {
+        return;
+      }
     } catch (error) {
       console.log("error occurred : ", error);
     }
