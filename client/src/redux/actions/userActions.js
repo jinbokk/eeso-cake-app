@@ -167,22 +167,7 @@ function addToCart(createdOption) {
 
   return async (dispatch) => {
     try {
-      const addToCartResult = await axios
-        .post("/api/users/addToCart", body)
-        .then((res) => {
-          return res.data;
-        });
-
-      console.log("addToCartResult", addToCartResult);
-
-      if (addToCartResult.isUpdated) {
-        dispatch({
-          type: "ADD_TO_CART",
-          payload: addToCartResult.updatedCart,
-        });
-      } else {
-        return;
-      }
+      await axios.post("/api/users/addToCart", body);
     } catch (error) {
       console.log("error occurred : ", error);
     }

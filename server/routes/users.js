@@ -159,61 +159,76 @@ router.get("/logout", auth, (req, res) => {
   );
 });
 
-router.post("/addToCart", auth, (req, res) => {
+router.post("/addToCart", auth, async (req, res) => {
   const createdOptions = req.body.createdOption; // Array
 
-  console.log("createdOptions::::::", createdOptions);
+  const user = await User.findOne({ _id: req.user._id }).exec();
 
-  User.findOne({ _id: req.user._id }, (err, result) => {
-    if (result.cart.length === 0) {
-      // 유저 카트가 비어있을 경우
-      createdOptions.map((createdOptionItem) => {
-        User.findOneAndUpdate(
-          {
-            _id: req.user._id,
-          },
-          {
-            $push: {
-              cart: {
-                _id: mongo.ObjectId(),
-                rootProductId: createdOptionItem.rootProductId,
-                title: createdOptionItem.title,
-                image_url: createdOptionItem.image_url,
-                // option: createdOptionItem.option,
-                deliveryType: createdOptionItem.deliveryType,
-                deliveryDate: createdOptionItem.deliveryDate,
-                deliveryTime: createdOptionItem.deliveryTime,
-                letteringToggle: createdOptionItem.letteringToggle,
-                letteringText: createdOptionItem.letteringText,
-                designTopperToggle: createdOptionItem.designTopperToggle,
-                designTopperText: createdOptionItem.designTopperText,
-                customerRequestText: createdOptionItem.customerRequestText,
-                quantity: createdOptionItem.quantity,
-                price: createdOptionItem.price,
-              },
+  console.log("user", user);
+
+  if (user.cart.length === 0) {
+    // 유저 카트가 비어있을 경우
+    createdOptions.map((createdOptionItem) => {
+      User.findOneAndUpdate(
+        {
+          _id: req.user._id,
+        },
+        {
+          $push: {
+            cart: {
+              _id: mongo.ObjectId(),
+              rootProductId: createdOptionItem.rootProductId,
+              title: createdOptionItem.title,
+              image_url: createdOptionItem.image_url,
+              deliveryType: createdOptionItem.deliveryType,
+              deliveryDate: createdOptionItem.deliveryDate,
+              deliveryTime: createdOptionItem.deliveryTime,
+              letteringToggle: createdOptionItem.letteringToggle,
+              letteringText: createdOptionItem.letteringText,
+              designTopperToggle: createdOptionItem.designTopperToggle,
+              designTopperText: createdOptionItem.designTopperText,
+              customerRequestText: createdOptionItem.customerRequestText,
+              quantity: createdOptionItem.quantity,
+              price: createdOptionItem.price,
             },
           },
-          {
-            new: true,
-          },
-          (err, result) => {
-            if (err) {
-              return res.status(400).json({ success: false, err });
-            } else {
-              console.log("result", result);
-            }
-          }
-        );
-      });
-    } else {
-      // 유저 카트가 비어있지 않을 경우
+        },
+        {
+          new: true,
+        },
+        (err, result) => result
+      );
+    });
+  } else {
+    // 유저 카트가 비어있지 않을 경우
 
-      // 카트 아이디 && 옵션 모두 일치하는지 판단.
-      const existingIndex = result.cart;
-      const createdIndex = req.body.createdOption;
+    // 카트 아이디 && 옵션 모두 일치하는지 판단.
+    const existingIndex = user.cart;
+    const createdIndex = req.body.createdOption;
 
-      const duplicateOption = createdIndex.filter((createdOption) =>
-        existingIndex.some(
+    const duplicateOption = createdIndex.filter((createdOption) =>
+      existingIndex.some(
+        (existingOption) =>
+          // JSON.stringify(existingOption) === JSON.stringify(createdOption)
+          existingOption.rootProductId === createdOption.rootProductId &&
+          existingOption.deliveryType === createdOption.deliveryType &&
+          existingOption.deliveryDate === createdOption.deliveryDate &&
+          existingOption.deliveryTime === createdOption.deliveryTime &&
+          existingOption.letteringToggle === createdOption.letteringToggle &&
+          existingOption.designTopperToggle ===
+            createdOption.designTopperToggle &&
+          existingOption.customerRequestText ===
+            createdOption.customerRequestText &&
+          existingOption.price === createdOption.price
+      )
+    );
+
+    console.log("duplicateOption", duplicateOption);
+    // [] or 겹치는 옵션 걸러냄
+
+    const notDuplicateOption = createdIndex.filter(
+      (createdOption) =>
+        !existingIndex.some(
           (existingOption) =>
             // JSON.stringify(existingOption) === JSON.stringify(createdOption)
             existingOption.rootProductId === createdOption.rootProductId &&
@@ -227,127 +242,90 @@ router.post("/addToCart", auth, (req, res) => {
               createdOption.customerRequestText &&
             existingOption.price === createdOption.price
         )
+    );
+
+    console.log("notDuplicateOption", notDuplicateOption);
+    // 겹치지 않는 옵션
+
+    // 1. 겹치는 옵션만 있을때
+    // 2. 겹치는 옵션이 없을때
+    // 3. 겹치는 옵션과 겹치지 않는 옵션이 섞여있을때
+
+    duplicateOption.map((duplicateItem) => {
+      User.findOneAndUpdate(
+        {
+          _id: req.user._id,
+        },
+        {
+          $inc: { "cart.$[elem].quantity": 1 },
+        },
+        {
+          new: true,
+          arrayFilters: [
+            {
+              "elem.rootProductId": duplicateItem.rootProductId,
+              "elem.deliveryType": duplicateItem.deliveryType,
+              "elem.deliveryDate": duplicateItem.deliveryDate,
+              "elem.deliveryTime": duplicateItem.deliveryTime,
+              "elem.letteringToggle": duplicateItem.letteringToggle,
+              "elem.letteringText": duplicateItem.letteringText,
+              "elem.designTopperToggle": duplicateItem.designTopperToggle,
+              "elem.designTopperText": duplicateItem.designTopperText,
+              "elem.customerRequestText": duplicateItem.customerRequestText,
+              "elem.price": duplicateItem.price,
+            },
+          ],
+        },
+        (err, result) => result
       );
+    });
 
-      console.log("duplicateOption", duplicateOption);
-      // [] or 겹치는 옵션 걸러냄
-
-      const notDuplicateOption = createdIndex.filter(
-        (createdOption) =>
-          !existingIndex.some(
-            (existingOption) =>
-              // JSON.stringify(existingOption) === JSON.stringify(createdOption)
-              existingOption.rootProductId === createdOption.rootProductId &&
-              existingOption.deliveryType === createdOption.deliveryType &&
-              existingOption.deliveryDate === createdOption.deliveryDate &&
-              existingOption.deliveryTime === createdOption.deliveryTime &&
-              existingOption.letteringToggle ===
-                createdOption.letteringToggle &&
-              existingOption.designTopperToggle ===
-                createdOption.designTopperToggle &&
-              existingOption.customerRequestText ===
-                createdOption.customerRequestText &&
-              existingOption.price === createdOption.price
-          )
-      );
-
-      console.log("notDuplicateOption", notDuplicateOption);
-      // 겹치지 않는 옵션
-
-      // 1. 겹치는 옵션만 있을때
-      // 2. 겹치는 옵션이 없을때
-      // 3. 겹치는 옵션과 겹치지 않는 옵션이 섞여있을때
-
-      duplicateOption.map((duplicateItem) => {
-        User.findOneAndUpdate(
-          {
-            _id: req.user._id,
-          },
-          {
-            $inc: { "cart.$[elem].quantity": 1 },
-          },
-          {
-            new: true,
-            arrayFilters: [
-              {
-                "elem.rootProductId": duplicateItem.rootProductId,
-                "elem.deliveryType": duplicateItem.deliveryType,
-                "elem.deliveryDate": duplicateItem.deliveryDate,
-                "elem.deliveryTime": duplicateItem.deliveryTime,
-                "elem.letteringToggle": duplicateItem.letteringToggle,
-                "elem.letteringText": duplicateItem.letteringText,
-                "elem.designTopperToggle": duplicateItem.designTopperToggle,
-                "elem.designTopperText": duplicateItem.designTopperText,
-                "elem.customerRequestText": duplicateItem.customerRequestText,
-                "elem.price": duplicateItem.price,
-              },
-            ],
-          },
-          (err, result) => {
-            if (err) {
-              console.log("err::::::::::::::::::", err);
-              return res.status(400).json({ success: false, err });
-            } else {
-              console.log("result::::::::::::::::::", result);
-              // return res.status(200).send(result);
-            }
-          }
-        );
-      });
-
-      notDuplicateOption.map((notDuplicateItem) => {
-        User.findOneAndUpdate(
-          {
-            _id: req.user._id,
-          },
-          {
-            $push: {
-              cart: {
-                _id: mongo.ObjectId(),
-                rootProductId: notDuplicateItem.rootProductId,
-                title: notDuplicateItem.title,
-                image_url: notDuplicateItem.image_url,
-                // option: notDuplicateItem.option,
-                deliveryType: notDuplicateItem.deliveryType,
-                deliveryDate: notDuplicateItem.deliveryDate,
-                deliveryTime: notDuplicateItem.deliveryTime,
-                letteringToggle: notDuplicateItem.letteringToggle,
-                letteringText: notDuplicateItem.letteringText,
-                designTopperToggle: notDuplicateItem.designTopperToggle,
-                designTopperText: notDuplicateItem.designTopperText,
-                customerRequestText: notDuplicateItem.customerRequestText,
-                quantity: notDuplicateItem.quantity,
-                price: notDuplicateItem.price,
-              },
+    notDuplicateOption.map((notDuplicateItem) => {
+      User.findOneAndUpdate(
+        {
+          _id: req.user._id,
+        },
+        {
+          $push: {
+            cart: {
+              _id: mongo.ObjectId(),
+              rootProductId: notDuplicateItem.rootProductId,
+              title: notDuplicateItem.title,
+              image_url: notDuplicateItem.image_url,
+              deliveryType: notDuplicateItem.deliveryType,
+              deliveryDate: notDuplicateItem.deliveryDate,
+              deliveryTime: notDuplicateItem.deliveryTime,
+              letteringToggle: notDuplicateItem.letteringToggle,
+              letteringText: notDuplicateItem.letteringText,
+              designTopperToggle: notDuplicateItem.designTopperToggle,
+              designTopperText: notDuplicateItem.designTopperText,
+              customerRequestText: notDuplicateItem.customerRequestText,
+              quantity: notDuplicateItem.quantity,
+              price: notDuplicateItem.price,
             },
           },
-          {
-            new: true,
-          },
-          (err, result) => {
-            if (err) {
-              console.log("err::::::::::::::::::", err);
-              return res.status(400).json({ success: false, err });
-            } else {
-              console.log("result::::::::::::::::::", result);
-              // return res.status(200).send(result);
-            }
-          }
-        );
-      });
-    }
-  });
+        },
+        {
+          new: true,
+        },
+        (err, result) => result
+      );
+    });
 
-  // findOne의 결과로 이후 로직을 탄 다음, 최종적으로 업데이트 된 document값을 dispatch로 넘겨주어
-  // 카트 갯수 state를 업데이트 할 수 있도록 해야한다
-
-  // 아래 경우는 업데이트 되기 전의 값을 넘기기 때문에 수정이 필요하다...
-  User.findOne({ _id: req.user._id }, (err, result) => {
-    return res.status(200).json({ updatedCart: result.cart, isUpdated: true });
-  });
+    // 위 과정이 모두 끝난 뒤, <<<이걸 어떻게 판단할까...
+    // 한번에 묶어서 보낸다..
+    // return res
+    //   .status(200)
+    //   .json({ updatedCart: result.cart, isUpdated: true });
+  }
 });
 
 router.get("/remove-from-cart", auth, (req, res) => {
+  let cartId = req.query.id;
+  console.log("cartId", cartId);
+  let cart_o_id = new ObjectId(cartId);
+  console.log("cart_o_id", cart_o_id);
+
   // 1. cart 안의 상품들 중 지우고자 하는 상품을 찾아 지운다
   User.findOneAndUpdate(
     {
@@ -356,11 +334,13 @@ router.get("/remove-from-cart", auth, (req, res) => {
     {
       $pull: {
         cart: {
-          id: req.query.id,
+          _id: cart_o_id,
         },
       },
     },
-    { new: true },
+    {
+      new: true,
+    },
     (err, result) => {
       if (err) {
         console.log("err::::::::::::::::::", err);
@@ -413,7 +393,7 @@ router.post("/decreaseQuantity", auth, async (req, res) => {
       _id: req.user._id,
     },
     {
-      $inc: { "cart.$[elem].quantity": 1 },
+      $inc: { "cart.$[elem].quantity": -1 },
     },
     {
       new: true,

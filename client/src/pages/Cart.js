@@ -186,7 +186,7 @@ const Cart = () => {
                     if (
                       window.confirm("해당 상품을 카트에서 제거하시겠습니까?")
                     ) {
-                      removeFromCart(item.id);
+                      removeFromCart(item._id);
                     } else {
                       return;
                     }

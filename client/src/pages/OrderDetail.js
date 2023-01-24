@@ -146,6 +146,8 @@ const OrderDetail = () => {
 
   const addToCartHandler = () => {
     dispatch(userActions.addToCart(cartItems));
+    alert("장바구니에 상품이 담겼습니다");
+    dispatch(userActions.auth());
   };
 
   const onSubmit = (data) => {
@@ -300,8 +302,7 @@ const OrderDetail = () => {
                               <Col lg={12} className="mb-2">
                                 <div>
                                   <span>
-                                    {item.deliveryType} /{" "}
-                                    {item.deliveryDate} /{" "}
+                                    {item.deliveryType} / {item.deliveryDate} /{" "}
                                     {item.deliveryTime}
                                   </span>
                                 </div>
@@ -310,8 +311,7 @@ const OrderDetail = () => {
                               <Col>
                                 {item.letteringToggle === "추가 하기" ? (
                                   <div className="me-2">
-                                    케이크 판 레터링 /{" "}
-                                    {item.letteringText}
+                                    케이크 판 레터링 / {item.letteringText}
                                   </div>
                                 ) : (
                                   <div className="disabled_text">
@@ -319,8 +319,7 @@ const OrderDetail = () => {
                                   </div>
                                 )}
 
-                                {item.designTopperToggle ===
-                                "추가 하기" ? (
+                                {item.designTopperToggle === "추가 하기" ? (
                                   <div className="me-2">
                                     디자인 토퍼 문구 (+
                                     {designTopperPrice.toLocaleString("ko-KR")}
@@ -335,8 +334,7 @@ const OrderDetail = () => {
                                 {item.customerRequestText ? (
                                   <div>
                                     <span className="me-2">
-                                      요청 사항 /{" "}
-                                      {item.customerRequestText}
+                                      요청 사항 / {item.customerRequestText}
                                     </span>
                                   </div>
                                 ) : null}
