@@ -10,6 +10,7 @@ import { BsCheck2Circle, BsCartCheck } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
+import Payment from "../components/utils/Payment";
 import "./css/cart.css";
 
 const Cart = () => {
@@ -203,7 +204,7 @@ const Cart = () => {
                   {authUserData &&
                     authUserData.cart
                       .reduce((accumulator, item) => {
-                        return accumulator + item.수량;
+                        return accumulator + item.quantity;
                       }, 0)
                       .toLocaleString("ko-KR")}{" "}
                   개
@@ -250,6 +251,7 @@ const Cart = () => {
           </Row>
         )}
         {/* <CartTable /> */}
+        <Payment />
       </Container>
       {/* )} */}
     </ThemeProvider>

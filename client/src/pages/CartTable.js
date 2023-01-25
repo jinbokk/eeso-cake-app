@@ -49,10 +49,7 @@ function Row(props) {
         </TableCell>
         <TableCell>
           주문 옵션
-          <IconButton
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
+          <IconButton size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
@@ -126,7 +123,7 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9, 1.5),
 ];
 
-export default function Payment() {
+export default function CartTable() {
   return (
     <TableContainer component={Paper}>
       <Table>

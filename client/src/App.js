@@ -16,7 +16,7 @@ import Order from "./pages/Order";
 import OrderDetail from "./pages/OrderDetail";
 import Mypage from "./pages/Mypage";
 import Cart from "./pages/Cart";
-import Payment from "./pages/Payment";
+import Payment from "./pages/CartTable";
 import GuideRice from "./pages/GuideRice";
 import GuideBread from "./pages/GuideBread";
 import Contact from "./pages/Contact";
