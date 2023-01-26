@@ -20,7 +20,7 @@
 .ribbon_video {
   position: absolute;
   z-index: 100;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   top: 0;
   right: 0;
@@ -40,7 +40,7 @@
   left: 0;
   z-index: 0;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
 }
 
 .landing_bg_img {
@@ -120,7 +120,7 @@
 
   .title_section {
     position: absolute;
-    width: 100vw;
+    width: 100%;
     transform: none;
     padding-top: 80px;
     padding-bottom: 60px;

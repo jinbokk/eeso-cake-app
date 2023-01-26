@@ -64,7 +64,7 @@ const Instagram = () => {
           />
         ) : (
           <>
-            <Row className="instaFeed_counter justify-content-center align-items-center p-0 mb-5">
+            <Row className="instaFeed_counter justify-content-center align-items-center p-0">
               <Row className="justify-content-center align-items-end mb-4">
                 <Col sm={12} lg={"auto"}>
                   현재까지
@@ -77,11 +77,6 @@ const Instagram = () => {
                     className="instaFeed_counter_accent"
                   />
                   개의 피드가 작성되었어요 !
-                </Col>
-              </Row>
-              <Row className="justify-content-center align-items-end">
-                <Col sm={12} lg={"auto"}>
-                  주문해주시는 모든 분들께 감사드립니다 :)
                 </Col>
               </Row>
             </Row>

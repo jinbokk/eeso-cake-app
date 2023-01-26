@@ -38,7 +38,7 @@
 
 .design_container {
   display: flex;
-  width: 100vw;
+  width: 100%;
   justify-content: space-around;
 }
 
@@ -65,7 +65,7 @@
 } */
 
 .guide_swiper_container {
-  width: 100vw;
+  width: 100%;
   max-height: 400px;
 }
 

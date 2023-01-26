@@ -74,7 +74,7 @@ const Navbar = () => {
               <NavLink to="/">
                 <div>
                   <img
-                    src="/images/logo_test.png"
+                    src="/images/nav_logo.png"
                     alt=""
                     className="main_logo"
                   />
@@ -86,7 +86,7 @@ const Navbar = () => {
               <NavLink to="/">
                 <div>
                   <img
-                    src="/images/logo_test.png"
+                    src="/images/nav_logo.png"
                     alt=""
                     className="main_logo"
                   />

@@ -52,6 +52,7 @@ body {
   font-size: var(--font-size);
   /* line-height: 2rem; */
   width: 100vw;
+  max-width: 100%;
   background-color: var(--bg);
   word-break: keep-all !important;
   padding-top: var(--nav-height);
@@ -72,7 +73,7 @@ hr {
   height: 16px;
   opacity: 1;
   margin: 3em 0 !important;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 hr::before {
@@ -115,7 +116,7 @@ a:hover {
   --main-font: GowunBatang;
   --font-size: 12px;
   --nav-font: GowunBatang;
-  --nav-font-size: 1rem;
+  --nav-font-size: 0.93rem;
   --nav-height: 70px;
   --bg: rgb(251, 239, 233);
   --bg-dark: rgb(255, 226, 211);

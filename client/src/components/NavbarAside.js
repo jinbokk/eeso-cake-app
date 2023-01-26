@@ -37,7 +37,7 @@ const NavbarAside = (props) => {
           <Col className="align-items-center">
             <NavLink to="/" onClick={() => setToggleHandler(false)}>
               <div>
-                <img src="/images/logo_test.png" alt="" className="main_logo" />
+                <img src="/images/nav_logo.png" alt="" className="main_logo" />
               </div>
             </NavLink>
           </Col>

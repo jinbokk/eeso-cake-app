@@ -20,7 +20,8 @@
 
 .instaFeed_counter {
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
 }
 
 .instaFeed_container {
@@ -94,7 +95,7 @@
   height: 9rem;
   line-height: 1.75rem;
   display: -webkit-box;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   overflow: scroll;
   /* -webkit-line-clamp: 5; */
   /* -webkit-box-orient: vertical; */
@@ -136,6 +137,8 @@
 
 @media screen and (max-width: 992px) {
   .instaFeed_counter {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+    min-width: 90vw;
   }
 }

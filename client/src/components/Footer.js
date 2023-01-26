@@ -82,7 +82,7 @@ const Footer = () => {
         </Row> */}
 
         <Container className="border_top py-5">
-          <Row>
+          <Row className="mb-2">
             <Col>
               <div className="link_container">
                 <div>

@@ -119,7 +119,7 @@ const Home = () => {
     >
       <Container fluid className="home_container_top" ref={ref}>
         <Row className="main_banner_container m-0 p-0">
-          <Col>
+          <Col className="m-0 p-0">
             <div className="main_banner_text">
               <div className="glow">
                 <span>

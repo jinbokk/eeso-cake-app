@@ -25,7 +25,7 @@ li {
   font-family: var(--nav-font);
   font-size: var(--nav-font-size);
   font-weight: bold;
-  width: 100vw;
+  width: 100%;
   height: var(--nav-height);
   /* border-bottom: 1px solid rgba(255, 2, 2, 0.08); */
 }
@@ -51,6 +51,8 @@ li {
 .main_logo {
   height: 70px;
   padding: 15px;
+  position: relative;
+  bottom: 2px;
 }
 
 /* NavMenu */
@@ -60,7 +62,7 @@ li {
   display: flex;
   align-items: center;
   transition: 0.2s;
-  padding: 20px;
+  padding: 1.2rem;
   z-index: 10000;
 }
 
@@ -74,7 +76,7 @@ li {
   z-index: 5;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 300px;
 }
 
@@ -84,7 +86,7 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   height: 400px;
   position: absolute;
   top: 0;
@@ -134,7 +136,7 @@ li {
 
 .user_container > a {
   transition: 0.3s;
-  font-size: 1.1rem;
+  font-size: var(--nav-font-size);
 }
 
 .user_container > span {
@@ -170,7 +172,7 @@ li {
   font-size: inherit;
   font-weight: inherit;
   cursor: pointer;
-  padding: 20px;
+  padding: 1.2rem;
   transition: 0.2s;
 }
 
@@ -317,7 +319,7 @@ li {
   z-index: 1000;
   top: 0;
   right: -150vw;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: var(--bg);
   /* background-color: bisque; */
@@ -422,7 +424,7 @@ li {
   font-size: var(--font-size) !important;
   font-weight: bold;
   box-shadow: none !important;
-  padding: 0.8em 1.5em !important;
+  padding: 0.8em 1.9em !important;
   height: 55px;
 }
 
