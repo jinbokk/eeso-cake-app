@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper";
 import { motion } from "framer-motion";
+import { NavLink } from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -98,34 +99,41 @@ const Landing = (props) => {
           <Col xs={12} lg={6} className="text-center">
             <div className="title_section text-start">
               <div>
+                <h2 className="landing_h2 ease_in_left_1 mb-3">
+                  Design Cake Shop
+                </h2>
                 <img
-                  src="/logo512.png"
+                  // src="/logo512.png"
+                  src="/images/nav_logo.png"
                   // src="/images/deco_cake.png"
                   alt=""
                   className="landing_logo ease_in_left_1"
                 />
-                <h2 className="landing_h2 ease_in_left_1 mb-3">
-                  Design Cake Shop
-                </h2>
-                <h1 className="landing_h1 ease_in_left_2 mb-5 ">EESO CAKE</h1>
+                {/* <h1 className="landing_h1 ease_in_left_2 mb-5 ">EESO CAKE</h1> */}
               </div>
 
               <div className="ease_in_left_3 mb-5">
-                <h3 className="landing_h3">안녕하세요, 이소케이크 입니다</h3>
                 <h3 className="landing_h3">특별하고 소중한 날,</h3>
                 <h3 className="landing_h3">
                   고객님의 행복을 위해 최선을 다하겠습니다
                 </h3>
               </div>
 
-              <button
+              <NavLink
+                to="/order"
                 className="landing_button ease_in_bottom_2"
-                // onMouseEnter={onMouseEnterHandler}
-                // onMouseLeave={onMouseLeaveHandler}
                 onClick={() => props.setIsLandingPageView(true)}
               >
-                SHOP NOW
-              </button>
+                구매하기
+              </NavLink>
+
+              <NavLink
+                to="/cakes/bread"
+                className="landing_button ease_in_bottom_2"
+                onClick={() => props.setIsLandingPageView(true)}
+              >
+                케이크 둘러보기
+              </NavLink>
             </div>
           </Col>
 

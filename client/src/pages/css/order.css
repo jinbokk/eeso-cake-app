@@ -2,7 +2,7 @@
   height: 500px;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgb(33 37 41 / 10%);
-  background-color: #fff;
+  background-color: #a1887f41;
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -18,5 +18,6 @@
   width: 100%;
   height: 300px;
   padding: 15px;
+  border-radius: 20px;
   object-fit: cover;
 }

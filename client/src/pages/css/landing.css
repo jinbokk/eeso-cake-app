@@ -1,6 +1,8 @@
 .landing_container {
-  position: absolute;
-  top: calc(var(--nav-height) * -1);
+  position: fixed;
+  z-index: 9999999;
+  top: 0;
+  /* top: calc(var(--nav-height) * -1); */
   height: 100vh;
   overflow-y: hidden;
   max-width: 100vw !important;
@@ -29,9 +31,10 @@
 
 .landing_logo {
   position: relative;
-  bottom: 30px;
+  /* bottom: 30px; */
   z-index: 100;
-  width: 100px;
+  width: 20rem;
+  padding-bottom: 2rem;
 }
 
 .bg_swiper {
@@ -100,11 +103,15 @@
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   color: white;
-  padding: 12px 54px;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
   font-family: var(--landing-font);
-  font-size: 2rem !important;
-  font-weight: bold;
+  font-size: 1.3rem !important;
   cursor: pointer;
+}
+
+.landing_button:hover {
+  transform: scale(1.1);
 }
 
 .landing_product_img {

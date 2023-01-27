@@ -42,6 +42,14 @@
   font-style: normal;
   font-display: block;
 }
+
+@font-face {
+  font-family: 'NanumSquareNeo-Variable';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,
 body {
   padding: 0 !important;
@@ -112,11 +120,11 @@ a:hover {
 }
 
 :root {
-  --landing-font: GowunBatang;
-  --main-font: GowunBatang;
+  --landing-font: NanumSquareNeo-Variable;
+  --main-font: NanumSquareNeo-Variable;
   --font-size: 12px;
-  --nav-font: GowunBatang;
-  --nav-font-size: 0.93rem;
+  --nav-font: NanumSquareNeo-Variable;
+  --nav-font-size: 0.8rem;
   --nav-height: 70px;
   --bg: rgb(251, 239, 233);
   --bg-dark: rgb(255, 226, 211);

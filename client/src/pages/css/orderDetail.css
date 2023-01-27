@@ -109,10 +109,7 @@
   align-items: center;
   padding: 1.5rem 0;
   border-bottom: 1px solid rgba(129, 58, 8, 0.3);
-}
-
-.option_menu_text {
-  font-size: 1.2rem;
+  font-size: 1rem !important;
 }
 
 .controller_container {

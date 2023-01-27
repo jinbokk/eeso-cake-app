@@ -169,11 +169,11 @@ const OrderDetail = () => {
               <Row className="mb-5">
                 {width < 992 ? (
                   <div style={{ padding: "0 3rem" }}>
-                    <h1 className="mb-3 fw-bold">{productDetail.title}</h1>
+                    <h3 className="mb-3 fw-bold">{productDetail.title}</h3>
                     <h5 className="mb-4">{productDetail.description}</h5>
-                    <h1 className="mb-4">
+                    <h3 className="mb-4">
                       ₩ {productDetail.price.toLocaleString("ko-KR")}
-                    </h1>
+                    </h3>
                   </div>
                 ) : null}
 
@@ -215,11 +215,11 @@ const OrderDetail = () => {
                 <Col lg={5} className="px-5">
                   {width > 992 ? (
                     <>
-                      <h1 className="mb-3 fw-bold">{productDetail.title}</h1>
+                      <h3 className="mb-3 fw-bold">{productDetail.title}</h3>
                       <h5 className="mb-4">{productDetail.description}</h5>
-                      <h1 className="mb-4">
+                      <h3 className="mb-4">
                         ₩ {Number(productDetail.price).toLocaleString("ko-KR")}
-                      </h1>
+                      </h3>
                     </>
                   ) : null}
 
@@ -260,7 +260,7 @@ const OrderDetail = () => {
                               key={index}
                               className="order_preview align-items-center p-3"
                             >
-                              <Col className="d-flex flex-row justify-content-between mb-2">
+                              <Col className="d-flex flex-row justify-content-between align-items-center mb-3">
                                 <div className="fw-bold">
                                   {productDetail.title}
                                 </div>
@@ -310,7 +310,7 @@ const OrderDetail = () => {
 
                               <Col>
                                 {item.letteringToggle === "추가 하기" ? (
-                                  <div className="me-2">
+                                  <div className="disabled_text">
                                     케이크 판 레터링 / {item.letteringText}
                                   </div>
                                 ) : (
@@ -320,7 +320,7 @@ const OrderDetail = () => {
                                 )}
 
                                 {item.designTopperToggle === "추가 하기" ? (
-                                  <div className="me-2">
+                                  <div className="disabled_text">
                                     디자인 토퍼 문구 (+
                                     {designTopperPrice.toLocaleString("ko-KR")}
                                     원) / {item.designTopperText}
@@ -332,10 +332,8 @@ const OrderDetail = () => {
                                 )}
 
                                 {item.customerRequestText ? (
-                                  <div>
-                                    <span className="me-2">
-                                      요청 사항 / {item.customerRequestText}
-                                    </span>
+                                  <div className="disabled_text">
+                                    요청 사항 / {item.customerRequestText}
                                   </div>
                                 ) : null}
 

@@ -56,9 +56,11 @@ const Order = () => {
                     alt=""
                     className="product_image mb-3"
                   />
-                  <h4 className="text-start fw-bold px-3">{item.title}</h4>
-                  <div className="text-start px-3">{item.description}</div>
-                  <h4 className="text-end px-4 mt-auto mb-4">₩ {item.price}</h4>
+                  <h5 className="text-start fw-bold px-3">{item.title}</h5>
+                  <p className="text-start px-3">{item.description}</p>
+                  <h5 className="text-end px-4 mt-auto mb-4">
+                    ₩ {item.price.toLocaleString("ko-KR")}
+                  </h5>
                 </NavLink>
               </Col>
             ))}

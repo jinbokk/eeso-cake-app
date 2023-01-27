@@ -6,6 +6,8 @@ import { ToggleButtonGroup, ToggleButton, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { brown } from "@mui/material/colors";
 
+import { FaCarSide } from "react-icons/fa";
+
 import {
   DesktopDatePicker,
   TimePicker,
@@ -110,7 +112,7 @@ const Delivery = ({ control, cartItems }) => {
     <>
       <div>
         <div className="option_menu_section">
-          <div className="option_menu_text">
+          <div>
             <div>수령 방법</div>
             {/* <div className="warning">
                             * 택배 서비스는 준비 중입니다
@@ -140,7 +142,7 @@ const Delivery = ({ control, cartItems }) => {
                   <CustomToggleButton value="방문 수령">
                     <div
                       style={{
-                        fontSize: "1rem",
+                        fontSize: "0.9rem",
                         pointerEvents: "none",
                       }}
                     >
@@ -150,7 +152,7 @@ const Delivery = ({ control, cartItems }) => {
                   <CustomToggleButton value="차량 배송">
                     <div
                       style={{
-                        fontSize: "1rem",
+                        fontSize: "0.9rem",
                         pointerEvents: "none",
                       }}
                     >
@@ -160,7 +162,7 @@ const Delivery = ({ control, cartItems }) => {
                   <CustomToggleButton value="택배" disabled>
                     <div
                       style={{
-                        fontSize: "1rem",
+                        fontSize: "0.9rem",
                         pointerEvents: "none",
                       }}
                     >
@@ -197,7 +199,10 @@ const Delivery = ({ control, cartItems }) => {
                 </div>
 
                 <div className="py-3">
-                  요금 안내
+                  <div className="mb-3">
+                    <FaCarSide className="me-2" />
+                    요금 안내
+                  </div>
                   <div style={{ color: "red" }}>
                     * 서울 / 경기 외 장거리, 지방 차량 배송 불가
                   </div>
@@ -274,6 +279,7 @@ const Delivery = ({ control, cartItems }) => {
                         ...params.inputProps,
                         readOnly: true,
                         style: {
+                          fontSize: "0.9rem",
                           cursor: "pointer",
                         },
                         placeholder: "날짜를 선택해 주세요",
@@ -337,6 +343,7 @@ const Delivery = ({ control, cartItems }) => {
                         ...params.inputProps,
                         readOnly: true,
                         style: {
+                          fontSize: "0.9rem",
                           cursor: "pointer",
                         },
                         placeholder:

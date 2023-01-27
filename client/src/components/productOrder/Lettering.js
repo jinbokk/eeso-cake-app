@@ -94,7 +94,7 @@ const Lettering = ({ control, cartItems }) => {
                   <CustomToggleButton value="추가 하기">
                     <div
                       style={{
-                        fontSize: "1rem",
+                        fontSize: "0.9rem",
                         pointerEvents: "none",
                       }}
                     >
@@ -104,7 +104,7 @@ const Lettering = ({ control, cartItems }) => {
                   <CustomToggleButton value="추가하지 않기">
                     <div
                       style={{
-                        fontSize: "1rem",
+                        fontSize: "0.9rem",
                         pointerEvents: "none",
                       }}
                     >
