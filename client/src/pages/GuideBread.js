@@ -38,13 +38,14 @@ const GuideBread = () => {
         <Row>
           <Col className="text-center">
             <h1 className="mb-5 guide_title">빵 케이크 가이드</h1>
+            <h3 className=" guide_sub_title">
+              심플한 레터링 케이크부터 귀여운 피규어 케이크,
+            </h3>
             <h3 className="mb-4 guide_sub_title">
-              심플한 레터링 케이크부터 귀여운 피규어 케이크, 먹을 수 있는 포토
-              케이크까지
+              먹을 수 있는 포토 케이크까지
             </h3>
-            <h3 className="guide_sub_title">
-              모든 순간, 모든 공간에 어울리는 이소케이크의 시그니처 케이크
-            </h3>
+            <h3 className="guide_sub_title">모든 순간, 모든 공간에 어울리는</h3>
+            <h3 className="guide_sub_title">이소케이크의 시그니처 케이크</h3>
           </Col>
         </Row>
 
@@ -52,7 +53,7 @@ const GuideBread = () => {
           <hr data-content="주문 전 안내사항" />
         </Row>
 
-        <Row>
+        <Row className="guide_text_container">
           <Col md={6}>
             <div className="mb-3">
               <div>
@@ -205,7 +206,7 @@ const GuideBread = () => {
           <hr data-content="크림" />
         </Row>
 
-        <Row>
+        <Row className="cake_design_text">
           <Col
             md={12}
             className="d-flex flex-column justify-content-center align-items-center text-center"
@@ -230,7 +231,7 @@ const GuideBread = () => {
           <hr data-content="시트" />
         </Row>
 
-        <Row>
+        <Row className="cake_design_text">
           <Col
             md={12}
             className="d-flex flex-column justify-content-center align-items-center text-center"
@@ -257,7 +258,7 @@ const GuideBread = () => {
           <hr data-content="패키지" />
         </Row>
 
-        <Row>
+        <Row className="cake_design_text">
           <Col md={12}>
             <div className="d-flex flex-column align-items-center justify-content-center my-3">
               <div className="d-flex justify-content-center align-items-center mb-3">
@@ -281,12 +282,14 @@ const GuideBread = () => {
           <hr />
         </Row>
 
-        <Row>
+        <Row className="cake_design_text">
           <Col className="px-5 d-flex justify-content-center align-items-center text-center">
-            <div>위의 내용을 확인하신 후,</div>
-            <div>성함 / 연락처 / 픽업 날짜 및 시간과 함께</div>
-            <div>편하신 곳으로 상담 요청 주시면</div>
-            <div>확인 후 빠른 연락드리겠습니다 : )</div>
+            <div>
+              위 내용을 확인하신 후,<br></br>
+              성함 / 연락처 / 픽업 날짜 및 시간과 함께<br></br>
+              편하신 곳으로 상담 요청 주시면<br></br>
+              확인 후 빠른 연락드리겠습니다 : )
+            </div>
 
             <div
               className="py-5 d-flex flex-column justify-content-center align-items-center"
@@ -297,10 +300,10 @@ const GuideBread = () => {
             </div>
 
             <div className="opacity-50">
-              디자인 선택이 어려우시다면, 기념 내용을 말씀해주세요~ 제가 몇 가지
-              추천도 해드릴게요 : )
+              디자인 선택이 어려우시다면, 기념 내용을 말씀해주세요
+              <br></br>상담 및 디자인 추천 드리겠습니다 : )
             </div>
-            <div className="opacity-50">
+            <div className="opacity-50 mt-2">
               ( ex : 여자친구 생일 케이크, 아이 돌잔치 케이크, 부모님 생신
               케이크 등등 )
             </div>

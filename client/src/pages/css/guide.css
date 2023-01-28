@@ -63,9 +63,12 @@
 .package_info_container > div {
   margin: 20px;
 } */
+.guide_text_container {
+  font-size: 0.9rem;
+}
 
 .guide_swiper_container {
-  width: 100%;
+  width: 100vw;
   max-height: 400px;
 }
 
@@ -104,6 +107,10 @@
 
 .accent {
   color: var(--bg-accent);
+}
+
+.cake_design_text {
+  font-size: 0.9rem;
 }
 
 /* .row > div {

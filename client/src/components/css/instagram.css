@@ -141,4 +141,8 @@
     text-align: center;
     min-width: 90vw;
   }
+
+  .instaFeed_container {
+    height: 450px;
+  }
 }

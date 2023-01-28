@@ -158,7 +158,7 @@ const Cakes = () => {
       </Modal>
 
       {loading ? (
-        <Loading width={"100vw"} height={"100vh"} text={loadingText} />
+        <Loading width={"100%"} height={"100vh"} text={loadingText} />
       ) : (
         <motion.div
           initial={{ opacity: 0, y: "20px" }}

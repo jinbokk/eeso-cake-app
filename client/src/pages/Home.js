@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 import "swiper/css";
 import "swiper/css/free-mode";
-// import "./css/about.css";
+import "swiper/css/effect-cards";
 import "./css/home.css";
 
 import Loading from "../components/Loading";
@@ -15,7 +15,7 @@ import Loading from "../components/Loading";
 import { productActions } from "../redux/actions/productActions";
 import { Container, Row, Col } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Autoplay } from "swiper";
+import { FreeMode, Autoplay, EffectCards } from "swiper";
 import Instagram from "../components/Instagram";
 import { BsStars } from "react-icons/bs";
 
@@ -31,7 +31,19 @@ const Home = () => {
 
   const { loading, productsData } = useSelector((state) => state.product);
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
+
+  const decoImages = [
+    "/images/deco/deco_(1).png",
+    "/images/deco/deco_(3).png",
+    "/images/deco/deco_(5).png",
+    "/images/deco/deco_(6).png",
+    "/images/deco/deco_(7).png",
+    "/images/deco/deco_(8).png",
+    "/images/deco/deco_(9).png",
+    "/images/deco/deco_(10).png",
+    "/images/deco/deco_(11).png",
+  ];
 
   const ref = useRef(null);
   gsap.registerPlugin(ScrollTrigger);
@@ -194,7 +206,7 @@ const Home = () => {
           </Row>
         </Row>
 
-        <Row className="w-100">
+        <Row className="w-100 m-0">
           <Col className="my-3">
             <hr data-content="고객님을 위한 다양한 케이크가 준비되어 있습니다" />
           </Col>
@@ -234,7 +246,7 @@ const Home = () => {
                               "upload/q_50/"
                             )}
                             alt=""
-                            className="home_swiper_image"
+                            className="deco_image"
                           />
                         </SwiperSlide>
                       ))}
@@ -265,65 +277,46 @@ const Home = () => {
           )}
         </Row>
 
-        <Row className="w-100">
+        <Row className="w-100  m-0">
           <Col className="my-3">
             <hr data-content="다양한 소품들로 더욱 즐겁게" />
           </Col>
-          <Row className="mx-0 p-0">
-            <Col className="party_banner_container p-0 gsap_third">
-              <div className="deco_image_container">
-                {width < 992 ? null : (
-                  <>
-                    <div>
-                      <img
-                        src="/images/deco/deco_1.png"
-                        alt=""
-                        className="deco_image"
-                      />
-                      <img
-                        src="/images/deco/deco_2.png"
-                        alt=""
-                        className="deco_image"
-                      />
-                      <img
-                        src="/images/deco/deco_3.png"
-                        alt=""
-                        className="deco_image"
-                      />
-                    </div>
-                    <div style={{ marginLeft: "5%" }}>
-                      <img
-                        src="/images/deco/deco_4.png"
-                        alt=""
-                        className="deco_image"
-                      />
-                      <img
-                        src="/images/deco/deco_5.png"
-                        alt=""
-                        className="deco_image"
-                      />
-                      <img
-                        src="/images/deco/deco_6.png"
-                        alt=""
-                        className="deco_image"
-                      />
-                    </div>
-                  </>
-                )}
-              </div>
 
+          <Row className="party_banner_container mx-0 p-0 gsap_third">
+            <Col lg={6} xs={12} className="deco_image_container">
+              <Swiper
+                effect={"cards"}
+                grabCursor={true}
+                modules={[EffectCards]}
+                cardsEffect={{ perSlideOffset: 10 }}
+                className="swiper_card"
+              >
+                {decoImages.map((item, index) => {
+                  return (
+                    <SwiperSlide key={index} className="deco_image_slide">
+                      <img src={item} alt="" className="deco_image" />
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </Col>
+
+            <Col lg={6} xs={12}>
+              <iframe
+                title="party_animation"
+                src="https://embed.lottiefiles.com/animation/78667"
+                className="party_animation"
+              ></iframe>
               <div className="party_text">
-                {/* <div className="underline mb-5">순간을 더욱 빛내줄 소품들</div> */}
+                <div className="underline mb-4">다양한 소품들이 있습니다</div>
+                <div>매장에 구비된 다양한 디자인 소품들과</div>
+                <div>세상에 단 하나뿐인 주문 제작 토퍼까지</div>
                 <div>
-                  매장에 구비된 다양한 디자인 소품들과, 세상에 단 하나뿐인 주문
-                  제작 토퍼까지
-                </div>
-                <div>
-                  특별한 날, 더욱 특별한 순간을 만들어 보세요
-                  <BsStars
-                    style={{ position: "relative", bottom: "8px" }}
+                  특별한 날, 더욱 특별한 순간을 만들어 보세요 !
+                  {/* <BsStars
+                    style={{ position: "relative", bottom: "3px" }}
                     className="mx-2"
-                  />
+                  /> */}
                 </div>
               </div>
             </Col>

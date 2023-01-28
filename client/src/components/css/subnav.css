@@ -1,12 +1,37 @@
 .filter_container_top {
   position: relative;
   z-index: 90;
-  width: fit-content;
-  height: 100px;
+  width: 100%;
+  height: 80px;
   display: flex;
   flex-wrap: nowrap;
   overflow-x: scroll;
+  overflow-y: hidden;
   align-items: center;
+  padding: 3% 10% !important;
+}
+
+.gradient_overlay {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(
+    to right,
+    var(--bg) 0%,
+    transparent 15%,
+    transparent 85%,
+    var(--bg) 100%
+  );
+  z-index: 100;
+}
+
+.filter_container_top::-webkit-scrollbar {
+  display: none;
 }
 
 .filter_container {
@@ -16,7 +41,7 @@
 }
 
 .filter_button {
-  font-size: 1rem;
+  font-size: 0.9rem;
   white-space: nowrap;
   align-items: center;
   padding: 0.5em 1rem;

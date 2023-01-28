@@ -73,16 +73,8 @@ const Footer = () => {
           </Row>
         </Container>
 
-        {/* <Row>
-          <Col className="flex-row">
-            <div className="subNav">HOME</div>
-            <div className="subNav">MAP</div>
-            <div className="subNav">GUIDE</div>
-          </Col>
-        </Row> */}
-
-        <Container className="border_top py-5">
-          <Row className="mb-2">
+        <Container className="border_top pb-5">
+          <Row className="mb-2 pt-4 pb-5">
             <Col>
               <div className="link_container">
                 <div>
@@ -129,7 +121,7 @@ const Footer = () => {
           </Row>
 
           <Row className="w-auto m-auto info_container">
-            <Col lg={4} xs={6} className="px-3">
+            <Col lg={3} xs={6} className="px-3">
               <div className="info_title mb-2">
                 <img
                   src="/icons/footer/store.png"
@@ -138,7 +130,7 @@ const Footer = () => {
                 />
                 상호명
               </div>
-              <div className="mb-4 info_text">이소케이크</div>
+              <div className="mb-5 info_text">이소케이크</div>
 
               <div className="info_title mb-2">
                 <img
@@ -148,10 +140,10 @@ const Footer = () => {
                 />
                 사업자번호
               </div>
-              <div className="mb-4 info_text">430 - 39 - 00287</div>
+              <div className="mb-5 info_text">430 - 39 - 00287</div>
             </Col>
 
-            <Col lg={4} xs={6} className="px-3">
+            <Col lg={3} xs={6} className="px-3">
               <div className="info_title mb-2">
                 <img
                   src="/icons/footer/person.png"
@@ -160,7 +152,7 @@ const Footer = () => {
                 />
                 대표자명
               </div>
-              <div className="mb-4 info_text">이소정</div>
+              <div className="mb-5 info_text">이소정</div>
               <div className="info_title mb-2">
                 <img
                   src="/icons/footer/phone.png"
@@ -169,10 +161,10 @@ const Footer = () => {
                 />
                 전화번호
               </div>
-              <div className="mb-4 info_text">0507 - 1424 - 1945</div>
+              <div className="mb-5 info_text">0507 - 1424 - 1945</div>
             </Col>
 
-            <Col lg={4} xs={12} className="px-3">
+            <Col lg={3} xs={6} className="px-3">
               <div className="info_title mb-2">
                 <img
                   src="/icons/footer/time.png"
@@ -181,9 +173,13 @@ const Footer = () => {
                 />
                 영업 시간
               </div>
-              <div className="mb-4 info_text">
-                11:00 ~ 18:00 / 매주 월요일 휴무
+              <div className="mb-5 info_text">
+                매주 월요일 휴무<br></br>화 ~ 금 : 11:00 ~ 19:30<br></br>토 :
+                10:00 ~ 16:00<br></br>일 : 10:00 ~ 12:00
               </div>
+            </Col>
+
+            <Col lg={3} xs={6} className="px-3">
               <div className="info_title mb-2">
                 <img
                   src="/icons/footer/location.png"
@@ -192,8 +188,16 @@ const Footer = () => {
                 />
                 위치
               </div>
-              <div className="mb-4 info_text">
-                경기 의정부시 승지로30번길 20 1층
+              <div className="mb-5 info_text">
+                경기도 의정부시 승지로30번길 20 1층<br></br>
+                <a
+                  href="https://map.naver.com/v5/search/%EC%9D%B4%EC%86%8C%EC%BC%80%EC%9D%B4%ED%81%AC/place/661959504?c=14147586.5818935,4542283.8149681,16.63,0,0,0,dh&placePath=%3Fentry%253Dbmp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="location_link"
+                >
+                  지도 보기
+                </a>
               </div>
             </Col>
           </Row>
@@ -201,7 +205,7 @@ const Footer = () => {
 
         <Container>
           <Row className="copyright justify-content-end p-4">
-            Copyright 2022. eesocake. All Right Reserved
+            Copyright 2023. eesocake. All Right Reserved
           </Row>
         </Container>
       </Container>

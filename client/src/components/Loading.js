@@ -2,7 +2,7 @@ import React from "react";
 
 import "./css/loading.css";
 
-const Loading = ({ width = "100vw", height = "100vh", text }) => {
+const Loading = ({ width = "100%", height = "100%", text }) => {
   return (
     <div style={{ width: width, height: height }}>
       <div className="loading_container">

@@ -42,11 +42,11 @@ const Contact = () => {
                 </div>
                 <div>대중교통 이용시</div>
                 <div>
-                  <span className="by_subway">경전철 탑석역</span> 하차 후, 7분
-                  내 도보 이동
+                  <span className="by_subway me-2">경전철 탑석역</span>
+                  하차 후, 7분 내 도보 이동
                 </div>
                 <div>
-                  <span className="by_bus">청구아파트 버스정류소</span> 하차
+                  <span className="by_bus me-2">청구아파트 버스정류소</span>
                   하차 후, 7분 내 도보 이동
                 </div>
               </Col>

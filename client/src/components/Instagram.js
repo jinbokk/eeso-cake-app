@@ -69,6 +69,7 @@ const Instagram = () => {
                 <Col sm={12} lg={"auto"}>
                   현재까지
                   <CountUp
+                    enableScrollSpy={true}
                     start={1}
                     end={media_count}
                     duration={3}

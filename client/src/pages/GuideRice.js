@@ -15,7 +15,7 @@ import "swiper/css/navigation";
 import "./css/guide.css";
 
 const GuideRice = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const pagination = {
     clickable: true,
@@ -50,7 +50,7 @@ const GuideRice = () => {
           <hr data-content="주문 전 안내사항" />
         </Row>
 
-        <Row>
+        <Row className="guide_text_container">
           <Col md={6}>
             <div className="mb-3">
               <div>
@@ -213,9 +213,10 @@ const GuideRice = () => {
               alt=""
             />
             <div className="m-3">돔 디자인</div>
-            <div className="text-center">
-              케이크 윗면에 전체적으로 꽃이 올라가는 디자인! 미니, 1호 사이즈에
-              추천드리는 디자인입니다 풍성해 보이는 디자인.
+            <div className="text-center cake_design_text">
+              케이크 위에 둥글게 꽃이 올라가는 디자인<br></br>
+              특유의 풍성한 볼륨감으로<br></br>
+              미니 사이즈, 1호 사이즈에 추천드립니다
             </div>
           </Col>
 
@@ -230,8 +231,11 @@ const GuideRice = () => {
               alt=""
             />
             <div className="m-3">초승달 디자인</div>
-            <div className="text-center">
-              여백의 미를 살린 세련된 케이크를 찾으시는 분들께 추천드려요!
+            <div className="text-center cake_design_text">
+              여백의 미를 살린 세련된 초승달 디자인<br></br>
+              심플하지만 밋밋하지 않은 <br></br>
+              케이크를 찾으시는 분들께 추천 드립니다
+              <br></br>
             </div>
           </Col>
 
@@ -246,9 +250,10 @@ const GuideRice = () => {
               alt=""
             />
             <div className="m-3">리스 디자인</div>
-            <div className="text-center">
-              3,4호 대형 사이즈에 추천드리는 디자인입니다 화려한 화관 스타일의
-              케이크! 여러 조각 나누어 드셔도 예쁨을 최대한 남길 수 있는 디자인.
+            <div className="text-center cake_design_text">
+              화려한 화관 모양의 디자인<br></br>
+              3호, 4호 대형 사이즈에 추천드리며,<br></br>
+              여러 조각 나누어 드셔도 아름다운 디자인 입니다
             </div>
           </Col>
         </Row>
@@ -257,11 +262,11 @@ const GuideRice = () => {
           <hr data-content="설기 맛 선택" />
         </Row>
 
-        <Row>
+        <Row className="cake_design_text">
           <Col md={12}>
             <div className="d-flex flex-column align-items-center justify-content-center my-3">
               <div className="d-flex justify-content-center align-items-center mb-3">
-                <span className="mx-1">옵션</span> <MdLooksOne size="24" />
+                <div className="mx-1">옵션</div> <MdLooksOne size="24" />
               </div>
               <div>백설기 (기본설기)</div>
             </div>
@@ -270,7 +275,8 @@ const GuideRice = () => {
           <Col md={12}>
             <div className="d-flex flex-column align-items-center justify-content-center my-3">
               <div className="d-flex justify-content-center align-items-center mb-3">
-                <span className="mx-1">옵션</span> <MdLooksTwo size="24" />
+                <div className="mx-1 align-items-center">옵션</div>{" "}
+                <MdLooksTwo size="24" />
               </div>
               <div>흑임자 설기 (흑임자 잼 / 쿠앤크 색감)</div>
             </div>
@@ -279,7 +285,7 @@ const GuideRice = () => {
           <Col md={12}>
             <div className="d-flex flex-column align-items-center justify-content-center my-3">
               <div className="d-flex justify-content-center align-items-center mb-3">
-                <span className="mx-1">옵션</span> <MdLooks3 size="24" />
+                <div className="mx-1">옵션</div> <MdLooks3 size="24" />
               </div>
               <div>단호박 설기 (단호박 필링 / 노란 설기 )</div>
             </div>
@@ -288,7 +294,7 @@ const GuideRice = () => {
           <Col md={12}>
             <div className="d-flex flex-column align-items-center justify-content-center my-3">
               <div className="d-flex justify-content-center align-items-center mb-3">
-                <span className="mx-1">옵션</span> <MdLooks4 size="24" />
+                <div className="mx-1">옵션</div> <MdLooks4 size="24" />
               </div>
               <div>초코 설기 ( 초코칩 필링 / 브라운 설기 )</div>
             </div>
@@ -299,7 +305,7 @@ const GuideRice = () => {
           <hr data-content="패키지" />
         </Row>
 
-        <Row>
+        <Row className="cake_design_text">
           <Col md={12}>
             <div className="d-flex flex-column align-items-center justify-content-center my-3">
               <div className="d-flex justify-content-center align-items-center mb-3">
@@ -323,9 +329,9 @@ const GuideRice = () => {
           <hr />
         </Row>
 
-        <Row>
+        <Row className="cake_design_text">
           <Col className="px-5 d-flex justify-content-center align-items-center text-center">
-            <div>위의 내용을 확인하신 후,</div>
+            <div>위 내용을 확인하신 후,</div>
             <div>성함 / 연락처 / 픽업 날짜 및 시간과 함께</div>
             <div>편하신 곳으로 상담 요청 주시면</div>
             <div>확인 후 빠른 연락드리겠습니다 : )</div>
@@ -339,10 +345,10 @@ const GuideRice = () => {
             </div>
 
             <div className="opacity-50">
-              디자인 선택이 어려우시다면, 기념 내용을 말씀해주세요~ 제가 몇 가지
-              추천도 해드릴게요 : )
+              디자인 선택이 어려우시다면, 기념 내용을 말씀해주세요
+              <br></br>상담 및 디자인 추천 드리겠습니다 : )
             </div>
-            <div className="opacity-50">
+            <div className="opacity-50 mt-2">
               ( ex : 여자친구 생일 케이크, 아이 돌잔치 케이크, 부모님 생신
               케이크 등등 )
             </div>

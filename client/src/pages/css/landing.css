@@ -58,17 +58,15 @@
   display: inline-block;
   position: absolute;
   padding: 0 5vw;
-  left: 0;
+  left: 10%;
   top: 50%;
   transform: translateY(-50%);
   margin: 0 !important;
 }
 
-.title_section::before {
-  /* outline: 5px dashed white; */
+/* .title_section::before {
   outline: 5px dashed var(--bg);
   outline-offset: 10px;
-  /* background-color: white; */
   background-color: var(--bg);
   opacity: 0.8;
   position: absolute;
@@ -80,7 +78,7 @@
   width: 100%;
   height: 500%;
   content: "";
-}
+} */
 
 .landing_h1 {
   font-family: var(--nav-font);
@@ -91,10 +89,6 @@
   color: var(--bg-accent);
 }
 
-.landing_h3 {
-  font-family: var(--main-font);
-}
-
 .landing_button {
   display: inline-block;
   width: fit-content;
@@ -103,15 +97,18 @@
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   color: white;
-  padding: 0.5rem 1rem;
   margin-right: 1rem;
   font-family: var(--landing-font);
-  font-size: 1.3rem !important;
+  font-size: 1.5rem !important;
+  padding: 1rem 2rem;
   cursor: pointer;
+  /* transition: 0.3s; */
 }
 
 .landing_button:hover {
-  transform: scale(1.1);
+  transform: scale(1.05) !important;
+  color: white;
+  transition: 0.3s;
 }
 
 .landing_product_img {
@@ -120,16 +117,79 @@
   object-fit: contain;
 }
 
+@keyframes slide_v {
+  from {
+    bottom: -100vh;
+  }
+
+  to {
+    bottom: 0;
+  }
+}
+@keyframes slide_h {
+  from {
+    right: -100vw;
+  }
+
+  to {
+    right: 0;
+  }
+}
+
+.ribbon_v {
+  animation-duration: 2s;
+  animation-name: slide_v;
+  background: url("/public/images/ribbon_texture_v.png");
+  position: fixed;
+  right: 10%;
+  bottom: 0;
+  width: 80px;
+  height: 100vh;
+  z-index: 1000;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  opacity: 0.8;
+}
+
+.ribbon_h {
+  animation-duration: 2s;
+  animation-name: slide_h;
+  background: url("/public/images/ribbon_texture_h.png");
+  position: fixed;
+  right: 0;
+  top: 10%;
+  height: 80px;
+  width: 100vw;
+  z-index: 1000;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  opacity: 0.8;
+}
+
+.ribbon_tie {
+  background: url("/public/images/ribbon_texture_tie.png");
+  background-size: cover;
+  position: fixed;
+  right: 20%;
+  top: 10%;
+  height: 200px;
+  width: 200px;
+  z-index: 1100;
+  /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+}
+
 @media screen and (max-width: 992px) {
   .landing_logo {
-    width: 50px;
+    width: 60vw;
+  }
+
+  .landing_h2 {
+    font-size: 2rem;
   }
 
   .title_section {
     position: absolute;
     width: 100%;
     transform: none;
-    padding-top: 80px;
+    padding-top: 60px;
     padding-bottom: 60px;
     left: 0;
     top: 0;
@@ -144,6 +204,7 @@
     top: 0;
     left: 0;
     height: 100%;
+    display: none;
   }
 
   .title_section > div {
@@ -152,6 +213,13 @@
 
   .image_section {
     position: absolute;
-    bottom: -200px;
+    bottom: -50px;
+  }
+
+  .ribbon_v {
+    display: none;
+  }
+  .ribbon_h {
+    display: none;
   }
 }

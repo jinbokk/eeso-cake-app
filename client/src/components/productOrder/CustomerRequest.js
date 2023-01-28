@@ -52,7 +52,12 @@ const CustomerRequest = ({ control, cartItems }) => {
                 onChange(e.target.value);
                 requestHandler(e.target.value);
               }}
-              inputProps={{ style: { fontSize: "0.9rem",fontFamily:"NanumSquareNeo-Variable" } }}
+              inputProps={{
+                style: {
+                  fontSize: "0.9rem",
+                  fontFamily: "NanumSquareNeo-Variable",
+                },
+              }}
             />
           )}
         />

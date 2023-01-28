@@ -34,16 +34,6 @@ const NavbarAside = (props) => {
         }
       >
         <Row>
-          <Col className="align-items-center">
-            <NavLink to="/" onClick={() => setToggleHandler(false)}>
-              <div>
-                <img src="/images/nav_logo.png" alt="" className="main_logo" />
-              </div>
-            </NavLink>
-          </Col>
-        </Row>
-
-        <Row>
           <Col className="mt-3">
             <Accordion defaultActiveKey={["0"]}>
               <Accordion.Item eventKey="0">
@@ -152,7 +142,7 @@ const NavbarAside = (props) => {
 
         <Row>
           <Col>
-            <div className="text-center pb-5">
+            <div className="text-center pt-5 pb-5">
               {props.authUserData && props.authUserData.isAuth ? (
                 <>
                   <NavLink

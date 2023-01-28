@@ -6,7 +6,7 @@
 
 .main_banner_container {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - var(--nav-height));
   background-image: url(/public/images/home_main_banner.jpg);
   /* background-attachment: local, scroll; */
   background-attachment: fixed;
@@ -166,14 +166,19 @@
 .party_banner_container {
   text-align: center;
   position: relative;
-  background-image: url(/public/images/cake_deco_lg.png);
+  background-image: url(/public/images/cake_deco.png);
   background-size: cover;
   background-repeat: no-repeat;
-  height: 80vh;
+  height: 100vh;
   width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .party_banner_container::before {
+  user-select: none;
   content: "";
   position: absolute;
   bottom: 0;
@@ -184,31 +189,49 @@
   background-image: linear-gradient(to right, var(--bg), transparent 100%);
 }
 
-.party_text {
+.party_animation {
   position: absolute;
-  top: 50%;
-  left: 10%;
-  transform: translateY(-50%);
+  z-index: -100;
+  top: 0;
+  right: -25%;
+  user-select: none;
+  width: 100%;
+  height: 90%;
+}
+
+.party_text {
+  position: relative;
+  z-index: 5;
+  margin: 0 auto;
   line-height: 250%;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: start;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 .deco_image_container {
-  position: absolute;
   display: flex;
-  height: 100%;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: start;
-  padding: 2.5rem;
+  height: 100%;
+}
+
+.swiper_card {
+  width: 70%;
+  height: 50%;
+}
+
+.deco_image_slide {
+  border-radius: 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: relative;
+  z-index: 100;
 }
 
 .deco_image {
-  width: 220px;
-  margin: 1rem;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* responsive */
@@ -273,19 +296,41 @@
   }
 
   .party_banner_container {
-    height: 25vh;
+    background-position: 45% 0;
+    flex-direction: column-reverse;
+    height: 70vh;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .party_banner_container::before {
+    background-image: linear-gradient(
+      to bottom,
+      var(--bg) 0%,
+      transparent 70%,
+      var(--bg) 100%
+    );
+  }
+
+  .swiper_card {
+    height: 70%;
+    width: 70%;
+  }
+
+  .deco_image_container {
+    height: 50%;
+    padding: 0 2rem;
+  }
+
+  .party_animation {
+    right: 0;
+    transform: scale(1.5);
   }
 
   .party_text {
+    width: 80%;
     z-index: 10;
     font-size: 1rem;
-    width: 70%;
-    word-break: keep-all;
-  }
-
-  .deco_image {
-    width: 70%;
-    height: 70%;
-    object-fit: contain;
+    margin-bottom: 1.5rem;
   }
 }

@@ -1,19 +1,48 @@
 .about_container_top {
   font-family: var(--main-font);
   font-size: 1rem;
+  height: calc(100vh - var(--nav-height));
+}
+
+.about_container_top::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - var(--nav-height));
+  content: "";
+  background-image: url("/public/images/about.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 992px) {
+  .about_container_top::before {
+    background-position: 50%;
+  }
 }
 
 .about_banner_img {
-  width: 800px !important;
+  width: 100% !important;
   object-fit: contain;
   margin-top: 50px;
 }
 
+.about_text_container_top {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  height: calc(100vh - var(--nav-height));
+}
+
 .about_text_container {
   font-size: 0.9rem;
+  height: fit-content;
   padding: 20px;
   line-height: 40px;
   text-align: center;
+  position: relative;
+  z-index: 10;
 }
 
 .text_accent {

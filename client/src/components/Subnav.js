@@ -42,6 +42,7 @@ const Subnav = ({ option }) => {
 
   return (
     <>
+      <div className="gradient_overlay"></div>
       <Container className="filter_container_top">
         <div className="filter_container">
           {subnav_items.map((item, index) => (

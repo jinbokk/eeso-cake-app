@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const logoutHandler = () => {
     const confirm = window.confirm("로그아웃 하시겠습니까?");
-    dispatch(userActions.logoutUser(confirm))
+    dispatch(userActions.logoutUser(confirm));
   };
 
   const handleScroll = () => {
@@ -117,6 +117,7 @@ const Navbar = () => {
                     { subTitle: "BREAD CAKE GUIDE", link: "/guide/bread" },
                   ],
                 }}
+                slim={true}
               />
 
               <NavDropdown
@@ -169,10 +170,7 @@ const Navbar = () => {
                   <div className="user_container mx-5">
                     {authUserData && authUserData.isAuth ? (
                       <>
-                        <NavLink
-                          onClick={logoutHandler}
-                          className="mx-3"
-                        >
+                        <NavLink onClick={logoutHandler} className="mx-3">
                           로그아웃
                         </NavLink>
                         <NavLink

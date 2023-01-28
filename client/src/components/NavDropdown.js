@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const NavDropdown = ({ navMenu }) => {
+const NavDropdown = ({ navMenu, slim = false }) => {
   // const [isShown, setIsShown] = useState(false);
 
   const mouseOver = (e) => {
@@ -38,7 +38,7 @@ const NavDropdown = ({ navMenu }) => {
         </li>
 
         <li>
-          <ul className="dropDown_depth_2">
+          <ul className={slim ? "slim dropDown_depth_2" : "dropDown_depth_2"}>
             {navMenu.item.map((item, index) => (
               <li key={index}>
                 <NavLink
