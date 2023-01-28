@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { forSaleProductActions } from "../redux/actions/forSaleProductActions";
 import { userActions } from "../redux/actions/userActions";
 
@@ -31,6 +31,7 @@ import "./css/orderDetail.css";
 
 const OrderDetail = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { productId } = useParams();
 
@@ -39,6 +40,8 @@ const OrderDetail = () => {
   const { loading, productDetail } = useSelector(
     (state) => state.forSaleProduct
   );
+
+  const { authUserData } = useSelector((state) => state.user);
 
   const {
     deliveryType,
@@ -145,9 +148,21 @@ const OrderDetail = () => {
   };
 
   const addToCartHandler = () => {
-    dispatch(userActions.addToCart(cartItems));
-    alert("장바구니에 상품이 담겼습니다");
-    dispatch(userActions.auth());
+    if (authUserData && !authUserData.isAuth) {
+      const confirm = window.confirm(
+        "장바구니에 상품을 담기 위해서는 로그인 해야합니다\n로그인 하시겠습니까?"
+      );
+
+      if (confirm) {
+        navigate("/login");
+      } else {
+        return;
+      }
+    } else {
+      dispatch(userActions.addToCart(cartItems));
+      alert("장바구니에 상품이 담겼습니다");
+      dispatch(userActions.auth());
+    }
   };
 
   const onSubmit = (data) => {

@@ -133,8 +133,8 @@ function Login() {
               </Col>
               <Col lg={6}>
                 <div className="help_link">
-                  <NavLink>비밀번호를 잊으셨나요?</NavLink>
-                  <span className="mx-2">/</span>
+                  {/* <NavLink>비밀번호를 잊으셨나요?</NavLink> */}
+                  {/* <span className="mx-2">/</span> */}
                   <NavLink to="/register">회원가입</NavLink>
                 </div>
               </Col>
