@@ -304,7 +304,9 @@ const Home = () => {
                 className="party_animation"
               ></iframe>
               <div className="party_text">
-                <div className="underline mb-4">다양한 소품들이 있습니다</div>
+                <div className="underline mb-4">
+                  더 특별하게, 더 기억에 남게
+                </div>
                 <div>매장에 구비된 다양한 디자인 소품들과</div>
                 <div>세상에 단 하나뿐인 주문 제작 토퍼까지</div>
                 <div>
