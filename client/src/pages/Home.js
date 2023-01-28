@@ -17,7 +17,6 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Autoplay, EffectCards } from "swiper";
 import Instagram from "../components/Instagram";
-import { BsStars } from "react-icons/bs";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -34,14 +33,14 @@ const Home = () => {
   const { width } = useWindowDimensions();
 
   const decoImages = [
+    "/images/deco/deco_(7).png",
+    "/images/deco/deco_(10).png",
+    "/images/deco/deco_(9).png",
+    "/images/deco/deco_(6).png",
+    "/images/deco/deco_(5).png",
     "/images/deco/deco_(1).png",
     "/images/deco/deco_(3).png",
-    "/images/deco/deco_(5).png",
-    "/images/deco/deco_(6).png",
-    "/images/deco/deco_(7).png",
     "/images/deco/deco_(8).png",
-    "/images/deco/deco_(9).png",
-    "/images/deco/deco_(10).png",
     "/images/deco/deco_(11).png",
   ];
 
@@ -62,7 +61,7 @@ const Home = () => {
         duration: 1,
         scrollTrigger: {
           trigger: element.querySelector(".gsap_first"),
-          start: "top center",
+          start: "top 80%",
         },
       }
     );
@@ -79,8 +78,7 @@ const Home = () => {
         duration: 1,
         scrollTrigger: {
           trigger: element.querySelector(".gsap_second"),
-          start: "top center",
-          end: "bottom center",
+          start: "top 80%",
         },
       }
     );
@@ -97,8 +95,7 @@ const Home = () => {
         duration: 1,
         scrollTrigger: {
           trigger: element.querySelector(".gsap_third"),
-          start: "top center",
-          end: "bottom center",
+          start: "top 80%",
         },
       }
     );
@@ -115,8 +112,7 @@ const Home = () => {
         duration: 1,
         scrollTrigger: {
           trigger: element.querySelector(".gsap_fourth"),
-          start: "top center",
-          end: "bottom center",
+          start: "top 80%",
         },
       }
     );
