@@ -148,6 +148,17 @@ li {
   transition: 0.3;
 }
 
+.user_btn {
+  cursor: pointer;
+  transition: 0.3;
+}
+
+.user_btn:hover {
+  color: var(--bg-accent);
+  transition: 0.3;
+}
+
+
 .link_icon {
   pointer-events: all !important;
   width: 25px;

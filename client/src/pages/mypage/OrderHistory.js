@@ -22,7 +22,7 @@ const OrderHistory = () => {
           xs={2}
           className="d-flex align-items-center justify-content-center"
         >
-          <IoIosArrowForward size={25} className="order_history_lookup_arrow" />
+          <IoIosArrowForward className="order_history_lookup_arrow" />
         </Col>
 
         <Col xs={1} className="order_history_lookup_item">
@@ -34,7 +34,7 @@ const OrderHistory = () => {
           xs={2}
           className="d-flex align-items-center justify-content-center"
         >
-          <IoIosArrowForward size={25} className="order_history_lookup_arrow" />
+          <IoIosArrowForward className="order_history_lookup_arrow" />
         </Col>
 
         <Col xs={1} className="order_history_lookup_item">
@@ -46,7 +46,7 @@ const OrderHistory = () => {
           xs={2}
           className="d-flex align-items-center justify-content-center"
         >
-          <IoIosArrowForward size={25} className="order_history_lookup_arrow" />
+          <IoIosArrowForward className="order_history_lookup_arrow" />
         </Col>
 
         <Col xs={1} className="order_history_lookup_item">

@@ -169,19 +169,20 @@ const Navbar = () => {
                 <div className="util_container">
                   <div className="user_container mx-5">
                     {authUserData && authUserData.isAuth ? (
-                      <>
-                        <NavLink onClick={logoutHandler} className="mx-3">
+                      <div className="d-flex">
+                        <div onClick={logoutHandler} className="mx-3 user_btn">
                           로그아웃
-                        </NavLink>
+                        </div>
                         <NavLink
                           to="/user/mypage/order-history"
-                          className="mx-3"
+                          className="mx-3 user_btn"
                         >
                           마이페이지
                         </NavLink>
                         <NavLink
                           to="/user/cart"
                           style={{ marginLeft: "1.5rem" }}
+                          className="user_btn"
                         >
                           <StyledBadge
                             badgeContent={
@@ -190,10 +191,10 @@ const Navbar = () => {
                             }
                             color="error"
                           >
-                            <BsCart4 className="cartIcon" />
+                            <BsCart4 className="cartIcon user_btn" />
                           </StyledBadge>
                         </NavLink>
-                      </>
+                      </div>
                     ) : (
                       <>
                         <NavLink

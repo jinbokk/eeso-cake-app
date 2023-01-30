@@ -144,26 +144,28 @@ const NavbarAside = (props) => {
           <Col>
             <div className="text-center pt-5 pb-5">
               {props.authUserData && props.authUserData.isAuth ? (
-                <>
-                  <NavLink
+                <div className="d-flex justify-content-center align-items-center">
+                  <div
                     onClick={() => {
                       setToggleHandler(false);
                       props.logoutHandler();
                     }}
+                    className="user_btn"
                     style={{ position: "relative", top: "2px" }}
                   >
                     로그아웃
-                  </NavLink>
+                  </div>
 
                   <NavLink
                     to="/user/mypage/order-history"
                     onClick={() => {
                       setToggleHandler(false);
                     }}
+                    className="user_btn"
                     style={{
                       position: "relative",
                       top: "2px",
-                      margin: "0 10px",
+                      margin: "0 30px",
                     }}
                   >
                     마이페이지
@@ -182,12 +184,15 @@ const NavbarAside = (props) => {
                       color="error"
                     >
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <div style={{ marginRight: "5px" }}>장바구니</div>
-                        <props.BsCart4 className="cartIcon" />
+                        {/* <div style={{ marginRight: "5px" }} className="user_btn">장바구니</div> */}
+                        <props.BsCart4
+                          className="cartIcon user_btn"
+                          style={{ position: "relative", top: "1px" }}
+                        />
                       </div>
                     </props.StyledBadge>
                   </NavLink>
-                </>
+                </div>
               ) : (
                 <>
                   <NavLink

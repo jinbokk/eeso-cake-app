@@ -189,7 +189,7 @@ const Footer = () => {
                 위치
               </div>
               <div className="mb-5 info_text">
-                경기도 의정부시 승지로30번길 20 1층<br></br>
+                경기도 의정부시 승지로30번길 20<br></br>
                 <a
                   href="https://map.naver.com/v5/search/%EC%9D%B4%EC%86%8C%EC%BC%80%EC%9D%B4%ED%81%AC/place/661959504?c=14147586.5818935,4542283.8149681,16.63,0,0,0,dh&placePath=%3Fentry%253Dbmp"
                   target="_blank"
