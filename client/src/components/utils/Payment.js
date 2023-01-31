@@ -1,6 +1,20 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../redux/actions/userActions";
 
-const Payment = () => {
+const Payment = ({ authUserData, pay_method }) => {
+  const dispatch = useDispatch();
+  let name =
+    authUserData.cart.length > 1
+      ? `${authUserData.cart[0].title} 외 ${authUserData.cart.length - 1}건`
+      : `${authUserData.cart[0].title}`;
+
+  let buyer_name = authUserData.name;
+  let buyer_tel = authUserData.phoneNumber;
+  let buyer_email = authUserData.email;
+  let buyer_addr = authUserData.address.address;
+  let buyer_postcode = authUserData.address.postcode;
+
   const onClickPayment = () => {
     /* 1. 가맹점 식별하기 */
     const IMP = window.IMP;
@@ -11,30 +25,37 @@ const Payment = () => {
     IMP.request_pay(
       /* 2. 결제 데이터 정의하기 */
       {
-        pg: "kcp", // PG사
-        pay_method: "card", // 결제수단
+        pg: "nice", // PG사
+        pay_method: pay_method, // 결제수단
         merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
-        name: "아임포트 결제 데이터 분석", // 주문명
+        name: name, // 주문명
         amount: 100, // 결제금액
-        buyer_name: "홍길동", // 구매자 이름
-        buyer_tel: "01012341234", // 구매자 전화번호
-        buyer_email: "example@example", // 구매자 이메일
-        buyer_addr: "신사동 661-16", // 구매자 주소
-        buyer_postcode: "06018", // 구매자 우편번호
+        buyer_name: buyer_name, // 구매자 이름
+        buyer_tel: buyer_tel, // 구매자 전화번호
+        buyer_email: buyer_email, // 구매자 이메일
+        buyer_addr: buyer_addr, // 구매자 주소
+        buyer_postcode: buyer_postcode, // 구매자 우편번호
       },
       (res) => {
         /* 3. 콜백 함수 정의하기 */
         const { success, error_msg } = res;
         if (success) {
-          alert("결제 성공");
+          alert("결제가 완료 되었습니다");
+          console.log(res);
+
+          let body = {
+            orderUid: res.imp_uid,
+            // orderProducts : authUserData.cart
+            // 특정 상품 구매시, 해당 상품만 보내도록 할 수 있어야 한다.
+          };
+
+          dispatch(userActions.orderComplete(body));
         } else {
-          alert(`결제 실패 : ${error_msg}`);
+          alert(`결제에 실패하였습니다\n${error_msg}`);
         }
       }
     );
   };
-
-  /* 3. 콜백 함수 정의하기 */
 
   return (
     <>

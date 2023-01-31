@@ -193,7 +193,7 @@ function Register() {
   };
 
   // address
-  const [fullAddress, setFullAddress] = useState("");
+  const [address, setAddress] = useState("");
   const [extraAddress, setExtraAddress] = useState("");
 
   const extraAddressHandler = (extraAddress) => {
@@ -260,7 +260,10 @@ function Register() {
       name: name,
       gender: gender,
       phoneNumber: phoneNumber,
-      address: fullAddress + " " + extraAddress,
+      address: {
+        postcode: address.postcode,
+        address: address.fullAddress + " " + extraAddress,
+      },
       marketing: marketing,
     };
 
@@ -275,7 +278,7 @@ function Register() {
       phoneNumberVerify === false ||
       isDuplicatePhoneNumber === true ||
       isPhoneNumberWrong.error ||
-      fullAddress === "" ||
+      address === "" ||
       terms === false ||
       privacyPolicy === false
     ) {
@@ -665,14 +668,27 @@ function Register() {
             <InputGroup className="mb-2">
               <Form.Control
                 type="text"
-                value={fullAddress}
+                value={address.postcode}
                 readOnly
-                placeholder="전체 주소"
+                placeholder="우편번호"
                 style={{ userSelect: "none", cursor: "default" }}
               />
               <InputGroup.Text className="input_area_button">
-                <Postcode setFullAddress={setFullAddress} />
+                <Postcode setAddress={setAddress} />
               </InputGroup.Text>
+            </InputGroup>
+
+            <InputGroup
+              style={{ borderRight: "1px solid pink" }}
+              className="mb-2"
+            >
+              <Form.Control
+                type="text"
+                value={address.fullAddress}
+                readOnly
+                placeholder="기본 주소"
+                style={{ userSelect: "none", cursor: "default" }}
+              />
             </InputGroup>
 
             <InputGroup

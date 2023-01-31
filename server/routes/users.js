@@ -35,6 +35,8 @@ router.post("/register", (req, res) => {
           err.code === 11000
             ? "동일한 이메일로 가입된 계정이 존재합니다."
             : "회원가입에 실패하였습니다.",
+
+        error: err,
       });
     } else {
       return res.status(200).json({
@@ -163,8 +165,6 @@ router.post("/addToCart", auth, async (req, res) => {
   const createdOptions = req.body.createdOption; // Array
 
   const user = await User.findOne({ _id: req.user._id }).exec();
-
-  console.log("user", user);
 
   if (user.cart.length === 0) {
     // 유저 카트가 비어있을 경우
@@ -400,8 +400,39 @@ router.post("/decreaseQuantity", auth, async (req, res) => {
       arrayFilters: [
         {
           "elem._id": cart_o_id,
+          "elem.quantity": { $gt: 1 },
         },
       ],
+    },
+    (err, result) => {
+      if (err) {
+        console.log("err::::::::::::::::::", err);
+        return res.status(400).json({ success: false, err });
+      } else {
+        console.log("result::::::::::::::::::", result);
+        return res.status(200).send(result.cart);
+      }
+    }
+  );
+});
+
+router.post("/orderComplete", auth, async (req, res) => {
+  let orderUid = req.query.orderUid;
+
+  User.findOneAndUpdate(
+    {
+      _id: req.user._id,
+    },
+    {
+      $push: {
+        history: {
+          _id: orderUid,
+          // orderProducts들도 함께 넣어주어야 한다
+        },
+      },
+    },
+    {
+      new: true,
     },
     (err, result) => {
       if (err) {

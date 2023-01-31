@@ -1,12 +1,13 @@
 import React from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 
-export default function Postcode({ setFullAddress }) {
+export default function Postcode({ setAddress }) {
   const open = useDaumPostcodePopup(
     "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
   );
 
   const handleComplete = (data) => {
+    let postcode = data.zonecode;
     let fullAddress = data.address;
     let extraAddress = "";
 
@@ -22,7 +23,10 @@ export default function Postcode({ setFullAddress }) {
     }
 
     // console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
-    setFullAddress(fullAddress);
+    setAddress({
+      postcode: postcode,
+      fullAddress: fullAddress,
+    });
   };
 
   const handleClick = () => {

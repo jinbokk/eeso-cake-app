@@ -201,36 +201,6 @@ function removeFromCart(productId) {
   };
 }
 
-// function getCartItems(cartItems, userCart) {
-//   return async (dispatch) => {
-//     try {
-//       const getCartItemsResult = await axios
-//         .get(`/api/products/products-by-id?id=${cartItems}`)
-//         .then((res) => {
-//           // 1.cartItems들에 해당하는 정보들을 Product Collection에서 가져온다
-//           userCart.forEach((cartItem) => {
-//             res.data.forEach((productDetail, index) => {
-//               if (cartItem.id === productDetail._id) {
-//                 // 2. Quantity 정보를 넣어준다.
-//                 res.data[index].quantity = cartItem.quantity;
-//               }
-//             });
-//           });
-
-//           console.log(res.data);
-//           return res.data;
-//         });
-
-//       dispatch({
-//         type: "GET_CART_ITEMS",
-//         payload: getCartItemsResult,
-//       });
-//     } catch (error) {
-//       console.log("error occurred : ", error);
-//     }
-//   };
-// }
-
 function increaseQuantity(cartId) {
   return async (dispatch) => {
     try {
@@ -270,6 +240,19 @@ function decreaseQuantity(cartId) {
   };
 }
 
+function orderComplete(body) {
+  return async (dispatch) => {
+    try {
+      const orderCompleteResult = await axios
+        .post(`/api/users/orderComplete?orderUid=${body.orderUid}`)
+        .then((res) => {
+          console.log(res.data);
+          return res.data;
+        });
+    } catch (error) {}
+  };
+}
+
 export const userActions = {
   registerUser,
   unregisterUser,
@@ -280,7 +263,7 @@ export const userActions = {
   auth,
   addToCart,
   removeFromCart,
-  // getCartItems,
   increaseQuantity,
   decreaseQuantity,
+  orderComplete,
 };

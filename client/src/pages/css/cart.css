@@ -26,12 +26,12 @@
 }
 
 .item_title {
-  margin-bottom: 1rem;
   font-size: 1rem;
   text-align: start;
   text-decoration: underline 1px rgba(0, 0, 0, 0);
   text-underline-offset: 7px;
   transition: 0.2s;
+  padding: 0.5rem 0.5rem;
 }
 
 .delete_button {
@@ -51,4 +51,19 @@
   user-select: none;
   font-size: 1.5rem;
   padding: 10px;
+}
+
+.cart_table th {
+  vertical-align: middle;
+  padding: 0.5rem 1rem !important;
+}
+
+.cart_table td {
+  vertical-align: middle;
+  padding: 1.5rem 1.5rem !important;
+}
+
+.option_text {
+  font-size: 0.8rem;
+  padding: 0.5rem 0.5rem;
 }

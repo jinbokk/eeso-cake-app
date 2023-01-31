@@ -23,7 +23,7 @@ const CustomerRequest = ({ control, cartItems }) => {
     <>
       <div className="d-block border-0 option_menu_section">
         <div className="d-flex justify-content-between">
-          <div>요청 사항</div>
+          <div>요청 사항 {`(${request.length}/30)`}</div>
           <div
             style={{
               fontSize: "0.8rem",
@@ -42,8 +42,7 @@ const CustomerRequest = ({ control, cartItems }) => {
           render={({ field: { onChange, value, ...field } }) => (
             <TextField
               {...field}
-              // multiline
-              // label="레터링 추가 요청은 반영되지 않습니다"
+              placeholder="최대 30자 까지 입력 가능합니다"
               fullWidth
               variant="outlined"
               style={{ width: "100%" }}
@@ -57,6 +56,7 @@ const CustomerRequest = ({ control, cartItems }) => {
                   fontSize: "0.9rem",
                   fontFamily: "NanumSquareNeo-Variable",
                 },
+                maxLength: 30,
               }}
             />
           )}

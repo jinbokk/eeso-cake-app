@@ -227,7 +227,7 @@ const OrderDetail = () => {
                   </Row> */}
                 </Col>
 
-                <Col lg={5} className="px-5">
+                <Col lg={5}>
                   {width > 992 ? (
                     <>
                       <h3 className="mb-3 fw-bold">{productDetail.title}</h3>
