@@ -4,6 +4,11 @@ const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 
+const AddressSchema = mongoose.Schema({
+  postcode: String,
+  fullAddress: String,
+});
+
 const userSchema = mongoose.Schema({
   email: {
     type: String,
@@ -24,7 +29,7 @@ const userSchema = mongoose.Schema({
     required: true,
   },
   address: {
-    type: Object,
+    type: AddressSchema,
     required: true,
   },
   phoneNumber: {
@@ -33,6 +38,8 @@ const userSchema = mongoose.Schema({
   },
   marketing: {
     type: Boolean,
+    default: false,
+    required: true,
   },
   role: {
     type: Number,

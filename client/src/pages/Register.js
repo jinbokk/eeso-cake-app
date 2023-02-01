@@ -262,7 +262,7 @@ function Register() {
       phoneNumber: phoneNumber,
       address: {
         postcode: address.postcode,
-        address: address.fullAddress + " " + extraAddress,
+        fullAddress: address.fullAddress + " " + extraAddress,
       },
       marketing: marketing,
     };
