@@ -110,11 +110,12 @@ router.get("/register/phoneNumber-check/:phoneNumber", (req, res) => {
 router.post("/login", (req, res) => {
   // 1. find email on DB
   User.findOne({ email: req.body.email }, (err, user) => {
-    if (!user)
+    if (!user) {
       return res.send({
         loginSuccess: false,
         message: "해당 이메일로 가입된 계정이 없습니다.",
       });
+    }
 
     // 2. if email checked, then check password verify
     user.comparePassword(req.body.password, (err, isMatch) => {
