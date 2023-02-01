@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import { userActions } from "../redux/actions/userActions";
@@ -12,10 +12,12 @@ import { NavLink } from "react-router-dom";
 
 import Payment from "../components/utils/Payment";
 import "./css/cart.css";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const { authUserData } = useSelector((state) => state.user);
+  const { width } = useWindowDimensions();
 
   const removeFromCart = (productId) => {
     dispatch(userActions.removeFromCart(productId));
@@ -34,9 +36,9 @@ const Cart = () => {
   });
 
   const QuantityButton = styled(Button)(() => ({
-    width: "30px",
+    width: width < 992 ? "20px" : "30px",
     minWidth: 0,
-    height: "30px",
+    height: width < 992 ? "20px" : "30px",
     padding: "10px",
     boxShadow: "none",
 
@@ -51,6 +53,7 @@ const Cart = () => {
     width: "200px",
     fontSize: "1.2rem",
     boxShadow: "none",
+    fontFamily: "inherit",
 
     "&:hover": {
       backgroundColor: pink[300],
@@ -64,6 +67,7 @@ const Cart = () => {
     width: "200px",
     fontSize: "1.2rem",
     boxShadow: "none",
+    fontFamily: "inherit",
 
     "&:hover": {
       backgroundColor: pink[400],
@@ -71,13 +75,49 @@ const Cart = () => {
     },
   }));
 
-  const [checkedList, setCheckedList] = useState([]);
-  const [checkedItem, setCheckedItem] = useState([]);
-  const checkHandler = (e, item) => {
-    setCheckedItem((prev) => [...prev, item]);
-    console.log(checkedItem); // boolean
-    console.log(item);
+  const initialCartIds = authUserData.cart.map((item) => item._id);
+
+  const [checkedCartIds, setCheckedCart] = useState([]);
+
+  useLayoutEffect(() => {
+    setCheckedCart(initialCartIds);
+  }, [authUserData]);
+
+  const checkHandler = (event) => {
+    const { value, checked } = event.target; // value는 개별 cartId
+
+    console.log(value);
+
+    if (value === "checkAll") {
+      if (initialCartIds.length === checkedCartIds.length) {
+        setCheckedCart([]);
+      } else {
+        setCheckedCart(initialCartIds);
+      }
+    } else {
+      if (checked) {
+        setCheckedCart((prev) => [...prev, value]);
+      } else {
+        setCheckedCart((prev) => {
+          return [...prev.filter((item) => item !== value)];
+        });
+      }
+    }
   };
+
+  const [authUserDataWithCheckedCart, setAuthUserDataWithCheckedCart] =
+    useState(authUserData);
+
+  const checkedCartList = authUserData.cart.filter((userCartItem) =>
+    checkedCartIds.some((checkedCartId) => userCartItem._id === checkedCartId)
+  );
+
+  useEffect(() => {
+    // checkedCartIds를 이용하여 authUserData.cart와 대조
+    setAuthUserDataWithCheckedCart({ ...authUserData, cart: checkedCartList });
+  }, [checkedCartIds]);
+
+  console.log("authUserDataWithCheckedCart", authUserDataWithCheckedCart);
 
   return (
     <ThemeProvider theme={theme}>
@@ -102,13 +142,14 @@ const Cart = () => {
 
         {authUserData && authUserData.isAuth && authUserData.cart.length > 0 ? (
           <>
-            <Table bordered>
+            <Table bordered responsive>
               <thead className="text-center">
                 <tr className="cart_table">
                   <th>
                     <Checkbox
-                      // checked={checkedItem}
-                      onChange={(e) => checkHandler(e)}
+                      value={"checkAll"}
+                      checked={initialCartIds.length === checkedCartIds.length}
+                      onChange={checkHandler}
                     />
                   </th>
                   <th>상품정보</th>
@@ -122,10 +163,9 @@ const Cart = () => {
                   <tr key={index} className="cart_table">
                     <td>
                       <Checkbox
-                        // checked={checkedItem.find(
-                        //   (checkedItem) => checkedItem._id === item._id
-                        // )}
-                        onChange={(e) => checkHandler(e, item)}
+                        value={item._id}
+                        checked={checkedCartIds.includes(item._id)}
+                        onChange={checkHandler}
                       />
                     </td>
 
@@ -251,23 +291,21 @@ const Cart = () => {
             <Row>
               <Col className="border-top p-5 justify-content-center align-items-center">
                 <div className="total_text">
-                  총 수량 :{" "}
-                  {authUserData &&
-                    authUserData.cart
-                      .reduce((accumulator, item) => {
-                        return accumulator + item.quantity;
-                      }, 0)
-                      .toLocaleString("ko-KR")}{" "}
+                  선택 수량 :{" "}
+                  {authUserDataWithCheckedCart.cart
+                    .reduce((accumulator, item) => {
+                      return accumulator + item.quantity;
+                    }, 0)
+                    .toLocaleString("ko-KR")}
                   개
                 </div>
                 <div className="total_text">
                   주문 금액 : ₩{" "}
-                  {authUserData &&
-                    authUserData.cart
-                      .reduce((accumulator, item) => {
-                        return accumulator + item.quantity * item.price;
-                      }, 0)
-                      .toLocaleString("ko-KR")}
+                  {authUserDataWithCheckedCart.cart
+                    .reduce((accumulator, item) => {
+                      return accumulator + item.quantity * item.price;
+                    }, 0)
+                    .toLocaleString("ko-KR")}
                 </div>
               </Col>
             </Row>
@@ -286,23 +324,14 @@ const Cart = () => {
                   <OrderButton variant="contained">전체 주문</OrderButton>
                 </NavLink>
               </Col>
-              {/* <Col className="align-items-center">
-                <Paypal />
-              </Col> */}
             </Row>
 
-            <Payment authUserData={authUserData} pay_method="card" />
-            <Payment authUserData={authUserData} pay_method="vbank" />
-            <Payment authUserData={authUserData} pay_method="trans" />
-            <Payment authUserData={authUserData} pay_method="phone" />
+            <Payment authUserDataWithCheckedCart={authUserDataWithCheckedCart} pay_method="card" />
           </>
         ) : (
           <Row className="border-top empty_msg">
             <Col className="justify-content-center align-items-center">
               <div>장바구니가 비어있습니다</div>
-              {/* <NavLink to="/">
-                    <div>이소케이크 둘러보기</div>
-                    </NavLink> */}
             </Col>
           </Row>
         )}

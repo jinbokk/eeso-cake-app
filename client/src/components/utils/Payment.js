@@ -2,18 +2,23 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../redux/actions/userActions";
 
-const Payment = ({ authUserData, pay_method }) => {
+const Payment = ({ authUserDataWithCheckedCart, pay_method }) => {
   const dispatch = useDispatch();
   let name =
-    authUserData.cart.length > 1
-      ? `${authUserData.cart[0].title} 외 ${authUserData.cart.length - 1}건`
-      : `${authUserData.cart[0].title}`;
+    authUserDataWithCheckedCart.cart.length > 1
+      ? `${authUserDataWithCheckedCart.cart[0].title} 외 ${
+          authUserDataWithCheckedCart.cart.length - 1
+        }건`
+      : `${authUserDataWithCheckedCart.cart[0].title}`;
 
-  let buyer_name = authUserData.name;
-  let buyer_tel = authUserData.phoneNumber;
-  let buyer_email = authUserData.email;
-  let buyer_addr = authUserData.address.address;
-  let buyer_postcode = authUserData.address.postcode;
+  let buyer_name = authUserDataWithCheckedCart.name;
+  let amount = authUserDataWithCheckedCart.cart.reduce((accumulator, item) => {
+    return accumulator + item.quantity * item.price;
+  }, 0);
+  let buyer_tel = authUserDataWithCheckedCart.phoneNumber;
+  let buyer_email = authUserDataWithCheckedCart.email;
+  let buyer_addr = authUserDataWithCheckedCart.address.address;
+  let buyer_postcode = authUserDataWithCheckedCart.address.postcode;
 
   const onClickPayment = () => {
     /* 1. 가맹점 식별하기 */
@@ -29,7 +34,7 @@ const Payment = ({ authUserData, pay_method }) => {
         pay_method: pay_method, // 결제수단
         merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
         name: name, // 주문명
-        amount: 100, // 결제금액
+        amount: amount, // 결제금액
         buyer_name: buyer_name, // 구매자 이름
         buyer_tel: buyer_tel, // 구매자 전화번호
         buyer_email: buyer_email, // 구매자 이메일

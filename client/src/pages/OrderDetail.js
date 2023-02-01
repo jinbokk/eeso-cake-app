@@ -183,7 +183,7 @@ const OrderDetail = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <Row className="mb-5">
                 {width < 992 ? (
-                  <div style={{ padding: "0 3rem" }}>
+                  <div>
                     <h3 className="mb-3 fw-bold">{productDetail.title}</h3>
                     <h5 className="mb-4">{productDetail.description}</h5>
                     <h3 className="mb-4">
