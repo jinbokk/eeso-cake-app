@@ -1,5 +1,5 @@
 .mypage_title {
-  margin: 2rem 0;
+  padding: 2rem 0;
   font-weight: bold;
   /* color: var(--bg-accent); */
   /* text-decoration: underline 1px solid var(--bg-accent);
@@ -19,6 +19,10 @@
   align-items: center;
   justify-content: space-between;
   max-height: max-content;
+}
+
+.border_right {
+  border-right: 1px solid var(--bg-accent);
 }
 
 .order_history_lookup_text {

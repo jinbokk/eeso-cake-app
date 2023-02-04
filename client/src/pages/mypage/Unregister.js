@@ -34,8 +34,9 @@ const Unregister = () => {
     }
   }, [visible]);
 
-  const unregisterHandler = () => {
-    const confirm = window.confirm("회원 탈퇴 하시겠습니까?");
+  const unregisterHandler = (e) => {
+    e.preventDefault();
+    const confirm = window.confirm("회원탈퇴를 하시겠습니까?");
     if (confirm) {
       let body = {
         email: authUserData.email,

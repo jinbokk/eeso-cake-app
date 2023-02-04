@@ -418,7 +418,16 @@ router.post("/decreaseQuantity", auth, async (req, res) => {
 });
 
 router.post("/orderComplete", auth, async (req, res) => {
-  let orderUid = req.query.orderUid;
+  let { imp_uid, merchant_uid, name, amount, products } = req.body;
+
+  // order Process
+
+  // 1. 결제완료 : order_paid
+  // 2. 제작중 : order_making
+  // 3. 픽업 대기: order_waiting_for_pickup
+  // 4. 픽업 완료: order_complete
+  // 5. 취소 대기 : order_waiting_for_cancel
+  // 6. 취소 완료 : order_canceled
 
   User.findOneAndUpdate(
     {
@@ -427,8 +436,13 @@ router.post("/orderComplete", auth, async (req, res) => {
     {
       $push: {
         history: {
-          _id: orderUid,
-          // orderProducts들도 함께 넣어주어야 한다
+          imp_uid: imp_uid,
+          merchant_uid: merchant_uid,
+          name: name,
+          amount: amount,
+          products: products,
+          state: "order_paid",
+          createdAt: new Date(),
         },
       },
     },

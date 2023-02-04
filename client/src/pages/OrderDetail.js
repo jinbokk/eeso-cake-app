@@ -161,6 +161,7 @@ const OrderDetail = () => {
     } else {
       dispatch(userActions.addToCart(cartItems));
       alert("장바구니에 상품이 담겼습니다");
+      setCartItems([]);
       dispatch(userActions.auth());
     }
   };

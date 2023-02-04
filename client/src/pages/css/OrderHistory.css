@@ -1,0 +1,78 @@
+.order_card {
+  padding: 3rem !important;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  background-color: #8d6e633f;
+  border-radius: 15px;
+}
+
+.order_card_status {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.order_card_info {
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
+.order_card_accordion {
+  /* background-color: red !important; */
+  border: none !important;
+  overflow: hidden;
+  border-radius: 15px !important;
+  transition: 0.3s;
+  font-size: 0.8rem;
+}
+
+.order_card_accordion .accordion-body > div {
+  border-bottom: 1px dotted var(--bg-accent);
+}
+
+.order_card_accordion .accordion-body > div:last-child {
+  border-bottom: none;
+}
+
+.order_card_accordion .collapsed {
+  border-bottom: none !important;
+}
+
+.order_card_accordion .accordion-button {
+  border-bottom: 1px solid var(--bg-accent);
+}
+
+.order_card_accordion .accordion-button:focus {
+  border-bottom: 1px solid var(--bg-accent);
+}
+
+.order_card_accordion > .accordion-header {
+  background-color: var(--bg);
+  /* border-radius: 15px; */
+  transition: 0.3s;
+}
+
+.order_card_accordion > .accordion-collapse {
+  background-color: var(--bg) !important;
+}
+
+.order_card_accordion > h2 > .accordion-button {
+  justify-content: center !important;
+}
+
+.order_card_accordion > h2 > .accordion-button::after {
+  display: none !important;
+}
+
+.order_card_image {
+  max-width: 120px;
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+@media screen and (max-width: 992px) {
+  .order_card_accordion {
+    text-align: center;
+  }
+}

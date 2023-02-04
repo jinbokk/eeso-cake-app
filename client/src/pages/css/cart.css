@@ -34,6 +34,10 @@
   padding: 0.5rem 0.5rem;
 }
 
+.border_bottom {
+  border-bottom: 1px solid rgba(255, 144, 144, 0.5);
+}
+
 .delete_button {
   font-size: 2.2rem;
   color: gray;
@@ -51,6 +55,10 @@
   user-select: none;
   font-size: 1.5rem;
   padding: 10px;
+}
+
+.cart_table {
+  border-color: rgba(255, 144, 144, 0.5);
 }
 
 .cart_table th {

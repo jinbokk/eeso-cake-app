@@ -62,7 +62,7 @@ function duplicatePhoneNumberCheck(phoneNumber) {
   let body = {
     phoneNumber: phoneNumber,
   };
-  
+
   // const IMP = window.IMP;
   // const store_id = process.env.IAMPORT_STORE_ID;
   // IMP.init(store_id);
@@ -71,11 +71,11 @@ function duplicatePhoneNumberCheck(phoneNumber) {
   // IMP.certification({ // param
   //   // 주문 번호
   //   pg:'danal',//본인인증 설정이 2개이상 되어 있는 경우 필
-  //   merchant_uid: "ORD20180131-0000011", 
+  //   merchant_uid: "ORD20180131-0000011",
   //   // 모바일환경에서 popup:false(기본값) 인 경우 필수
-  //   m_redirect_url : "{리디렉션 될 URL}", 
+  //   m_redirect_url : "{리디렉션 될 URL}",
   //   // PC환경에서는 popup 파라메터가 무시되고 항상 true 로 적용됨
-  //   popup : false 
+  //   popup : false
   // }, res => { // callback
   //   if (res.success) {
   //     console.log(res)
@@ -264,13 +264,13 @@ function decreaseQuantity(cartId) {
 function orderComplete(body) {
   return async (dispatch) => {
     try {
-      const orderCompleteResult = await axios
-        .post(`/api/users/orderComplete?orderUid=${body.orderUid}`)
-        .then((res) => {
-          console.log(res.data);
-          return res.data;
-        });
-    } catch (error) {}
+      await axios.post("/api/users/orderComplete", body).then((res) => {
+        console.log(res.data);
+        return res.data;
+      });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
   };
 }
 

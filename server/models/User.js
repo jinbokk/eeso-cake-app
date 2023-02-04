@@ -9,51 +9,55 @@ const moment = require("moment");
 //   fullAddress: String,
 // });
 
-const userSchema = mongoose.Schema({
-  email: {
-    type: String,
-    trim: true,
-    unique: 1,
-    required: true,
+const userSchema = mongoose.Schema(
+  {
+    email: {
+      type: String,
+      trim: true,
+      unique: 1,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: Object,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
+    marketing: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    role: {
+      type: Number,
+      default: 0,
+    },
+    cart: { type: Array, default: [] },
+    history: { type: Array, default: [] },
+    createdAt: {},
+    token: {
+      type: String,
+    },
+    tokenExp: {
+      type: Number,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  gender: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: Object,
-    required: true,
-  },
-  phoneNumber: {
-    type: String,
-    required: true,
-  },
-  marketing: {
-    type: Boolean,
-    default: false,
-    required: true,
-  },
-  role: {
-    type: Number,
-    default: 0,
-  },
-  cart: { type: Array, default: [] },
-  history: { type: Array, default: [] },
-  token: {
-    type: String,
-  },
-  tokenExp: {
-    type: Number,
-  },
-});
+  { timestamps: true }
+);
 
 //before save to mongoDb
 userSchema.pre("save", function (next) {
@@ -104,7 +108,7 @@ userSchema.methods.generateToken = function (cb) {
 userSchema.statics.findByToken = function (token, cb) {
   // methods에서는 this가 호출한 주체를 가리킨다.
   // 예를들어, abc.findByToken 이렇게 호출했다면 this = abc가 된다
-  
+
   // statics는 this가 모델 그 자체를 가리킨다.
   // 즉, statics에서 this는 mongoose 모델을 가리킨다
   // findByToken에서 statics으로 해야 하는 이유는

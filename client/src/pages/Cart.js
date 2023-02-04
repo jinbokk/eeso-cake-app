@@ -1,10 +1,10 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { Container, Row, Col, Table, Nav } from "react-bootstrap";
 import { userActions } from "../redux/actions/userActions";
 import { Button, Checkbox } from "@mui/material";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
-import { pink } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 import { AiOutlineClose, AiOutlineRight } from "react-icons/ai";
 import { BsCheck2Circle, BsCartCheck } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
@@ -27,10 +27,7 @@ const Cart = () => {
   const theme = createTheme({
     palette: {
       primary: {
-        main: pink[300],
-      },
-      secondary: {
-        main: pink[500],
+        main: "#de6061",
       },
     },
   });
@@ -43,7 +40,7 @@ const Cart = () => {
     boxShadow: "none",
 
     "&:hover": {
-      backgroundColor: pink[400],
+      backgroundColor: red[400],
       boxShadow: "none",
     },
   }));
@@ -56,7 +53,7 @@ const Cart = () => {
     fontFamily: "inherit",
 
     "&:hover": {
-      backgroundColor: pink[300],
+      backgroundColor: red[300],
       color: "white",
       boxShadow: "none",
     },
@@ -70,7 +67,7 @@ const Cart = () => {
     fontFamily: "inherit",
 
     "&:hover": {
-      backgroundColor: pink[400],
+      backgroundColor: red[400],
       boxShadow: "none",
     },
   }));
@@ -184,11 +181,11 @@ const Cart = () => {
                         </Col>
 
                         <Col lg={7} className="text-start">
-                          <div className="item_title border-bottom">
+                          <div className="item_title border_bottom">
                             {item.title}
                           </div>
 
-                          <div className="border-bottom">
+                          <div className="border_bottom">
                             <div className="option_text">
                               {item.deliveryType} / {item.deliveryDate}{" "}
                               {item.deliveryTime}
@@ -289,7 +286,7 @@ const Cart = () => {
             </Table>
 
             <Row>
-              <Col className="border-top p-5 justify-content-center align-items-center">
+              <Col className="p-5 border_bottom justify-content-center align-items-center">
                 <div className="total_text">
                   선택 수량 :{" "}
                   {authUserDataWithCheckedCart.cart
@@ -310,23 +307,47 @@ const Cart = () => {
               </Col>
             </Row>
 
-            <Row className="py-5 border-top w-auto justify-content-center">
+            <Row className="py-5 w-auto justify-content-center">
               <Col className="align-items-center">
-                <ShoppingButton variant="outlined">
-                  쇼핑하러 가기
-                </ShoppingButton>
-              </Col>
-              <Col className="align-items-center">
-                <OrderButton variant="contained">선택상품 주문</OrderButton>
-              </Col>
-              <Col className="align-items-center">
-                <NavLink to="/user/payment">
-                  <OrderButton variant="contained">전체 주문</OrderButton>
+                <NavLink to="/order">
+                  <ShoppingButton variant="outlined">
+                    쇼핑하러 가기
+                  </ShoppingButton>
                 </NavLink>
               </Col>
+              <Col className="align-items-center">
+                {authUserDataWithCheckedCart.cart.length > 0 ? (
+                  <Payment
+                    OrderButton={OrderButton}
+                    btnTitle="선택상품 주문"
+                    authUserDataWithCheckedCart={authUserDataWithCheckedCart}
+                    pay_method="card"
+                  />
+                ) : (
+                  <Payment
+                    disabled
+                    OrderButton={OrderButton}
+                    btnTitle="선택상품 주문"
+                  />
+                )}
+              </Col>
+              <Col className="align-items-center">
+                {authUserDataWithCheckedCart.cart.length > 0 ? (
+                  <Payment
+                    OrderButton={OrderButton}
+                    btnTitle="전체 주문"
+                    authUserDataWithCheckedCart={authUserData}
+                    pay_method="card"
+                  />
+                ) : (
+                  <Payment
+                    disabled
+                    OrderButton={OrderButton}
+                    btnTitle="전체 주문"
+                  />
+                )}
+              </Col>
             </Row>
-
-            <Payment authUserDataWithCheckedCart={authUserDataWithCheckedCart} pay_method="card" />
           </>
         ) : (
           <Row className="border-top empty_msg">
