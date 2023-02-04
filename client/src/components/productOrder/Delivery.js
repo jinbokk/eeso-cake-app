@@ -294,6 +294,9 @@ const Delivery = ({ control, cartItems }) => {
 
         <div className="option_menu_section">
           <span className="option_menu_text">수령 시간</span>
+
+          {/* antDesing TimePicker로 바꾸자 */}
+
           <div className="controller_container">
             <Controller
               control={control}
@@ -306,7 +309,6 @@ const Delivery = ({ control, cartItems }) => {
                   value={delivery === "택배" ? null : time}
                   minTime={minTime}
                   maxTime={maxTime}
-                  disableMaskedInput
                   inputFormat="a hh:mm"
                   onChange={(event) => {
                     onChange(event);

@@ -19,8 +19,10 @@ const Cart = () => {
   const { authUserData } = useSelector((state) => state.user);
   const { width } = useWindowDimensions();
 
-  const removeFromCart = (productId) => {
-    dispatch(userActions.removeFromCart(productId));
+  const removeFromCart = (checkedCartIds) => {
+    dispatch(userActions.removeFromCart(checkedCartIds));
+    alert("선택하신 상품이 장바구니에서 제거되었습니다");
+    dispatch(userActions.auth());
   };
 
   // theme
@@ -33,9 +35,10 @@ const Cart = () => {
   });
 
   const QuantityButton = styled(Button)(() => ({
-    width: width < 992 ? "20px" : "30px",
+    width: width < 992 ? "15px" : "30px",
     minWidth: 0,
-    height: width < 992 ? "20px" : "30px",
+    height: width < 992 ? "15px" : "30px",
+    fontSize: width < 992 ? "1rem" : "1.3rem",
     padding: "10px",
     boxShadow: "none",
 
@@ -46,9 +49,9 @@ const Cart = () => {
   }));
 
   const ShoppingButton = styled(Button)(() => ({
-    padding: "10px",
-    width: "200px",
-    fontSize: "1.2rem",
+    padding: "15px 20px",
+    width: "100%",
+    fontSize: width < 992 ? "1rem" : "1.2rem",
     boxShadow: "none",
     fontFamily: "inherit",
 
@@ -60,9 +63,9 @@ const Cart = () => {
   }));
 
   const OrderButton = styled(Button)(() => ({
-    padding: "10px",
-    width: "200px",
-    fontSize: "1.2rem",
+    padding: "15px 20px",
+    width: "100%",
+    fontSize: width < 992 ? "1rem" : "1.2rem",
     boxShadow: "none",
     fontFamily: "inherit",
 
@@ -74,10 +77,10 @@ const Cart = () => {
 
   const initialCartIds = authUserData.cart.map((item) => item._id);
 
-  const [checkedCartIds, setCheckedCart] = useState([]);
+  const [checkedCartIds, setCheckedCartIds] = useState([]);
 
   useLayoutEffect(() => {
-    setCheckedCart(initialCartIds);
+    setCheckedCartIds(initialCartIds);
   }, [authUserData]);
 
   const checkHandler = (event) => {
@@ -87,15 +90,15 @@ const Cart = () => {
 
     if (value === "checkAll") {
       if (initialCartIds.length === checkedCartIds.length) {
-        setCheckedCart([]);
+        setCheckedCartIds([]);
       } else {
-        setCheckedCart(initialCartIds);
+        setCheckedCartIds(initialCartIds);
       }
     } else {
       if (checked) {
-        setCheckedCart((prev) => [...prev, value]);
+        setCheckedCartIds((prev) => [...prev, value]);
       } else {
-        setCheckedCart((prev) => {
+        setCheckedCartIds((prev) => {
           return [...prev.filter((item) => item !== value)];
         });
       }
@@ -120,14 +123,14 @@ const Cart = () => {
     <ThemeProvider theme={theme}>
       <Container>
         {authUserData && authUserData.isAuth ? (
-          <h1 className="py-5 text-center">
+          <h1 className="cart_title">
             <span style={{ marginRight: "5px" }}>{authUserData.name}</span>
             님의 장바구니
           </h1>
         ) : null}
 
-        <Row className="my-4">
-          <Col className="flex-row justify-content-end align-items-center">
+        <Row className="mb-4">
+          <Col className="order_navigation">
             <BsCartCheck className="m-2 text-danger" />
             <span className="fw-bold text-danger">Cart</span>
             <AiOutlineRight className="m-2 text-danger" />
@@ -139,151 +142,258 @@ const Cart = () => {
 
         {authUserData && authUserData.isAuth && authUserData.cart.length > 0 ? (
           <>
-            <Table bordered responsive>
-              <thead className="text-center">
-                <tr className="cart_table">
-                  <th>
-                    <Checkbox
-                      value={"checkAll"}
-                      checked={initialCartIds.length === checkedCartIds.length}
-                      onChange={checkHandler}
-                    />
-                  </th>
-                  <th>상품정보</th>
-                  <th>수량</th>
-                  <th colSpan={2}>주문금액</th>
-                </tr>
-              </thead>
-
-              <tbody className="text-center">
-                {authUserData.cart.map((item, index) => (
-                  <tr key={index} className="cart_table">
-                    <td>
+            {width < 992 ? (
+              <Table bordered responsive>
+                <thead className="text-center">
+                  <tr className="cart_table">
+                    <th>
                       <Checkbox
-                        value={item._id}
-                        checked={checkedCartIds.includes(item._id)}
+                        value={"checkAll"}
+                        checked={
+                          initialCartIds.length === checkedCartIds.length
+                        }
                         onChange={checkHandler}
                       />
-                    </td>
-
-                    <td>
-                      <Row className="d-flex justify-content-between align-items-center">
-                        <Col lg={5} className="item_thumbnail_container">
-                          <NavLink to={`/order/detail/${item.rootProductId}`}>
-                            <div>
-                              <img
-                                src={item.image_url}
-                                alt=""
-                                className="item_thumbnail"
-                              />
-                            </div>
-                          </NavLink>
-                        </Col>
-
-                        <Col lg={7} className="text-start">
-                          <div className="item_title border_bottom">
-                            {item.title}
-                          </div>
-
-                          <div className="border_bottom">
-                            <div className="option_text">
-                              {item.deliveryType} / {item.deliveryDate}{" "}
-                              {item.deliveryTime}
-                            </div>
-                          </div>
-
-                          {
-                            item.letteringToggle === "추가 하기" ? (
-                              <div className="option_text">
-                                케이크 판 레터링 / {item.letteringText}
-                              </div>
-                            ) : null
-                            // (
-                            //   <div className="disabled_text">
-                            //     케이크판 레터링 / 추가하지 않기
-                            //   </div>
-                            // )
-                          }
-
-                          {
-                            item.designTopperToggle === "추가 하기" ? (
-                              <div className="option_text">
-                                디자인 토퍼 문구 (+
-                                {item.designTopperText.length <= 10
-                                  ? "6,000"
-                                  : "9,000"}
-                                {/* {item.디자인토퍼_추가금.toLocaleString("ko-KR")} */}
-                                원) / {item.designTopperText}
-                              </div>
-                            ) : null
-                            // (
-                            //   <div className="disabled_text">
-                            //     디자인 토퍼 / 추가하지 않기
-                            //   </div>
-                            // )
-                          }
-
-                          {item.customerRequestText ? (
-                            <div className="option_text">
-                              요청 사항 / {item.customerRequestText}
-                            </div>
-                          ) : null}
-                        </Col>
-                      </Row>
-                    </td>
-
-                    <td>
-                      <div className="d-flex justify-content-center align-items-center">
-                        <QuantityButton
-                          variant="contained"
-                          onClick={() => {
-                            if (item.quantity > 1) {
-                              dispatch(userActions.decreaseQuantity(item._id));
-                            }
-                          }}
-                        >
-                          <div style={{ fontSize: "1.5rem" }}>-</div>
-                        </QuantityButton>
-                        <div className="mx-3 user-select-none">
-                          {item.quantity}
-                        </div>
-                        <QuantityButton
-                          variant="contained"
-                          onClick={() => {
-                            dispatch(userActions.increaseQuantity(item._id));
-                          }}
-                        >
-                          <div style={{ fontSize: "1.5rem" }}>+</div>
-                        </QuantityButton>
-                      </div>
-                    </td>
-
-                    <td>
-                      <div>
-                        ₩ {(item.quantity * item.price).toLocaleString("ko-KR")}
-                      </div>
-                    </td>
-
-                    <td>
-                      <AiOutlineClose
-                        className="delete_button"
-                        onClick={() => {
-                          if (
-                            window.confirm(
-                              "해당 상품을 카트에서 제거하시겠습니까?"
-                            )
-                          ) {
-                            removeFromCart(item._id);
-                          } else {
-                            return;
-                          }
-                        }}
-                      />
-                    </td>
+                    </th>
+                    <th>상품정보</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+
+                <tbody className="text-center">
+                  {authUserData.cart.map((item, index) => (
+                    <tr key={index} className="cart_table">
+                      <td>
+                        <Checkbox
+                          value={item._id}
+                          checked={checkedCartIds.includes(item._id)}
+                          onChange={checkHandler}
+                        />
+                      </td>
+
+                      <td>
+                        <Row className="d-flex justify-content-between align-items-center">
+                          <Col lg={5} className="item_thumbnail_container mb-3">
+                            <NavLink to={`/order/detail/${item.rootProductId}`}>
+                              <div>
+                                <img
+                                  src={item.image_url}
+                                  alt=""
+                                  className="item_thumbnail"
+                                />
+                              </div>
+                            </NavLink>
+                          </Col>
+
+                          <Col lg={7} className="text-center mb-3">
+                            <div className="item_title border_bottom fw-bold text-center">
+                              {item.title}
+                            </div>
+
+                            <div className="border_bottom">
+                              <div className="option_text">
+                                {item.deliveryType} / {item.deliveryDate}{" "}
+                                {item.deliveryTime}
+                              </div>
+                            </div>
+
+                            <div className="option_text border_bottom">
+                              {item.letteringToggle === "추가 하기" ? (
+                                <div>레터링 문구 : {item.letteringText}</div>
+                              ) : null}
+
+                              {item.designTopperToggle === "추가 하기" ? (
+                                <div>
+                                  디자인 토퍼 문구 : {item.designTopperText}{" "}
+                                  <span className="disabled_text">
+                                    (+
+                                    {item.designTopperText.length <= 10
+                                      ? "6,000"
+                                      : "9,000"}
+                                    원)
+                                  </span>
+                                </div>
+                              ) : null}
+
+                              {item.customerRequestText ? (
+                                <div>
+                                  요청 사항 : {item.customerRequestText}
+                                </div>
+                              ) : null}
+                            </div>
+                          </Col>
+                        </Row>
+
+                        <Row>
+                          <div className="text-center d-flex justify-content-end align-items-center">
+                            <div className="d-flex align-items-center mb-3">
+                              <div>주문 수량 :</div>
+                              <div className="d-flex justify-content-center align-items-center ms-3">
+                                <QuantityButton
+                                  variant="contained"
+                                  onClick={() => {
+                                    if (item.quantity > 1) {
+                                      dispatch(
+                                        userActions.decreaseQuantity(item._id)
+                                      );
+                                    }
+                                  }}
+                                >
+                                  <div>-</div>
+                                </QuantityButton>
+                                <div className="mx-3 user-select-none">
+                                  {item.quantity}
+                                </div>
+                                <QuantityButton
+                                  variant="contained"
+                                  onClick={() => {
+                                    dispatch(
+                                      userActions.increaseQuantity(item._id)
+                                    );
+                                  }}
+                                >
+                                  <div>+</div>
+                                </QuantityButton>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="text-end">
+                            주문 금액 : ₩{" "}
+                            {(item.quantity * item.price).toLocaleString(
+                              "ko-KR"
+                            )}
+                          </div>
+                        </Row>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            ) : (
+              <Table bordered responsive>
+                <thead className="text-center">
+                  <tr className="cart_table">
+                    <th>
+                      <Checkbox
+                        value={"checkAll"}
+                        checked={
+                          initialCartIds.length === checkedCartIds.length
+                        }
+                        onChange={checkHandler}
+                      />
+                    </th>
+                    <th>상품정보</th>
+                    <th>수량</th>
+                    <th colSpan={2}>주문금액</th>
+                  </tr>
+                </thead>
+
+                <tbody className="text-center">
+                  {authUserData.cart.map((item, index) => (
+                    <tr key={index} className="cart_table">
+                      <td>
+                        <Checkbox
+                          value={item._id}
+                          checked={checkedCartIds.includes(item._id)}
+                          onChange={checkHandler}
+                        />
+                      </td>
+
+                      <td>
+                        <Row className="d-flex justify-content-between align-items-center">
+                          <Col lg={5} className="item_thumbnail_container">
+                            <NavLink to={`/order/detail/${item.rootProductId}`}>
+                              <div>
+                                <img
+                                  src={item.image_url}
+                                  alt=""
+                                  className="item_thumbnail"
+                                />
+                              </div>
+                            </NavLink>
+                          </Col>
+
+                          <Col lg={7} className="text-start">
+                            <div className="item_title border_bottom fw-bold">
+                              {item.title}
+                            </div>
+
+                            <div className="border_bottom">
+                              <div className="option_text">
+                                {item.deliveryType} / {item.deliveryDate}{" "}
+                                {item.deliveryTime}
+                              </div>
+                            </div>
+
+                            <div className="option_text">
+                              {item.letteringToggle === "추가 하기" ? (
+                                <div>
+                                  케이크 판 레터링 : {item.letteringText}
+                                </div>
+                              ) : null}
+
+                              {item.designTopperToggle === "추가 하기" ? (
+                                <div>
+                                  디자인 토퍼 문구 : {item.designTopperText}{" "}
+                                  <span className="disabled_text">
+                                    (+
+                                    {item.designTopperText.length <= 10
+                                      ? "6,000"
+                                      : "9,000"}
+                                    원)
+                                  </span>
+                                </div>
+                              ) : null}
+
+                              {item.customerRequestText ? (
+                                <div>
+                                  요청 사항 : {item.customerRequestText}
+                                </div>
+                              ) : null}
+                            </div>
+                          </Col>
+                        </Row>
+                      </td>
+
+                      <td>
+                        <div className="d-flex justify-content-center align-items-center">
+                          <QuantityButton
+                            variant="contained"
+                            onClick={() => {
+                              if (item.quantity > 1) {
+                                dispatch(
+                                  userActions.decreaseQuantity(item._id)
+                                );
+                              }
+                            }}
+                          >
+                            <div>-</div>
+                          </QuantityButton>
+                          <div className="mx-3 user-select-none">
+                            {item.quantity}
+                          </div>
+                          <QuantityButton
+                            variant="contained"
+                            onClick={() => {
+                              dispatch(userActions.increaseQuantity(item._id));
+                            }}
+                          >
+                            <div>+</div>
+                          </QuantityButton>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div>
+                          ₩{" "}
+                          {(item.quantity * item.price).toLocaleString("ko-KR")}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
 
             <Row>
               <Col className="p-5 border_bottom justify-content-center align-items-center">
@@ -307,47 +417,67 @@ const Cart = () => {
               </Col>
             </Row>
 
-            <Row className="py-5 w-auto justify-content-center">
-              <Col className="align-items-center">
-                <NavLink to="/order">
-                  <ShoppingButton variant="outlined">
-                    쇼핑하러 가기
+            <Container>
+              <Row className="py-5 w-auto justify-content-center">
+                <Col xs={3} className="text-center align-items-center">
+                  <NavLink to="/order" style={{ width: "100%" }}>
+                    <ShoppingButton variant="outlined">
+                      쇼핑하러 가기
+                    </ShoppingButton>
+                  </NavLink>
+                </Col>
+                <Col xs={3} className="text-center align-items-center">
+                  <ShoppingButton
+                    variant="outlined"
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "선택하신 상품을 장바구니에서 제거하시겠습니까?"
+                        )
+                      ) {
+                        removeFromCart(checkedCartIds);
+                      } else {
+                        return;
+                      }
+                    }}
+                  >
+                    선택상품 제거
                   </ShoppingButton>
-                </NavLink>
-              </Col>
-              <Col className="align-items-center">
-                {authUserDataWithCheckedCart.cart.length > 0 ? (
-                  <Payment
-                    OrderButton={OrderButton}
-                    btnTitle="선택상품 주문"
-                    authUserDataWithCheckedCart={authUserDataWithCheckedCart}
-                    pay_method="card"
-                  />
-                ) : (
-                  <Payment
-                    disabled
-                    OrderButton={OrderButton}
-                    btnTitle="선택상품 주문"
-                  />
-                )}
-              </Col>
-              <Col className="align-items-center">
-                {authUserDataWithCheckedCart.cart.length > 0 ? (
-                  <Payment
-                    OrderButton={OrderButton}
-                    btnTitle="전체 주문"
-                    authUserDataWithCheckedCart={authUserData}
-                    pay_method="card"
-                  />
-                ) : (
-                  <Payment
-                    disabled
-                    OrderButton={OrderButton}
-                    btnTitle="전체 주문"
-                  />
-                )}
-              </Col>
-            </Row>
+                </Col>
+                <Col xs={3} className="text-center align-items-center">
+                  {authUserDataWithCheckedCart.cart.length > 0 ? (
+                    <Payment
+                      OrderButton={OrderButton}
+                      btnTitle="선택상품 주문"
+                      authUserDataWithCheckedCart={authUserDataWithCheckedCart}
+                      pay_method="card"
+                    />
+                  ) : (
+                    <Payment
+                      disabled
+                      OrderButton={OrderButton}
+                      btnTitle="선택상품 주문"
+                    />
+                  )}
+                </Col>
+                <Col xs={3} className="text-center align-items-center">
+                  {authUserDataWithCheckedCart.cart.length > 0 ? (
+                    <Payment
+                      OrderButton={OrderButton}
+                      btnTitle="전체 주문"
+                      authUserDataWithCheckedCart={authUserData}
+                      pay_method="card"
+                    />
+                  ) : (
+                    <Payment
+                      disabled
+                      OrderButton={OrderButton}
+                      btnTitle="전체 주문"
+                    />
+                  )}
+                </Col>
+              </Row>
+            </Container>
           </>
         ) : (
           <Row className="border-top empty_msg">
@@ -384,3 +514,10 @@ export default Cart;
 // 서버사이드 렌더링을 이용하는게 맞습니다
 
 // 하지만 실제 운영에서 클라이언트 렌더링을 사용하는 사이트도 많습니다 ^^
+
+{
+  /* <AiOutlineClose
+  className="delete_button"
+  
+/>; */
+}

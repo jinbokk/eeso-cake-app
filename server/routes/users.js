@@ -321,37 +321,29 @@ router.post("/addToCart", auth, async (req, res) => {
   }
 });
 
-router.get("/remove-from-cart", auth, (req, res) => {
-  let cartId = req.query.id;
-  console.log("cartId", cartId);
-  let cart_o_id = new ObjectId(cartId);
-  console.log("cart_o_id", cart_o_id);
+router.post("/remove-from-cart", auth, (req, res) => {
+  let { checkedCartIds } = req.body;
 
-  // 1. cart 안의 상품들 중 지우고자 하는 상품을 찾아 지운다
-  User.findOneAndUpdate(
-    {
-      _id: req.user._id,
-    },
-    {
-      $pull: {
-        cart: {
-          _id: cart_o_id,
+  checkedCartIds.map((item) => {
+    let cart_o_id = new ObjectId(item);
+    // 1. cart 안의 상품들 중 지우고자 하는 상품을 찾아 지운다
+    return User.findOneAndUpdate(
+      {
+        _id: req.user._id,
+      },
+      {
+        $pull: {
+          cart: {
+            _id: cart_o_id,
+          },
         },
       },
-    },
-    {
-      new: true,
-    },
-    (err, result) => {
-      if (err) {
-        console.log("err::::::::::::::::::", err);
-        return res.status(400).json({ success: false, err });
-      } else {
-        console.log("result::::::::::::::::::", result);
-        return res.status(200).send(result.cart);
-      }
-    }
-  );
+      {
+        new: true,
+      },
+      (err, result) => result
+    );
+  });
 });
 
 router.post("/increaseQuantity", auth, async (req, res) => {

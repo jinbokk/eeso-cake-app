@@ -182,7 +182,7 @@ const OrderDetail = () => {
         <>
           <Container className="detail_container">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Row className="mb-5">
+              <Row className="mb-5 mx-auto w-100">
                 {width < 992 ? (
                   <div>
                     <h3 className="mb-3 fw-bold">{productDetail.title}</h3>
@@ -203,29 +203,6 @@ const OrderDetail = () => {
                     수작업 케이크 특성상 위 이미지와 다소 차이가 있을 수
                     있습니다
                   </div>
-
-                  {/* <Row>
-                    <Col sm={12} md={4} className="plus_tag">
-                      <MdCake size={35} color={"white"} className="m-2" />
-                      <span className="w-75">
-                        첨가제 사용을 최소화하고
-                        <br /> 정성스레 만든 건강한 케이크
-                      </span>
-                    </Col>
-                    <Col sm={12} md={4} className="plus_tag">
-                      <MdRateReview size={35} color={"white"} className="m-2" />
-                      <span className="w-75">
-                        고객님들의 만족스런
-                        <br /> 리뷰를 통해 검증된 맛
-                      </span>
-                    </Col>
-                    <Col sm={12} md={4} className="plus_tag">
-                      <BsStars size={35} color={"white"} className="m-2" />
-                      <span className="w-75">
-                        특별한 날을 <br /> 더욱 특별하게 빛내 보세요
-                      </span>
-                    </Col>
-                  </Row> */}
                 </Col>
 
                 <Col lg={5}>

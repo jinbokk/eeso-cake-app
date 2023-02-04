@@ -1,3 +1,11 @@
+.cart_title {
+  font-size: 2rem;
+  text-align: center;
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+  margin: 0;
+}
+
 .empty_msg {
   padding-top: 5rem;
   font-size: 2rem;
@@ -76,6 +84,22 @@
   padding: 0.5rem 0.5rem;
 }
 
+.order_navigation {
+  display: flex;
+  font-size: 0.8rem;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  padding-right: 2rem !important;
+}
+
+.delete_button {
+  position: absolute;
+  width: 30px;
+  top: 10px;
+  right: 10px;
+}
+
 @media screen and (max-width: 992px) {
   .item_thumbnail_container {
     display: flex;
@@ -83,7 +107,14 @@
   }
 
   .item_thumbnail {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
+  }
+
+  .delete_button {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: fit-content !important;
   }
 }

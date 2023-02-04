@@ -195,26 +195,15 @@ function addToCart(createdOption) {
   };
 }
 
-function removeFromCart(productId) {
-  return async (dispatch) => {
-    try {
-      const removeCartItemsResult = await axios
-        .get(`/api/users/remove-from-cart?id=${productId}`)
-        .then((res) => {
-          // // productDetail과 cart 정보를 조합하여 cartDetail을 만든다
-          // res.data.cart.forEach((cartItem) => {
-          //   res.data.productDetail.forEach((productDetail, index) => {
-          //     if (cartItem.id === productDetail._id) {
-          //       res.data.productDetail[index].quantity = cartItem.quantity;
-          //     }
-          //   });
-          // });
-          return res.data;
-        });
+function removeFromCart(checkedCartIds) {
+  let body = {
+    checkedCartIds: checkedCartIds,
+  };
 
-      dispatch({
-        type: "REMOVE_CART_ITEMS",
-        payload: removeCartItemsResult,
+  return async () => {
+    try {
+      await axios.post(`/api/users/remove-from-cart`, body).then((res) => {
+        return res.data;
       });
     } catch (error) {
       console.log("error occurred : ", error);
