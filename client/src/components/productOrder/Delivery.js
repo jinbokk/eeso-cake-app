@@ -83,10 +83,12 @@ const Delivery = ({ control, cartItems }) => {
   // const [modifiedDate, setModifiedDate] = useState(undefined);
   const [dateError, setDateError] = useState(undefined);
 
-  const dateHandler = (event) => {
-    setDate(event);
-    const date = new Date(event);
-    const modifiedDate = format(date, "yyyy년 MM월 dd일 (eee)", { locale: ko });
+  const dateHandler = (date) => {
+    setDate(date);
+    const selectedDate = new Date(date);
+    const modifiedDate = format(selectedDate, "yyyy년 MM월 dd일 (eee)", {
+      locale: ko,
+    });
     // setModifiedDate(modifiedDate);
     dispatch(orderActions.setDeliveryDate(modifiedDate));
   };
@@ -106,25 +108,37 @@ const Delivery = ({ control, cartItems }) => {
   //  time
   const [timeOpen, setTimeOpen] = useState(false);
   const [time, setTime] = useState(null);
-  // const [modifiedTime, setModifiedTime] = useState(undefined);
   const [minTime, setMinTime] = useState(undefined);
   const [maxTime, setMaxTime] = useState(undefined);
   const [timeError, setTimeError] = useState(undefined);
 
-  const timeHandler = (event) => {
-    setTime(event);
-    const date = new Date(event);
-    const modifiedTime = format(date, "a hh : mm", { locale: ko });
-    // setModifiedTime(modifiedTime);
+  const timeHandler = (date) => {
+    // let ampm_before = time ? format(time, "a", { locale: ko }) : undefined;
+    // console.log(time);
+    // let ampm_after = format(date, "a", { locale: ko }); // 오전 || 오후
+
+    // console.log("ampm_before", ampm_before);
+    // console.log("ampm_after", ampm_after);
+
+    // if ((ampm_before !== undefined || null) && ampm_before !== ampm_after) {
+    //   setTime(new Date(0, 0, 0, 11));
+    // } else {
+    //   setTime(date);
+    // }
+
+    setTime(date);
+
+    const selectedDate = new Date(date);
+    const modifiedTime = format(selectedDate, "a hh : mm", { locale: ko });
     dispatch(orderActions.setDeliveryTime(modifiedTime));
   };
 
-  const storeHourHandler = (event) => {
+  const storeHourHandler = (date) => {
     // 평일     am 11:00 ~ pm 7:30
     // 토요일   am 10:00 ~ pm 4:00
     // 일요일   am 10:00 ~ pm 12:00
 
-    const selectedDay = format(event, "eee", { locale: ko });
+    const selectedDay = format(date, "eee", { locale: ko });
     console.log("selectedDay", selectedDay);
 
     if (selectedDay === "토") {
@@ -283,10 +297,10 @@ const Delivery = ({ control, cartItems }) => {
                   disableMaskedInput
                   dayOfWeekFormatter={(day) => `${day}`}
                   value={date}
-                  onChange={(event) => {
-                    onChange(event);
-                    dateHandler(event);
-                    storeHourHandler(event);
+                  onChange={(date) => {
+                    onChange(date);
+                    dateHandler(date);
+                    storeHourHandler(date);
                   }}
                   fullWidth
                   open={dateOpen}
@@ -367,16 +381,18 @@ const Delivery = ({ control, cartItems }) => {
               render={({ field: { onChange, value, ...field } }) => (
                 <TimePicker
                   {...field}
+                  disableMaskedInput
                   className="mui_x_custom"
                   value={delivery === "택배" ? null : time}
                   minTime={minTime}
                   maxTime={maxTime}
                   inputFormat="a hh:mm"
-                  onChange={(event) => {
-                    onChange(event);
-                    timeHandler(event);
-
-                    console.log(event);
+                  onChange={(date) => {
+                    onChange(date);
+                    timeHandler(date, onChange);
+                  }}
+                  onClick={(e) => {
+                    console.log("onClick", e);
                   }}
                   disabled={delivery === "택배" ? true : false}
                   ampmInClock

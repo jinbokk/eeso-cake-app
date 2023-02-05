@@ -75,6 +75,10 @@
   }
 }
 
+.css-1mgnakj-MuiTypography-root-PrivatePickersToolbarText-root.Mui-selected {
+  color: #c0907f !important;
+}
+
 .css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root {
   display: none !important;
 }
