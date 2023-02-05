@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Controller } from "react-hook-form";
+import { orderActions } from "../../redux/actions/orderActions";
 
 import { ToggleButtonGroup, ToggleButton, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -9,16 +10,23 @@ import { brown } from "@mui/material/colors";
 import { FaCarSide } from "react-icons/fa";
 
 import {
-  DesktopDatePicker,
+  DatePicker,
   TimePicker,
+  DesktopDatePicker,
+  DesktopTimePicker,
   LocalizationProvider,
 } from "@mui/x-date-pickers";
+
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 import { format, addDays } from "date-fns";
 import { ko } from "date-fns/locale";
 
-import { orderActions } from "../../redux/actions/orderActions";
+/// antd
+// import dayjs from "dayjs";
+// import "dayjs/locale/ko";
+// import locale from "antd/locale/ko_KR";
+// import { DatePicker, TimePicker } from "antd";
 
 const Delivery = ({ control, cartItems }) => {
   const dispatch = useDispatch();
@@ -42,6 +50,24 @@ const Delivery = ({ control, cartItems }) => {
     },
   }));
 
+  // const CustomDatePicker = styled(DatePicker)(() => ({
+  //   border: "1px solid",
+  //   color: brown[400],
+  //   borderColor: "rgba(0, 0, 0, 0.25)",
+  //   boxShadow: "none",
+  //   height: "50px",
+  //   width: "100%",
+  // }));
+
+  // const CustomTimePicker = styled(TimePicker)(() => ({
+  //   border: "1px solid",
+  //   color: brown[400],
+  //   borderColor: "rgba(0, 0, 0, 0.25)",
+  //   boxShadow: "none",
+  //   height: "50px",
+  //   width: "100%",
+  // }));
+
   // delivery
   const [delivery, setDelivery] = useState(undefined);
 
@@ -64,6 +90,18 @@ const Delivery = ({ control, cartItems }) => {
     // setModifiedDate(modifiedDate);
     dispatch(orderActions.setDeliveryDate(modifiedDate));
   };
+
+  /////////////////
+  /////////////////
+  /////////////////
+
+  // const disabledDate = (current) => {
+  //   return current < dayjs().add(2, "day") || current > dayjs().add(14, "day");
+  // };
+
+  /////////////////
+  /////////////////
+  /////////////////
 
   //  time
   const [timeOpen, setTimeOpen] = useState(false);
@@ -235,8 +273,9 @@ const Delivery = ({ control, cartItems }) => {
               name="수령_날짜"
               defaultValue={null}
               render={({ field: { onChange, value, ...field } }) => (
-                <DesktopDatePicker
+                <DatePicker
                   {...field}
+                  size="lg"
                   className="mui_x_custom"
                   minDate={addDays(new Date(), 3)}
                   maxDate={addDays(new Date(), 14)}
@@ -292,10 +331,33 @@ const Delivery = ({ control, cartItems }) => {
           </div>
         </div>
 
+        {/* <div>
+          <div className="option_menu_section">
+            <span className="option_menu_text">수령 날짜</span>
+            <div className="controller_container">
+              <Controller
+                control={control}
+                name="수령_날짜"
+                defaultValue={null}
+                render={({ field: { onChange, value, ...field } }) => (
+                  <CustomDatePicker
+                    {...field}
+                    allowClear={false}
+                    inputReadOnly
+                    showToday={false}
+                    placeholder={"날짜를 선택해 주세요"}
+                    format="YYYY-MM-DD (ddd)"
+                    disabledDate={disabledDate}
+                    onChange={(e) => console.log(e)}
+                  />
+                )}
+              />
+            </div>
+          </div>
+        </div> */}
+
         <div className="option_menu_section">
           <span className="option_menu_text">수령 시간</span>
-
-          {/* antDesing TimePicker로 바꾸자 */}
 
           <div className="controller_container">
             <Controller
@@ -317,6 +379,7 @@ const Delivery = ({ control, cartItems }) => {
                     console.log(event);
                   }}
                   disabled={delivery === "택배" ? true : false}
+                  ampmInClock
                   fullWidth
                   open={timeOpen}
                   onOpen={() => {
@@ -362,6 +425,30 @@ const Delivery = ({ control, cartItems }) => {
             />
           </div>
         </div>
+        {/* 
+        <div className="option_menu_section">
+          <span className="option_menu_text">수령 시간</span>
+
+          <div className="controller_container">
+            <Controller
+              control={control}
+              name="수령_시간"
+              defaultValue={null}
+              render={({ field: { onChange, value, ...field } }) => (
+                <CustomTimePicker
+                  {...field}
+                  allowClear={false}
+                  showNow={false}
+                  use12Hours
+                  minuteStep={10}
+                  inputReadOnly
+                  format="a hh:mm"
+                  placeholder="시간을 선택해 주세요"
+                />
+              )}
+            />
+          </div>
+        </div> */}
       </LocalizationProvider>
     </>
   );

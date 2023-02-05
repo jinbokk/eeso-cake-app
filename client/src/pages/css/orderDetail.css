@@ -75,6 +75,10 @@
   }
 }
 
+.css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root {
+  display: none !important;
+}
+
 .css-pbg3za-MuiGrid-root-MuiPickersToolbar-content {
   display: flex !important;
   align-items: center !important;
@@ -87,6 +91,16 @@
 .MuiTimePickerToolbar-ampmSelection {
   display: none !important;
 }
+
+/* @media screen and (max-width: 992px) {
+  .MuiTimePickerToolbar-ampmSelection {
+    display: block !important;
+  }
+  .MuiTimePickerToolbar-ampmSelection button span{
+    margin: 0 5px;
+    font-weight: bold !important;
+  }
+} */
 
 .MuiClock-amButton {
   position: absolute !important;
@@ -119,6 +133,30 @@
   padding: 1.5rem 0;
   border-bottom: 1px solid rgba(129, 58, 8, 0.3);
   font-size: 1rem !important;
+}
+
+.ant-picker-content ul:nth-child(1) {
+  border-inline-start: 1px solid rgba(5, 5, 5, 0.06);
+  order: 2;
+}
+.ant-picker-content ul:nth-child(2) {
+  border-inline-start: 1px solid rgba(5, 5, 5, 0.06);
+  order: 3;
+}
+.ant-picker-content ul:nth-child(3) {
+  border-inline-start: 1px solid rgba(5, 5, 5, 0.06);
+  order: 1;
+}
+
+.ant-picker-content ul:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-picker-content ul:last-child::after {
+  display: none;
 }
 
 /* font-size: clamp(0.8rem, 1vw, 1rem) !important; */

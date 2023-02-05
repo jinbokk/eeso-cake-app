@@ -6,8 +6,8 @@
   display: inline-block;
 }
 
-ul,
-li {
+.nav_container_top ul,
+.nav_container_top li {
   list-style: none;
   margin-bottom: 0 !important;
   padding: 0 !important;
