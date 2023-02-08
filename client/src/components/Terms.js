@@ -10,7 +10,11 @@ const Terms = () => {
   return (
     <div
       dangerouslySetInnerHTML={iframeTerms()}
-      style={{ width: "100%", height: "100%", fontFamily: "NanumSquareNeo-Variable" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        fontFamily: "NanumSquareNeo-Variable",
+      }}
     ></div>
   );
 };

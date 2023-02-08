@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 import "./css/footer.css";
 
 const Footer = () => {
@@ -75,7 +76,18 @@ const Footer = () => {
 
         <Container className="border_top pb-5">
           <Row className="mb-2 pt-4 pb-5">
-            <Col>
+            <Col className="d-flex flex-row justify-content-between align-items-center">
+              <div style={{ color: "gray" }}>
+                <span style={{ fontSize: "0.5rem" }} className="px-3">
+                  <NavLink to="/policy/terms">이용약관</NavLink>
+                </span>
+                <span style={{ fontSize: "0.5rem" }}>
+                  <NavLink to="/policy/privacy-policy">
+                    개인정보처리방침
+                  </NavLink>
+                </span>
+              </div>
+
               <div className="link_container">
                 <div>
                   <a
