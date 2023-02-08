@@ -1,12 +1,12 @@
 import React from "react";
 import Map from "../components/Map";
 
-import "./css/contact.css";
+import "./css/contactPage.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { GrNavigate } from "react-icons/gr";
 import { motion } from "framer-motion";
 
-const Contact = () => {
+const ContactPage = () => {
   return (
     <motion.div
       initial={{ opacity: 0, y: "20px" }}
@@ -89,4 +89,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default ContactPage;

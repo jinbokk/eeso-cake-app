@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./css/about.css";
+import "./css/aboutPage.css";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import { AiOutlineSmile } from "react-icons/ai";
 import { motion } from "framer-motion";
 
-const About = () => {
+const AboutPage = () => {
   return (
     <motion.div
       initial={{ opacity: 0, y: "20px" }}
@@ -72,4 +72,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutPage;

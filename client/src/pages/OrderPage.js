@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 
 import Loading from "../components/Loading";
 import { forSaleProductActions } from "../redux/actions/forSaleProductActions";
-import "./css/order.css";
+import "./css/orderPage.css";
 
-const Order = () => {
+const OrderPage = () => {
   const dispatch = useDispatch();
 
   const isFirstRun = useRef(true);
@@ -71,4 +71,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default OrderPage;

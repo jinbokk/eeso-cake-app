@@ -7,13 +7,13 @@ import { NavLink } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import "./css/landing.css";
+import "./css/landingPage.css";
 
 // https://greensock.com/react/
 import { gsap } from "gsap";
 import { Container, Row, Col } from "react-bootstrap";
 
-const Landing = (props) => {
+const LandingPage = (props) => {
   // gsap
   const el = useRef();
   const q = gsap.utils.selector(el);
@@ -184,4 +184,4 @@ const Landing = (props) => {
   );
 };
 
-export default Landing;
+export default LandingPage;

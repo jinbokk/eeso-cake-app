@@ -3,33 +3,35 @@ import { Routes, Route, useLocation } from "react-router-dom";
 // import { AnimatePresence } from "framer-motion";
 
 import Auth from "./hoc/Auth";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import Landing from "./pages/Landing";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Cakes from "./pages/Cakes";
-import Order from "./pages/Order";
-// import OrderDetail from "./pages/OrderDetail_deprecated";
-import OrderDetail from "./pages/OrderDetail";
-import Mypage from "./pages/Mypage";
-import Cart from "./pages/Cart";
-import Payment from "./pages/CartTable";
-import GuideRice from "./pages/GuideRice";
-import GuideBread from "./pages/GuideBread";
-import Contact from "./pages/Contact";
-import FAQ from "./pages/FAQ";
+import LandingPage from "./pages/LandingPage";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import CakesPage from "./pages/CakesPage";
+import OrderPage from "./pages/OrderPage";
+// import OrderDetailPage from "./pages/OrderDetail_deprecated";
+import OrderDetailPage from "./pages/OrderDetailPage";
+import MyPage from "./pages/MyPage";
+import CartPage from "./pages/CartPage";
+import PaymentPage from "./pages/PaymentPage";
+import GuideRicePage from "./pages/GuideRicePage";
+import GuideBreadPage from "./pages/GuideBreadPage";
+import ContactPage from "./pages/ContactPage";
+import FAQPage from "./pages/FAQPage";
 import Loading from "./components/Loading";
 import Footer from "./components/Footer";
-import UploadProduct from "./pages/UploadProduct";
-import OrderHistory from "./pages/mypage/OrderHistory";
-import OrderCancellationHistory from "./pages/mypage/OrderCancellationHistory";
-import Coupon from "./pages/mypage/Coupon";
-import Mileage from "./pages/mypage/Mileage";
-import EditProfile from "./pages/mypage/EditProfile";
-import Unregister from "./pages/mypage/Unregister";
+import UploadProductPage from "./pages/UploadProductPage";
+import OrderHistoryPage from "./pages/mypage/OrderHistoryPage";
+import OrderCancellationHistoryPage from "./pages/mypage/OrderCancellationHistoryPage";
+import CouponPage from "./pages/mypage/CouponPage";
+import MileagePage from "./pages/mypage/MileagePage";
+import EditProfilePage from "./pages/mypage/EditProfilePage";
+import UnregisterPage from "./pages/mypage/UnregisterPage";
+import TermsPage from "./pages/policy/TermsPage";
+import PrivacyPolicyPage from "./pages/policy/PrivacyPolicyPage";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -40,21 +42,23 @@ function App() {
   //   1. null : 아무나 출입 가능
   //   2. true : 로그인 한 유저만 출입 가능
   //   3. false : 로그인 한 유저는 출입 불가
-  const AuthLogin = Auth(Login, false);
-  const AuthRegister = Auth(Register, false);
-  const AuthHome = Auth(Home, null);
-  const AuthAbout = Auth(About, null);
-  const AuthCakes = Auth(Cakes, null);
-  const AuthOrder = Auth(Order, null);
-  const AuthOrderDetail = Auth(OrderDetail, null);
-  const AuthMypage = Auth(Mypage, true);
-  const AuthCart = Auth(Cart, true);
-  const AuthPayment = Auth(Payment, true);
-  const AuthGuideRice = Auth(GuideRice, null);
-  const AuthGuideBread = Auth(GuideBread, null);
-  const AuthFAQ = Auth(FAQ, null);
-  const AuthContact = Auth(Contact, null);
-  const AuthUploadProduct = Auth(UploadProduct, true, true);
+  const AuthLogin = Auth(LoginPage, false);
+  const AuthRegister = Auth(RegisterPage, false);
+  const AuthHome = Auth(HomePage, null);
+  const AuthAboutPage = Auth(AboutPage, null);
+  const AuthCakes = Auth(CakesPage, null);
+  const AuthOrder = Auth(OrderPage, null);
+  const AuthOrderDetail = Auth(OrderDetailPage, null);
+  const AuthMypage = Auth(MyPage, true);
+  const AuthCart = Auth(CartPage, true);
+  const AuthPayment = Auth(PaymentPage, true);
+  const AuthGuideRice = Auth(GuideRicePage, null);
+  const AuthGuideBread = Auth(GuideBreadPage, null);
+  const AuthFAQ = Auth(FAQPage, null);
+  const AuthContact = Auth(ContactPage, null);
+  const AuthUploadProduct = Auth(UploadProductPage, true, true);
+  const AuthTerms = Auth(TermsPage, null);
+  const AuthPrivacyPolicy = Auth(PrivacyPolicyPage, null);
 
   // sessionStorage (플리커링을 없애기 위해 useLayoutEffect 사용)
   const [isLandingPageView, setIsLandingPageView] = useState(false);
@@ -75,7 +79,7 @@ function App() {
   return (
     <>
       {!isLandingPageView ? (
-        <Landing setIsLandingPageView={setIsLandingPageView} />
+        <LandingPage setIsLandingPageView={setIsLandingPageView} />
       ) : (
         <>
           <Suspense fallback={<Loading />}>
@@ -86,7 +90,7 @@ function App() {
               <Route path="/" element={<AuthHome />} />
               <Route path="/login" element={<AuthLogin />} />
               <Route path="/register" element={<AuthRegister />} />
-              <Route path="/about" element={<AuthAbout />} />
+              <Route path="/about" element={<AuthAboutPage />} />
               <Route path="/cakes/:ingredient" element={<AuthCakes />} />
               <Route path="/order" element={<AuthOrder />} />
               <Route
@@ -95,23 +99,28 @@ function App() {
               />
               {/* <Route path="/user/mypage/:menu" element={<AuthMypage />} /> */}
               <Route path="/user/mypage" element={<AuthMypage />}>
-                <Route path="order-history" element={<OrderHistory />} />
+                <Route path="order-history" element={<OrderHistoryPage />} />
                 <Route
                   path="order-cancellation-history"
-                  element={<OrderCancellationHistory />}
+                  element={<OrderCancellationHistoryPage />}
                 />
-                <Route path="coupon" element={<Coupon />} />
-                <Route path="mileage" element={<Mileage />} />
-                <Route path="edit-profile" element={<EditProfile />} />
-                <Route path="unregister" element={<Unregister />} />
+                <Route path="coupon" element={<CouponPage />} />
+                <Route path="mileage" element={<MileagePage />} />
+                <Route path="edit-profile" element={<EditProfilePage />} />
+                <Route path="unregister" element={<UnregisterPage />} />
               </Route>
               <Route path="/user/cart" element={<AuthCart />} />
-              <Route path="/user/payment" element={<AuthPayment />} />
+              <Route path="/payment/:state" element={<AuthPayment />} />
               <Route path="/guide/rice" element={<AuthGuideRice />} />
               <Route path="/guide/bread" element={<AuthGuideBread />} />
               <Route path="/faq" element={<AuthFAQ />} />
               <Route path="/contact" element={<AuthContact />} />
               <Route path="/upload" element={<AuthUploadProduct />} />
+              <Route
+                path="/policy/privacy-policy"
+                element={<AuthPrivacyPolicy />}
+              />
+              <Route path="/policy/terms" element={<AuthTerms />} />
             </Routes>
             {/* </AnimatePresence> */}
             <Footer />

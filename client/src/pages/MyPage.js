@@ -4,9 +4,9 @@ import { Outlet } from "react-router";
 import MypageNav from "../components/MypageNav";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
-import "./css/mypage.css";
+import "./css/myPage.css";
 
-const Mypage = () => {
+const MyPage = () => {
   const [title, setTitle] = useState("");
   const { width } = useWindowDimensions();
 
@@ -37,4 +37,4 @@ const Mypage = () => {
   );
 };
 
-export default Mypage;
+export default MyPage;

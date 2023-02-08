@@ -10,9 +10,9 @@ import { motion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "./css/guide.css";
+import "./css/guidePage.css";
 
-const GuideBread = () => {
+const GuideBreadPage = () => {
   const { width, height } = useWindowDimensions();
 
   const pagination = {
@@ -314,4 +314,4 @@ const GuideBread = () => {
   );
 };
 
-export default GuideBread;
+export default GuideBreadPage;

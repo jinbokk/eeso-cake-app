@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import "./css/cakes.css";
+import "./css/cakesPage.css";
 
 import Subnav from "../components/Subnav";
 import Loading from "../components/Loading";
@@ -12,7 +12,7 @@ import { productActions } from "../redux/actions/productActions";
 import { Container, Row, Col } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
-const Cakes = () => {
+const CakesPage = () => {
   const dispatch = useDispatch();
 
   const isFirstRun = useRef(true);
@@ -214,4 +214,4 @@ const Cakes = () => {
   );
 };
 
-export default Cakes;
+export default CakesPage;

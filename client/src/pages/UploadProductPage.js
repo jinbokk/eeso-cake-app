@@ -19,9 +19,9 @@ import { pink } from "@mui/material/colors";
 import Dropzone from "react-dropzone";
 import axios from "axios";
 
-import "./css/uploadProduct.css";
+import "./css/uploadProductPage.css";
 
-export default function UploadProduct() {
+export default function UploadProductPage() {
   const { isAdmin } = useSelector((state) => state.user.authUserData);
   console.log(isAdmin);
 

@@ -10,11 +10,12 @@ import { BsCheck2Circle, BsCartCheck } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
+import PaymentPage from "./PaymentPage";
 import Payment from "../components/utils/Payment";
-import "./css/cart.css";
+import "./css/cartPage.css";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
-const Cart = () => {
+const CartPage = () => {
   const dispatch = useDispatch();
   const { authUserData } = useSelector((state) => state.user);
   const { width } = useWindowDimensions();
@@ -81,7 +82,7 @@ const Cart = () => {
 
   useLayoutEffect(() => {
     setCheckedCartIds(initialCartIds);
-  }, [authUserData]);
+  }, []);
 
   const checkHandler = (event) => {
     const { value, checked } = event.target; // value는 개별 cartId
@@ -105,19 +106,13 @@ const Cart = () => {
     }
   };
 
-  const [authUserDataWithCheckedCart, setAuthUserDataWithCheckedCart] =
-    useState(authUserData);
-
   const checkedCartList = authUserData.cart.filter((userCartItem) =>
     checkedCartIds.some((checkedCartId) => userCartItem._id === checkedCartId)
   );
 
   useEffect(() => {
-    // checkedCartIds를 이용하여 authUserData.cart와 대조
-    setAuthUserDataWithCheckedCart({ ...authUserData, cart: checkedCartList });
+    dispatch({ type: "MODIFY_SELECTED_CART", payload: checkedCartIds });
   }, [checkedCartIds]);
-
-  console.log("authUserDataWithCheckedCart", authUserDataWithCheckedCart);
 
   return (
     <ThemeProvider theme={theme}>
@@ -132,11 +127,11 @@ const Cart = () => {
         <Row className="mb-4">
           <Col className="order_navigation">
             <BsCartCheck className="m-2 text-danger" />
-            <span className="fw-bold text-danger">Cart</span>
+            <span className="fw-bold text-danger">CartPage</span>
             <AiOutlineRight className="m-2 text-danger" />
             <MdPayment className="m-2" /> <span>Payment</span>
             <AiOutlineRight className="m-2" />
-            <BsCheck2Circle className="m-2" /> <span>Order Complete</span>
+            <BsCheck2Circle className="m-2" /> <span>OrderPage Complete</span>
           </Col>
         </Row>
 
@@ -399,7 +394,7 @@ const Cart = () => {
               <Col className="p-5 border_bottom justify-content-center align-items-center">
                 <div className="total_text">
                   선택 수량 :{" "}
-                  {authUserDataWithCheckedCart.cart
+                  {checkedCartList
                     .reduce((accumulator, item) => {
                       return accumulator + item.quantity;
                     }, 0)
@@ -408,7 +403,7 @@ const Cart = () => {
                 </div>
                 <div className="total_text">
                   주문 금액 : ₩{" "}
-                  {authUserDataWithCheckedCart.cart
+                  {checkedCartList
                     .reduce((accumulator, item) => {
                       return accumulator + item.quantity * item.price;
                     }, 0)
@@ -444,38 +439,61 @@ const Cart = () => {
                     선택상품 제거
                   </ShoppingButton>
                 </Col>
+
                 <Col xs={3} className="text-center align-items-center">
-                  {authUserDataWithCheckedCart.cart.length > 0 ? (
+                  {checkedCartList.length > 0 ? (
+                    <NavLink to="/payment" style={{ width: "100%" }}>
+                      <OrderButton variant="contained">
+                        선택상품 주문
+                      </OrderButton>
+                    </NavLink>
+                  ) : (
+                    <OrderButton disabled variant="contained">
+                      선택상품 주문
+                    </OrderButton>
+                  )}
+                </Col>
+
+                <Col xs={3} className="text-center align-items-center">
+                  {checkedCartList.length > 0 ? (
+                    <NavLink to="payment" style={{ width: "100%" }}>
+                      <OrderButton variant="contained">전체 주문</OrderButton>
+                    </NavLink>
+                  ) : (
+                    <OrderButton disabled variant="contained">
+                      전체 주문
+                    </OrderButton>
+                  )}
+                </Col>
+                {/* <Col xs={3} className="text-center align-items-center">
+                  {checkedCartList.cart.length > 0 ? (
                     <Payment
-                      OrderButton={OrderButton}
                       btnTitle="선택상품 주문"
-                      authUserDataWithCheckedCart={authUserDataWithCheckedCart}
+                      checkedCartList={checkedCartList}
                       pay_method="card"
                     />
                   ) : (
                     <Payment
                       disabled
-                      OrderButton={OrderButton}
                       btnTitle="선택상품 주문"
                     />
                   )}
                 </Col>
+
                 <Col xs={3} className="text-center align-items-center">
-                  {authUserDataWithCheckedCart.cart.length > 0 ? (
+                  {checkedCartList.cart.length > 0 ? (
                     <Payment
-                      OrderButton={OrderButton}
                       btnTitle="전체 주문"
-                      authUserDataWithCheckedCart={authUserData}
+                      checkedCartList={authUserData}
                       pay_method="card"
                     />
                   ) : (
                     <Payment
                       disabled
-                      OrderButton={OrderButton}
                       btnTitle="전체 주문"
                     />
                   )}
-                </Col>
+                </Col> */}
               </Row>
             </Container>
           </>
@@ -491,7 +509,7 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartPage;
 
 // 저희가 Cors이슈를 쉽게 해결하려고 이 부분을 이용한건데
 

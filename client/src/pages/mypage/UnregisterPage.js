@@ -7,7 +7,7 @@ import { useOutletContext } from "react-router";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 
-const Unregister = () => {
+const UnregisterPage = () => {
   const [title, setTitle] = useOutletContext();
 
   useEffect(() => {
@@ -106,4 +106,4 @@ const Unregister = () => {
   );
 };
 
-export default Unregister;
+export default UnregisterPage;

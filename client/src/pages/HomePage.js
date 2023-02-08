@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/effect-cards";
-import "./css/home.css";
+import "./css/homePage.css";
 
 import Loading from "../components/Loading";
 
@@ -18,7 +18,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Autoplay, EffectCards } from "swiper";
 import Instagram from "../components/Instagram";
 
-const Home = () => {
+const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -330,4 +330,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

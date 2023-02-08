@@ -3,7 +3,6 @@ let initialState = {
   unregisterResult: undefined,
   loginResult: undefined,
   authUserData: undefined,
-  // cartDetail: undefined,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -33,6 +32,15 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         authUserData: { ...state.authUserData, cart: payload },
+      };
+
+    case "MODIFY_SELECTED_CART":
+      return {
+        ...state,
+        authUserData: {
+          ...state.authUserData,
+          checkedCartIds: payload,
+        },
       };
 
     default:

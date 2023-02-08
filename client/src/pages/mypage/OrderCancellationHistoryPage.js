@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useOutletContext } from "react-router";
 import { IoIosArrowForward } from "react-icons/io";
 
-const OrderCancellationHistory = () => {
+const OrderCancellationHistoryPage = () => {
   const [title, setTitle] = useOutletContext();
   const { authUserData } = useSelector((state) => state.user);
 
@@ -50,4 +50,4 @@ const OrderCancellationHistory = () => {
   );
 };
 
-export default OrderCancellationHistory;
+export default OrderCancellationHistoryPage;

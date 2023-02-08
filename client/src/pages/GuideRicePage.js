@@ -12,9 +12,9 @@ import { MdLooks4 } from "react-icons/md";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "./css/guide.css";
+import "./css/guidePage.css";
 
-const GuideRice = () => {
+const GuideRicePage = () => {
   const { width } = useWindowDimensions();
 
   const pagination = {
@@ -359,4 +359,4 @@ const GuideRice = () => {
   );
 };
 
-export default GuideRice;
+export default GuideRicePage;

@@ -49,6 +49,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpec));
 app.use("/api", require("./routes/api"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/products", require("./routes/products"));
+app.use("/api/iamport", require("./routes/iamport"));
 app.use("/api/instagram", require("./routes/instagram"));
 
 // const instaApiBaseURL = process.env.INSTAGRAM_API_BASE_URL;

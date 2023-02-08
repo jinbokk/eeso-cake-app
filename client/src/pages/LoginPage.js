@@ -8,9 +8,9 @@ import { motion } from "framer-motion";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 
-import "./css/login.css";
+import "./css/loginPage.css";
 
-function Login() {
+function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
@@ -153,4 +153,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginPage;

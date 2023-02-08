@@ -16,8 +16,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { brown } from "@mui/material/colors";
 
-import GuideBread from "./GuideBread";
-import GuideRice from "./GuideRice";
+import GuideBreadPage from "./GuideBreadPage";
+import GuideRicePage from "./GuideRicePage";
 import { BsCart4 } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 import { AiOutlineCheckCircle } from "react-icons/ai";
@@ -27,9 +27,9 @@ import Lettering from "../components/productOrder/Lettering";
 import DesignTopper from "../components/productOrder/DesignTopper";
 import CustomerRequest from "../components/productOrder/CustomerRequest";
 
-import "./css/orderDetail.css";
+import "./css/orderDetailPage.css";
 
-const OrderDetail = () => {
+const OrderDetailPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -437,9 +437,9 @@ const OrderDetail = () => {
           </Container>
 
           <Container>
-            {productDetail.ingredient === "rice" ? <GuideRice /> : null}
+            {productDetail.ingredient === "rice" ? <GuideRicePage /> : null}
             {productDetail.ingredient === "bread" || "event" ? (
-              <GuideBread />
+              <GuideBreadPage />
             ) : null}
           </Container>
         </>
@@ -448,4 +448,4 @@ const OrderDetail = () => {
   );
 };
 
-export default OrderDetail;
+export default OrderDetailPage;

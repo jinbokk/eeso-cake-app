@@ -10,9 +10,9 @@ import { Container } from "react-bootstrap";
 import { RxTriangleRight } from "react-icons/rx";
 import { MdContactSupport } from "react-icons/md";
 
-import "./css/faq.css";
+import "./css/faqPage.css";
 
-const FAQ = () => {
+const FAQPage = () => {
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -228,7 +228,7 @@ const FAQ = () => {
     <Container style={{ marginTop: "4rem" }}>
       <div className="d-flex flex-column align-items-center pb-5">
         <MdContactSupport size={50} />
-        <div className="display-6 mt-3">FAQ</div>
+        <div className="display-6 mt-3">FAQPage</div>
       </div>
       {panels.map((item, index) => {
         return (
@@ -273,4 +273,4 @@ const FAQ = () => {
   );
 };
 
-export default FAQ;
+export default FAQPage;

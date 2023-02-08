@@ -20,9 +20,9 @@ import Postcode from "../components/utils/Postcode";
 
 import Terms from "../components/Terms";
 import PrivacyPolicy from "../components/PrivacyPolicy";
-import "./css/register.css";
+import "./css/registerPage.css";
 
-function Register() {
+function RegisterPage() {
   //name
   const [name, setName] = useState("");
 
@@ -799,4 +799,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterPage;

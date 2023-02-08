@@ -8,9 +8,9 @@ import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import Accordion from "react-bootstrap/Accordion";
 
-import "../css/OrderHistory.css";
+import "../css/orderHistoryPage.css";
 
-const OrderHistory = () => {
+const OrderHistoryPage = () => {
   const [title, setTitle] = useOutletContext();
   const { authUserData } = useSelector((state) => state.user);
 
@@ -241,4 +241,4 @@ const OrderHistory = () => {
   );
 };
 
-export default OrderHistory;
+export default OrderHistoryPage;
