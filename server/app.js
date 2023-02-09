@@ -9,6 +9,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const createError = require("http-errors");
 const logger = require("morgan");
+const schedule = require("node-schedule");
 
 // const refreshToken = require("./middleware/tokenRefresher");
 // refreshToken();
@@ -82,5 +83,12 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "public", "index.html"));
   });
 }
+
+app.listen(3000, function () {
+  console.log("Express start on port 3000!");
+  schedule.scheduleJob("* * * * * *", function () {
+    console.log(new Date() + " scheduler running!");
+  });
+});
 
 module.exports = app;
