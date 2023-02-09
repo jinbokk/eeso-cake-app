@@ -110,7 +110,7 @@ function App() {
                 <Route path="unregister" element={<UnregisterPage />} />
               </Route>
               <Route path="/user/cart" element={<AuthCart />} />
-              <Route path="/payment/:state" element={<AuthPayment />} />
+              <Route path="/payment" element={<AuthPayment />} />
               <Route path="/guide/rice" element={<AuthGuideRice />} />
               <Route path="/guide/bread" element={<AuthGuideBread />} />
               <Route path="/faq" element={<AuthFAQ />} />

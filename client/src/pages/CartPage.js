@@ -5,15 +5,13 @@ import { userActions } from "../redux/actions/userActions";
 import { Button, Checkbox } from "@mui/material";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
-import { AiOutlineClose, AiOutlineRight } from "react-icons/ai";
-import { BsCheck2Circle, BsCartCheck } from "react-icons/bs";
-import { MdPayment } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import PaymentPage from "./PaymentPage";
 import Payment from "../components/utils/Payment";
 import "./css/cartPage.css";
 import useWindowDimensions from "../hooks/useWindowDimensions";
+import PaymentNav from "../components/PaymentNav";
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -57,7 +55,7 @@ const CartPage = () => {
     fontFamily: "inherit",
 
     "&:hover": {
-      backgroundColor: red[300],
+      backgroundColor: "#de6061",
       color: "white",
       boxShadow: "none",
     },
@@ -87,8 +85,6 @@ const CartPage = () => {
   const checkHandler = (event) => {
     const { value, checked } = event.target; // value는 개별 cartId
 
-    console.log(value);
-
     if (value === "checkAll") {
       if (initialCartIds.length === checkedCartIds.length) {
         setCheckedCartIds([]);
@@ -106,32 +102,27 @@ const CartPage = () => {
     }
   };
 
-  const checkedCartList = authUserData.cart.filter((userCartItem) =>
+  const checkedCartItems = authUserData.cart.filter((userCartItem) =>
     checkedCartIds.some((checkedCartId) => userCartItem._id === checkedCartId)
   );
 
-  useEffect(() => {
-    dispatch({ type: "MODIFY_SELECTED_CART", payload: checkedCartIds });
-  }, [checkedCartIds]);
+  console.log("checkedCartItems:::::", checkedCartItems);
 
   return (
     <ThemeProvider theme={theme}>
       <Container>
         {authUserData && authUserData.isAuth ? (
           <h1 className="cart_title">
-            <span style={{ marginRight: "5px" }}>{authUserData.name}</span>
+            <span style={{ marginRight: "5px", color: "black" }}>
+              {authUserData.name}
+            </span>
             님의 장바구니
           </h1>
         ) : null}
 
         <Row className="mb-4">
           <Col className="order_navigation">
-            <BsCartCheck className="m-2 text-danger" />
-            <span className="fw-bold text-danger">CartPage</span>
-            <AiOutlineRight className="m-2 text-danger" />
-            <MdPayment className="m-2" /> <span>Payment</span>
-            <AiOutlineRight className="m-2" />
-            <BsCheck2Circle className="m-2" /> <span>OrderPage Complete</span>
+            <PaymentNav status="cart" />
           </Col>
         </Row>
 
@@ -390,24 +381,42 @@ const CartPage = () => {
               </Table>
             )}
 
-            <Row>
-              <Col className="p-5 border_bottom justify-content-center align-items-center">
+            <Row className="total_text_container justify-content-center mb-5">
+              <Col lg={3} xs={5}>
                 <div className="total_text">
-                  선택 수량 :{" "}
-                  {checkedCartList
-                    .reduce((accumulator, item) => {
-                      return accumulator + item.quantity;
-                    }, 0)
-                    .toLocaleString("ko-KR")}
-                  개
+                  <div>주문 수량</div>
+                  <div>
+                    {checkedCartItems
+                      .reduce((accumulator, item) => {
+                        return accumulator + item.quantity;
+                      }, 0)
+                      .toLocaleString("ko-KR")}
+                    개
+                  </div>
                 </div>
+              </Col>
+
+              <Col lg={"auto"} xs={"auto"}>
+                <div
+                  style={{
+                    borderRight: "1px solid var(--bg-accent)",
+                    width: "1px",
+                    height: "100%",
+                  }}
+                ></div>
+              </Col>
+
+              <Col lg={3} xs={5}>
                 <div className="total_text">
-                  주문 금액 : ₩{" "}
-                  {checkedCartList
-                    .reduce((accumulator, item) => {
-                      return accumulator + item.quantity * item.price;
-                    }, 0)
-                    .toLocaleString("ko-KR")}
+                  <div>주문 금액</div>
+                  <div>
+                    {checkedCartItems
+                      .reduce((accumulator, item) => {
+                        return accumulator + item.quantity * item.price;
+                      }, 0)
+                      .toLocaleString("ko-KR")}{" "}
+                    원
+                  </div>
                 </div>
               </Col>
             </Row>
@@ -441,12 +450,18 @@ const CartPage = () => {
                 </Col>
 
                 <Col xs={3} className="text-center align-items-center">
-                  {checkedCartList.length > 0 ? (
-                    <NavLink to="/payment" style={{ width: "100%" }}>
+                  {checkedCartItems.length > 0 ? (
+                    <Link
+                      to="/payment"
+                      state={{
+                        checkedCartItems: checkedCartItems,
+                      }}
+                      style={{ width: "100%" }}
+                    >
                       <OrderButton variant="contained">
                         선택상품 주문
                       </OrderButton>
-                    </NavLink>
+                    </Link>
                   ) : (
                     <OrderButton disabled variant="contained">
                       선택상품 주문
@@ -455,10 +470,16 @@ const CartPage = () => {
                 </Col>
 
                 <Col xs={3} className="text-center align-items-center">
-                  {checkedCartList.length > 0 ? (
-                    <NavLink to="payment" style={{ width: "100%" }}>
+                  {checkedCartItems.length > 0 ? (
+                    <Link
+                      to="/payment"
+                      state={{
+                        checkedCartItems: authUserData.cart,
+                      }}
+                      style={{ width: "100%" }}
+                    >
                       <OrderButton variant="contained">전체 주문</OrderButton>
-                    </NavLink>
+                    </Link>
                   ) : (
                     <OrderButton disabled variant="contained">
                       전체 주문
@@ -466,10 +487,10 @@ const CartPage = () => {
                   )}
                 </Col>
                 {/* <Col xs={3} className="text-center align-items-center">
-                  {checkedCartList.cart.length > 0 ? (
+                  {checkedCartItems.cart.length > 0 ? (
                     <Payment
                       btnTitle="선택상품 주문"
-                      checkedCartList={checkedCartList}
+                      checkedCartItems={checkedCartItems}
                       pay_method="card"
                     />
                   ) : (
@@ -481,10 +502,10 @@ const CartPage = () => {
                 </Col>
 
                 <Col xs={3} className="text-center align-items-center">
-                  {checkedCartList.cart.length > 0 ? (
+                  {checkedCartItems.cart.length > 0 ? (
                     <Payment
                       btnTitle="전체 주문"
-                      checkedCartList={authUserData}
+                      checkedCartItems={authUserData}
                       pay_method="card"
                     />
                   ) : (
@@ -532,10 +553,3 @@ export default CartPage;
 // 서버사이드 렌더링을 이용하는게 맞습니다
 
 // 하지만 실제 운영에서 클라이언트 렌더링을 사용하는 사이트도 많습니다 ^^
-
-{
-  /* <AiOutlineClose
-  className="delete_button"
-  
-/>; */
-}

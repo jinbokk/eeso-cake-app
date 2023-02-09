@@ -34,15 +34,6 @@ const userReducer = (state = initialState, action) => {
         authUserData: { ...state.authUserData, cart: payload },
       };
 
-    case "MODIFY_SELECTED_CART":
-      return {
-        ...state,
-        authUserData: {
-          ...state.authUserData,
-          checkedCartIds: payload,
-        },
-      };
-
     default:
       return state;
   }

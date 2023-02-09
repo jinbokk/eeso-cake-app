@@ -1,0 +1,35 @@
+.section_title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  color: black;
+  border-bottom: 2px dotted #de6061;
+  /* background-color: #de606013; */
+}
+
+.section_title_icon {
+  position: relative;
+  bottom: 1px;
+  color: #ce5454 !important;
+  height: 100%;
+  font-size: 2rem;
+}
+
+.payment_input_title {
+  width: 80px;
+  min-width: max-content;
+  /* font-weight: bold; */
+}
+
+.payment_input {
+  border: 1px solid pink !important;
+  width: 100% !important;
+  /* max-width: 500px !important; */
+}
+
+.payment_input::placeholder {
+  color: rgb(172, 172, 172) !important;
+  font-weight: normal !important;
+  font-size: 0.9rem;
+}
