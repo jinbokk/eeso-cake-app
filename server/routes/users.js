@@ -410,7 +410,7 @@ router.post("/decreaseQuantity", auth, async (req, res) => {
 
 router.post("/orderComplete", auth, async (req, res) => {
   let { imp_uid, merchant_uid, name, amount, products } = req.body;
-
+  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
   // order Process
 
   // 1. 결제완료 : order_paid
@@ -432,8 +432,8 @@ router.post("/orderComplete", auth, async (req, res) => {
           name: name,
           amount: amount,
           products: products,
-          state: "order_paid",
-          createdAt: new Date(),
+          status: "order_paid",
+          createdAt: new Date(new Date().getTime() + KR_TIME_DIFF),
         },
       },
     },

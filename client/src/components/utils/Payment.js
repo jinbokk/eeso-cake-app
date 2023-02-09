@@ -4,13 +4,14 @@ import { userActions } from "../../redux/actions/userActions";
 import { Button } from "@mui/material";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { Col, Row } from "react-bootstrap";
 
 const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const theme = createTheme({
     palette: {
@@ -97,9 +98,6 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
           /* 3. 콜백 함수 정의하기 */
           const { success, error_msg } = res;
           if (success) {
-            alert("결제가 완료 되었습니다");
-            console.log(res);
-
             let body = {
               imp_uid: res.imp_uid, // 아임포트 `unique key`(환불 요청시 `unique key`로 사용)
               merchant_uid: res.merchant_uid, // 주문번호 (결제정보 조회시 사용)
@@ -109,6 +107,15 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
             };
 
             dispatch(userActions.orderComplete(body));
+
+            let checkedCartIds = authUserDataWithCheckedCart.cart.map(
+              (item) => item._id
+            );
+
+            dispatch(userActions.removeFromCart(checkedCartIds));
+
+            alert("결제가 완료 되었습니다.\n홈 화면으로 이동합니다.");
+            navigate("/");
           } else {
             alert(`결제에 실패하였습니다\n${error_msg}`);
           }

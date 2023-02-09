@@ -4,15 +4,13 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useOutletContext } from "react-router";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
-import { format } from "date-fns";
-import { ko } from "date-fns/locale";
 import Accordion from "react-bootstrap/Accordion";
 
 import "../css/orderHistoryPage.css";
 
 const OrderHistoryPage = () => {
   const [title, setTitle] = useOutletContext();
-  const { authUserData } = useSelector((state) => state.user);
+  const { authUserData } = useSelector((status) => status.user);
 
   useEffect(() => {
     setTitle("쇼핑 정보");
@@ -25,8 +23,9 @@ const OrderHistoryPage = () => {
           <div className="order_history_lookup_text">결제 완료</div>
           <div className="display-5">
             {
-              authUserData.history.filter((item) => item.state === "order_paid")
-                .length
+              authUserData.history.filter(
+                (item) => item.status === "order_paid"
+              ).length
             }
           </div>
         </Col>
@@ -43,7 +42,7 @@ const OrderHistoryPage = () => {
           <div className="display-5">
             {
               authUserData.history.filter(
-                (item) => item.state === "order_making"
+                (item) => item.status === "order_making"
               ).length
             }
           </div>
@@ -61,7 +60,7 @@ const OrderHistoryPage = () => {
           <div className="display-5">
             {
               authUserData.history.filter(
-                (item) => item.state === "order_waiting_for_pickup"
+                (item) => item.status === "order_waiting_for_pickup"
               ).length
             }
           </div>
@@ -79,7 +78,7 @@ const OrderHistoryPage = () => {
           <div className="display-5">
             {
               authUserData.history.filter(
-                (item) => item.state === "order_complete"
+                (item) => item.status === "order_complete"
               ).length
             }
           </div>
@@ -103,22 +102,24 @@ const OrderHistoryPage = () => {
             <Row className="order_card_status text-start d-flex justify-content-between align-items-center mb-4">
               <Col xs={12} lg={"auto"}>
                 <span className="me-2">
-                  {historyItems.state === "order_paid" ? "결제 완료" : null}
-                  {historyItems.state === "order_making" ? "제작중" : null}
-                  {historyItems.state === "order_waiting_for_pickup"
+                  {historyItems.status === "order_paid" ? "결제 완료" : null}
+                  {historyItems.status === "order_making" ? "제작중" : null}
+                  {historyItems.status === "order_waiting_for_pickup"
                     ? "픽업 대기"
                     : null}
-                  {historyItems.state === "order_complete" ? "픽업 완료" : null}
-                  {historyItems.state === "order_waiting_for_cancel"
+                  {historyItems.status === "order_complete"
+                    ? "픽업 완료"
+                    : null}
+                  {historyItems.status === "order_waiting_for_cancel"
                     ? "취소 대기"
                     : null}
-                  {historyItems.state === "order_canceled" ? "취소 완료" : null}
+                  {historyItems.status === "order_canceled"
+                    ? "취소 완료"
+                    : null}
                 </span>
 
                 <span className="order_card_info">
-                  {format(new Date(historyItems.createdAt), "yyyy-MM-dd", {
-                    locale: ko,
-                  })}
+                  {historyItems.createdAt.slice(0,10)}
                 </span>
               </Col>
 
