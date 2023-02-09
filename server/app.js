@@ -84,15 +84,15 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-let autoUpdateDB = require("./util/autoUpdateDB.js");
+// let autoUpdate = require("././util/autoUpdate.js");
 
-app.listen(3000, function () {
-  console.log("Express start on port 3000!");
-  let test = autoUpdateDB.autoUpdateDB();
-  schedule.scheduleJob("1 * * * * *", function () {
-    console.log(new Date() + " scheduler running!");
-    console.log("test::::", test);
-  });
-});
+// app.listen(3000, function () {
+//   console.log("Express start on port 3000!");
+//   let test = autoUpdate.autoUpdateDB();
+//   schedule.scheduleJob("1 * * * * *", function () {
+//     console.log(new Date() + " scheduler running!");
+//     console.log("test::::", test);
+//   });
+// });
 
 module.exports = app;
