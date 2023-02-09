@@ -86,7 +86,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.listen(3000, function () {
   console.log("Express start on port 3000!");
-  schedule.scheduleJob("* * * * * *", function () {
+  schedule.scheduleJob("1 * * * * *", function () {
     console.log(new Date() + " scheduler running!");
   });
 });
