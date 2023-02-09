@@ -12,8 +12,6 @@ import { Col, Row } from "react-bootstrap";
 const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
   const dispatch = useDispatch();
 
-  console.log("pickupInfo", pickupInfo);
-
   const theme = createTheme({
     palette: {
       primary: {
@@ -108,8 +106,6 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
               name: name, // 주문명
               amount: amount, // 결제금액
               products: authUserDataWithCheckedCart.cart, // array type
-              // orderProducts : authUserData.cart
-              // 특정 상품 구매시, 해당 상품만 보내도록 할 수 있어야 한다.
             };
 
             dispatch(userActions.orderComplete(body));

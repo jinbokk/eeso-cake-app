@@ -84,10 +84,14 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+let autoUpdateDB = require("./util/autoUpdateDB.js");
+
 app.listen(3000, function () {
   console.log("Express start on port 3000!");
+  let test = autoUpdateDB();
   schedule.scheduleJob("1 * * * * *", function () {
     console.log(new Date() + " scheduler running!");
+    console.log("test::::", test);
   });
 });
 
