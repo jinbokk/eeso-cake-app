@@ -181,8 +181,7 @@ router.post("/addToCart", auth, async (req, res) => {
               title: createdOptionItem.title,
               image_url: createdOptionItem.image_url,
               deliveryType: createdOptionItem.deliveryType,
-              deliveryDate: createdOptionItem.deliveryDate,
-              deliveryTime: createdOptionItem.deliveryTime,
+              deliveryDateTime: createdOptionItem.deliveryDateTime,
               letteringToggle: createdOptionItem.letteringToggle,
               letteringText: createdOptionItem.letteringText,
               designTopperToggle: createdOptionItem.designTopperToggle,
@@ -212,8 +211,8 @@ router.post("/addToCart", auth, async (req, res) => {
           // JSON.stringify(existingOption) === JSON.stringify(createdOption)
           existingOption.rootProductId === createdOption.rootProductId &&
           existingOption.deliveryType === createdOption.deliveryType &&
-          existingOption.deliveryDate === createdOption.deliveryDate &&
-          existingOption.deliveryTime === createdOption.deliveryTime &&
+          existingOption.deliveryDateTime.stringType ===
+            createdOption.deliveryDateTime.stringType &&
           existingOption.letteringToggle === createdOption.letteringToggle &&
           existingOption.designTopperToggle ===
             createdOption.designTopperToggle &&
@@ -233,8 +232,8 @@ router.post("/addToCart", auth, async (req, res) => {
             // JSON.stringify(existingOption) === JSON.stringify(createdOption)
             existingOption.rootProductId === createdOption.rootProductId &&
             existingOption.deliveryType === createdOption.deliveryType &&
-            existingOption.deliveryDate === createdOption.deliveryDate &&
-            existingOption.deliveryTime === createdOption.deliveryTime &&
+            existingOption.deliveryDateTime.stringType ===
+              createdOption.deliveryDateTime.stringType &&
             existingOption.letteringToggle === createdOption.letteringToggle &&
             existingOption.designTopperToggle ===
               createdOption.designTopperToggle &&
@@ -265,8 +264,8 @@ router.post("/addToCart", auth, async (req, res) => {
             {
               "elem.rootProductId": duplicateItem.rootProductId,
               "elem.deliveryType": duplicateItem.deliveryType,
-              "elem.deliveryDate": duplicateItem.deliveryDate,
-              "elem.deliveryTime": duplicateItem.deliveryTime,
+              "elem.deliveryDateTime.stringType":
+                duplicateItem.deliveryDateTime.stringType,
               "elem.letteringToggle": duplicateItem.letteringToggle,
               "elem.letteringText": duplicateItem.letteringText,
               "elem.designTopperToggle": duplicateItem.designTopperToggle,
@@ -293,8 +292,7 @@ router.post("/addToCart", auth, async (req, res) => {
               title: notDuplicateItem.title,
               image_url: notDuplicateItem.image_url,
               deliveryType: notDuplicateItem.deliveryType,
-              deliveryDate: notDuplicateItem.deliveryDate,
-              deliveryTime: notDuplicateItem.deliveryTime,
+              deliveryDateTime: notDuplicateItem.deliveryDateTime,
               letteringToggle: notDuplicateItem.letteringToggle,
               letteringText: notDuplicateItem.letteringText,
               designTopperToggle: notDuplicateItem.designTopperToggle,
@@ -432,8 +430,7 @@ router.post("/orderComplete", auth, async (req, res) => {
           name: name,
           amount: amount,
           products: products,
-          status: "order_paid",
-          createdAt: new Date(new Date().getTime() + KR_TIME_DIFF),
+          paymentDate: new Date(new Date().getTime() + KR_TIME_DIFF),
         },
       },
     },

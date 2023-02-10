@@ -9,6 +9,8 @@ const moment = require("moment");
 //   fullAddress: String,
 // });
 
+const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+
 const userSchema = mongoose.Schema(
   {
     email: {
@@ -48,7 +50,10 @@ const userSchema = mongoose.Schema(
     },
     cart: { type: Array, default: [] },
     history: { type: Array, default: [] },
-    createdAt: {},
+    createdAt: {
+      type: Date,
+      default: new Date(new Date().getTime() + KR_TIME_DIFF),
+    },
     token: {
       type: String,
     },
@@ -56,7 +61,6 @@ const userSchema = mongoose.Schema(
       type: Number,
     },
   },
-  { timestamps: true }
 );
 
 //before save to mongoDb

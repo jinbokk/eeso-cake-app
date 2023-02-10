@@ -1,5 +1,4 @@
 const { User } = require("../models/User.js");
-const moment = require("moment");
 
 exports.update_order_status = () => {
   const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
@@ -8,11 +7,13 @@ exports.update_order_status = () => {
   User.updateMany(
     {},
     {
-      "history.$[elem].status": "order_making",
+      // "history.$[elem].status": "order_making",
+      "history.$[].products.$[elem].status": "order_making",
     },
     {
       arrayFilters: [
         {
+          // "elem.status": "order_paid",
           "elem.status": "order_paid",
           "elem.createdAt": {
             $gt: new Date(new Date().getTime() + KR_TIME_DIFF - oneDay),
