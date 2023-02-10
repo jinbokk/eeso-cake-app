@@ -177,8 +177,7 @@ const CartPage = () => {
 
                             <div className="border_bottom">
                               <div className="option_text">
-                                {item.deliveryType} / {item.deliveryDate}{" "}
-                                {item.deliveryTime}
+                                {item.deliveryType} / {item.deliveryDateTime.stringType}
                               </div>
                             </div>
 
@@ -306,8 +305,7 @@ const CartPage = () => {
 
                             <div className="border_bottom">
                               <div className="option_text">
-                                {item.deliveryType} / {item.deliveryDate}{" "}
-                                {item.deliveryTime}
+                                {item.deliveryType} / {item.deliveryDateTime.stringType}
                               </div>
                             </div>
 

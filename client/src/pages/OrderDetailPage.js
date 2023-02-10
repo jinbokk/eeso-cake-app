@@ -87,50 +87,51 @@ const OrderDetailPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [designTopperPrice, setDesignTopperPrice] = useState(0);
 
-  let createdCart = {
-    rootProductId: productDetail._id,
-    title: productDetail.title,
-    image_url: productDetail.image_url,
-    deliveryType: deliveryType,
-    deliveryDate: deliveryDate,
-    deliveryTime: deliveryTime,
-    letteringToggle: letteringToggle,
-    letteringText: letteringText,
-    designTopperToggle: designTopperToggle,
-    designTopperText: designTopperText,
-    customerRequestText: customerRequestText,
-    quantity: 1,
-    price: parseInt(productDetail.price) + parseInt(designTopperPrice),
+  const combineDateWithTime = (date, time) => {
+    return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      time.getHours(),
+      time.getMinutes(),
+      time.getSeconds(),
+      time.getMilliseconds()
+    );
   };
-  // let createdCart = {
-  //   rootProductId: productDetail._id,
-  //   title: productDetail.title,
-  //   image_url: productDetail.image_url,
-  //   option: {
-  //     deliveryType: deliveryType,
-  //     deliveryDate: deliveryDate,
-  //     deliveryTime: deliveryTime,
-  //     letteringToggle: letteringToggle,
-  //     letteringText: letteringText,
-  //     designTopperToggle: designTopperToggle,
-  //     designTopperText: designTopperText,
-  //     customerRequestText: customerRequestText,
-  //   },
-  //   quantity: 1,
-  //   price: parseInt(productDetail.price) + parseInt(designTopperPrice),
-  // };
 
   const optionConfirmHandler = () => {
+    const deliveryDateTime = combineDateWithTime(
+      deliveryDate.dateType,
+      deliveryTime.dateType
+    );
+
+    let createdCart = {
+      rootProductId: productDetail._id,
+      title: productDetail.title,
+      image_url: productDetail.image_url,
+      deliveryType: deliveryType,
+      deliveryDateTime: {
+        stringType: deliveryDate.stringType + " " + deliveryTime.stringType,
+        dateType: deliveryDateTime,
+      },
+      letteringToggle: letteringToggle,
+      letteringText: letteringText,
+      designTopperToggle: designTopperToggle,
+      designTopperText: designTopperText,
+      customerRequestText: customerRequestText,
+      quantity: 1,
+      price: parseInt(productDetail.price) + parseInt(designTopperPrice),
+    };
+
     if (
       !createdCart.deliveryType ||
-      !createdCart.deliveryDate ||
-      !createdCart.deliveryTime ||
+      !createdCart.deliveryDateTime ||
       (createdCart.letteringToggle === "추가 하기" &&
         !createdCart.letteringText) ||
       (createdCart.designTopperToggle === "추가 하기" &&
         !createdCart.designTopperText)
     ) {
-      alert("옵션을 다시 확인해 주세요");
+      alert("선택하신 옵션을 다시 확인해 주세요");
     } else {
       setCartItems((prev) => [...prev, createdCart]);
       dispatch({ type: "RESET_FORM" });
@@ -162,6 +163,7 @@ const OrderDetailPage = () => {
       dispatch(userActions.addToCart(cartItems));
       alert("장바구니에 상품이 담겼습니다");
       setCartItems([]);
+      dispatch({ type: "RESET_FORM" });
       dispatch(userActions.auth());
     }
   };
@@ -295,8 +297,8 @@ const OrderDetailPage = () => {
                               <Col lg={12} className="mb-2">
                                 <div>
                                   <span>
-                                    {item.deliveryType} / {item.deliveryDate} /{" "}
-                                    {item.deliveryTime}
+                                    {item.deliveryType} /{" "}
+                                    {item.deliveryDateTime.stringType}
                                   </span>
                                 </div>
                               </Col>

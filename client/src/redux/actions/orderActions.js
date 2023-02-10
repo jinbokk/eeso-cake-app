@@ -7,19 +7,21 @@ function setDeliveryType(deliveryType) {
     });
   };
 }
-function setDeliveryDate(deliveryDate) {
+
+function setDeliveryDate(body) {
   return async (dispatch) => {
     dispatch({
       type: "SET_DELIVERY_DATE",
-      payload: deliveryDate,
+      payload: body,
     });
   };
 }
-function setDeliveryTime(deliveryTime) {
+
+function setDeliveryTime(body) {
   return async (dispatch) => {
     dispatch({
       type: "SET_DELIVERY_TIME",
-      payload: deliveryTime,
+      payload: body,
     });
   };
 }

@@ -103,7 +103,9 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
               merchant_uid: res.merchant_uid, // 주문번호 (결제정보 조회시 사용)
               name: name, // 주문명
               amount: amount, // 결제금액
-              products: authUserDataWithCheckedCart.cart, // array type
+              products: authUserDataWithCheckedCart.cart.map((item) => {
+                return { ...item, status: "order_paid" };
+              }), // array type
             };
 
             dispatch(userActions.orderComplete(body));

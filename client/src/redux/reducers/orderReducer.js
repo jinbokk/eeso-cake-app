@@ -18,10 +18,22 @@ const orderReducer = (state = initialState, action) => {
       return { ...state, deliveryType: payload };
 
     case "SET_DELIVERY_DATE":
-      return { ...state, deliveryDate: payload };
+      return {
+        ...state,
+        deliveryDate: {
+          dateType: payload.dateType,
+          stringType: payload.stringType,
+        },
+      };
 
     case "SET_DELIVERY_TIME":
-      return { ...state, deliveryTime: payload };
+      return {
+        ...state,
+        deliveryTime: {
+          dateType: payload.dateType,
+          stringType: payload.stringType,
+        },
+      };
 
     // lettering
     case "SET_LETTERING_TOGGLE":

@@ -128,7 +128,7 @@
 
 .mui_x_custom * {
   font-family: var(--main-font) !important;
-  width: 100% !important;
+  /* width: 100% !important; */
 }
 
 .option_menu_section {

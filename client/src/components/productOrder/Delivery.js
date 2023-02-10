@@ -78,34 +78,28 @@ const Delivery = ({ control, cartItems }) => {
   };
 
   // date
+  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 * -1;
+  console.log("timezoneOffset:", timezoneOffset);
   const [dateOpen, setDateOpen] = useState(false);
   const [date, setDate] = useState(null);
-  // const [modifiedDate, setModifiedDate] = useState(undefined);
   const [dateError, setDateError] = useState(undefined);
 
   const dateHandler = (date) => {
     setDate(date);
-    const selectedDate = new Date(date);
-    const modifiedDate = format(selectedDate, "yyyy년 MM월 dd일 (eee)", {
+    const selectedDate = new Date(date.getTime() + timezoneOffset); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
+    const modifiedDate = format(date, "yyyy년 MM월 dd일 (eee)", {
       locale: ko,
     });
-    // setModifiedDate(modifiedDate);
-    dispatch(orderActions.setDeliveryDate(modifiedDate));
+
+    const body = {
+      dateType: selectedDate,
+      stringType: modifiedDate,
+    };
+
+    dispatch(orderActions.setDeliveryDate(body));
   };
 
-  /////////////////
-  /////////////////
-  /////////////////
-
-  // const disabledDate = (current) => {
-  //   return current < dayjs().add(2, "day") || current > dayjs().add(14, "day");
-  // };
-
-  /////////////////
-  /////////////////
-  /////////////////
-
-  //  time
   const [timeOpen, setTimeOpen] = useState(false);
   const [time, setTime] = useState(null);
   const [minTime, setMinTime] = useState(undefined);
@@ -113,6 +107,16 @@ const Delivery = ({ control, cartItems }) => {
   const [timeError, setTimeError] = useState(undefined);
 
   const timeHandler = (date) => {
+    setTime(date);
+    console.log("timezone Offset", date.getTimezoneOffset());
+    const selectedTime = new Date(date.getTime() + timezoneOffset);
+    const modifiedTime = format(date, "a hh : mm", { locale: ko });
+
+    const body = {
+      dateType: selectedTime,
+      stringType: modifiedTime,
+    };
+    dispatch(orderActions.setDeliveryTime(body));
     // let ampm_before = time ? format(time, "a", { locale: ko }) : undefined;
     // console.log(time);
     // let ampm_after = format(date, "a", { locale: ko }); // 오전 || 오후
@@ -125,13 +129,23 @@ const Delivery = ({ control, cartItems }) => {
     // } else {
     //   setTime(date);
     // }
-
-    setTime(date);
-
-    const selectedDate = new Date(date);
-    const modifiedTime = format(selectedDate, "a hh : mm", { locale: ko });
-    dispatch(orderActions.setDeliveryTime(modifiedTime));
   };
+
+  // const [combinedDateWithTime, setCombinedDateWithTime] = useState(undefined);
+
+  // const combineDateWithTime = (date, time) => {
+  //   const combinedDateWithTime = new Date(
+  //     date.getFullYear(),
+  //     date.getMonth(),
+  //     date.getDate(),
+  //     time.getHours(),
+  //     time.getMinutes(),
+  //     time.getSeconds(),
+  //     time.getMilliseconds()
+  //   );
+
+  //   setCombinedDateWithTime(combinedDateWithTime);
+  // };
 
   const storeHourHandler = (date) => {
     // 평일     am 11:00 ~ pm 7:30
@@ -389,10 +403,7 @@ const Delivery = ({ control, cartItems }) => {
                   inputFormat="a hh:mm"
                   onChange={(date) => {
                     onChange(date);
-                    timeHandler(date, onChange);
-                  }}
-                  onClick={(e) => {
-                    console.log("onClick", e);
+                    timeHandler(date);
                   }}
                   disabled={delivery === "택배" ? true : false}
                   ampmInClock
