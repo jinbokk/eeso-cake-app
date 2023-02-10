@@ -84,6 +84,7 @@ if (process.env.NODE_ENV === "production") {
 const scheduledTask = require("./util/scheduledTask");
 
 app.listen(8000, function () {
+  // 5초마다 mongoDB 탐색하여 document 갱신
   schedule.scheduleJob("*/5 * * * * *", function () {
     console.log("scheduler running / " + new Date());
     scheduledTask.update_order_status();

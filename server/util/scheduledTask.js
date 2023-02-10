@@ -13,7 +13,7 @@ exports.update_order_status = () => {
     {
       arrayFilters: [
         {
-          "elem.status": "order_paid_test",
+          "elem.status": "order_paid",
           "elem.createdAt": new Date(
             new Date().getTime() + KR_TIME_DIFF - oneDay
           ), // 1일 전
