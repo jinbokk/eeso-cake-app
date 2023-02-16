@@ -66,20 +66,41 @@
   padding: 2rem 1rem;
 }
 
+.total_text_container > div {
+  border-right: 1px solid var(--bg-accent);
+}
+
+.total_text_container > div:last-child {
+  border-right: none;
+}
+
+@media screen and (max-width: 992px) {
+  .total_text_container > div:first-child {
+    margin-bottom: 2rem;
+  }
+
+  .total_text_container > div:nth-child(2) {
+    border-right: none;
+    margin-bottom: 2rem;
+  }
+}
+
 .total_text {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   user-select: none;
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   padding: 10px;
+  height: 100%;
 }
 
-.total_text div:first-child {
+.total_text > div:first-child {
   font-size: 1rem;
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 1rem;
+  /* margin-bottom: 8px; */
 }
 
 .cart_table {

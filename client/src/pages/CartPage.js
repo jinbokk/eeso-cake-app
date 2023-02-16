@@ -1,20 +1,26 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useCallback,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Row, Col, Table, Nav } from "react-bootstrap";
+import { Container, Row, Col, Table } from "react-bootstrap";
 import { userActions } from "../redux/actions/userActions";
 import { Button, Checkbox } from "@mui/material";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
-import { Link, NavLink } from "react-router-dom";
-
-import PaymentPage from "./PaymentPage";
-import Payment from "../components/utils/Payment";
-import "./css/cartPage.css";
+import { NavLink, useNavigate } from "react-router-dom";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import PaymentNav from "../components/PaymentNav";
+import format from "date-fns/format";
+import { ko } from "date-fns/locale";
+
+import "./css/cartPage.css";
 
 const CartPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { authUserData } = useSelector((state) => state.user);
   const { width } = useWindowDimensions();
 
@@ -106,7 +112,46 @@ const CartPage = () => {
     checkedCartIds.some((checkedCartId) => userCartItem._id === checkedCartId)
   );
 
-  console.log("checkedCartItems:::::", checkedCartItems);
+  const [isOrderble, setIsOrderble] = useState(undefined);
+
+  const orderVerification = () => {
+    if (checkedCartItems.length === 0) {
+      setIsOrderble(false);
+      return false;
+    } else {
+      const isOrderbleCheck = checkedCartItems.every((compareItems) => {
+        return (
+          checkedCartItems[0].deliveryType === compareItems.deliveryType &&
+          checkedCartItems[0].deliveryDateTime.stringType ===
+            compareItems.deliveryDateTime.stringType
+        );
+      });
+
+      if (isOrderbleCheck) {
+        setIsOrderble(true);
+      } else {
+        setIsOrderble(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    orderVerification();
+  }, [checkedCartItems]);
+
+  const handleOrderNavigate = useCallback(() => {
+    if (!isOrderble) {
+      window.alert(
+        "상품의 수령방법 및 수령일시가\n동일한 제품에 한하여 일괄 주문이 가능합니다.\n\n상품을 재선택하여 주문 부탁드립니다 :-)"
+      );
+    } else {
+      navigate("/payment", {
+        state: {
+          checkedCartItems: checkedCartItems,
+        },
+      });
+    }
+  }, [checkedCartItems]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -138,10 +183,13 @@ const CartPage = () => {
                         checked={
                           initialCartIds.length === checkedCartIds.length
                         }
-                        onChange={checkHandler}
+                        onChange={(event) => {
+                          checkHandler(event);
+                          orderVerification();
+                        }}
                       />
                     </th>
-                    <th>상품정보</th>
+                    <th>상품 정보</th>
                   </tr>
                 </thead>
 
@@ -152,7 +200,10 @@ const CartPage = () => {
                         <Checkbox
                           value={item._id}
                           checked={checkedCartIds.includes(item._id)}
-                          onChange={checkHandler}
+                          onChange={(event) => {
+                            checkHandler(event);
+                            orderVerification();
+                          }}
                         />
                       </td>
 
@@ -177,7 +228,8 @@ const CartPage = () => {
 
                             <div className="border_bottom">
                               <div className="option_text">
-                                {item.deliveryType} / {item.deliveryDateTime.stringType}
+                                {item.deliveryType} /{" "}
+                                {item.deliveryDateTime.stringType}
                               </div>
                             </div>
 
@@ -208,10 +260,13 @@ const CartPage = () => {
                           </Col>
                         </Row>
 
-                        <Row>
-                          <div className="text-center d-flex justify-content-end align-items-center">
+                        <Row className="justify-content-between">
+                          <Col
+                            xs={"auto"}
+                            className="text-center d-flex justify-content-between align-items-center"
+                          >
                             <div className="d-flex align-items-center mb-3">
-                              <div>주문 수량 :</div>
+                              <div>수량 :</div>
                               <div className="d-flex justify-content-center align-items-center ms-3">
                                 <QuantityButton
                                   variant="contained"
@@ -225,7 +280,7 @@ const CartPage = () => {
                                 >
                                   <div>-</div>
                                 </QuantityButton>
-                                <div className="mx-3 user-select-none">
+                                <div className="mx-2 user-select-none">
                                   {item.quantity}
                                 </div>
                                 <QuantityButton
@@ -240,14 +295,14 @@ const CartPage = () => {
                                 </QuantityButton>
                               </div>
                             </div>
-                          </div>
+                          </Col>
 
-                          <div className="text-end">
-                            주문 금액 : ₩{" "}
+                          <Col xs={"auto"} className="text-end">
+                            금액 : ₩{" "}
                             {(item.quantity * item.price).toLocaleString(
                               "ko-KR"
                             )}
-                          </div>
+                          </Col>
                         </Row>
                       </td>
                     </tr>
@@ -264,12 +319,15 @@ const CartPage = () => {
                         checked={
                           initialCartIds.length === checkedCartIds.length
                         }
-                        onChange={checkHandler}
+                        onChange={(event) => {
+                          checkHandler(event);
+                          orderVerification();
+                        }}
                       />
                     </th>
-                    <th>상품정보</th>
+                    <th>상품 정보</th>
                     <th>수량</th>
-                    <th colSpan={2}>주문금액</th>
+                    <th colSpan={2}>주문 금액</th>
                   </tr>
                 </thead>
 
@@ -280,7 +338,10 @@ const CartPage = () => {
                         <Checkbox
                           value={item._id}
                           checked={checkedCartIds.includes(item._id)}
-                          onChange={checkHandler}
+                          onChange={(event) => {
+                            checkHandler(event);
+                            orderVerification();
+                          }}
                         />
                       </td>
 
@@ -305,7 +366,8 @@ const CartPage = () => {
 
                             <div className="border_bottom">
                               <div className="option_text">
-                                {item.deliveryType} / {item.deliveryDateTime.stringType}
+                                {item.deliveryType} /{" "}
+                                {item.deliveryDateTime.stringType}
                               </div>
                             </div>
 
@@ -380,6 +442,56 @@ const CartPage = () => {
             )}
 
             <Row className="total_text_container justify-content-center mb-5">
+              <Col lg={3} xs={5} className={width < 992 ? "pb-3" : null}>
+                <div className="total_text">
+                  <div>수령 방법</div>
+                  <div style={{ fontSize: "1rem" }}>
+                    {isOrderble && checkedCartItems.length > 0
+                      ? checkedCartItems[0].deliveryType
+                      : "-"}
+                  </div>
+                </div>
+              </Col>
+
+              <Col lg={3} xs={5} className={width < 992 ? "pb-3" : null}>
+                <div className="total_text">
+                  <div>수령 일시</div>
+                  <div style={{ fontSize: "1rem" }}>
+                    {isOrderble && checkedCartItems.length > 0 ? (
+                      <Row className="justify-content-center">
+                        <Col
+                          lg={"auto"}
+                          className={
+                            width < 992
+                              ? "text-center px-0"
+                              : "text-center px-0 me-2"
+                          }
+                        >
+                          {format(
+                            new Date(
+                              checkedCartItems[0].deliveryDateTime.dateType
+                            ),
+                            "yyyy-MM-dd (eee)",
+                            { locale: ko }
+                          )}
+                        </Col>
+                        <Col lg={"auto"} className="text-center px-0">
+                          {format(
+                            new Date(
+                              checkedCartItems[0].deliveryDateTime.dateType
+                            ),
+                            "a hh:mm",
+                            { locale: ko }
+                          )}
+                        </Col>
+                      </Row>
+                    ) : (
+                      "-"
+                    )}
+                  </div>
+                </div>
+              </Col>
+
               <Col lg={3} xs={5}>
                 <div className="total_text">
                   <div>주문 수량</div>
@@ -392,16 +504,6 @@ const CartPage = () => {
                     개
                   </div>
                 </div>
-              </Col>
-
-              <Col lg={"auto"} xs={"auto"}>
-                <div
-                  style={{
-                    borderRight: "1px solid var(--bg-accent)",
-                    width: "1px",
-                    height: "100%",
-                  }}
-                ></div>
               </Col>
 
               <Col lg={3} xs={5}>
@@ -449,17 +551,12 @@ const CartPage = () => {
 
                 <Col xs={3} className="text-center align-items-center">
                   {checkedCartItems.length > 0 ? (
-                    <Link
-                      to="/payment"
-                      state={{
-                        checkedCartItems: checkedCartItems,
-                      }}
-                      style={{ width: "100%" }}
+                    <OrderButton
+                      variant="contained"
+                      onClick={handleOrderNavigate}
                     >
-                      <OrderButton variant="contained">
-                        선택상품 주문
-                      </OrderButton>
-                    </Link>
+                      선택상품 주문
+                    </OrderButton>
                   ) : (
                     <OrderButton disabled variant="contained">
                       선택상품 주문
@@ -467,50 +564,18 @@ const CartPage = () => {
                   )}
                 </Col>
 
-                <Col xs={3} className="text-center align-items-center">
+                {/* <Col xs={3} className="text-center align-items-center">
                   {checkedCartItems.length > 0 ? (
-                    <Link
-                      to="/payment"
-                      state={{
-                        checkedCartItems: authUserData.cart,
-                      }}
-                      style={{ width: "100%" }}
+                    <OrderButton
+                      variant="contained"
+                      onClick={handleOrderNavigate}
                     >
-                      <OrderButton variant="contained">전체 주문</OrderButton>
-                    </Link>
+                      전체 주문
+                    </OrderButton>
                   ) : (
                     <OrderButton disabled variant="contained">
                       전체 주문
                     </OrderButton>
-                  )}
-                </Col>
-                {/* <Col xs={3} className="text-center align-items-center">
-                  {checkedCartItems.cart.length > 0 ? (
-                    <Payment
-                      btnTitle="선택상품 주문"
-                      checkedCartItems={checkedCartItems}
-                      pay_method="card"
-                    />
-                  ) : (
-                    <Payment
-                      disabled
-                      btnTitle="선택상품 주문"
-                    />
-                  )}
-                </Col>
-
-                <Col xs={3} className="text-center align-items-center">
-                  {checkedCartItems.cart.length > 0 ? (
-                    <Payment
-                      btnTitle="전체 주문"
-                      checkedCartItems={authUserData}
-                      pay_method="card"
-                    />
-                  ) : (
-                    <Payment
-                      disabled
-                      btnTitle="전체 주문"
-                    />
                   )}
                 </Col> */}
               </Row>

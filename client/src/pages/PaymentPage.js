@@ -6,6 +6,8 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import PaymentNav from "../components/PaymentNav";
 import Payment from "../components/utils/Payment";
 import { RxDragHandleDots2 } from "react-icons/rx";
+import format from "date-fns/format";
+import { ko } from "date-fns/locale";
 // import Postcode from "../components/utils/Postcode";
 
 import "./css/paymentPage.css";
@@ -103,7 +105,8 @@ const PaymentPage = () => {
 
                           <div className="border_bottom">
                             <div className="option_text">
-                              {item.deliveryType} / {item.deliveryDateTime.stringType}
+                              {item.deliveryType} /{" "}
+                              {item.deliveryDateTime.stringType}
                             </div>
                           </div>
 
@@ -458,6 +461,56 @@ const PaymentPage = () => {
         </Row>
 
         <Row className="total_text_container justify-content-center mb-5 py-5">
+          <Col lg={3} xs={5} className={width < 992 ? "pb-3" : null}>
+            <div className="total_text">
+              <div>수령 방법</div>
+              <div style={{ fontSize: "1rem" }}>
+                {authUserDataWithCheckedCart.cart.length > 0
+                  ? authUserDataWithCheckedCart.cart[0].deliveryType
+                  : "-"}
+              </div>
+            </div>
+          </Col>
+
+          <Col lg={3} xs={5} className={width < 992 ? "pb-3" : null}>
+            <div className="total_text">
+              <div>수령 일시</div>
+              <div style={{ fontSize: "1rem" }}>
+                {authUserDataWithCheckedCart.cart.length > 0 ? (
+                  <Row className="justify-content-center">
+                    <Col
+                      lg={"auto"}
+                      className={
+                        width < 992
+                          ? "text-center px-0"
+                          : "text-center px-0 me-2"
+                      }
+                    >
+                      {format(
+                        new Date(
+                          authUserDataWithCheckedCart.cart[0].deliveryDateTime.dateType
+                        ),
+                        "yyyy-MM-dd (eee)",
+                        { locale: ko }
+                      )}
+                    </Col>
+                    <Col lg={"auto"} className="text-center px-0">
+                      {format(
+                        new Date(
+                          authUserDataWithCheckedCart.cart[0].deliveryDateTime.dateType
+                        ),
+                        "a hh:mm",
+                        { locale: ko }
+                      )}
+                    </Col>
+                  </Row>
+                ) : (
+                  "-"
+                )}
+              </div>
+            </div>
+          </Col>
+
           <Col lg={3} xs={5}>
             <div className="total_text">
               <div>주문 수량</div>
@@ -470,16 +523,6 @@ const PaymentPage = () => {
                 개
               </div>
             </div>
-          </Col>
-
-          <Col lg={"auto"} xs={"auto"}>
-            <div
-              style={{
-                borderRight: "1px solid var(--bg-accent)",
-                width: "1px",
-                height: "100%",
-              }}
-            ></div>
           </Col>
 
           <Col lg={3} xs={5}>

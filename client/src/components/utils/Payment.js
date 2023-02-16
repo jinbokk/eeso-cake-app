@@ -83,7 +83,7 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
       IMP.request_pay(
         /* 2. 결제 데이터 정의하기 */
         {
-          pg: "nice", // PG사
+          pg: "kicc", // PG사
           pay_method: pay_method, // 결제수단
           merchant_uid: `${new Date().getTime()}`, // 주문번호
           name: name, // 주문명
@@ -103,9 +103,11 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
               merchant_uid: res.merchant_uid, // 주문번호 (결제정보 조회시 사용)
               name: name, // 주문명
               amount: amount, // 결제금액
-              products: authUserDataWithCheckedCart.cart.map((item) => {
-                return { ...item, status: "order_paid" };
-              }), // array type
+              deliveryType: authUserDataWithCheckedCart.cart[0].deliveryType,
+              deliveryDateTime:
+                authUserDataWithCheckedCart.cart[0].deliveryDateTime,
+              products: authUserDataWithCheckedCart.cart, // array type
+              status: "order_paid",
             };
 
             dispatch(userActions.orderComplete(body));

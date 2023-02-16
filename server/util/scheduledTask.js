@@ -7,16 +7,15 @@ exports.update_order_status = () => {
   User.updateMany(
     {},
     {
-      // "history.$[elem].status": "order_making",
-      "history.$[].products.$[elem].status": "order_making",
+      "history.$[elem].status": "order_making",
+      // "history.$[].products.$[elem].status": "order_making",
     },
     {
       arrayFilters: [
         {
-          // "elem.status": "order_paid",
           "elem.status": "order_paid",
           "elem.createdAt": {
-            $gt: new Date(new Date().getTime() + KR_TIME_DIFF - oneDay),
+            $gt: new Date(new Date().getTime() + KR_TIME_DIFF - oneDay * 3),
           }, // 1일 전
         },
       ],
@@ -25,6 +24,32 @@ exports.update_order_status = () => {
     return docs;
   });
 };
+
+// exports.update_order_status = () => {
+//   const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+//   const oneDay = 24 * 60 * 60 * 1000;
+
+//   User.updateMany(
+//     {},
+//     {
+//       // "history.$[elem].status": "order_making",
+//       "history.$[].products.$[elem].status": "order_making",
+//     },
+//     {
+//       arrayFilters: [
+//         {
+//           // "elem.status": "order_paid",
+//           "elem.status": "order_paid",
+//           "elem.createdAt": {
+//             $gt: new Date(new Date().getTime() + KR_TIME_DIFF - oneDay),
+//           }, // 1일 전
+//         },
+//       ],
+//     }
+//   ).exec((err, docs) => {
+//     return docs;
+//   });
+// };
 
 ///////////////////////////////////////////////////
 

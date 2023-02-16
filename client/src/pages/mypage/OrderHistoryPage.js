@@ -5,6 +5,7 @@ import { useOutletContext } from "react-router";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import Accordion from "react-bootstrap/Accordion";
+import format from "date-fns/format";
 
 import "../css/orderHistoryPage.css";
 
@@ -100,28 +101,33 @@ const OrderHistoryPage = () => {
         {authUserData.history.map((historyItems, index) => (
           <div key={index} className="order_card">
             <Row className="order_card_status text-start d-flex justify-content-between align-items-center mb-4">
-              <Col xs={12} lg={"auto"}>
-                <span className="me-2">
-                  {historyItems.status === "order_paid" ? "결제 완료" : null}
-                  {historyItems.status === "order_making" ? "제작중" : null}
-                  {historyItems.status === "order_waiting_for_pickup"
-                    ? "픽업 대기"
-                    : null}
-                  {historyItems.status === "order_complete"
-                    ? "픽업 완료"
-                    : null}
-                  {historyItems.status === "order_waiting_for_cancel"
-                    ? "취소 대기"
-                    : null}
-                  {historyItems.status === "order_canceled"
-                    ? "취소 완료"
-                    : null}
-                </span>
-
-                <span className="order_card_info">
-                  {historyItems.createdAt.slice(0,10)}
-                </span>
-              </Col>
+              {/* <Col xs={12} lg={"auto"}>
+                  <span className="me-2">
+                    {historyItems.products.status === "order_paid"
+                      ? "결제 완료"
+                      : null}
+                    {historyItems.products.status === "order_making"
+                      ? "제작중"
+                      : null}
+                    {historyItems.products.status === "order_waiting_for_pickup"
+                      ? "픽업 대기"
+                      : null}
+                    {historyItems.products.status === "order_complete"
+                      ? "픽업 완료"
+                      : null}
+                    {historyItems.products.status === "order_waiting_for_cancel"
+                      ? "취소 대기"
+                      : null}
+                    {historyItems.products.status === "order_canceled"
+                      ? "취소 완료"
+                      : null}
+                  </span>
+  
+                  <span className="order_card_info">
+                    결제일자{" "}
+                    {format(new Date(historyItems.paymentDate), "yyyy-MM-dd")}
+                  </span>
+                </Col> */}
 
               <Col xs={12} lg={"auto"} className="order_card_info">
                 주문번호 {historyItems.merchant_uid}
@@ -152,8 +158,7 @@ const OrderHistoryPage = () => {
 
                 <div>
                   {historyItems.products[0].deliveryType} /{" "}
-                  {historyItems.products[0].deliveryDate}{" "}
-                  {historyItems.products[0].deliveryTime}
+                  {historyItems.products[0].deliveryDateTime.stringType}
                 </div>
 
                 <div>
@@ -168,7 +173,7 @@ const OrderHistoryPage = () => {
                   eventKey={`top-${index}`}
                   className="order_card_accordion"
                 >
-                  <Accordion.Header>상세보기</Accordion.Header>
+                  <Accordion.Header>전체보기</Accordion.Header>
                   <Accordion.Body>
                     {historyItems.products.map((orderProducts, index) => (
                       <Row className="py-4" key={index}>

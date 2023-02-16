@@ -169,9 +169,23 @@
 .controller_container {
   width: 60%;
 }
+.preview_container {
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #a1887f48;
+  border-radius: 1rem;
+}
 
 .order_preview {
-  border-bottom: 2px solid rgba(129, 58, 8, 0.5);
+  margin-top: 1rem;
+  border-bottom: 2px solid #a1887f;
+  background-color: #a1887f48;
+  border-radius: 1rem;
+}
+
+.preview_text {
+  font-size: 0.8rem;
+  opacity: 0.7;
 }
 
 .input_visible {
@@ -187,9 +201,10 @@
 .remove_button {
   padding: 0 10px;
   cursor: pointer;
+  width:fit-content
 }
 
 .disabled_text {
-  font-size: 0.5rem;
+  font-size: 0.8rem;
   color: gray;
 }

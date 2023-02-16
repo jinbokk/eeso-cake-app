@@ -248,132 +248,148 @@ const OrderDetailPage = () => {
                     </Button>
 
                     {cartItems.length > 0 ? (
-                      <>
+                      <Container className="preview_container">
                         {cartItems.map((item, index) => {
                           return (
                             <Row
                               key={index}
                               className="order_preview align-items-center p-3"
                             >
-                              <Col className="d-flex flex-row justify-content-between align-items-center mb-3">
-                                <div className="fw-bold">
+                              <Col
+                                lg={12}
+                                className="d-flex align-items-center justify-content-between py-2"
+                              >
+                                <Col lg={"auto"} className="fw-bold">
                                   {productDetail.title}
-                                </div>
+                                </Col>
 
-                                <div className="d-flex flex-row justify-content-center align-items-center">
-                                  <QuantityButton
-                                    variant="contained"
-                                    onClick={() => {
-                                      if (item.quantity > 1) {
-                                        item.quantity = item.quantity - 1;
-                                      }
-                                      setCartItems((prev) => [...prev]);
-                                    }}
-                                  >
-                                    <div style={{ fontSize: "1.5rem" }}>-</div>
-                                  </QuantityButton>
-                                  <div className="mx-3 user-select-none">
-                                    {item.quantity}
-                                  </div>
-                                  <QuantityButton
-                                    variant="contained"
-                                    onClick={() => {
-                                      item.quantity = item.quantity + 1;
-                                      setCartItems((prev) => [...prev]);
-                                    }}
-                                  >
-                                    <div style={{ fontSize: "1.5rem" }}>+</div>
-                                  </QuantityButton>
-                                </div>
-
-                                <div
+                                <Col
+                                  lg={"auto"}
                                   className="remove_button"
                                   onClick={() => optionRemoveHandler(index)}
                                 >
                                   X
-                                </div>
+                                </Col>
                               </Col>
 
-                              <Col lg={12} className="mb-2">
-                                <div>
-                                  <span>
-                                    {item.deliveryType} /{" "}
-                                    {item.deliveryDateTime.stringType}
-                                  </span>
+                              <Col lg={12}>
+                                <Row className="py-2 pb-3">
+                                  <Col
+                                    lg={"auto"}
+                                    className="d-flex flex-row justify-content-between align-items-center"
+                                  >
+                                    <div className="d-flex flex-row justify-content-center align-items-center">
+                                      <QuantityButton
+                                        variant="contained"
+                                        onClick={() => {
+                                          if (item.quantity > 1) {
+                                            item.quantity = item.quantity - 1;
+                                          }
+                                          setCartItems((prev) => [...prev]);
+                                        }}
+                                      >
+                                        <div style={{ fontSize: "1.5rem" }}>
+                                          -
+                                        </div>
+                                      </QuantityButton>
+                                      <div className="mx-3 user-select-none">
+                                        {item.quantity}
+                                      </div>
+                                      <QuantityButton
+                                        variant="contained"
+                                        onClick={() => {
+                                          item.quantity = item.quantity + 1;
+                                          setCartItems((prev) => [...prev]);
+                                        }}
+                                      >
+                                        <div style={{ fontSize: "1.5rem" }}>
+                                          +
+                                        </div>
+                                      </QuantityButton>
+                                    </div>
+                                  </Col>
+
+                                  <Col style={{ textAlign: "end" }}>
+                                    ₩{" "}
+                                    {(
+                                      item.quantity * item.price
+                                    ).toLocaleString("ko-KR")}
+                                  </Col>
+                                </Row>
+                              </Col>
+
+                              <Col lg={12}>
+                                <div className="preview_text fw-bold">
+                                  {item.deliveryType} /{" "}
+                                  {item.deliveryDateTime.stringType}
                                 </div>
                               </Col>
 
                               <Col>
                                 {item.letteringToggle === "추가 하기" ? (
-                                  <div className="disabled_text">
+                                  <div className="preview_text">
                                     케이크 판 레터링 / {item.letteringText}
                                   </div>
                                 ) : (
-                                  <div className="disabled_text">
+                                  <div className="preview_text">
                                     케이크 판 레터링 / 추가하지 않기
                                   </div>
                                 )}
 
                                 {item.designTopperToggle === "추가 하기" ? (
-                                  <div className="disabled_text">
+                                  <div className="preview_text">
                                     디자인 토퍼 문구 (+
                                     {designTopperPrice.toLocaleString("ko-KR")}
                                     원) / {item.designTopperText}
                                   </div>
                                 ) : (
-                                  <div className="disabled_text">
+                                  <div className="preview_text">
                                     디자인 토퍼 / 추가하지 않기
                                   </div>
                                 )}
 
                                 {item.customerRequestText ? (
-                                  <div className="disabled_text">
+                                  <div className="preview_text">
                                     요청 사항 / {item.customerRequestText}
                                   </div>
                                 ) : null}
-
-                                <div style={{ textAlign: "end" }}>
-                                  ₩{" "}
-                                  {(item.quantity * item.price).toLocaleString(
-                                    "ko-KR"
-                                  )}
-                                </div>
                               </Col>
                             </Row>
                           );
                         })}
 
                         <Row
-                          className="p-5"
+                          className="py-4"
                           style={{ fontSize: "1.5rem", fontWeight: "bold" }}
                         >
-                          <Col className="justify-content-center align-items-center">
-                            주문 금액
-                          </Col>
-                          <Col className="align-items-center">
-                            <span
-                              style={{ fontSize: "1.1rem", opacity: "0.6" }}
-                            >
-                              총 수량
-                              <span style={{ margin: "0 5px" }}>
+                          <Col lg={6} xs={6}>
+                            <div className="total_text">
+                              <div>주문 수량</div>
+                              <div>
                                 {cartItems
-                                  .reduce((accumulator, option) => {
-                                    return accumulator + option.quantity;
+                                  .reduce((accumulator, item) => {
+                                    return accumulator + item.quantity;
                                   }, 0)
                                   .toLocaleString("ko-KR")}
-                              </span>
-                              개
-                            </span>
-                            <span>
-                              ₩{" "}
-                              {cartItems
-                                .reduce((accumulator, option) => {
-                                  return (
-                                    accumulator + option.quantity * option.price
-                                  );
-                                }, 0)
-                                .toLocaleString("ko-KR")}
-                            </span>
+                                개
+                              </div>
+                            </div>
+                          </Col>
+
+                          <Col lg={6} xs={6}>
+                            <div className="total_text">
+                              <div>주문 금액</div>
+                              <div>
+                                {cartItems
+                                  .reduce((accumulator, item) => {
+                                    return (
+                                      accumulator + item.quantity * item.price
+                                    );
+                                  }, 0)
+                                  .toLocaleString("ko-KR")}{" "}
+                                원
+                              </div>
+                            </div>
                           </Col>
                         </Row>
 
@@ -430,7 +446,7 @@ const OrderDetailPage = () => {
                             </Button>
                           </Col>
                         </Row>
-                      </>
+                      </Container>
                     ) : null}
                   </ThemeProvider>
                 </Col>

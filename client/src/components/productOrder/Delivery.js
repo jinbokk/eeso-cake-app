@@ -88,7 +88,7 @@ const Delivery = ({ control, cartItems }) => {
   const dateHandler = (date) => {
     setDate(date);
     const selectedDate = new Date(date.getTime() + timezoneOffset); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
-    const modifiedDate = format(date, "yyyy년 MM월 dd일 (eee)", {
+    const modifiedDate = format(date, "yyyy-MM-dd (eee)", {
       locale: ko,
     });
 
@@ -110,7 +110,7 @@ const Delivery = ({ control, cartItems }) => {
     setTime(date);
     console.log("timezone Offset", date.getTimezoneOffset());
     const selectedTime = new Date(date.getTime() + timezoneOffset);
-    const modifiedTime = format(date, "a hh : mm", { locale: ko });
+    const modifiedTime = format(date, "a hh:mm", { locale: ko });
 
     const body = {
       dateType: selectedTime,
