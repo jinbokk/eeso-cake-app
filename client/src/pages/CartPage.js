@@ -531,22 +531,28 @@ const CartPage = () => {
                   </NavLink>
                 </Col>
                 <Col xs={3} className="text-center align-items-center">
-                  <ShoppingButton
-                    variant="outlined"
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          "선택하신 상품을 장바구니에서 제거하시겠습니까?"
-                        )
-                      ) {
-                        removeFromCart(checkedCartIds);
-                      } else {
-                        return;
-                      }
-                    }}
-                  >
-                    선택상품 제거
-                  </ShoppingButton>
+                  {checkedCartItems.length > 0 ? (
+                    <ShoppingButton
+                      variant="outlined"
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            "선택하신 상품을 장바구니에서 제거하시겠습니까?"
+                          )
+                        ) {
+                          removeFromCart(checkedCartIds);
+                        } else {
+                          return;
+                        }
+                      }}
+                    >
+                      선택상품 제거
+                    </ShoppingButton>
+                  ) : (
+                    <ShoppingButton disabled variant="outlined">
+                      선택상품 제거
+                    </ShoppingButton>
+                  )}
                 </Col>
 
                 <Col xs={3} className="text-center align-items-center">
