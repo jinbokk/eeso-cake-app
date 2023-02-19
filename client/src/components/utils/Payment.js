@@ -126,8 +126,13 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
 
             dispatch(userActions.removeFromCart(checkedCartIds));
 
-            alert("결제가 완료 되었습니다.\n홈 화면으로 이동합니다.");
-            navigate("/");
+            // alert("결제가 완료 되었습니다.\n홈 화면으로 이동합니다.");
+            navigate("success", {
+              replace: true,
+              state: {
+                result: res,
+              },
+            });
           } else {
             alert(`결제에 실패하였습니다\n${error_msg}`);
           }

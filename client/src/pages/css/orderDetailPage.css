@@ -201,7 +201,7 @@
 .remove_button {
   padding: 0 10px;
   cursor: pointer;
-  width:fit-content
+  width: fit-content;
 }
 
 .disabled_text {

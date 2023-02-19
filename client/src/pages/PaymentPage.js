@@ -58,7 +58,7 @@ const PaymentPage = () => {
 
   return !state ? null : (
     <>
-      <h1 className="cart_title">주문하기</h1>
+      <h1 className="cart_title">주문서 작성</h1>
 
       <Container className="py-5">
         <Row className="mb-4">

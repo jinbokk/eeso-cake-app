@@ -253,7 +253,7 @@ const OrderDetailPage = () => {
                           return (
                             <Row
                               key={index}
-                              className="order_preview align-items-center p-3"
+                              className="order_preview align-items-center m-2 p-3"
                             >
                               <Col
                                 lg={12}
@@ -393,7 +393,7 @@ const OrderDetailPage = () => {
                           </Col>
                         </Row>
 
-                        <Row>
+                        <Row className="m-2">
                           <Col>
                             <Button
                               variant="contained"

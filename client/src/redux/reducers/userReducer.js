@@ -3,6 +3,7 @@ let initialState = {
   unregisterResult: undefined,
   loginResult: undefined,
   authUserData: undefined,
+  // loading: true,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -26,7 +27,12 @@ const userReducer = (state = initialState, action) => {
       };
 
     case "AUTH_USER":
-      return { ...state, loginResult: undefined, authUserData: payload };
+      return {
+        ...state,
+        loginResult: undefined,
+        // loading: false,
+        authUserData: payload,
+      };
 
     case "MODIFY_CART_QUANTITY":
       return {

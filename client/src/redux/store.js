@@ -13,10 +13,9 @@ const composeEnhancers = composeWithDevTools({
 const persistConfig = {
   key: "user",
   version: 1,
-  // localStorage에 저장합니다.
   // sessionStorage에 저장합니다.
   storage: storageSession,
-  // reducer 중에 "특정" reducer만 localstorage에 저장합니다.
+  // reducer 중에 "특정" reducer만 sessionstorage에 저장합니다.
   // whitelist: ["특정"]
   whitelist: ["user"],
   // blacklist의 경우, 그것만 제외합니다

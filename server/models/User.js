@@ -11,57 +11,55 @@ const moment = require("moment");
 
 const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
 
-const userSchema = mongoose.Schema(
-  {
-    email: {
-      type: String,
-      trim: true,
-      unique: 1,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    gender: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: Object,
-      required: true,
-    },
-    phoneNumber: {
-      type: String,
-      required: true,
-    },
-    marketing: {
-      type: Boolean,
-      default: false,
-      required: true,
-    },
-    role: {
-      type: Number,
-      default: 0,
-    },
-    cart: { type: Array, default: [] },
-    history: { type: Array, default: [] },
-    createdAt: {
-      type: Date,
-      default: new Date(new Date().getTime() + KR_TIME_DIFF),
-    },
-    token: {
-      type: String,
-    },
-    tokenExp: {
-      type: Number,
-    },
+const userSchema = mongoose.Schema({
+  email: {
+    type: String,
+    trim: true,
+    unique: 1,
+    required: true,
   },
-);
+  password: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: Object,
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
+  marketing: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
+  role: {
+    type: Number,
+    default: 0,
+  },
+  cart: { type: Array, default: [] },
+  history: { type: Array, default: [] },
+  createdAt: {
+    type: Date,
+    default: new Date(new Date().getTime() + KR_TIME_DIFF),
+  },
+  token: {
+    type: String,
+  },
+  tokenExp: {
+    type: Number,
+  },
+});
 
 //before save to mongoDb
 userSchema.pre("save", function (next) {
@@ -99,9 +97,9 @@ userSchema.methods.generateToken = function (cb) {
 
   // generate web token with jwt
   let token = jwt.sign(user._id.toHexString(), "secret");
-  let oneHour = moment().add(1, "hour").valueOf();
+  let twoHour = moment().add(2, "hour").valueOf();
 
-  user.tokenExp = oneHour;
+  user.tokenExp = twoHour;
   user.token = token;
   user.save(function (err, user) {
     if (err) return cb(err);
@@ -119,6 +117,8 @@ userSchema.statics.findByToken = function (token, cb) {
   // findOne은 mongoose 모델에서 작동하는 함수이기 때문이다.
 
   let user = this;
+
+  console.log("auth running");
 
   jwt.verify(token, "secret", function (err, decoded) {
     user.findOne({ _id: decoded, token: token }, function (err, user) {

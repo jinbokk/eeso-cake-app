@@ -175,6 +175,9 @@ function auth() {
         type: "AUTH_USER",
         payload: authUserData,
       });
+      
+      return authUserData
+
     } catch (error) {
       console.log("error occurred : ", error);
     }
