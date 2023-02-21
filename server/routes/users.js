@@ -153,6 +153,8 @@ router.get("/logout", auth, (req, res) => {
       if (err) {
         return res.status(400).json({ logoutSuccess: false, message: err });
       } else {
+        res.clearCookie("w_auth")
+        res.clearCookie("w_authExp")
         return res.status(200).json({
           logoutSuccess: true,
         });

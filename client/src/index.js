@@ -12,6 +12,8 @@ import { BrowserRouter } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import ScrollToTop from "./components/ScrollToTop";
 
+import { CookiesProvider } from "react-cookie";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 let persistor = persistStore(store);
@@ -21,7 +23,9 @@ root.render(
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
         <ScrollToTop />
-        <App />
+        <CookiesProvider>
+          <App />
+        </CookiesProvider>
       </BrowserRouter>
     </PersistGate>
   </Provider>

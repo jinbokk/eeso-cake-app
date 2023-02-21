@@ -7,6 +7,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 // import { AnimatePresence } from "framer-motion";
+import PrivateRoute from "./hoc/PrivateRoute";
 
 import Auth from "./hoc/Auth";
 import LoginPage from "./pages/LoginPage";
@@ -185,21 +186,26 @@ function App() {
             path="/order/detail/:productId"
             element={<AuthOrderDetail />}
           />
-          {/* <Route path="/user/mypage/:menu" element={<AuthMypage />} /> */}
 
-          <Route path="/user/mypage" element={<AuthMypage />}>
-            <Route path="order-history" element={<OrderHistoryPage />} />
-            <Route
-              path="order-cancellation-history"
-              element={<OrderCancellationHistoryPage />}
-            />
-            <Route path="coupon" element={<CouponPage />} />
-            <Route path="mileage" element={<MileagePage />} />
-            <Route path="edit-profile" element={<EditProfilePage />} />
-            <Route path="unregister" element={<UnregisterPage />} />
+          <Route path="/user/mypage" element={<PrivateRoute />}>
+            <Route path="/user/mypage" element={<AuthMypage />}>
+              <Route path="order-history" element={<OrderHistoryPage />} />
+              <Route
+                path="order-cancellation-history"
+                element={<OrderCancellationHistoryPage />}
+              />
+
+              <Route path="coupon" element={<CouponPage />} />
+              <Route path="mileage" element={<MileagePage />} />
+              <Route path="edit-profile" element={<EditProfilePage />} />
+              <Route path="unregister" element={<UnregisterPage />} />
+            </Route>
           </Route>
 
-          <Route path="/user/cart" element={<AuthCart />} />
+          <Route path="/user/cart" element={<PrivateRoute />}>
+            <Route path="/user/cart" element={<AuthCart />} />
+          </Route>
+
           <Route path="/payment" element={<AuthPayment />} />
           <Route path="/payment/success" element={<AuthPaymentSuccessPage />} />
           <Route path="/payment/failure" element={<AuthPaymentFailurePage />} />

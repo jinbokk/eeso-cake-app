@@ -9,7 +9,10 @@ const moment = require("moment");
 //   fullAddress: String,
 // });
 
-const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+// const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+
+const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 * -1;
+// const selectedTime = new Date(date.getTime() + timezoneOffset);
 
 const userSchema = mongoose.Schema({
   email: {
@@ -51,7 +54,7 @@ const userSchema = mongoose.Schema({
   history: { type: Array, default: [] },
   createdAt: {
     type: Date,
-    default: new Date(new Date().getTime() + KR_TIME_DIFF),
+    default: new Date(new Date().getTime() + timezoneOffset), // 맞는지 확인할 것
   },
   token: {
     type: String,
@@ -97,10 +100,15 @@ userSchema.methods.generateToken = function (cb) {
 
   // generate web token with jwt
   let token = jwt.sign(user._id.toHexString(), "secret");
-  let twoHour = moment().add(2, "hour").valueOf();
+  // let twoHour = moment().add(2, "hour").valueOf();
+  let twoHour = new Date(
+    new Date().getTime() + timezoneOffset + 2 * 60 * 60 * 1000
+  );
 
-  user.tokenExp = twoHour;
+  console.log("twoHour", twoHour);
+
   user.token = token;
+  user.tokenExp = twoHour;
   user.save(function (err, user) {
     if (err) return cb(err);
     cb(null, user);

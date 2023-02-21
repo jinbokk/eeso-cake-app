@@ -139,21 +139,18 @@ function logoutUser(confirm) {
             if (res.data.logoutSuccess === false) {
               return alert(res.data.message);
             } else {
-              return res.data;
+              alert("로그아웃 되었습니다");
+              window.location.replace("/");
+              // dispatch({
+              //   type: "LOGOUT_USER",
+              //   payload: {
+              //     loginResult: undefined,
+              //     authUserData: { isAuth: false },
+              //   },
+              // });
+              // return res.data;
             }
           });
-
-        if (logoutResult.logoutSuccess === true) {
-          dispatch({
-            type: "LOGOUT_USER",
-            payload: {
-              loginResult: undefined,
-              authUserData: { isAuth: false },
-            },
-          });
-          window.location.assign("/");
-          return;
-        }
       } else {
         return;
       }
@@ -175,9 +172,8 @@ function auth() {
         type: "AUTH_USER",
         payload: authUserData,
       });
-      
-      return authUserData
 
+      return authUserData;
     } catch (error) {
       console.log("error occurred : ", error);
     }

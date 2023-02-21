@@ -21,7 +21,7 @@ import "./css/cartPage.css";
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, authUserData } = useSelector((state) => state.user);
+  const { authUserData } = useSelector((state) => state.user);
   const { width } = useWindowDimensions();
 
   const removeFromCart = (checkedCartIds) => {
@@ -154,436 +154,423 @@ const CartPage = () => {
   }, [checkedCartItems]);
 
   return (
-      <ThemeProvider theme={theme}>
-        <Container>
-          {authUserData && authUserData.isAuth ? (
-            <h1 className="cart_title">
-              <span style={{ marginRight: "5px", color: "black" }}>
-                {authUserData.name}
-              </span>
-              님의 장바구니
-            </h1>
-          ) : null}
+    <ThemeProvider theme={theme}>
+      <Container>
+        {authUserData && authUserData.isAuth ? (
+          <h1 className="cart_title">
+            <span style={{ marginRight: "5px", color: "black" }}>
+              {authUserData.name}
+            </span>
+            님의 장바구니
+          </h1>
+        ) : null}
 
-          <Row className="mb-4">
-            <Col className="order_navigation">
-              <PaymentNav status="cart" />
-            </Col>
-          </Row>
+        <Row className="mb-4">
+          <Col className="order_navigation">
+            <PaymentNav status="cart" />
+          </Col>
+        </Row>
 
-          {authUserData &&
-          authUserData.isAuth &&
-          authUserData.cart.length > 0 ? (
-            <>
-              {width < 992 ? (
-                <Table bordered responsive>
-                  <thead className="text-center">
-                    <tr className="cart_table">
-                      <th>
+        {authUserData && authUserData.isAuth && authUserData.cart.length > 0 ? (
+          <>
+            {width < 992 ? (
+              <Table bordered responsive>
+                <thead className="text-center">
+                  <tr className="cart_table">
+                    <th>
+                      <Checkbox
+                        value={"checkAll"}
+                        checked={
+                          initialCartIds.length === checkedCartIds.length
+                        }
+                        onChange={(event) => {
+                          checkHandler(event);
+                          orderVerification();
+                        }}
+                      />
+                    </th>
+                    <th>상품 정보</th>
+                  </tr>
+                </thead>
+
+                <tbody className="text-center">
+                  {authUserData.cart.map((item, index) => (
+                    <tr key={index} className="cart_table">
+                      <td>
                         <Checkbox
-                          value={"checkAll"}
-                          checked={
-                            initialCartIds.length === checkedCartIds.length
-                          }
+                          value={item._id}
+                          checked={checkedCartIds.includes(item._id)}
                           onChange={(event) => {
                             checkHandler(event);
                             orderVerification();
                           }}
                         />
-                      </th>
-                      <th>상품 정보</th>
-                    </tr>
-                  </thead>
+                      </td>
 
-                  <tbody className="text-center">
-                    {authUserData.cart.map((item, index) => (
-                      <tr key={index} className="cart_table">
-                        <td>
-                          <Checkbox
-                            value={item._id}
-                            checked={checkedCartIds.includes(item._id)}
-                            onChange={(event) => {
-                              checkHandler(event);
-                              orderVerification();
-                            }}
-                          />
-                        </td>
-
-                        <td>
-                          <Row className="d-flex justify-content-between align-items-center">
-                            <Col
-                              lg={5}
-                              className="item_thumbnail_container mb-3"
-                            >
-                              <NavLink
-                                to={`/order/detail/${item.rootProductId}`}
-                              >
-                                <div>
-                                  <img
-                                    src={item.image_url}
-                                    alt=""
-                                    className="item_thumbnail"
-                                  />
-                                </div>
-                              </NavLink>
-                            </Col>
-
-                            <Col lg={7} className="text-center mb-3">
-                              <div className="item_title border_bottom fw-bold text-center">
-                                {item.title}
+                      <td>
+                        <Row className="d-flex justify-content-between align-items-center">
+                          <Col lg={5} className="item_thumbnail_container mb-3">
+                            <NavLink to={`/order/detail/${item.rootProductId}`}>
+                              <div>
+                                <img
+                                  src={item.image_url}
+                                  alt=""
+                                  className="item_thumbnail"
+                                />
                               </div>
+                            </NavLink>
+                          </Col>
 
-                              <div className="border_bottom">
-                                <div className="option_text">
-                                  {item.deliveryType} /{" "}
-                                  {item.deliveryDateTime.stringType}
-                                </div>
-                              </div>
-
-                              <div className="option_text border_bottom">
-                                {item.letteringToggle === "추가 하기" ? (
-                                  <div>레터링 문구 : {item.letteringText}</div>
-                                ) : null}
-
-                                {item.designTopperToggle === "추가 하기" ? (
-                                  <div>
-                                    디자인 토퍼 문구 : {item.designTopperText}{" "}
-                                    <span className="disabled_text">
-                                      (+
-                                      {item.designTopperText.length <= 10
-                                        ? "6,000"
-                                        : "9,000"}
-                                      원)
-                                    </span>
-                                  </div>
-                                ) : null}
-
-                                {item.customerRequestText ? (
-                                  <div>
-                                    요청 사항 : {item.customerRequestText}
-                                  </div>
-                                ) : null}
-                              </div>
-                            </Col>
-                          </Row>
-
-                          <Row className="justify-content-between">
-                            <Col
-                              xs={"auto"}
-                              className="text-center d-flex justify-content-between align-items-center"
-                            >
-                              <div className="d-flex align-items-center mb-3">
-                                <div>수량 :</div>
-                                <div className="d-flex justify-content-center align-items-center ms-3">
-                                  <QuantityButton
-                                    variant="contained"
-                                    onClick={() => {
-                                      if (item.quantity > 1) {
-                                        dispatch(
-                                          userActions.decreaseQuantity(item._id)
-                                        );
-                                      }
-                                    }}
-                                  >
-                                    <div>-</div>
-                                  </QuantityButton>
-                                  <div className="mx-2 user-select-none">
-                                    {item.quantity}
-                                  </div>
-                                  <QuantityButton
-                                    variant="contained"
-                                    onClick={() => {
-                                      dispatch(
-                                        userActions.increaseQuantity(item._id)
-                                      );
-                                    }}
-                                  >
-                                    <div>+</div>
-                                  </QuantityButton>
-                                </div>
-                              </div>
-                            </Col>
-
-                            <Col xs={"auto"} className="text-end">
-                              금액 : ₩{" "}
-                              {(item.quantity * item.price).toLocaleString(
-                                "ko-KR"
-                              )}
-                            </Col>
-                          </Row>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              ) : (
-                <Table bordered responsive>
-                  <thead className="text-center">
-                    <tr className="cart_table">
-                      <th>
-                        <Checkbox
-                          value={"checkAll"}
-                          checked={
-                            initialCartIds.length === checkedCartIds.length
-                          }
-                          onChange={(event) => {
-                            checkHandler(event);
-                            orderVerification();
-                          }}
-                        />
-                      </th>
-                      <th>상품 정보</th>
-                      <th>수량</th>
-                      <th colSpan={2}>주문 금액</th>
-                    </tr>
-                  </thead>
-
-                  <tbody className="text-center">
-                    {authUserData.cart.map((item, index) => (
-                      <tr key={index} className="cart_table">
-                        <td>
-                          <Checkbox
-                            value={item._id}
-                            checked={checkedCartIds.includes(item._id)}
-                            onChange={(event) => {
-                              checkHandler(event);
-                              orderVerification();
-                            }}
-                          />
-                        </td>
-
-                        <td>
-                          <Row className="d-flex justify-content-between align-items-center">
-                            <Col lg={5} className="item_thumbnail_container">
-                              <NavLink
-                                to={`/order/detail/${item.rootProductId}`}
-                              >
-                                <div>
-                                  <img
-                                    src={item.image_url}
-                                    alt=""
-                                    className="item_thumbnail"
-                                  />
-                                </div>
-                              </NavLink>
-                            </Col>
-
-                            <Col lg={7} className="text-start">
-                              <div className="item_title border_bottom fw-bold">
-                                {item.title}
-                              </div>
-
-                              <div className="border_bottom">
-                                <div className="option_text">
-                                  {item.deliveryType} /{" "}
-                                  {item.deliveryDateTime.stringType}
-                                </div>
-                              </div>
-
-                              <div className="option_text">
-                                {item.letteringToggle === "추가 하기" ? (
-                                  <div>
-                                    케이크 판 레터링 : {item.letteringText}
-                                  </div>
-                                ) : null}
-
-                                {item.designTopperToggle === "추가 하기" ? (
-                                  <div>
-                                    디자인 토퍼 문구 : {item.designTopperText}{" "}
-                                    <span className="disabled_text">
-                                      (+
-                                      {item.designTopperText.length <= 10
-                                        ? "6,000"
-                                        : "9,000"}
-                                      원)
-                                    </span>
-                                  </div>
-                                ) : null}
-
-                                {item.customerRequestText ? (
-                                  <div>
-                                    요청 사항 : {item.customerRequestText}
-                                  </div>
-                                ) : null}
-                              </div>
-                            </Col>
-                          </Row>
-                        </td>
-
-                        <td>
-                          <div className="d-flex justify-content-center align-items-center">
-                            <QuantityButton
-                              variant="contained"
-                              onClick={() => {
-                                if (item.quantity > 1) {
-                                  dispatch(
-                                    userActions.decreaseQuantity(item._id)
-                                  );
-                                }
-                              }}
-                            >
-                              <div>-</div>
-                            </QuantityButton>
-                            <div className="mx-3 user-select-none">
-                              {item.quantity}
+                          <Col lg={7} className="text-center mb-3">
+                            <div className="item_title border_bottom fw-bold text-center">
+                              {item.title}
                             </div>
-                            <QuantityButton
-                              variant="contained"
-                              onClick={() => {
-                                dispatch(
-                                  userActions.increaseQuantity(item._id)
-                                );
-                              }}
-                            >
-                              <div>+</div>
-                            </QuantityButton>
-                          </div>
-                        </td>
 
-                        <td>
-                          <div>
-                            ₩{" "}
+                            <div className="border_bottom">
+                              <div className="option_text">
+                                {item.deliveryType} /{" "}
+                                {item.deliveryDateTime.stringType}
+                              </div>
+                            </div>
+
+                            <div className="option_text border_bottom">
+                              {item.letteringToggle === "추가 하기" ? (
+                                <div>레터링 문구 : {item.letteringText}</div>
+                              ) : null}
+
+                              {item.designTopperToggle === "추가 하기" ? (
+                                <div>
+                                  디자인 토퍼 문구 : {item.designTopperText}{" "}
+                                  <span className="disabled_text">
+                                    (+
+                                    {item.designTopperText.length <= 10
+                                      ? "6,000"
+                                      : "9,000"}
+                                    원)
+                                  </span>
+                                </div>
+                              ) : null}
+
+                              {item.customerRequestText ? (
+                                <div>
+                                  요청 사항 : {item.customerRequestText}
+                                </div>
+                              ) : null}
+                            </div>
+                          </Col>
+                        </Row>
+
+                        <Row className="justify-content-between">
+                          <Col
+                            xs={"auto"}
+                            className="text-center d-flex justify-content-between align-items-center"
+                          >
+                            <div className="d-flex align-items-center mb-3">
+                              <div>수량 :</div>
+                              <div className="d-flex justify-content-center align-items-center ms-3">
+                                <QuantityButton
+                                  variant="contained"
+                                  onClick={() => {
+                                    if (item.quantity > 1) {
+                                      dispatch(
+                                        userActions.decreaseQuantity(item._id)
+                                      );
+                                    }
+                                  }}
+                                >
+                                  <div>-</div>
+                                </QuantityButton>
+                                <div className="mx-2 user-select-none">
+                                  {item.quantity}
+                                </div>
+                                <QuantityButton
+                                  variant="contained"
+                                  onClick={() => {
+                                    dispatch(
+                                      userActions.increaseQuantity(item._id)
+                                    );
+                                  }}
+                                >
+                                  <div>+</div>
+                                </QuantityButton>
+                              </div>
+                            </div>
+                          </Col>
+
+                          <Col xs={"auto"} className="text-end">
+                            금액 : ₩{" "}
                             {(item.quantity * item.price).toLocaleString(
                               "ko-KR"
                             )}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              )}
-
-              <Row className="total_text_container justify-content-center mb-5">
-                <Col lg={3} xs={5} className={width < 992 ? "pb-3" : null}>
-                  <div className="total_text">
-                    <div>수령 방법</div>
-                    <div style={{ fontSize: "1rem" }}>
-                      {isOrderble && checkedCartItems.length > 0
-                        ? checkedCartItems[0].deliveryType
-                        : "-"}
-                    </div>
-                  </div>
-                </Col>
-
-                <Col lg={3} xs={5} className={width < 992 ? "pb-3" : null}>
-                  <div className="total_text">
-                    <div>수령 일시</div>
-                    <div style={{ fontSize: "1rem" }}>
-                      {isOrderble && checkedCartItems.length > 0 ? (
-                        <Row className="justify-content-center">
-                          <Col
-                            lg={"auto"}
-                            className={
-                              width < 992
-                                ? "text-center px-0"
-                                : "text-center px-0 me-2"
-                            }
-                          >
-                            {format(
-                              new Date(
-                                checkedCartItems[0].deliveryDateTime.dateType
-                              ),
-                              "yyyy-MM-dd (eee)",
-                              { locale: ko }
-                            )}
-                          </Col>
-                          <Col lg={"auto"} className="text-center px-0">
-                            {format(
-                              new Date(
-                                checkedCartItems[0].deliveryDateTime.dateType
-                              ),
-                              "a hh:mm",
-                              { locale: ko }
-                            )}
                           </Col>
                         </Row>
-                      ) : (
-                        "-"
-                      )}
-                    </div>
-                  </div>
-                </Col>
-
-                <Col lg={3} xs={5}>
-                  <div className="total_text">
-                    <div>주문 수량</div>
-                    <div>
-                      {checkedCartItems
-                        .reduce((accumulator, item) => {
-                          return accumulator + item.quantity;
-                        }, 0)
-                        .toLocaleString("ko-KR")}
-                      개
-                    </div>
-                  </div>
-                </Col>
-
-                <Col lg={3} xs={5}>
-                  <div className="total_text">
-                    <div>주문 금액</div>
-                    <div>
-                      {checkedCartItems
-                        .reduce((accumulator, item) => {
-                          return accumulator + item.quantity * item.price;
-                        }, 0)
-                        .toLocaleString("ko-KR")}{" "}
-                      원
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-
-              <Container>
-                <Row className="py-5 w-auto justify-content-center">
-                  <Col xs={3} className="text-center align-items-center">
-                    <NavLink to="/order" style={{ width: "100%" }}>
-                      <ShoppingButton variant="outlined">
-                        쇼핑하러 가기
-                      </ShoppingButton>
-                    </NavLink>
-                  </Col>
-                  <Col xs={3} className="text-center align-items-center">
-                    {checkedCartItems.length > 0 ? (
-                      <ShoppingButton
-                        variant="outlined"
-                        onClick={() => {
-                          if (
-                            window.confirm(
-                              "선택하신 상품을 장바구니에서 제거하시겠습니까?"
-                            )
-                          ) {
-                            removeFromCart(checkedCartIds);
-                          } else {
-                            return;
-                          }
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            ) : (
+              <Table bordered responsive>
+                <thead className="text-center">
+                  <tr className="cart_table">
+                    <th>
+                      <Checkbox
+                        value={"checkAll"}
+                        checked={
+                          initialCartIds.length === checkedCartIds.length
+                        }
+                        onChange={(event) => {
+                          checkHandler(event);
+                          orderVerification();
                         }}
-                      >
-                        선택상품 제거
-                      </ShoppingButton>
-                    ) : (
-                      <ShoppingButton disabled variant="outlined">
-                        선택상품 제거
-                      </ShoppingButton>
-                    )}
-                  </Col>
+                      />
+                    </th>
+                    <th>상품 정보</th>
+                    <th>수량</th>
+                    <th colSpan={2}>주문 금액</th>
+                  </tr>
+                </thead>
 
-                  <Col xs={3} className="text-center align-items-center">
-                    {checkedCartItems.length > 0 ? (
-                      <OrderButton
-                        variant="contained"
-                        onClick={handleOrderNavigate}
-                      >
-                        선택상품 주문
-                      </OrderButton>
-                    ) : (
-                      <OrderButton disabled variant="contained">
-                        선택상품 주문
-                      </OrderButton>
-                    )}
-                  </Col>
+                <tbody className="text-center">
+                  {authUserData.cart.map((item, index) => (
+                    <tr key={index} className="cart_table">
+                      <td>
+                        <Checkbox
+                          value={item._id}
+                          checked={checkedCartIds.includes(item._id)}
+                          onChange={(event) => {
+                            checkHandler(event);
+                            orderVerification();
+                          }}
+                        />
+                      </td>
 
-                  {/* <Col xs={3} className="text-center align-items-center">
+                      <td>
+                        <Row className="d-flex justify-content-between align-items-center">
+                          <Col lg={5} className="item_thumbnail_container">
+                            <NavLink to={`/order/detail/${item.rootProductId}`}>
+                              <div>
+                                <img
+                                  src={item.image_url}
+                                  alt=""
+                                  className="item_thumbnail"
+                                />
+                              </div>
+                            </NavLink>
+                          </Col>
+
+                          <Col lg={7} className="text-start">
+                            <div className="item_title border_bottom fw-bold">
+                              {item.title}
+                            </div>
+
+                            <div className="border_bottom">
+                              <div className="option_text">
+                                {item.deliveryType} /{" "}
+                                {item.deliveryDateTime.stringType}
+                              </div>
+                            </div>
+
+                            <div className="option_text">
+                              {item.letteringToggle === "추가 하기" ? (
+                                <div>
+                                  케이크 판 레터링 : {item.letteringText}
+                                </div>
+                              ) : null}
+
+                              {item.designTopperToggle === "추가 하기" ? (
+                                <div>
+                                  디자인 토퍼 문구 : {item.designTopperText}{" "}
+                                  <span className="disabled_text">
+                                    (+
+                                    {item.designTopperText.length <= 10
+                                      ? "6,000"
+                                      : "9,000"}
+                                    원)
+                                  </span>
+                                </div>
+                              ) : null}
+
+                              {item.customerRequestText ? (
+                                <div>
+                                  요청 사항 : {item.customerRequestText}
+                                </div>
+                              ) : null}
+                            </div>
+                          </Col>
+                        </Row>
+                      </td>
+
+                      <td>
+                        <div className="d-flex justify-content-center align-items-center">
+                          <QuantityButton
+                            variant="contained"
+                            onClick={() => {
+                              if (item.quantity > 1) {
+                                dispatch(
+                                  userActions.decreaseQuantity(item._id)
+                                );
+                              }
+                            }}
+                          >
+                            <div>-</div>
+                          </QuantityButton>
+                          <div className="mx-3 user-select-none">
+                            {item.quantity}
+                          </div>
+                          <QuantityButton
+                            variant="contained"
+                            onClick={() => {
+                              dispatch(userActions.increaseQuantity(item._id));
+                            }}
+                          >
+                            <div>+</div>
+                          </QuantityButton>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div>
+                          ₩{" "}
+                          {(item.quantity * item.price).toLocaleString("ko-KR")}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
+
+            <Row className="total_text_container justify-content-center mb-5">
+              <Col lg={3} xs={5} className={width < 992 ? "pb-3" : null}>
+                <div className="total_text">
+                  <div>수령 방법</div>
+                  <div style={{ fontSize: "1rem" }}>
+                    {isOrderble && checkedCartItems.length > 0
+                      ? checkedCartItems[0].deliveryType
+                      : "-"}
+                  </div>
+                </div>
+              </Col>
+
+              <Col lg={3} xs={5} className={width < 992 ? "pb-3" : null}>
+                <div className="total_text">
+                  <div>수령 일시</div>
+                  <div style={{ fontSize: "1rem" }}>
+                    {isOrderble && checkedCartItems.length > 0 ? (
+                      <Row className="justify-content-center">
+                        <Col
+                          lg={"auto"}
+                          className={
+                            width < 992
+                              ? "text-center px-0"
+                              : "text-center px-0 me-2"
+                          }
+                        >
+                          {format(
+                            new Date(
+                              checkedCartItems[0].deliveryDateTime.dateType
+                            ),
+                            "yyyy-MM-dd (eee)",
+                            { locale: ko }
+                          )}
+                        </Col>
+                        <Col lg={"auto"} className="text-center px-0">
+                          {format(
+                            new Date(
+                              checkedCartItems[0].deliveryDateTime.dateType
+                            ),
+                            "a hh:mm",
+                            { locale: ko }
+                          )}
+                        </Col>
+                      </Row>
+                    ) : (
+                      "-"
+                    )}
+                  </div>
+                </div>
+              </Col>
+
+              <Col lg={3} xs={5}>
+                <div className="total_text">
+                  <div>주문 수량</div>
+                  <div>
+                    {checkedCartItems
+                      .reduce((accumulator, item) => {
+                        return accumulator + item.quantity;
+                      }, 0)
+                      .toLocaleString("ko-KR")}
+                    개
+                  </div>
+                </div>
+              </Col>
+
+              <Col lg={3} xs={5}>
+                <div className="total_text">
+                  <div>주문 금액</div>
+                  <div>
+                    {checkedCartItems
+                      .reduce((accumulator, item) => {
+                        return accumulator + item.quantity * item.price;
+                      }, 0)
+                      .toLocaleString("ko-KR")}{" "}
+                    원
+                  </div>
+                </div>
+              </Col>
+            </Row>
+
+            <Container>
+              <Row className="py-5 w-auto justify-content-center">
+                <Col xs={3} className="text-center align-items-center">
+                  <NavLink to="/order" style={{ width: "100%" }}>
+                    <ShoppingButton variant="outlined">
+                      쇼핑하러 가기
+                    </ShoppingButton>
+                  </NavLink>
+                </Col>
+                <Col xs={3} className="text-center align-items-center">
+                  {checkedCartItems.length > 0 ? (
+                    <ShoppingButton
+                      variant="outlined"
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            "선택하신 상품을 장바구니에서 제거하시겠습니까?"
+                          )
+                        ) {
+                          removeFromCart(checkedCartIds);
+                        } else {
+                          return;
+                        }
+                      }}
+                    >
+                      선택상품 제거
+                    </ShoppingButton>
+                  ) : (
+                    <ShoppingButton disabled variant="outlined">
+                      선택상품 제거
+                    </ShoppingButton>
+                  )}
+                </Col>
+
+                <Col xs={3} className="text-center align-items-center">
+                  {checkedCartItems.length > 0 ? (
+                    <OrderButton
+                      variant="contained"
+                      onClick={handleOrderNavigate}
+                    >
+                      선택상품 주문
+                    </OrderButton>
+                  ) : (
+                    <OrderButton disabled variant="contained">
+                      선택상품 주문
+                    </OrderButton>
+                  )}
+                </Col>
+
+                {/* <Col xs={3} className="text-center align-items-center">
                   {checkedCartItems.length > 0 ? (
                     <OrderButton
                       variant="contained"
@@ -597,19 +584,19 @@ const CartPage = () => {
                     </OrderButton>
                   )}
                 </Col> */}
-                </Row>
-              </Container>
-            </>
-          ) : (
-            <Row className="border-top empty_msg">
-              <Col className="justify-content-center align-items-center">
-                <div>장바구니가 비어있습니다</div>
-              </Col>
-            </Row>
-          )}
-        </Container>
-      </ThemeProvider>
-    )
+              </Row>
+            </Container>
+          </>
+        ) : (
+          <Row className="border-top empty_msg">
+            <Col className="justify-content-center align-items-center">
+              <div>장바구니가 비어있습니다</div>
+            </Col>
+          </Row>
+        )}
+      </Container>
+    </ThemeProvider>
+  );
 };
 
 export default CartPage;

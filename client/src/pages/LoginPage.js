@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { userActions } from "../redux/actions/userActions";
 import { motion } from "framer-motion";
 import { AiOutlineEye } from "react-icons/ai";
@@ -11,6 +11,13 @@ import { AiOutlineEyeInvisible } from "react-icons/ai";
 import "./css/loginPage.css";
 
 function LoginPage() {
+  const location = useLocation();
+  // console.log("location.state", location && location.state);
+  // console.log(
+  //   "location.state.originalPath",
+  //   location && location.state.originalPath
+  // );
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
@@ -46,7 +53,9 @@ function LoginPage() {
 
   useEffect(() => {
     if (loginResult && loginResult.loginSuccess === true) {
-      navigate(-1);
+      navigate((location.state && location.state.originalPath) || "/", {
+        replace: true,
+      });
     } else if (loginResult && loginResult.loginSuccess === false) {
       alert(loginResult.message);
     }
