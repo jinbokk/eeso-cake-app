@@ -13,35 +13,49 @@ export default function Auth(SpecificComponent, option, adminRoute = null) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const originalPath = useLocation();
+    const location = useLocation();
 
-    useEffect(() => {
-      dispatch(userActions.auth()).then((res) => {
-        if (!res.isAuth) {
-          console.log("res::::", res);
-          // 로그인이 안되었는데,
-          if (option) {
-            // 로그인한 유저만 출입 가능하다면 (option === true)
-            navigate("/login", {
-              replace: true,
-              state: { originalPath: originalPath },
-            });
-          }
-        } else {
-          // 로그인이 되어 있고,
-          if (adminRoute && !res.isAdmin) {
-            // 관리자라우트에 관리자가 접근하려는데 관리자가 아니라면,
-            navigate("/", { replace: true });
-            // <Navigate replace to="/" />;
-            alert("관리자 전용 페이지 입니다");
-          }
-          if (option === false) {
+    console.log("location", location);
+
+    // useEffect(() => {
+    dispatch(userActions.auth()).then((res) => {
+      console.log("res:::", res);
+      if (!res.isAuth) {
+        console.log("res::::", res);
+        console.log("로그인 안된상태 로직 탔음");
+
+        // 로그인이 안되었는데,
+        if (option) {
+          // 로그인한 유저만 출입 가능하다면 (option === true)
+          navigate("/login", {
+            replace: true,
+            state: { originalPath: location },
+          });
+        }
+      } else {
+        // 로그인이 되어 있고,
+        if (adminRoute && !res.isAdmin) {
+          // 관리자라우트에 관리자가 접근하려는데 관리자가 아니라면,
+          navigate("/", { replace: true });
+          // <Navigate replace to="/" />;
+          alert("관리자 전용 페이지 입니다");
+        }
+        if (option === false) {
+          if (location.state) {
+            console.log("location.state 존재 로직 탔음");
+            // 로그인 뒤 로그인페이지에 머무르는 짧은 시간이 있어서 그때 이동시켜버리는 문제가 발생.
             // 로그인 한 유저는 접근 불가한 페이지로 가려고 한다면,
-            navigate(-1, { replace: true });
+            navigate(location.state.originalPath.pathname, { replace: true });
+          } else {
+            console.log("location.state 없음 로직 탔음");
+            // 로그인 뒤 로그인페이지에 머무르는 짧은 시간이 있어서 그때 이동시켜버리는 문제가 발생.
+            // 로그인 한 유저는 접근 불가한 페이지로 가려고 한다면,
+            navigate("/", { replace: true });
           }
         }
-      });
-    }, []);
+      }
+    });
+    // }, []);
 
     return <SpecificComponent />;
   }

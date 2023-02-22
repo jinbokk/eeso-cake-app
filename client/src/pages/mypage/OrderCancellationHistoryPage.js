@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import { useOutletContext } from "react-router";
@@ -8,7 +8,7 @@ const OrderCancellationHistoryPage = () => {
   const [title, setTitle] = useOutletContext();
   const { authUserData } = useSelector((state) => state.user);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTitle("쇼핑 정보");
   }, []);
 

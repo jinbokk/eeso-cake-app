@@ -54,7 +54,7 @@ const userSchema = mongoose.Schema({
   history: { type: Array, default: [] },
   createdAt: {
     type: Date,
-    default: new Date(new Date().getTime() + timezoneOffset), // 맞는지 확인할 것
+    default: new Date(new Date().getTime() + timezoneOffset),
   },
   token: {
     type: String,
@@ -99,16 +99,18 @@ userSchema.methods.generateToken = function (cb) {
   let user = this;
 
   // generate web token with jwt
-  let token = jwt.sign(user._id.toHexString(), "secret");
-  // let twoHour = moment().add(2, "hour").valueOf();
-  let twoHour = new Date(
-    new Date().getTime() + timezoneOffset + 2 * 60 * 60 * 1000
-  );
+  let token = jwt.sign({ userId: user._id.toHexString() }, "secret", {
+    expiresIn: "1m",
+  });
 
-  console.log("twoHour", twoHour);
+  // let twoHour = moment().add(2, "hour").valueOf();
+  let twoHour = moment().add(1, "minute").valueOf();
 
   user.token = token;
+
+  console.log("token:::", token);
   user.tokenExp = twoHour;
+
   user.save(function (err, user) {
     if (err) return cb(err);
     cb(null, user);
@@ -126,13 +128,19 @@ userSchema.statics.findByToken = function (token, cb) {
 
   let user = this;
 
-  console.log("auth running");
-
   jwt.verify(token, "secret", function (err, decoded) {
-    user.findOne({ _id: decoded, token: token }, function (err, user) {
-      if (err) return cb(err);
-      cb(null, user);
-    });
+    if (!decoded) {
+      // 만료시간이 다되어 폐기된 쿠키일경우
+      return console.log("쿠키시간 만료");
+    } else {
+      user.findOne({ _id: decoded.userId, token: token }, function (err, user) {
+        if (err) {
+          return cb(err);
+        } else {
+          cb(null, user);
+        }
+      });
+    }
   });
 };
 

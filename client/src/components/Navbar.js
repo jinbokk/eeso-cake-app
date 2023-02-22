@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import "./css/navbar.css";
 
-import { Navigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import NavDropdown from "./NavDropdown";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import NavbarAside from "./NavbarAside";
@@ -14,6 +14,7 @@ import { userActions } from "../redux/actions/userActions";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const { width } = useWindowDimensions();
 
@@ -21,7 +22,14 @@ const Navbar = () => {
 
   const logoutHandler = () => {
     const confirm = window.confirm("로그아웃 하시겠습니까?");
-    dispatch(userActions.logoutUser(confirm));
+    dispatch(userActions.logoutUser(confirm)).then((res) => {
+      if (res.logoutSuccess) {
+        window.alert("로그아웃 되었습니다");
+        navigate("/", { replace: true });
+      } else {
+        window.alert(res.message);
+      }
+    });
   };
 
   const handleScroll = () => {

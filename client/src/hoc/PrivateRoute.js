@@ -1,21 +1,23 @@
-// import { Route, Navigate } from "react-router-dom";
-// import { getCookie } from "../components/utils/Cookie";
-
-// export default function PrivateRoute({ element }) {
-//   const isAuth = getCookie("w_auth");
-
-//   console.log("element:::", element);
-
-//   return isAuth ? element : <Navigate to="/login" />;
-// }
-
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { getCookie } from "../components/utils/Cookie";
+import { getCookie, setCookie } from "../components/utils/Cookie";
 
 const PrivateRoute = () => {
   const isAuth = getCookie("w_auth");
+  const isAuthExp = getCookie("w_authExp");
+  console.log("isAuthExp", isAuthExp);
+  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 * -1;
+
+  console.log("exp to date", new Date(parseInt(isAuthExp)));
+
+  // const authCheck = () => {
+  //   new Date(parseInt(isAuthExp)) <
+  //   new Date(new Date().getTime() + timezoneOffset)
+  //     ? setCookie("w_auth", null)
+  //     : null;
+  // };
+
   const location = useLocation();
   const { authUserData } = useSelector((state) => state.user);
 

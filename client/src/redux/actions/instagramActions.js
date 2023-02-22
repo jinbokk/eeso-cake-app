@@ -18,8 +18,8 @@ function getInstaData() {
         getFeedData,
       ]);
 
-      console.log("1", profileDataJson);
-      console.log("1", feedJson);
+      // console.log("1", profileDataJson);
+      // console.log("1", feedJson);
 
       dispatch({
         type: "GET_INSTA_DATA_SUCCESS",
@@ -29,8 +29,9 @@ function getInstaData() {
         },
       });
 
-      console.log("2", profileDataJson);
-      console.log("2", feedJson);
+      // console.log("2", profileDataJson);
+      // console.log("2", feedJson);
+      
     } catch (error) {
       console.log(error);
     }

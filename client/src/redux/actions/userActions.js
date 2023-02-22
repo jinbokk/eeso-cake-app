@@ -104,7 +104,7 @@ function loginUser(body) {
         .post("/api/users/login", body)
         .then((res) => {
           if (res.data.loginSuccess === false) {
-            return alert(res.data.message);
+            return res.data;
           } else {
             if (body.rememberMe.activeRememberMe) {
               window.localStorage.setItem(
@@ -119,10 +119,7 @@ function loginUser(body) {
           }
         });
 
-      dispatch({
-        type: "LOGIN_USER",
-        payload: loginResult,
-      });
+      return loginResult;
     } catch (error) {
       console.log("error occurred : ", error);
     }
@@ -136,21 +133,10 @@ function logoutUser(confirm) {
         const logoutResult = await axios
           .get("/api/users/logout")
           .then((res) => {
-            if (res.data.logoutSuccess === false) {
-              return alert(res.data.message);
-            } else {
-              alert("로그아웃 되었습니다");
-              window.location.replace("/");
-              // dispatch({
-              //   type: "LOGOUT_USER",
-              //   payload: {
-              //     loginResult: undefined,
-              //     authUserData: { isAuth: false },
-              //   },
-              // });
-              // return res.data;
-            }
+            return res.data;
           });
+
+        return logoutResult;
       } else {
         return;
       }

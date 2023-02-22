@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useOutletContext } from "react-router";
 
 const MileagePage = () => {
   const [title, setTitle] = useOutletContext();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTitle("쿠폰 / 마일리지");
   }, []);
 

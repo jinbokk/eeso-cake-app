@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,17 +49,6 @@ function LoginPage() {
   // react-redux
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loginResult } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (loginResult && loginResult.loginSuccess === true) {
-      navigate((location.state && location.state.originalPath) || "/", {
-        replace: true,
-      });
-    } else if (loginResult && loginResult.loginSuccess === false) {
-      alert(loginResult.message);
-    }
-  }, [loginResult]);
 
   // react-router-dom
   const submitHandler = (e) => {
@@ -76,7 +65,16 @@ function LoginPage() {
     } else if (body.password === "") {
       alert("비밀번호를 입력해주세요");
     } else {
-      dispatch(userActions.loginUser(body));
+      dispatch(userActions.loginUser(body)).then((res) => {
+        console.log(res);
+        if (res.loginSuccess) {
+          navigate((location.state && location.state.originalPath) || "/", {
+            replace: true,
+          });
+        } else {
+          alert(res.message);
+        }
+      });
     }
   };
 

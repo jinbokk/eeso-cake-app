@@ -7,7 +7,7 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import "./css/myPage.css";
 
 const MyPage = () => {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(undefined);
   const { width } = useWindowDimensions();
 
   return (

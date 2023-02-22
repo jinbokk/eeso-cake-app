@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Container, Form, InputGroup, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { userActions } from "../../redux/actions/userActions";
@@ -10,7 +10,7 @@ import { AiOutlineEyeInvisible } from "react-icons/ai";
 const UnregisterPage = () => {
   const [title, setTitle] = useOutletContext();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTitle("회원정보");
   }, []);
 
