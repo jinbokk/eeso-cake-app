@@ -16,14 +16,23 @@ const userReducer = (state = initialState, action) => {
     case "UNREGISTER_USER":
       return { ...state, loginResult: undefined, unregisterResult: payload };
 
-    case "LOGIN_USER":
-      return { ...state, loginResult: payload };
+    // case "LOGIN_USER":
+    //   return { ...state, loginResult: payload };
 
-    case "LOGOUT_USER":
+    // case "LOGOUT_USER":
+    //   return {
+    //     ...state,
+    //     loginResult: payload.loginResult,
+    //     authUserData: payload.authUserData,
+    //   };
+
+    case "TOKEN_EXPIRED":
       return {
         ...state,
-        loginResult: payload.loginResult,
-        authUserData: payload.authUserData,
+        authUserData: {
+          isAuth: false,
+          err: null,
+        },
       };
 
     case "AUTH_USER":

@@ -19,10 +19,22 @@ export default function Auth(SpecificComponent, option, adminRoute = null) {
 
     // useEffect(() => {
     dispatch(userActions.auth()).then((res) => {
-      console.log("res:::", res);
+      console.log("res test:::", res);
       if (!res.isAuth) {
-        console.log("res::::", res);
-        console.log("로그인 안된상태 로직 탔음");
+        // if (
+        //   res.err.name === "TokenExpiredError"
+        //   // &&
+        //   // option &&
+        //   // location.pathname !== "/login"
+        // ) {
+        //   // navigate("/login", {
+        //   //   replace: true,
+        //   //   state: { originalPath: location },
+        //   // });
+        //   dispatch({ type: "TOKEN_EXPIRED" });
+        //   window.alert("보안을 위해 자동 로그아웃 되었습니다.");
+        //   //err 초기화 해야함
+        // }
 
         // 로그인이 안되었는데,
         if (option) {

@@ -100,11 +100,11 @@ userSchema.methods.generateToken = function (cb) {
 
   // generate web token with jwt
   let token = jwt.sign({ userId: user._id.toHexString() }, "secret", {
-    expiresIn: "1m",
+    expiresIn: "2h",
   });
 
-  // let twoHour = moment().add(2, "hour").valueOf();
-  let twoHour = moment().add(1, "minute").valueOf();
+  let twoHour = moment().add(2, "hour").valueOf();
+  // let twoHour = moment().add(5, "seconds").valueOf();
 
   user.token = token;
 
@@ -131,13 +131,16 @@ userSchema.statics.findByToken = function (token, cb) {
   jwt.verify(token, "secret", function (err, decoded) {
     if (!decoded) {
       // 만료시간이 다되어 폐기된 쿠키일경우
-      return console.log("쿠키시간 만료");
+      return cb(err);
+
+      // logout 실행
+      // navbar 로그인상태 초기화 등..
     } else {
       user.findOne({ _id: decoded.userId, token: token }, function (err, user) {
         if (err) {
           return cb(err);
         } else {
-          cb(null, user);
+          return cb(null, user);
         }
       });
     }

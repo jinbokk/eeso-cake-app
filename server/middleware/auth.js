@@ -5,7 +5,10 @@ let auth = (req, res, next) => {
 
   User.findByToken(token, (err, user) => {
     if (err) {
-      throw err;
+      return res.status(200).json({
+        isAuth: false,
+        err: err,
+      });
     }
 
     if (!user) {
