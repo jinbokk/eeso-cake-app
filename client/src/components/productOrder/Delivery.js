@@ -79,7 +79,7 @@ const Delivery = ({ control, cartItems }) => {
 
   // date
   const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 * -1;
+  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 ;
   console.log("timezoneOffset:", timezoneOffset);
   const [dateOpen, setDateOpen] = useState(false);
   const [date, setDate] = useState(null);

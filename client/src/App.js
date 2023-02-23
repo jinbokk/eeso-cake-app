@@ -180,7 +180,7 @@ function App() {
 
             <Route path="/payment" element={<AuthPayment />} />
             <Route
-              path="/payment/success"
+              path="/payment/success/:info"
               element={<AuthPaymentSuccessPage />}
             />
             <Route

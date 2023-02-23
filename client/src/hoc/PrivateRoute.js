@@ -7,7 +7,7 @@ const PrivateRoute = () => {
   const isAuth = getCookie("w_auth");
   const isAuthExp = getCookie("w_authExp");
   console.log("isAuthExp", isAuthExp);
-  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 * -1;
+  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 ;
 
   console.log("exp to date", new Date(parseInt(isAuthExp)));
 

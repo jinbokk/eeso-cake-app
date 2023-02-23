@@ -314,6 +314,8 @@ function RegisterPage() {
             <InputGroup>
               <Form.Control
                 type="email"
+                name="register_email"
+                autoComplete="new-email"
                 value={email}
                 placeholder="이메일을 입력해 주세요"
                 onChange={(e) => {
@@ -391,8 +393,9 @@ function RegisterPage() {
             <InputGroup>
               <Form.Control
                 type={passwordType}
+                name="register_password"
                 value={password}
-                autoComplete="on"
+                autoComplete="new-password"
                 className="input_area_password"
                 placeholder="비밀번호를 입력해 주세요"
                 onChange={(e) => {
@@ -434,8 +437,9 @@ function RegisterPage() {
             <InputGroup>
               <Form.Control
                 type={passwordType}
+                name="register_confirm_password"
                 value={confirmPassword}
-                autoComplete="on"
+                autoComplete="new-confirm-password"
                 className="input_area_password"
                 placeholder="비밀번호 확인"
                 onChange={(e) => setConfirmPassword(e.target.value)}

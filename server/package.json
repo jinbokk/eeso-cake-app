@@ -23,6 +23,7 @@
     "iamport": "^0.3.4",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.40",
     "mongoose": "^6.9.1",
     "mongoose-paginate-v2": "^1.7.1",
     "mongoose-to-swagger": "^1.4.0",

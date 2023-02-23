@@ -9,9 +9,9 @@ const moment = require("moment");
 //   fullAddress: String,
 // });
 
-// const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
 
-const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 * -1;
+// const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 ;
 // const selectedTime = new Date(date.getTime() + timezoneOffset);
 
 const userSchema = mongoose.Schema({
@@ -54,7 +54,7 @@ const userSchema = mongoose.Schema({
   history: { type: Array, default: [] },
   createdAt: {
     type: Date,
-    default: new Date(new Date().getTime() + timezoneOffset),
+    default: new Date(new Date().getTime() + KR_TIME_DIFF),
   },
   token: {
     type: String,
@@ -104,7 +104,6 @@ userSchema.methods.generateToken = function (cb) {
   });
 
   let twoHour = moment().add(2, "hour").valueOf();
-  // let twoHour = moment().add(5, "seconds").valueOf();
 
   user.token = token;
 

@@ -23,12 +23,12 @@ const PaymentPage = () => {
     cart: state.checkedCartItems,
   };
 
-  useEffect(() => {
-    if (!state) {
-      window.alert("잘못된 접근입니다. 홈 화면으로 이동합니다.");
-      navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!state) {
+  //     window.alert("잘못된 접근입니다. 홈 화면으로 이동합니다.");
+  //     navigate("/", { replace: true });
+  //   }
+  // }, []);
 
   // phoneNumber
   const [name, setName] = useState("");
@@ -56,7 +56,7 @@ const PaymentPage = () => {
     }
   }, [isSame]);
 
-  return !state ? null : (
+  return state && (
     <>
       <h1 className="cart_title">주문서 작성</h1>
 

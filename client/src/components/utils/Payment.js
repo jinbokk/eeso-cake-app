@@ -100,7 +100,7 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
           m_redirect_url:
             process.env.NODE_ENV === "production"
               ? "https://www.eeso-cake.com/payment/success"
-              : "http://localhost:3000",
+              : "http://localhost:3000/payment/success",
         },
         (res) => {
           /* 3. 콜백 함수 정의하기 */

@@ -14,17 +14,17 @@ const PaymentSuccessPage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  useEffect(() => {
-    if (!state) {
-      window.alert("잘못된 접근입니다. 홈 화면으로 이동합니다.");
-      navigate("/", { replace: true });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!state) {
+  //     window.alert("잘못된 접근입니다. 홈 화면으로 이동합니다.");
+  //     navigate("/", { replace: true });
+  //   }
+  // }, []);
 
   console.log("state::", state);
   return (
     <>
-      {!state ? null : (
+      {state && (
         <>
           <h1 className="payment_result_title">주문 결과</h1>
 
