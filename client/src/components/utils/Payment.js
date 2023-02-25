@@ -67,7 +67,9 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
   let buyer_addr = authUserDataWithCheckedCart.address.address;
   let buyer_postcode = authUserDataWithCheckedCart.address.postcode;
 
-  const onClickPayment = () => {
+  const onClickPayment = (e) => {
+    e.preventDefault();
+
     const confirm = window.confirm(
       "결제 진행 전, 주문 정보를 다시 한번 확인 해 주세요!\n* 주문 실수로 인한 교환 및 환불은 불가합니다\n\n결제를 진행 하시려면 확인을 눌러주세요"
     );
@@ -117,7 +119,7 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
 
             dispatch(userActions.orderComplete(body));
 
-            axios.post("https://eeso-cake.com/webhook/iamport", {
+            axios.post("https://eeso-cake.com/webhook", {
               data: {
                 imp_uid: res.imp_uid,
                 merchant_uid: res.merchant_uid,
