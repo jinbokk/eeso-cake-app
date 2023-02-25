@@ -10,10 +10,6 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { Col, Row } from "react-bootstrap";
 
 const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
-  const devtest = process.env.NODE_ENV;
-
-  console.log("NODE_ENV :::", devtest);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -97,10 +93,7 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
           buyer_email: buyer_email, // 구매자 이메일
           buyer_addr: buyer_addr, // 구매자 주소
           buyer_postcode: buyer_postcode, // 구매자 우편번호
-          m_redirect_url:
-            process.env.NODE_ENV === "production"
-              ? "https://www.eeso-cake.com/payment/success"
-              : "http://localhost:3000/payment/success",
+          m_redirect_url: "https://www.eeso-cake.com/payment/success",
         },
         (res) => {
           /* 3. 콜백 함수 정의하기 */
