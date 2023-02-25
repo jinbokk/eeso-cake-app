@@ -79,8 +79,6 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
       const IMP = window.IMP;
       const store_id = process.env.REACT_APP_IMP_STORE_ID;
 
-      console.log("store_id", store_id);
-
       IMP.init(store_id);
 
       /* 4. 결제 창 호출하기 */
@@ -117,39 +115,30 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
 
             console.log("res.data::::", res.data);
 
-            if (res.data.status === "success") {
-              dispatch(userActions.orderComplete(body));
+            dispatch(userActions.orderComplete(body));
 
-              axios.post("https://eeso-cake.com/webhook", {
+            axios.post("https://eeso-cake.com/webhook", {
+              data: {
                 data: {
-                  data: {
-                    imp_uid: res.imp_uid,
-                    merchant_uid: res.merchant_uid,
-                    //기타 필요한 데이터가 있으면 추가 전달
-                  },
+                  imp_uid: res.imp_uid,
+                  merchant_uid: res.merchant_uid,
+                  //기타 필요한 데이터가 있으면 추가 전달
                 },
-              });
+              },
+            });
 
-              let checkedCartIds = authUserDataWithCheckedCart.cart.map(
-                (item) => item._id
-              );
+            let checkedCartIds = authUserDataWithCheckedCart.cart.map(
+              (item) => item._id
+            );
 
-              dispatch(userActions.removeFromCart(checkedCartIds));
+            dispatch(userActions.removeFromCart(checkedCartIds));
 
-              navigate("success", {
-                replace: true,
-                state: {
-                  result: res,
-                },
-              });
-            } else {
-              navigate("failure", {
-                replace: true,
-                state: {
-                  result: res,
-                },
-              });
-            }
+            navigate("success", {
+              replace: true,
+              state: {
+                result: res,
+              },
+            });
 
             dispatch(userActions.paymentWebhook(body)).then((res) => {
               console.log("res::::::", res);
@@ -157,6 +146,12 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
 
             // alert("결제가 완료 되었습니다.\n홈 화면으로 이동합니다.");
           } else {
+            navigate("failure", {
+              replace: true,
+              state: {
+                result: res,
+              },
+            });
             alert(`결제에 실패하였습니다\n${error_msg}`);
           }
         }
