@@ -34,21 +34,21 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "EESO CAKE API DOCUMENT",
+      title: "EESO CAKE API DOCUMENT (in production)",
       version: "0.0.0",
       description: "API documentation for the  EESO CAKE SERVICE",
     },
   },
-  apis: ["./routes/*.js"], // files containing annotations as above
+  apis: ["./routes/api-docs.js"], // files containing annotations as above
 };
 const openapiSpec = swaggerJsdoc(options);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpec));
-app.use("/api", require("./routes/api"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/products", require("./routes/products"));
 app.use("/api/iamport", require("./routes/iamport"));
 app.use("/api/instagram", require("./routes/instagram"));
+app.use("/api/webhook", require("./routes/webhook"));
 
 // const instaApiBaseURL = process.env.INSTAGRAM_API_BASE_URL;
 // app.use(instaApiBaseURL, require("./routes/instagram"));

@@ -64,7 +64,7 @@ function duplicatePhoneNumberCheck(phoneNumber) {
   };
 
   // const IMP = window.IMP;
-  // const store_id = process.env.IAMPORT_STORE_ID;
+  // const store_id = process.env.IMP_STORE_ID;
   // IMP.init(store_id);
 
   // // IMP.certification(param, callback) 호출
@@ -248,6 +248,19 @@ function orderComplete(body) {
   };
 }
 
+function paymentWebhook(body) {
+  return async (dispatch) => {
+    try {
+      await axios.post("/api/webhook", body).then((res) => {
+        console.log("paymentWebhook res.data :::", res.data);
+        return res.data;
+      });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
 export const userActions = {
   registerUser,
   unregisterUser,
@@ -261,4 +274,5 @@ export const userActions = {
   increaseQuantity,
   decreaseQuantity,
   orderComplete,
+  paymentWebhook,
 };

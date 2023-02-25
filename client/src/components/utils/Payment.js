@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { Col, Row } from "react-bootstrap";
@@ -76,7 +77,7 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
     } else {
       /* 1. 가맹점 식별하기 */
       const IMP = window.IMP;
-      const store_id = process.env.REACT_APP_IAMPORT_STORE_ID;
+      const store_id = process.env.REACT_APP_IMP_STORE_ID;
       IMP.init(store_id);
 
       /* 4. 결제 창 호출하기 */
@@ -111,21 +112,45 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
               status: "order_paid",
             };
 
-            dispatch(userActions.orderComplete(body));
+            if (res.data.status === "success") {
+              dispatch(userActions.orderComplete(body));
 
-            let checkedCartIds = authUserDataWithCheckedCart.cart.map(
-              (item) => item._id
-            );
+              axios.post("https://eeso-cake.com/webhook", {
+                data: {
+                  data: {
+                    imp_uid: res.imp_uid,
+                    merchant_uid: res.merchant_uid,
+                    //기타 필요한 데이터가 있으면 추가 전달
+                  },
+                },
+              });
 
-            dispatch(userActions.removeFromCart(checkedCartIds));
+              let checkedCartIds = authUserDataWithCheckedCart.cart.map(
+                (item) => item._id
+              );
+
+              dispatch(userActions.removeFromCart(checkedCartIds));
+
+              navigate("success", {
+                replace: true,
+                state: {
+                  result: res,
+                },
+              });
+            } else {
+              navigate("failure", {
+                replace: true,
+                state: {
+                  result: res,
+                },
+              });
+            }
+
+            dispatch(userActions.paymentWebhook(body)).then((res) => {
+              console.log("res::::::", res);
+            });
 
             // alert("결제가 완료 되었습니다.\n홈 화면으로 이동합니다.");
-            navigate("success", {
-              replace: true,
-              state: {
-                result: res,
-              },
-            });
           } else {
             alert(`결제에 실패하였습니다\n${error_msg}`);
           }
