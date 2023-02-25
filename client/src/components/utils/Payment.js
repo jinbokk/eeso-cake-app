@@ -119,11 +119,9 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
 
             axios.post("https://eeso-cake.com/webhook", {
               data: {
-                data: {
-                  imp_uid: res.imp_uid,
-                  merchant_uid: res.merchant_uid,
-                  //기타 필요한 데이터가 있으면 추가 전달
-                },
+                imp_uid: res.imp_uid,
+                merchant_uid: res.merchant_uid,
+                //기타 필요한 데이터가 있으면 추가 전달
               },
             });
 
