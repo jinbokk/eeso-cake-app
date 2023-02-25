@@ -115,6 +115,8 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
               status: "order_paid",
             };
 
+            console.log("res.data::::", res.data);
+
             if (res.data.status === "success") {
               dispatch(userActions.orderComplete(body));
 
