@@ -251,7 +251,7 @@ function orderComplete(body) {
 function paymentWebhook(body) {
   return async (dispatch) => {
     try {
-      await axios.post("/api/webhook", body).then((res) => {
+      await axios.post("/webhook", body).then((res) => {
         console.log("paymentWebhook res.data :::", res.data);
         return res.data;
       });
