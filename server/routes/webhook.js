@@ -5,7 +5,7 @@ const { User } = require("../models/User");
 const FormData = require("form-data");
 const axios = require("axios");
 
-// "/api/webhook"에 대한 POST 요청을 처리
+// "/webhook"에 대한 POST 요청을 처리
 router.post("/", auth, async (req, res) => {
   try {
     // req의 body에서 imp_uid, merchant_uid 추출
@@ -29,8 +29,7 @@ router.post("/", auth, async (req, res) => {
     console.log("imp_secret", process.env.IMP_API_SECRET);
 
     const getToken = await axios.post(
-      `https://api.iamport.kr
-/users/getToken`,
+      `https://api.iamport.kr/users/getToken`,
       form
     );
 
@@ -90,7 +89,7 @@ router.post("/", auth, async (req, res) => {
       }
     } else {
       // 결제금액 불일치. 위/변조 된 결제
-      return res.send({ status: "forgery", message: "위조된 결제시도" })
+      return res.send({ status: "forgery", message: "위조된 결제시도" });
     }
   } catch (e) {
     console.log("error:::", e);
