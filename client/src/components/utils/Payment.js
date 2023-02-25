@@ -78,6 +78,9 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
       /* 1. 가맹점 식별하기 */
       const IMP = window.IMP;
       const store_id = process.env.REACT_APP_IMP_STORE_ID;
+
+      console.log("store_id", store_id);
+
       IMP.init(store_id);
 
       /* 4. 결제 창 호출하기 */
