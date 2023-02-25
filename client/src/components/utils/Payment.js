@@ -117,7 +117,7 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
 
             dispatch(userActions.orderComplete(body));
 
-            axios.post("https://eeso-cake.com/webhook", {
+            axios.post("https://eeso-cake.com/webhook/iamport", {
               data: {
                 imp_uid: res.imp_uid,
                 merchant_uid: res.merchant_uid,
