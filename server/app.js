@@ -50,7 +50,7 @@ app.use("/api/iamport", require("./routes/iamport"));
 app.use("/api/instagram", require("./routes/instagram"));
 app.use("/webhook", require("./routes/webhook"));
 
-app.post("/portone-webhook", async (req, res) => {
+app.post("/webhook", async (req, res) => {
   try {
     const { tx_id, payment_id } = req.body;
 
