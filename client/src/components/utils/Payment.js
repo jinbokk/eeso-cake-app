@@ -87,7 +87,7 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
       IMP.request_pay(
         /* 2. 결제 데이터 정의하기 */
         {
-          pg: "kicc", // PG사
+          pg: "danal_tpay", // PG사
           pay_method: pay_method, // 결제수단
           merchant_uid: `${new Date().getTime()}`, // 주문번호
           name: name, // 주문명
@@ -119,6 +119,10 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
 
             dispatch(userActions.orderComplete(body));
 
+            dispatch(userActions.paymentWebhook(res)).then((res) => {
+              console.log("res::::::", res);
+            });
+
             axios.post("https://eeso-cake.com/webhook", {
               data: {
                 imp_uid: res.imp_uid,
@@ -133,16 +137,14 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
 
             dispatch(userActions.removeFromCart(checkedCartIds));
 
-            dispatch(userActions.paymentWebhook(res)).then((res) => {
-              console.log("res::::::", res);
-            });
-
             navigate("success", {
               replace: true,
               state: {
                 result: res,
               },
             });
+
+            dispatch(userActions.auth());
 
             // alert("결제가 완료 되었습니다.\n홈 화면으로 이동합니다.");
           } else {
