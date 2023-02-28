@@ -6,6 +6,10 @@ const bcrypt = require("bcrypt");
 const { mongo } = require("mongoose");
 const ObjectId = require("mongodb").ObjectId;
 const moment = require("moment");
+const {
+  iamportGenerateAccessToken,
+} = require("../util/iamportGenerateAccessToken");
+const axios = require("axios");
 
 router.get("/auth", auth, (req, res) => {
   res.status(200).json({
@@ -409,7 +413,7 @@ router.post("/decreaseQuantity", auth, async (req, res) => {
   );
 });
 
-router.post("/orderComplete", auth, async (req, res) => {
+router.post("/order-complete", auth, async (req, res) => {
   let {
     imp_uid,
     merchant_uid,
@@ -428,7 +432,7 @@ router.post("/orderComplete", auth, async (req, res) => {
   // 3. 픽업 대기: order_waiting_for_pickup
   // 4. 픽업 완료: order_complete
   // 5. 취소 대기 : order_waiting_for_cancel
-  // 6. 취소 완료 : order_canceled
+  // 6. 주문 취소 : order_cancelled
 
   User.findOneAndUpdate(
     {
@@ -463,6 +467,66 @@ router.post("/orderComplete", auth, async (req, res) => {
       }
     }
   );
+});
+
+router.post("/order-cancel", auth, async (req, res) => {
+  const access_token = await iamportGenerateAccessToken();
+  const { imp_uid, merchant_uid } = req.body;
+  const cancel_order = await axios
+    .post(
+      `https://api.iamport.kr/payments/cancel`,
+      { imp_uid: imp_uid, merchant_uid: merchant_uid },
+      { headers: { Authorization: access_token } }
+    )
+    .then((res) => res.data);
+
+  const cancel_order_result = cancel_order.response;
+
+  console.log("cancel_order_result:::::", cancel_order_result);
+
+  User.findOneAndUpdate(
+    {
+      _id: req.user._id,
+    },
+    {
+      $set: {
+        "history.$[elem].status": "order_cancelled",
+        "history.$[elem].cancelInfo": {
+          cancelledDate: moment().format(),
+          cancelReceiptURL: cancel_order_result.cancel_receipt_urls[0],
+        },
+      },
+      //  $push: {
+      //   history: {
+      //     imp_uid: imp_uid,
+      //     merchant_uid: merchant_uid,
+      //     name: name,
+      //     amount: amount,
+      //     products: products,
+      //     status: status,
+      //     deliveryType: deliveryType,
+      //     deliveryDateTime: deliveryDateTime,
+      //     // paymentDate: new Date(new Date().getTime() + KR_TIME_DIFF),
+      //     paymentDate: moment().format(),
+      //   },
+      // },
+    },
+    {
+      arrayFilters: [
+        {
+          "elem.imp_uid": imp_uid,
+        },
+      ],
+    },
+    (err, result) => {
+      if (err) {
+        console.log("err::::::::::::::::::", err);
+        return res.status(400).json({ success: false, err });
+      }
+    }
+  );
+
+  return res.status(200).send(cancel_order_result);
 });
 
 module.exports = router;

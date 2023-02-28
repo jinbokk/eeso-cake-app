@@ -4,6 +4,9 @@ const { auth } = require("../middleware/auth");
 const { User } = require("../models/User");
 const FormData = require("form-data");
 const axios = require("axios");
+const {
+  iamportGenerateAccessToken,
+} = require("../util/iamportGenerateAccessToken");
 
 // "/webhook"에 대한 POST 요청을 처리
 router.post("/", auth, async (req, res) => {
@@ -21,19 +24,19 @@ router.post("/", auth, async (req, res) => {
     // 액세스 토큰(access token) 발급 받기
     /* ...중략... */
 
-    const form = new FormData();
-    form.append("imp_key", process.env.IMP_API_KEY);
-    form.append("imp_secret", process.env.IMP_API_SECRET);
+    // const form = new FormData();
+    // form.append("imp_key", process.env.IMP_API_KEY);
+    // form.append("imp_secret", process.env.IMP_API_SECRET);
 
-    console.log("imp_key", process.env.IMP_API_KEY);
-    console.log("imp_secret", process.env.IMP_API_SECRET);
+    // console.log("imp_key", process.env.IMP_API_KEY);
+    // console.log("imp_secret", process.env.IMP_API_SECRET);
 
-    const getToken = await axios.post(
-      `https://api.iamport.kr/users/getToken`,
-      form
-    );
+    // const getToken = await axios.post(
+    //   `https://api.iamport.kr/users/getToken`,
+    //   form
+    // );
 
-    const access_token = getToken.data.response.access_token;
+    const access_token = await iamportGenerateAccessToken();
 
     console.log("access_token:::", access_token);
 
