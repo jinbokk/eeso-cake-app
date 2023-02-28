@@ -7,11 +7,11 @@ import { IoIosArrowForward } from "react-icons/io";
 import Accordion from "react-bootstrap/Accordion";
 import format from "date-fns/format";
 import { ko } from "date-fns/locale";
+import moment from "moment";
+import "moment/locale/ko";
 
 import "../css/orderHistoryPage.css";
 
-import moment from "moment";
-import "moment/locale/ko";
 
 const OrderHistoryPage = () => {
   const [title, setTitle] = useOutletContext();
@@ -20,6 +20,17 @@ const OrderHistoryPage = () => {
   useLayoutEffect(() => {
     setTitle("쇼핑 정보");
   }, []);
+
+  function checkPaymentWithin24Hours(paymentDate) {
+    const now = moment();
+    console.log("now:::", now);
+    const paymentMoment = moment(paymentDate).format("YYYY MM DD HH:mm:ss");
+    const targetDate = moment(now).subtract(1, "day").toDate();
+    const diffInHours = now.diff(paymentMoment, "hours");
+    console.log("diffInHours:::", diffInHours);
+    return `${diffInHours}시간 이전에 결제`;
+    // return diffInHours <= 24 ? "true" : "false";
+  }
 
   return (
     // authUserData.isAuth 가 있으면 렌더하는 방식은
@@ -130,38 +141,9 @@ const OrderHistoryPage = () => {
                     </span>
 
                     <span>테스트중</span>
-                    <span>{historyItems.paymentDate}</span>
-                    {console.log(historyItems.paymentDate)}
-                    {console.log(
-                      "timezone Offset ::: ",
-                      new Date().getTimezoneOffset() * 60 * 1000
-                    )}
-                    {console.log(
-                      "now ::: ",
-                      new Date().getTime() +
-                        new Date().getTimezoneOffset() * 60 * 1000
-                    )}
-                    {console.log(
-                      "now to string::: ",
-                      format(
-                        new Date().getTime() +
-                          new Date().getTimezoneOffset() * 60 * 1000,
-                        "yyyy-MM-dd hh:mm",
-                        { locale: ko }
-                      )
-                    )}
-                    {console.log(
-                      "now to string moment::: ",
-                      moment().format("YYYY-MM-DD HH:mm:ss")
-                    )}
-                    {console.log("payment :: ", historyItems.paymentDate)}
-                    {console.log(new Date(historyItems.paymentDate.toString()))}
-                    {console.log(new Date("2023-02-18T18:25:32.267Z"))}
-                    {/* {console.log(
-                      format(historyItems.paymentDate, "yyyy-MM-dd", {
-                        locale: ko,
-                      })
-                    )} */}
+                    <span>
+                      {checkPaymentWithin24Hours(historyItems.paymentDate)}
+                    </span>
                   </Col>
 
                   <Col xs={12} lg={"auto"}>

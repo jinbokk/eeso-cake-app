@@ -1,4 +1,5 @@
 const { User } = require("../models/User.js");
+const moment = require("moment");
 
 exports.update_order_status = () => {
   const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
@@ -14,8 +15,8 @@ exports.update_order_status = () => {
       arrayFilters: [
         {
           "elem.status": "order_paid",
-          "elem.createdAt": {
-            $gt: new Date(new Date().getTime() + KR_TIME_DIFF - oneDay * 3),
+          "elem.paymentDate": {
+            $lte: moment().subtract(1, "days").format(),
           }, // 1일 전
         },
       ],

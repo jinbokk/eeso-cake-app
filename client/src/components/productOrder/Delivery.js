@@ -22,6 +22,9 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { format, addDays } from "date-fns";
 import { ko } from "date-fns/locale";
 
+import moment from "moment";
+import "moment/locale/ko";
+
 /// antd
 // import dayjs from "dayjs";
 // import "dayjs/locale/ko";
@@ -78,19 +81,24 @@ const Delivery = ({ control, cartItems }) => {
   };
 
   // date
-  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 ;
-  console.log("timezoneOffset:", timezoneOffset);
+  // const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+  // const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+  // console.log("timezoneOffset:", timezoneOffset);
   const [dateOpen, setDateOpen] = useState(false);
   const [date, setDate] = useState(null);
   const [dateError, setDateError] = useState(undefined);
 
   const dateHandler = (date) => {
     setDate(date);
-    const selectedDate = new Date(date.getTime() + timezoneOffset); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
-    const modifiedDate = format(date, "yyyy-MM-dd (eee)", {
-      locale: ko,
-    });
+    // const selectedDate = new Date(date.getTime() + timezoneOffset); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
+    const selectedDate = moment(date).format(); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
+    console.log("selectedDate:::::", selectedDate);
+    // const modifiedDate = format(date, "yyyy-MM-dd (eee)", {
+    //   locale: ko,
+    // });
+    const modifiedDate = moment(date).format("yyyy-MM-dd (ddd)");
+    console.log("modifiedDate:::::", modifiedDate);
+
 
     const body = {
       dateType: selectedDate,
@@ -108,9 +116,12 @@ const Delivery = ({ control, cartItems }) => {
 
   const timeHandler = (date) => {
     setTime(date);
-    console.log("timezone Offset", date.getTimezoneOffset());
-    const selectedTime = new Date(date.getTime() + timezoneOffset);
-    const modifiedTime = format(date, "a hh:mm", { locale: ko });
+    // const selectedTime = new Date(date.getTime() + timezoneOffset);
+    const selectedTime = moment(date).format(); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
+    console.log("selectedTime:::::", selectedTime);
+    // const modifiedTime = format(date, "a hh:mm", { locale: ko });
+    const modifiedTime = moment(date).format("a hh:mm");
+    console.log("modifiedTime:::::", modifiedTime);
 
     const body = {
       dateType: selectedTime,
@@ -152,7 +163,8 @@ const Delivery = ({ control, cartItems }) => {
     // 토요일   am 10:00 ~ pm 4:00
     // 일요일   am 10:00 ~ pm 12:00
 
-    const selectedDay = format(date, "eee", { locale: ko });
+    // const selectedDay = format(date, "eee", { locale: ko });
+    const selectedDay = moment(date).format("ddd");
     console.log("selectedDay", selectedDay);
 
     if (selectedDay === "토") {
@@ -374,7 +386,7 @@ const Delivery = ({ control, cartItems }) => {
                     inputReadOnly
                     showToday={false}
                     placeholder={"날짜를 선택해 주세요"}
-                    format="YYYY-MM-DD (ddd)"
+                    format="yyyy-MM-dd (ddd)"
                     disabledDate={disabledDate}
                     onChange={(e) => console.log(e)}
                   />

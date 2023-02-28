@@ -5,6 +5,7 @@ const { auth } = require("../middleware/auth");
 const bcrypt = require("bcrypt");
 const { mongo } = require("mongoose");
 const ObjectId = require("mongodb").ObjectId;
+const moment = require("moment");
 
 router.get("/auth", auth, (req, res) => {
   res.status(200).json({
@@ -153,8 +154,8 @@ router.get("/logout", auth, (req, res) => {
       if (err) {
         return res.status(400).json({ logoutSuccess: false, message: err });
       } else {
-        res.clearCookie("w_auth")
-        res.clearCookie("w_authExp")
+        res.clearCookie("w_auth");
+        res.clearCookie("w_authExp");
         return res.status(200).json({
           logoutSuccess: true,
         });
@@ -444,7 +445,8 @@ router.post("/orderComplete", auth, async (req, res) => {
           status: status,
           deliveryType: deliveryType,
           deliveryDateTime: deliveryDateTime,
-          paymentDate: new Date(new Date().getTime() + KR_TIME_DIFF),
+          // paymentDate: new Date(new Date().getTime() + KR_TIME_DIFF),
+          paymentDate: moment().format(),
         },
       },
     },

@@ -54,7 +54,7 @@ const userSchema = mongoose.Schema({
   history: { type: Array, default: [] },
   createdAt: {
     type: Date,
-    default: new Date(new Date().getTime() + KR_TIME_DIFF),
+    default: new Date(moment().format()),
   },
   token: {
     type: String,

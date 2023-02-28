@@ -27,6 +27,9 @@ import Lettering from "../components/productOrder/Lettering";
 import DesignTopper from "../components/productOrder/DesignTopper";
 import CustomerRequest from "../components/productOrder/CustomerRequest";
 
+import moment from "moment";
+import "moment/locale/ko";
+
 import "./css/orderDetailPage.css";
 
 const OrderDetailPage = () => {
@@ -88,15 +91,20 @@ const OrderDetailPage = () => {
   const [designTopperPrice, setDesignTopperPrice] = useState(0);
 
   const combineDateWithTime = (date, time) => {
-    return new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-      time.getHours(),
-      time.getMinutes(),
-      time.getSeconds(),
-      time.getMilliseconds()
-    );
+    // return new Date(
+    //   date.getFullYear(),
+    //   date.getMonth(),
+    //   date.getDate(),
+    //   time.getHours(),
+    //   time.getMinutes(),
+    //   time.getSeconds(),
+    //   time.getMilliseconds()
+    // );
+
+    const dateForm = moment(date).format("yyyy-MM-dd");
+    const timeForm = moment(time).format("hh:mm");
+
+    return moment(dateForm + " " + timeForm, "yyyy-MM-dd a hh:mm (ddd)");
   };
 
   const optionConfirmHandler = () => {
@@ -112,7 +120,7 @@ const OrderDetailPage = () => {
       deliveryType: deliveryType,
       deliveryDateTime: {
         stringType: deliveryDate.stringType + " " + deliveryTime.stringType,
-        dateType: deliveryDateTime,
+        dateType: moment(deliveryDateTime).format(),
       },
       letteringToggle: letteringToggle,
       letteringText: letteringText,
