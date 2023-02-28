@@ -6,9 +6,12 @@ import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import Accordion from "react-bootstrap/Accordion";
 import format from "date-fns/format";
+import { ko } from "date-fns/locale";
 
 import "../css/orderHistoryPage.css";
-import { ko } from "date-fns/locale";
+
+import moment from "moment";
+import "moment/locale/ko";
 
 const OrderHistoryPage = () => {
   const [title, setTitle] = useOutletContext();
@@ -125,6 +128,40 @@ const OrderHistoryPage = () => {
                         ? "취소 완료"
                         : null}
                     </span>
+
+                    <span>테스트중</span>
+                    <span>{historyItems.paymentDate}</span>
+                    {console.log(historyItems.paymentDate)}
+                    {console.log(
+                      "timezone Offset ::: ",
+                      new Date().getTimezoneOffset() * 60 * 1000
+                    )}
+                    {console.log(
+                      "now ::: ",
+                      new Date().getTime() +
+                        new Date().getTimezoneOffset() * 60 * 1000
+                    )}
+                    {console.log(
+                      "now to string::: ",
+                      format(
+                        new Date().getTime() +
+                          new Date().getTimezoneOffset() * 60 * 1000,
+                        "yyyy-MM-dd hh:mm",
+                        { locale: ko }
+                      )
+                    )}
+                    {console.log(
+                      "now to string moment::: ",
+                      moment().format("YYYY-MM-DD HH:mm:ss")
+                    )}
+                    {console.log("payment :: ", historyItems.paymentDate)}
+                    {console.log(new Date(historyItems.paymentDate.toString()))}
+                    {console.log(new Date("2023-02-18T18:25:32.267Z"))}
+                    {/* {console.log(
+                      format(historyItems.paymentDate, "yyyy-MM-dd", {
+                        locale: ko,
+                      })
+                    )} */}
                   </Col>
 
                   <Col xs={12} lg={"auto"}>

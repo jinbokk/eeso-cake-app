@@ -23,6 +23,7 @@
     "gsap": "^3.11.4",
     "http-proxy-middleware": "^2.0.6",
     "install": "^0.13.0",
+    "moment": "^2.29.4",
     "node-fetch": "^3.3.0",
     "npm": "^9.4.2",
     "react": "^18.2.0",
