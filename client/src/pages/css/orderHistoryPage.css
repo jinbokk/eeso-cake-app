@@ -1,3 +1,17 @@
+.text_emphasis {
+  /* color: white; */
+  background-color: lightgray;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.text_underline {
+  text-decoration: underline 1px solid;
+  text-underline-offset: 8px;
+  color: var(--bg-accent);
+  margin: 0px 5px;
+}
+
 .order_card {
   padding: 3rem !important;
   padding-top: 2rem !important;
@@ -9,7 +23,7 @@
 
 .order_card_status {
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 .order_card_info {
@@ -84,6 +98,16 @@
   aspect-ratio: 1/1;
   object-fit: cover;
   border-radius: 15px;
+}
+
+.order_cancel_button {
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  margin: 0 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 992px) {

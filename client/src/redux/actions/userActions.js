@@ -238,10 +238,31 @@ function decreaseQuantity(cartId) {
 function orderComplete(body) {
   return async (dispatch) => {
     try {
-      await axios.post("/api/users/orderComplete", body).then((res) => {
-        console.log(res.data);
-        return res.data;
-      });
+      const orderCompleteResult = await axios
+        .post("/api/users/order-complete", body)
+        .then((res) => {
+          console.log(res.data);
+          return res.data;
+        });
+
+      return orderCompleteResult;
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
+function orderCancel(body) {
+  console.log("body::::", body);
+  return async (dispatch) => {
+    try {
+      const orderCancelResult = await axios
+        .post("/api/users/order-cancel", body)
+        .then((res) => {
+          return res.data;
+        });
+
+      return orderCancelResult;
     } catch (error) {
       console.log("error occurred : ", error);
     }
@@ -274,5 +295,6 @@ export const userActions = {
   increaseQuantity,
   decreaseQuantity,
   orderComplete,
+  orderCancel,
   paymentWebhook,
 };

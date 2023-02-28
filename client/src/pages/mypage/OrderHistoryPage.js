@@ -1,9 +1,11 @@
 import React, { useLayoutEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import { useOutletContext } from "react-router";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { RxDot, RxDotFilled } from "react-icons/rx";
 import Accordion from "react-bootstrap/Accordion";
 import format from "date-fns/format";
 import { ko } from "date-fns/locale";
@@ -11,11 +13,13 @@ import moment from "moment";
 import "moment/locale/ko";
 
 import "../css/orderHistoryPage.css";
-
+import { userActions } from "../../redux/actions/userActions";
 
 const OrderHistoryPage = () => {
+  const dispatch = useDispatch();
   const [title, setTitle] = useOutletContext();
   const { authUserData } = useSelector((status) => status.user);
+  const { width } = useWindowDimensions();
 
   useLayoutEffect(() => {
     setTitle("쇼핑 정보");
@@ -31,6 +35,24 @@ const OrderHistoryPage = () => {
     return `${diffInHours}시간 이전에 결제`;
     // return diffInHours <= 24 ? "true" : "false";
   }
+
+  const orderCancelHandler = (body) => {
+    let confirm = window.confirm(
+      "취소된 주문은 되돌릴 수 없으며, 필요시 재주문을 해주셔야 합니다.\n주문을 취소하시겠습니까?"
+    );
+
+    if (confirm) {
+      dispatch(userActions.orderCancel(body)).then((res) => {
+        console.log("res::::", res);
+        if (res.status === "cancelled") {
+          window.alert("주문이 취소되었습니다.");
+          dispatch(userActions.auth());
+        }
+      });
+    } else {
+      return;
+    }
+  };
 
   return (
     // authUserData.isAuth 가 있으면 렌더하는 방식은
@@ -103,10 +125,37 @@ const OrderHistoryPage = () => {
 
       <Row>
         <Col className="my-5">
-          <div className="mb-4">
+          <div className="mb-3">
+            <RxDot className="me-2" color="gray" />
+            <span className="text_emphasis">결제 완료</span> 상태의 주문의 경우
+            24시간 이내 주문 취소가 가능합니다
+          </div>
+          <div className="mb-3">
+            <RxDot className="me-2" color="gray" />
+            결제일시 기준으로, 24시간 이후{" "}
+            <span className="text_emphasis">제작중</span> 상태로 자동 변경됩니다
+          </div>
+          <div>
+            <RxDot className="me-2" color="gray" />
+            <span className="text_emphasis">제작중</span> 상태 주문의 경우,
+            <span className="text_underline">
+              홈페이지 내 주문 변경 및 취소가 불가
+            </span>
+            하며 관련 문의는 카카오톡
+            <a
+              href="https://pf.kakao.com/_ZyKnd"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-2 link"
+            >
+              @이소케이크
+            </a>
+            채널로 문의 부탁드립니다
+          </div>
+          {/* <div className="mb-4">
             * 주문하신 제품은 픽업 4일전까지 레터링 문구만 수정 가능합니다
           </div>
-          <div>* 레터링 외 수정사항은 취소 후 재주문 부탁드립니다.</div>
+          <div>* 레터링 외 수정사항은 취소 후 재주문 부탁드립니다.</div> */}
         </Col>
       </Row>
 
@@ -120,8 +169,18 @@ const OrderHistoryPage = () => {
             .map((historyItems, index) => (
               <div key={index} className="order_card">
                 <Row className="order_card_status text-start d-flex justify-content-between align-items-center mb-4">
-                  <Col xs={12} lg={"auto"}>
-                    <span className="me-2">
+                  <Col
+                    xs={12}
+                    lg={"auto"}
+                    className="d-flex flex-row justify-content-start align-items-center"
+                  >
+                    <div className="me-2 status_title">
+                      <span>
+                        <RxDotFilled
+                          size={25}
+                          // style={{ position: "relative", bottom: "2px" }}
+                        />
+                      </span>
                       {historyItems.status === "order_paid"
                         ? "결제 완료"
                         : null}
@@ -135,25 +194,52 @@ const OrderHistoryPage = () => {
                       {historyItems.status === "order_waiting_for_cancel"
                         ? "취소 대기"
                         : null}
-                      {historyItems.status === "order_canceled"
-                        ? "취소 완료"
+                      {historyItems.status === "order_cancelled"
+                        ? "주문 취소"
                         : null}
-                    </span>
+                    </div>
 
-                    <span>테스트중</span>
-                    <span>
-                      {checkPaymentWithin24Hours(historyItems.paymentDate)}
-                    </span>
+                    {historyItems.status === "order_paid" ? (
+                      <div
+                        className="order_cancel_button"
+                        onClick={() =>
+                          orderCancelHandler({
+                            imp_uid: historyItems.imp_uid,
+                            merchant_uid: historyItems.merchant_uid,
+                          })
+                        }
+                      >
+                        주문 취소
+                      </div>
+                    ) : null}
+
+                    {historyItems.status === "order_cancelled" ? (
+                      <div
+                        className="order_cancel_button"
+                        // onClick={() =>
+                        //   orderCancelHandler({
+                        //     imp_uid: historyItems.imp_uid,
+                        //     merchant_uid: historyItems.merchant_uid,
+                        //   })
+                        // }
+                      >
+                        취소영수증 조회
+                      </div>
+                    ) : null}
                   </Col>
 
-                  <Col xs={12} lg={"auto"}>
+                  <Col
+                    xs={12}
+                    lg={"auto"}
+                    className={width < 992 ? "mt-4" : ""}
+                  >
                     <div className="order_card_info">
                       주문번호 {historyItems.merchant_uid}
                     </div>
 
                     <div className="order_card_info">
                       결제일자{" "}
-                      {/* {format(new Date(historyItems.paymentDate), "yyyy-MM-dd", {
+                      {/* {format(new Date(historyItems.paymentDate), "YYYY-MM-DD", {
                       locale: ko,
                     })} */}
                       {historyItems.paymentDate.slice(0, 10)}
@@ -183,11 +269,19 @@ const OrderHistoryPage = () => {
                     className="d-flex flex-column justify-content-around align-items-start"
                   >
                     <div className="fw-bold">{historyItems.name}</div>
-
-                    <div>
-                      {historyItems.products[0].deliveryType} /{" "}
-                      {historyItems.products[0].deliveryDateTime.stringType}
-                    </div>
+                    {width < 992 ? (
+                      <>
+                        <div>{historyItems.products[0].deliveryType}</div>
+                        <div>
+                          {historyItems.products[0].deliveryDateTime.stringType}
+                        </div>
+                      </>
+                    ) : (
+                      <div>
+                        {historyItems.products[0].deliveryType} /{" "}
+                        {historyItems.products[0].deliveryDateTime.stringType}
+                      </div>
+                    )}
 
                     <div>
                       결제 금액 : {historyItems.amount.toLocaleString("ko-KR")}

@@ -93,10 +93,10 @@ const Delivery = ({ control, cartItems }) => {
     // const selectedDate = new Date(date.getTime() + timezoneOffset); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
     const selectedDate = moment(date).format(); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
     console.log("selectedDate:::::", selectedDate);
-    // const modifiedDate = format(date, "yyyy-MM-dd (eee)", {
+    // const modifiedDate = format(date, "YYYY-MM-DD (eee)", {
     //   locale: ko,
     // });
-    const modifiedDate = moment(date).format("yyyy-MM-dd (ddd)");
+    const modifiedDate = moment(date).format("YYYY-MM-DD (ddd)");
     console.log("modifiedDate:::::", modifiedDate);
 
 
@@ -386,7 +386,7 @@ const Delivery = ({ control, cartItems }) => {
                     inputReadOnly
                     showToday={false}
                     placeholder={"날짜를 선택해 주세요"}
-                    format="yyyy-MM-dd (ddd)"
+                    format="YYYY-MM-DD (ddd)"
                     disabledDate={disabledDate}
                     onChange={(e) => console.log(e)}
                   />

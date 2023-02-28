@@ -101,10 +101,10 @@ const OrderDetailPage = () => {
     //   time.getMilliseconds()
     // );
 
-    const dateForm = moment(date).format("yyyy-MM-dd");
+    const dateForm = moment(date).format("YYYY-MM-DD");
     const timeForm = moment(time).format("hh:mm");
 
-    return moment(dateForm + " " + timeForm, "yyyy-MM-dd a hh:mm (ddd)");
+    return moment(dateForm + " " + timeForm, "YYYY-MM-DD a hh:mm (ddd)");
   };
 
   const optionConfirmHandler = () => {

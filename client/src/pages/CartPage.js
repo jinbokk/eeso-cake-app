@@ -13,6 +13,7 @@ import { red } from "@mui/material/colors";
 import { NavLink, useNavigate } from "react-router-dom";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import PaymentNav from "../components/PaymentNav";
+import moment from "moment";
 import format from "date-fns/format";
 import { ko } from "date-fns/locale";
 
@@ -467,22 +468,14 @@ const CartPage = () => {
                               : "text-center px-0 me-2"
                           }
                         >
-                          {format(
-                            new Date(
-                              checkedCartItems[0].deliveryDateTime.dateType
-                            ),
-                            "yyyy-MM-dd (eee)",
-                            { locale: ko }
-                          )}
+                          {moment(
+                            checkedCartItems[0].deliveryDateTime.dateType
+                          ).format("YYYY-MM-DD (ddd)")}
                         </Col>
                         <Col lg={"auto"} className="text-center px-0">
-                          {format(
-                            new Date(
-                              checkedCartItems[0].deliveryDateTime.dateType
-                            ),
-                            "a hh:mm",
-                            { locale: ko }
-                          )}
+                          {moment(
+                            checkedCartItems[0].deliveryDateTime.dateType
+                          ).format("a hh:mm")}
                         </Col>
                       </Row>
                     ) : (
