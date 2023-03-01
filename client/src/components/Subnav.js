@@ -15,6 +15,7 @@ const Subnav = ({ option }) => {
       { title: "# 돔 디자인", link: "?design=dome" },
       { title: "# 초승달 디자인", link: "?design=crescent" },
       { title: "# 리스 디자인", link: "?design=wreath" },
+      { title: "# 꽃다발 디자인", link: "?design=bouquet" },
     ];
   }
 

@@ -37,12 +37,45 @@ const OrderPage = () => {
         />
       ) : (
         <Container>
+          {/* <Row className="order_category_top">
+            <Col className="order_category">
+              <div className="order_category_circle">
+                <div className="order_category_title">전체</div>
+                <div className="order_category_bg">test</div>
+              </div>
+            </Col>
+            <Col className="order_category">
+              <div className="order_category_circle">
+                <div className="order_category_title">떡케이크</div>
+                <div className="order_category_bg">test</div>
+              </div>
+            </Col>
+            <Col className="order_category">
+              <div className="order_category_circle">
+                <div className="order_category_title">빵케이크</div>
+                <div className="order_category_bg">test</div>
+              </div>
+            </Col>
+            <Col className="order_category">
+              <div className="order_category_circle">
+                <div className="order_category_title">숫자타르트</div>
+                <div className="order_category_bg">test</div>
+              </div>
+            </Col>
+            <Col className="order_category">
+              <div className="order_category_circle">
+                <div className="order_category_title">시즌케이크</div>
+                <div className="order_category_bg">test</div>
+              </div>
+            </Col>
+          </Row> */}
+          
           <Row>
             {forSale_productsData.map((item, index) => (
               <Col
-                xs={12}
-                sm={6}
-                md={6}
+                xs={6}
+                // sm={6}
+                // md={6}
                 lg={3}
                 className="align-items-start justify-content-start"
                 key={index}

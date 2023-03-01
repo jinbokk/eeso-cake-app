@@ -36,7 +36,6 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   );
 
   const image_url = cloudinary_upload.secure_url;
-  const designArray = req.body.design.split(",").map((item) => item);
   //append로 추가한 데이터는 string처리가 되어 서버단에서 다시 array화 하는 작업을 추가함
 
   const product = new Product({
@@ -51,8 +50,11 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     layer:
       req.body.layer !== "" && req.body.layer !== "undefined"
         ? req.body.layer
-        : null,
-    design: designArray,
+        : 1,
+    design:
+      req.body.ingredient !== "" && req.body.design !== "undefined"
+        ? req.body.design.split(",").map((item) => item)
+        : [],
     image_url: image_url,
     description:
       req.body.description !== "" && req.body.description !== "undefined"
@@ -61,7 +63,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     price:
       req.body.price !== "" && req.body.price !== "undefined"
         ? req.body.price
-        : null,
+        : 0,
     sold: 0,
     views: 0,
   });
@@ -101,6 +103,7 @@ router.get("/cakes/:ingredient", async (req, res) => {
   const option = {
     page: parseInt(req.query.page) || parseInt(1),
     limit: 30,
+    sort: { createdAt: -1 },
   };
 
   const results = await Product.paginate(query, option);
@@ -124,7 +127,7 @@ router.get("/order", async (req, res) => {
   // }
 
   let query = {
-    price: { $ne: null },
+    price: { $ne: 0 },
   };
 
   const option = {

@@ -23,7 +23,6 @@ import "./css/uploadProductPage.css";
 
 export default function UploadProductPage() {
   const { isAdmin } = useSelector((state) => state.user.authUserData);
-  console.log(isAdmin);
 
   const theme = createTheme({
     palette: {
@@ -40,16 +39,16 @@ export default function UploadProductPage() {
   const [ingredient, setIngredient] = useState("");
   const [design, setDesign] = useState([]);
 
-  const layerHandler = (layer) => {
-    setLayer(layer);
+  const layerHandler = (event, value) => {
+    setLayer(value);
   };
 
-  const ingredientHandler = (ingredient) => {
-    setIngredient(ingredient);
+  const ingredientHandler = (event, value) => {
+    setIngredient(value);
   };
 
-  const designHandler = (design) => {
-    setDesign(design);
+  const designHandler = (event, value) => {
+    setDesign(value);
   };
 
   useEffect(() => {
@@ -99,18 +98,20 @@ export default function UploadProductPage() {
 
       formData.append("file", file[0]);
       formData.append("title", data.title);
-      formData.append("price", parseInt(data.price));
+      formData.append("price", data.price && parseInt(data.price));
       formData.append("ingredient", data.ingredient);
-      formData.append("layer", parseInt(data.layer));
+      formData.append("layer", data.layer && parseInt(data.layer));
       formData.append("design", data.design);
       formData.append("description", data.description);
+
+      console.log("final form:::", formData);
 
       axios
         .post("/api/products/upload", formData)
         .then((res) => {
           if (res.status === 200) {
-            alert("상품 업로드가 완료되었습니다.");
-            // window.location.reload();
+            // alert("상품 업로드가 완료되었습니다.");
+            window.location.reload();
           } else {
             alert("상품 업로드에 실패하였습니다.");
           }
@@ -183,9 +184,9 @@ export default function UploadProductPage() {
                         label="가격"
                         variant="outlined"
                         InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">원</InputAdornment>
-                          ),
+                          // startAdornment: (
+                          //   <InputAdornment position="start">원</InputAdornment>
+                          // ),
                           endAdornment: (
                             <InputAdornment position="end">원</InputAdornment>
                           ),
@@ -209,9 +210,9 @@ export default function UploadProductPage() {
                             className="my-4"
                             size="large"
                             value={ingredient}
-                            onChange={(e) => {
-                              onChange(e.target.value);
-                              ingredientHandler(e);
+                            onChange={(event, value) => {
+                              onChange(value);
+                              ingredientHandler(event, value);
                             }}
                             exclusive
                             {...field}
@@ -236,9 +237,9 @@ export default function UploadProductPage() {
                             className="my-4"
                             size="large"
                             value={layer}
-                            onChange={(e) => {
-                              onChange(e.target.value);
-                              layerHandler(e);
+                            onChange={(event, value) => {
+                              onChange(value);
+                              layerHandler(event, value);
                             }}
                             exclusive
                             {...field}
@@ -266,9 +267,9 @@ export default function UploadProductPage() {
                               className="mb-4"
                               size="large"
                               value={design}
-                              onChange={(e) => {
-                                onChange(e.target.value);
-                                designHandler(e);
+                              onChange={(event, value) => {
+                                onChange(value);
+                                designHandler(event, value);
                               }}
                               {...field}
                             >
@@ -293,9 +294,9 @@ export default function UploadProductPage() {
                         className="d-flex flex-wrap"
                         size="large"
                         value={design}
-                        onChange={(e) => {
-                          onChange(e.target.value);
-                          designHandler(e);
+                        onChange={(event, value) => {
+                          onChange(value);
+                          designHandler(event, value);
                         }}
                         {...field}
                       >
@@ -304,6 +305,8 @@ export default function UploadProductPage() {
                         <ToggleButton value="letter">레터링</ToggleButton>
                         <ToggleButton value="money">돈</ToggleButton>
                         <ToggleButton value="topper">토퍼</ToggleButton>
+                        <ToggleButton value="square">사각형</ToggleButton>
+                        <ToggleButton value="heart">하트형</ToggleButton>
                         <ToggleButton value="3D">3D</ToggleButton>
                         <ToggleButton value="fresh_flower">생화</ToggleButton>
                         <ToggleButton value="bouquet">꽃다발</ToggleButton>
