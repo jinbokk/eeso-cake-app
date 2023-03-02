@@ -24,7 +24,7 @@ root.render(
       <BrowserRouter>
         <ScrollToTop />
         <CookiesProvider>
-          <App />
+            <App />
         </CookiesProvider>
       </BrowserRouter>
     </PersistGate>

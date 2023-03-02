@@ -20,6 +20,8 @@ import { FaCarSide } from "react-icons/fa";
 import { DatePicker, TimePicker } from "antd";
 import { ConfigProvider } from "antd";
 import locale from "antd/lib/locale/ko_KR";
+import datePickerLocale from "antd/es/date-picker/locale/ko_KR";
+import "dayjs/locale/ko";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
@@ -28,12 +30,6 @@ import { ko } from "date-fns/locale";
 
 import moment from "moment";
 import "moment/locale/ko";
-
-/// antd
-// import dayjs from "dayjs";
-// import "dayjs/locale/ko";
-// import locale from "antd/locale/ko_KR";
-// import { DatePicker, TimePicker } from "antd";
 
 const Delivery = ({ control, cartItems }) => {
   const dispatch = useDispatch();
@@ -309,199 +305,69 @@ const Delivery = ({ control, cartItems }) => {
 
       <ConfigProvider locale={locale}>
         <div className="option_menu_section">
-          <span className="option_menu_text">수령 날짜</span>
+          <span className="option_menu_text">수령 일자</span>
           <div className="controller_container">
             <Controller
               control={control}
-              name="수령_날짜"
-              defaultValue={null}
+              name="수령_일자"
+              // defaultValue={null}
               render={({ field: { onChange, value, ...field } }) => (
                 <DatePicker
                   {...field}
-                  showTime={{
-                    defaultValue: moment("00:00:00", "HH:mm").format(),
-                    format: "HH:mm",
-                  }}
                   inputReadOnly
                   onChange={onChange}
                   onOk={console.log(value)}
-                  format={"YYYY-MM-DD (ddd) HH:mm"}
+                  defaultValue={undefined}
+                  format={"YYYY-MM-DD (ddd)"}
+                  locale={datePickerLocale}
+                  style={{ width: "100%" }}
+                  popupClassName="custom_dropdown"
+                  disabledDate={(current) => {
+                    let after = moment().add(5, "days").format("YYYY-MM-DD");
+                    let before = moment().add(3, "week").format("YYYY-MM-DD");
+
+                    return (
+                      (current && current < moment(after, "YYYY-MM-DD")) ||
+                      (current && current > moment(before, "YYYY-MM-DD"))
+                      // ||
+                      // (current &&
+                      //   current ===
+                      //     moment(
+                      //       moment().weekday(1).format("YYYY-MM-DD"),
+                      //       "YYYY-MM-DD"
+                      //     ))
+                      // 매주 월요일 선택불가 하도록 해야함
+                    );
+                  }}
                 />
-                // <DatePicker
-                //   {...field}
-                //   size="lg"
-                //   className="mui_x_custom"
-                //   minDate={addDays(new Date(), 3)}
-                //   maxDate={addDays(new Date(), 14)}
-                //   inputFormat="yyyy.MM.dd (eee)"
-                //   disableMaskedInput
-                //   dayOfWeekFormatter={(day) => `${day}`}
-                //   value={date}
-                //   onChange={(date) => {
-                //     onChange(date);
-                //     dateHandler(date);
-                //     storeHourHandler(date);
-                //   }}
-                //   fullWidth
-                //   open={dateOpen}
-                //   onOpen={() => {
-                //     if (!delivery) {
-                //       setDateError(true);
-                //     } else {
-                //       setDateOpen(true);
-                //     }
-                //   }}
-                //   onClose={() => setDateOpen(false)}
-                //   renderInput={(params) => (
-                //     <TextField
-                //       {...params}
-                //       onClick={() => {
-                //         if (!delivery) {
-                //           setDateError(true);
-                //         } else {
-                //           setDateOpen(true);
-                //         }
-                //       }}
-                //       error={dateError && !delivery ? true : false}
-                //       helperText={
-                //         dateError && !delivery
-                //           ? "수령 방법을 먼저 선택해 주세요"
-                //           : null
-                //       }
-                //       inputProps={{
-                //         ...params.inputProps,
-                //         readOnly: true,
-                //         style: {
-                //           fontSize: "0.9rem",
-                //           cursor: "pointer",
-                //         },
-                //         placeholder: "날짜를 선택해 주세요",
-                //       }}
-                //     />
-                //   )}
-                // />
               )}
             />
           </div>
         </div>
 
-        {/* <div>
-          <div className="option_menu_section">
-            <span className="option_menu_text">수령 날짜</span>
-            <div className="controller_container">
-              <Controller
-                control={control}
-                name="수령_날짜"
-                defaultValue={null}
-                render={({ field: { onChange, value, ...field } }) => (
-                  <CustomDatePicker
-                    {...field}
-                    allowClear={false}
-                    inputReadOnly
-                    showToday={false}
-                    placeholder={"날짜를 선택해 주세요"}
-                    format="YYYY-MM-DD (ddd)"
-                    disabledDate={disabledDate}
-                    onChange={(e) => console.log(e)}
-                  />
-                )}
-              />
-            </div>
-          </div>
-        </div> */}
-
         <div className="option_menu_section">
           <span className="option_menu_text">수령 시간</span>
-
           <div className="controller_container">
             <Controller
               control={control}
               name="수령_시간"
-              defaultValue={null}
+              // defaultValue={null}
               render={({ field: { onChange, value, ...field } }) => (
                 <TimePicker
                   {...field}
-                  disableMaskedInput
-                  className="mui_x_custom"
-                  value={delivery === "택배" ? null : time}
-                  minTime={minTime}
-                  maxTime={maxTime}
-                  inputFormat="a hh:mm"
-                  onChange={(date) => {
-                    onChange(date);
-                    timeHandler(date);
-                  }}
-                  disabled={delivery === "택배" ? true : false}
-                  ampmInClock
-                  fullWidth
-                  open={timeOpen}
-                  onOpen={() => {
-                    if (!date) {
-                      setTimeError(true);
-                    } else {
-                      setTimeOpen(true);
-                    }
-                  }}
-                  onClose={() => setTimeOpen(false)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      onClick={() => {
-                        if (!date) {
-                          setTimeError(true);
-                        } else {
-                          setTimeOpen(true);
-                        }
-                      }}
-                      error={timeError && !date ? true : false}
-                      helperText={
-                        timeError && !date ? "날짜를 먼저 선택해 주세요" : null
-                      }
-                      inputProps={{
-                        ...params.inputProps,
-                        readOnly: true,
-                        style: {
-                          fontSize: "0.9rem",
-                          cursor: "pointer",
-                        },
-                        placeholder:
-                          delivery === "택배"
-                            ? "택배 수령시 설정 불가"
-                            : "시간을 선택해 주세요",
-                      }}
-                    />
-                  )}
-                  minutesStep={5}
-                  showToolbar
+                  inputReadOnly
+                  onChange={onChange}
+                  onOk={console.log(value)}
+                  format={"HH시 mm분"}
+                  minuteStep={10}
+                  // disabledTime={{}}
+                  style={{ width: "100%" }}
+                  popupClassName="custom_dropdown"
                 />
               )}
             />
           </div>
         </div>
-        {/* 
-        <div className="option_menu_section">
-          <span className="option_menu_text">수령 시간</span>
-
-          <div className="controller_container">
-            <Controller
-              control={control}
-              name="수령_시간"
-              defaultValue={null}
-              render={({ field: { onChange, value, ...field } }) => (
-                <CustomTimePicker
-                  {...field}
-                  allowClear={false}
-                  showNow={false}
-                  use12Hours
-                  minuteStep={10}
-                  inputReadOnly
-                  format="a hh:mm"
-                  placeholder="시간을 선택해 주세요"
-                />
-              )}
-            />
-          </div>
-        </div> */}
       </ConfigProvider>
     </>
   );

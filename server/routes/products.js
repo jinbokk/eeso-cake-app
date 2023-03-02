@@ -145,10 +145,13 @@ router.get("/order/detail/:productId", async (req, res) => {
   let { productId } = req.params;
   let o_id = new ObjectId(productId);
 
-  Product.find({ _id: o_id }).then((err, productDetail) => {
-    if (err) return res.status(400).send(err);
-    return res.status(200).send(productDetail[0]);
-  });
+  try {
+    await Product.find({ _id: o_id }).then((productDetail) => {
+      return res.status(200).send(productDetail[0]);
+    });
+  } catch (error) {
+    return res.status(400).send(err);
+  }
 });
 
 // CART PAGE
