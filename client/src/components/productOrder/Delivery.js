@@ -9,13 +9,17 @@ import { brown } from "@mui/material/colors";
 
 import { FaCarSide } from "react-icons/fa";
 
-import {
-  DatePicker,
-  TimePicker,
-  DesktopDatePicker,
-  DesktopTimePicker,
-  LocalizationProvider,
-} from "@mui/x-date-pickers";
+// import {
+//   DatePicker,
+//   TimePicker,
+//   DesktopDatePicker,
+//   DesktopTimePicker,
+//   LocalizationProvider,
+// } from "@mui/x-date-pickers";
+
+import { DatePicker, TimePicker } from "antd";
+import { ConfigProvider } from "antd";
+import locale from "antd/lib/locale/ko_KR";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
@@ -98,7 +102,6 @@ const Delivery = ({ control, cartItems }) => {
     // });
     const modifiedDate = moment(date).format("YYYY-MM-DD (ddd)");
     console.log("modifiedDate:::::", modifiedDate);
-
 
     const body = {
       dateType: selectedDate,
@@ -304,7 +307,7 @@ const Delivery = ({ control, cartItems }) => {
         ) : null}
       </div>
 
-      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ko}>
+      <ConfigProvider locale={locale}>
         <div className="option_menu_section">
           <span className="option_menu_text">수령 날짜</span>
           <div className="controller_container">
@@ -315,57 +318,68 @@ const Delivery = ({ control, cartItems }) => {
               render={({ field: { onChange, value, ...field } }) => (
                 <DatePicker
                   {...field}
-                  size="lg"
-                  className="mui_x_custom"
-                  minDate={addDays(new Date(), 3)}
-                  maxDate={addDays(new Date(), 14)}
-                  inputFormat="yyyy.MM.dd (eee)"
-                  disableMaskedInput
-                  dayOfWeekFormatter={(day) => `${day}`}
-                  value={date}
-                  onChange={(date) => {
-                    onChange(date);
-                    dateHandler(date);
-                    storeHourHandler(date);
+                  showTime={{
+                    defaultValue: moment("00:00:00", "HH:mm").format(),
+                    format: "HH:mm",
                   }}
-                  fullWidth
-                  open={dateOpen}
-                  onOpen={() => {
-                    if (!delivery) {
-                      setDateError(true);
-                    } else {
-                      setDateOpen(true);
-                    }
-                  }}
-                  onClose={() => setDateOpen(false)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      onClick={() => {
-                        if (!delivery) {
-                          setDateError(true);
-                        } else {
-                          setDateOpen(true);
-                        }
-                      }}
-                      error={dateError && !delivery ? true : false}
-                      helperText={
-                        dateError && !delivery
-                          ? "수령 방법을 먼저 선택해 주세요"
-                          : null
-                      }
-                      inputProps={{
-                        ...params.inputProps,
-                        readOnly: true,
-                        style: {
-                          fontSize: "0.9rem",
-                          cursor: "pointer",
-                        },
-                        placeholder: "날짜를 선택해 주세요",
-                      }}
-                    />
-                  )}
+                  inputReadOnly
+                  onChange={onChange}
+                  onOk={console.log(value)}
+                  format={"YYYY-MM-DD (ddd) HH:mm"}
                 />
+                // <DatePicker
+                //   {...field}
+                //   size="lg"
+                //   className="mui_x_custom"
+                //   minDate={addDays(new Date(), 3)}
+                //   maxDate={addDays(new Date(), 14)}
+                //   inputFormat="yyyy.MM.dd (eee)"
+                //   disableMaskedInput
+                //   dayOfWeekFormatter={(day) => `${day}`}
+                //   value={date}
+                //   onChange={(date) => {
+                //     onChange(date);
+                //     dateHandler(date);
+                //     storeHourHandler(date);
+                //   }}
+                //   fullWidth
+                //   open={dateOpen}
+                //   onOpen={() => {
+                //     if (!delivery) {
+                //       setDateError(true);
+                //     } else {
+                //       setDateOpen(true);
+                //     }
+                //   }}
+                //   onClose={() => setDateOpen(false)}
+                //   renderInput={(params) => (
+                //     <TextField
+                //       {...params}
+                //       onClick={() => {
+                //         if (!delivery) {
+                //           setDateError(true);
+                //         } else {
+                //           setDateOpen(true);
+                //         }
+                //       }}
+                //       error={dateError && !delivery ? true : false}
+                //       helperText={
+                //         dateError && !delivery
+                //           ? "수령 방법을 먼저 선택해 주세요"
+                //           : null
+                //       }
+                //       inputProps={{
+                //         ...params.inputProps,
+                //         readOnly: true,
+                //         style: {
+                //           fontSize: "0.9rem",
+                //           cursor: "pointer",
+                //         },
+                //         placeholder: "날짜를 선택해 주세요",
+                //       }}
+                //     />
+                //   )}
+                // />
               )}
             />
           </div>
@@ -488,7 +502,7 @@ const Delivery = ({ control, cartItems }) => {
             />
           </div>
         </div> */}
-      </LocalizationProvider>
+      </ConfigProvider>
     </>
   );
 };

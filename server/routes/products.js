@@ -68,15 +68,15 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     views: 0,
   });
 
-  product.save((err) => {
-    if (err) {
-      res.status(400).json({ success: false, message: err });
-      return fs.unlinkSync(req.file.path);
-    } else {
+  try {
+    await product.save().then((result) => {
       res.status(200).json({ success: true });
       return fs.unlinkSync(req.file.path);
-    }
-  });
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error });
+    return fs.unlinkSync(req.file.path);
+  }
 });
 
 // CAKES PAGE
@@ -145,7 +145,7 @@ router.get("/order/detail/:productId", async (req, res) => {
   let { productId } = req.params;
   let o_id = new ObjectId(productId);
 
-  Product.find({ _id: o_id }).exec((err, productDetail) => {
+  Product.find({ _id: o_id }).then((err, productDetail) => {
     if (err) return res.status(400).send(err);
     return res.status(200).send(productDetail[0]);
   });
@@ -162,7 +162,7 @@ router.get("/products-by-id", async (req, res) => {
     return item;
   });
 
-  Product.find({ _id: { $in: productIds } }).exec((err, productDetail) => {
+  Product.find({ _id: { $in: productIds } }).then((err, productDetail) => {
     if (err) return res.status(400).send(err);
     return res.status(200).json(productDetail);
   });

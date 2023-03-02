@@ -95,7 +95,7 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
   });
 };
 
-userSchema.methods.generateToken = function (cb) {
+userSchema.methods.generateToken = async function (cb) {
   let user = this;
 
   // generate web token with jwt
@@ -110,10 +110,11 @@ userSchema.methods.generateToken = function (cb) {
   console.log("token:::", token);
   user.tokenExp = twoHour;
 
-  user.save(function (err, user) {
-    if (err) return cb(err);
-    cb(null, user);
-  });
+  try {
+    await user.save().then((user) => cb(null, user));
+  } catch (error) {
+    return cb(err);
+  }
 };
 
 userSchema.statics.findByToken = function (token, cb) {
@@ -127,7 +128,7 @@ userSchema.statics.findByToken = function (token, cb) {
 
   let user = this;
 
-  jwt.verify(token, "secret", function (err, decoded) {
+  jwt.verify(token, "secret", async function (err, decoded) {
     if (!decoded) {
       // 만료시간이 다되어 폐기된 쿠키일경우
       return cb(err);
@@ -135,13 +136,15 @@ userSchema.statics.findByToken = function (token, cb) {
       // logout 실행
       // navbar 로그인상태 초기화 등..
     } else {
-      user.findOne({ _id: decoded.userId, token: token }, function (err, user) {
-        if (err) {
-          return cb(err);
-        } else {
-          return cb(null, user);
-        }
-      });
+      try {
+        await user
+          .findOne({ _id: decoded.userId, token: token })
+          .then((user) => {
+            return cb(null, user);
+          });
+      } catch (error) {
+        return cb(err);
+      }
     }
   });
 };

@@ -58,7 +58,8 @@ router.post("/", auth, async (req, res) => {
       {
         history: { $elemMatch: { imp_uid: imp_uid } },
       }
-    );
+    ).then((order) => order);
+    
     console.log("findOrder::::", findOrder);
 
     const order = findOrder.history[0];

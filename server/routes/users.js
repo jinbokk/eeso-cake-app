@@ -28,26 +28,22 @@ router.get("/auth", auth, (req, res) => {
   });
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const user = new User(req.body);
 
-  user.save((err, doc) => {
-    if (err) {
-      return res.status(400).json({
-        registerSuccess: false,
-        message:
-          err.code === 11000
-            ? "동일한 이메일로 가입된 계정이 존재합니다."
-            : "회원가입에 실패하였습니다.",
-
-        error: err,
-      });
-    } else {
+  try {
+    await user.save().then((user) => {
       return res.status(200).json({
         registerSuccess: true,
       });
-    }
-  });
+    });
+  } catch (error) {
+    return res.status(400).json({
+      registerSuccess: false,
+      message: "회원가입에 실패하였습니다.",
+      error: error,
+    });
+  }
 });
 
 router.post("/unregister", async (req, res) => {
@@ -55,7 +51,7 @@ router.post("/unregister", async (req, res) => {
 
   let user = await User.findOne({
     email: req.body.email,
-  }).exec();
+  }).then((user) => user);
 
   let existPassword = user.password;
 
@@ -64,21 +60,22 @@ router.post("/unregister", async (req, res) => {
   console.log("comparePassword:::", comparePassword);
 
   if (comparePassword) {
-    User.findOne(
-      {
+    try {
+      await User.findOne({
         email: req.body.email,
-      },
-      (err, user) => {
-        if (!req.body.email || err) {
-          res.status(200).send(err);
+      }).then((user) => {
+        if (!req.body.email) {
+          res.status(200).send(user);
         } else {
           user.deleteOne();
           res.status(200).json({
             unregisterSuccess: true,
           });
         }
-      }
-    );
+      });
+    } catch (error) {
+      res.status(200).send(error);
+    }
   } else {
     res.status(200).json({
       unregisterSuccess: false,
@@ -87,10 +84,10 @@ router.post("/unregister", async (req, res) => {
   }
 });
 
-router.get("/register/email-check/:email", (req, res) => {
+router.get("/register/email-check/:email", async (req, res) => {
   let { email } = req.params;
 
-  User.findOne({ email: email }, (err, user) => {
+  await User.findOne({ email: email }).then((user) => {
     if (user) {
       return res.status(200).send(true);
     } else {
@@ -99,10 +96,10 @@ router.get("/register/email-check/:email", (req, res) => {
   });
 });
 
-router.get("/register/phoneNumber-check/:phoneNumber", (req, res) => {
+router.get("/register/phoneNumber-check/:phoneNumber", async (req, res) => {
   let { phoneNumber } = req.params;
 
-  User.findOne({ phoneNumber: phoneNumber }, (err, user) => {
+  await User.findOne({ phoneNumber: phoneNumber }).then((user) => {
     if (user) {
       return res.status(200).send(true);
     } else {
@@ -111,9 +108,9 @@ router.get("/register/phoneNumber-check/:phoneNumber", (req, res) => {
   });
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   // 1. find email on DB
-  User.findOne({ email: req.body.email }, (err, user) => {
+  await User.findOne({ email: req.body.email }).then((user) => {
     if (!user) {
       return res.send({
         loginSuccess: false,
@@ -150,28 +147,31 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.get("/logout", auth, (req, res) => {
-  User.findOneAndUpdate(
-    { _id: req.user._id },
-    { token: "", tokenExp: "" },
-    (err, doc) => {
-      if (err) {
-        return res.status(400).json({ logoutSuccess: false, message: err });
-      } else {
-        res.clearCookie("w_auth");
-        res.clearCookie("w_authExp");
-        return res.status(200).json({
-          logoutSuccess: true,
-        });
-      }
+router.get("/logout", auth, async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { token: "", tokenExp: "" }
+    ).then((user) => {
+      res.clearCookie("w_auth");
+      res.clearCookie("w_authExp");
+      return res.status(200).json({
+        logoutSuccess: true,
+      });
+    });
+  } catch (error) {
+    if (err) {
+      return res.status(400).json({ logoutSuccess: false, message: err });
     }
-  );
+  }
 });
 
 router.post("/addToCart", auth, async (req, res) => {
   const createdOptions = req.body.createdOption; // Array
 
-  const user = await User.findOne({ _id: req.user._id }).exec();
+  const user = await User.findOne({ _id: req.user._id }).then((user) => user);
+
+  console.log("addtocart update console::::", user);
 
   if (user.cart.length === 0) {
     // 유저 카트가 비어있을 경우
@@ -201,8 +201,7 @@ router.post("/addToCart", auth, async (req, res) => {
         },
         {
           new: true,
-        },
-        (err, result) => result
+        }
       );
     });
   } else {
@@ -281,8 +280,7 @@ router.post("/addToCart", auth, async (req, res) => {
               "elem.price": duplicateItem.price,
             },
           ],
-        },
-        (err, result) => result
+        }
       );
     });
 
@@ -312,8 +310,7 @@ router.post("/addToCart", auth, async (req, res) => {
         },
         {
           new: true,
-        },
-        (err, result) => result
+        }
       );
     });
 
@@ -331,7 +328,7 @@ router.post("/remove-from-cart", auth, (req, res) => {
   checkedCartIds.map((item) => {
     let cart_o_id = new ObjectId(item);
     // 1. cart 안의 상품들 중 지우고자 하는 상품을 찾아 지운다
-    return User.findOneAndUpdate(
+    User.findOneAndUpdate(
       {
         _id: req.user._id,
       },
@@ -344,8 +341,7 @@ router.post("/remove-from-cart", auth, (req, res) => {
       },
       {
         new: true,
-      },
-      (err, result) => result
+      }
     );
   });
 });
@@ -353,64 +349,57 @@ router.post("/remove-from-cart", auth, (req, res) => {
 router.post("/increaseQuantity", auth, async (req, res) => {
   let cartId = req.query.id;
   let cart_o_id = new ObjectId(cartId);
-
-  User.findOneAndUpdate(
-    {
-      _id: req.user._id,
-    },
-    {
-      $inc: { "cart.$[elem].quantity": 1 },
-    },
-    {
-      new: true,
-      arrayFilters: [
-        {
-          "elem._id": cart_o_id,
-        },
-      ],
-    },
-    (err, result) => {
-      if (err) {
-        console.log("err::::::::::::::::::", err);
-        return res.status(400).json({ success: false, err });
-      } else {
-        console.log("result::::::::::::::::::", result);
-        return res.status(200).send(result.cart);
+  try {
+    User.findOneAndUpdate(
+      {
+        _id: req.user._id,
+      },
+      {
+        $inc: { "cart.$[elem].quantity": 1 },
+      },
+      {
+        new: true,
+        arrayFilters: [
+          {
+            "elem._id": cart_o_id,
+          },
+        ],
       }
-    }
-  );
+    ).then((result) => {
+      return res.status(200).send(result.cart);
+    });
+  } catch (error) {
+    return res.status(400).json({ success: false, error });
+  }
 });
 
 router.post("/decreaseQuantity", auth, async (req, res) => {
   let cartId = req.query.id;
   let cart_o_id = new ObjectId(cartId);
 
-  User.findOneAndUpdate(
-    {
-      _id: req.user._id,
-    },
-    {
-      $inc: { "cart.$[elem].quantity": -1 },
-    },
-    {
-      new: true,
-      arrayFilters: [
-        {
-          "elem._id": cart_o_id,
-          "elem.quantity": { $gt: 1 },
-        },
-      ],
-    },
-    (err, result) => {
-      if (err) {
-        console.log("err::::::::::::::::::", err);
-        return res.status(400).json({ success: false, err });
-      } else {
-        console.log("result::::::::::::::::::", result);
-        return res.status(200).send(result.cart);
+  try {
+    User.findOneAndUpdate(
+      {
+        _id: req.user._id,
+      },
+      {
+        $inc: { "cart.$[elem].quantity": -1 },
+      },
+      {
+        new: true,
+        arrayFilters: [
+          {
+            "elem._id": cart_o_id,
+            "elem.quantity": { $gt: 1 },
+          },
+        ],
       }
-    }
-  );
+    ).then((result) => {
+      return res.status(200).send(result.cart);
+    });
+  } catch (error) {
+    return res.status(400).json({ success: false, error });
+  }
 });
 
 router.post("/order-complete", auth, async (req, res) => {
@@ -433,40 +422,36 @@ router.post("/order-complete", auth, async (req, res) => {
   // 4. 픽업 완료: order_complete
   // 5. 취소 대기 : order_waiting_for_cancel
   // 6. 주문 취소 : order_cancelled
-
-  User.findOneAndUpdate(
-    {
-      _id: req.user._id,
-    },
-    {
-      $push: {
-        history: {
-          imp_uid: imp_uid,
-          merchant_uid: merchant_uid,
-          name: name,
-          amount: amount,
-          products: products,
-          status: status,
-          deliveryType: deliveryType,
-          deliveryDateTime: deliveryDateTime,
-          // paymentDate: new Date(new Date().getTime() + KR_TIME_DIFF),
-          paymentDate: moment().format(),
+  try {
+    await User.findOneAndUpdate(
+      {
+        _id: req.user._id,
+      },
+      {
+        $push: {
+          history: {
+            imp_uid: imp_uid,
+            merchant_uid: merchant_uid,
+            name: name,
+            amount: amount,
+            products: products,
+            status: status,
+            deliveryType: deliveryType,
+            deliveryDateTime: deliveryDateTime,
+            // paymentDate: new Date(new Date().getTime() + KR_TIME_DIFF),
+            paymentDate: moment().format(),
+          },
         },
       },
-    },
-    {
-      new: true,
-    },
-    (err, result) => {
-      if (err) {
-        console.log("err::::::::::::::::::", err);
-        return res.status(400).json({ success: false, err });
-      } else {
-        console.log("result::::::::::::::::::", result);
-        return res.status(200).send(result.cart);
+      {
+        new: true,
       }
-    }
-  );
+    ).then((result) => {
+      return res.status(200).send(result.cart);
+    });
+  } catch (error) {
+    return res.status(400).json({ success: false, error });
+  }
 });
 
 router.post("/order-cancel", auth, async (req, res) => {
@@ -484,49 +469,33 @@ router.post("/order-cancel", auth, async (req, res) => {
 
   console.log("cancel_order_result:::::", cancel_order_result);
 
-  User.findOneAndUpdate(
-    {
-      _id: req.user._id,
-    },
-    {
-      $set: {
-        "history.$[elem].status": "order_cancelled",
-        "history.$[elem].cancelInfo": {
-          cancelledDate: moment().format(),
-          cancelReceiptURL: cancel_order_result.cancel_receipt_urls[0],
+  try {
+    await User.findOneAndUpdate(
+      {
+        _id: req.user._id,
+      },
+      {
+        $set: {
+          "history.$[elem].status": "order_cancelled",
+          "history.$[elem].cancelInfo": {
+            cancelledDate: moment().format(),
+            cancelReceiptURL: cancel_order_result.cancel_receipt_urls[0],
+          },
         },
       },
-      //  $push: {
-      //   history: {
-      //     imp_uid: imp_uid,
-      //     merchant_uid: merchant_uid,
-      //     name: name,
-      //     amount: amount,
-      //     products: products,
-      //     status: status,
-      //     deliveryType: deliveryType,
-      //     deliveryDateTime: deliveryDateTime,
-      //     // paymentDate: new Date(new Date().getTime() + KR_TIME_DIFF),
-      //     paymentDate: moment().format(),
-      //   },
-      // },
-    },
-    {
-      arrayFilters: [
-        {
-          "elem.imp_uid": imp_uid,
-        },
-      ],
-    },
-    (err, result) => {
-      if (err) {
-        console.log("err::::::::::::::::::", err);
-        return res.status(400).json({ success: false, err });
+      {
+        arrayFilters: [
+          {
+            "elem.imp_uid": imp_uid,
+          },
+        ],
       }
-    }
-  );
-
-  return res.status(200).send(cancel_order_result);
+    ).then((result) => {
+      return res.status(200).send(cancel_order_result);
+    });
+  } catch (error) {
+    return res.status(400).json({ success: false, error });
+  }
 });
 
 module.exports = router;

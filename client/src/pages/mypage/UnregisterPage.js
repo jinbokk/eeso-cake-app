@@ -36,14 +36,23 @@ const UnregisterPage = () => {
 
   const unregisterHandler = (e) => {
     e.preventDefault();
-    const confirm = window.confirm("회원탈퇴를 하시겠습니까?");
+    const confirm = window.confirm(
+      "탈퇴 후 회원 정보는 모두 사라지며\n관련 내용은 복구할 수 없습니다\n회원탈퇴를 진행 하시겠습니까?"
+    );
     if (confirm) {
       let body = {
         email: authUserData.email,
         password: password,
       };
-      navigate("/login");
-      dispatch(userActions.unregisterUser(body));
+      dispatch(userActions.unregisterUser(body)).then((unregisterResult) => {
+        if (unregisterResult.unregisterSuccess) {
+          window.alert("회원 탈퇴가 완료되었습니다.\n홈 화면으로 이동합니다.");
+          navigate("/", { replace: true });
+        } else {
+          window.alert(unregisterResult.message);
+          return;
+        }
+      });
     } else {
       return;
     }

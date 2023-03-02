@@ -116,9 +116,9 @@ export default function UploadProductPage() {
             alert("상품 업로드에 실패하였습니다.");
           }
         })
-        .catch((err) => {
+        .catch((error) => {
           alert("상품 업로드에 실패하였습니다.");
-          console.log(err.response.data.message.message);
+          console.log(error.response.data.message.message);
         });
     }
   };

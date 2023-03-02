@@ -26,14 +26,19 @@ function unregisterUser(body) {
 
       console.log("unregisterResult", unregisterResult);
 
-      if (!unregisterResult.unregisterResult) {
-        alert(unregisterResult.message);
-      } else {
-        dispatch({
-          type: "UNREGISTER_USER",
-          payload: unregisterResult,
-        });
-      }
+      return unregisterResult;
+
+      // if (!unregisterResult.unregisterResult) {
+      //   alert(unregisterResult.message);
+      //   return unregisterResult;
+      // } else {
+      //   alert("회원 탈퇴에 성공하였습니다");
+      //   return unregisterResult;
+      // dispatch({
+      //   type: "UNREGISTER_USER",
+      //   payload: unregisterResult,
+      // });
+      // }
     } catch (error) {
       console.log("error occurred : ", error);
     }

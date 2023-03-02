@@ -1,11 +1,11 @@
 const { User } = require("../models/User.js");
 const moment = require("moment");
 
-exports.update_order_status = () => {
+exports.update_order_status = async () => {
   const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
   const oneDay = 24 * 60 * 60 * 1000;
 
-  User.updateMany(
+  await User.updateMany(
     {},
     {
       "history.$[elem].status": "order_making",
@@ -21,36 +21,8 @@ exports.update_order_status = () => {
         },
       ],
     }
-  ).exec((err, docs) => {
-    return docs;
-  });
+  );
 };
-
-// exports.update_order_status = () => {
-//   const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-//   const oneDay = 24 * 60 * 60 * 1000;
-
-//   User.updateMany(
-//     {},
-//     {
-//       // "history.$[elem].status": "order_making",
-//       "history.$[].products.$[elem].status": "order_making",
-//     },
-//     {
-//       arrayFilters: [
-//         {
-//           // "elem.status": "order_paid",
-//           "elem.status": "order_paid",
-//           "elem.createdAt": {
-//             $gt: new Date(new Date().getTime() + KR_TIME_DIFF - oneDay),
-//           }, // 1일 전
-//         },
-//       ],
-//     }
-//   ).exec((err, docs) => {
-//     return docs;
-//   });
-// };
 
 ///////////////////////////////////////////////////
 
