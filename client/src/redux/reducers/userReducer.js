@@ -43,7 +43,7 @@ const userReducer = (state = initialState, action) => {
         authUserData: payload,
       };
 
-    case "MODIFY_CART_QUANTITY":
+    case "MODIFY_CART":
       return {
         ...state,
         authUserData: { ...state.authUserData, cart: payload },

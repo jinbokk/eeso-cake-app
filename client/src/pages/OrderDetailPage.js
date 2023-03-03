@@ -171,11 +171,27 @@ const OrderDetailPage = () => {
         return;
       }
     } else {
-      dispatch(userActions.addToCart(cartItems));
-      alert("장바구니에 상품이 담겼습니다");
-      setCartItems([]);
-      dispatch({ type: "RESET_FORM" });
-      dispatch(userActions.auth());
+      dispatch(userActions.addToCart(cartItems)).then((res) => {
+        console.log("res:::::::::::", res);
+        if (res.success) {
+          setCartItems([]);
+          dispatch({ type: "RESET_FORM" });
+
+          dispatch({ type: "MODIFY_CART", payload: res.resultCart });
+
+          const confirm = window.confirm(
+            "장바구니에 상품을 담았습니다.\n장바구니 페이지로 이동하시겠습니까?"
+          );
+
+          if (confirm) {
+            navigate("/user/cart", { replace: true });
+          } else {
+            dispatch(userActions.auth());
+          }
+        } else {
+          return alert("장바구니에 상품을 담는데 실패하였습니다.");
+        }
+      });
     }
   };
 

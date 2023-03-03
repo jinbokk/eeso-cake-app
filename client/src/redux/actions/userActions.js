@@ -178,7 +178,9 @@ function addToCart(createdOption) {
 
   return async (dispatch) => {
     try {
-      await axios.post("/api/users/addToCart", body);
+      return await axios.post("/api/users/addToCart", body).then((res) => {
+        return res.data;
+      });
     } catch (error) {
       console.log("error occurred : ", error);
     }
@@ -192,9 +194,7 @@ function removeFromCart(checkedCartIds) {
 
   return async () => {
     try {
-      await axios.post(`/api/users/remove-from-cart`, body).then((res) => {
-        return res.data;
-      });
+      await axios.post(`/api/users/remove-from-cart`, body);
     } catch (error) {
       console.log("error occurred : ", error);
     }
@@ -211,7 +211,7 @@ function increaseQuantity(cartId) {
         });
 
       dispatch({
-        type: "MODIFY_CART_QUANTITY",
+        type: "MODIFY_CART",
         payload: increaseQuantityResult,
       });
     } catch (error) {
@@ -231,7 +231,7 @@ function decreaseQuantity(cartId) {
         });
 
       dispatch({
-        type: "MODIFY_CART_QUANTITY",
+        type: "MODIFY_CART",
         payload: decreaseQuantityResult,
       });
     } catch (error) {

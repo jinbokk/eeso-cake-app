@@ -22,6 +22,7 @@ import "./css/cartPage.css";
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   const { authUserData } = useSelector((state) => state.user);
   const { width } = useWindowDimensions();
 
