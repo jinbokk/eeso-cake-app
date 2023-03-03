@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const dayjs = require("dayjs");
+require("dayjs/locale/ko");
+dayjs.locale("ko");
 
 const paymentSchema = new mongoose.Schema({
   user: { type: Array, default: [] },

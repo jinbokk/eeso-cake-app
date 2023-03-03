@@ -5,8 +5,6 @@ const { auth } = require("../middleware/auth");
 const bcrypt = require("bcrypt");
 const { mongo } = require("mongoose");
 const ObjectId = require("mongodb").ObjectId;
-const moment = require("moment");
-require("moment/locale/ko");
 
 const dayjs = require("dayjs");
 require("dayjs/locale/ko");

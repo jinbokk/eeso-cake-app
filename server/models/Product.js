@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 // const m2s = require("mongoose-to-swagger");
+const dayjs = require("dayjs");
+require("dayjs/locale/ko");
+dayjs.locale("ko");
 
 const productSchema = new mongoose.Schema(
   {
