@@ -16,20 +16,21 @@ router.post("/", async (req, res) => {
     const order_status = req.body.status;
 
     if (order_status === "cancelled") {
-      const test = await User.findOne(
-        {},
+      const orderStatusUpdate = await User.findOneAndUpdate(
+        { history: { $elemMatch: { imp_uid: imp_uid } } },
+        // { _id: req.user._id },
         {
-          history: { $elemMatch: { imp_uid: imp_uid } },
+          $set: { status: "test" },
         }
-      ).then((order) => order);
+      ).then((result) => result);
 
-      return res
-        .status(200)
-        .json({
-          status: "cancelled_confirm",
-          message: "취소_확인",
-          order: test,
-        });
+      // const order = findOrder.history[0];
+
+      return res.status(200).json({
+        status: "cancelled_confirm",
+        message: "취소_확인",
+        order: orderStatusUpdate,
+      });
     }
 
     console.log("req.body:::", req.body);
@@ -71,17 +72,13 @@ router.post("/", async (req, res) => {
     console.log("paymentData:::", paymentData);
 
     //     // DB에서 결제되어야 하는 금액 조회
-    const findOrder = await User.findOne(
+    const order = await User.findOne(
       {},
       // { _id: req.user._id },
       {
         history: { $elemMatch: { imp_uid: imp_uid } },
       }
-    ).then((order) => order);
-
-    console.log("findOrder::::", findOrder);
-
-    const order = findOrder.history[0];
+    ).then((order) => order.history[0]);
 
     console.log("order test::::", order);
 
