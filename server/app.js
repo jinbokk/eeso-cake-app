@@ -48,7 +48,7 @@ app.use("/api/users", require("./routes/users"));
 app.use("/api/products", require("./routes/products"));
 app.use("/api/iamport", require("./routes/iamport"));
 app.use("/api/instagram", require("./routes/instagram"));
-app.use("/webhook", require("./routes/webhook"));
+// app.use("/webhook", require("./routes/webhook"));
 
 app.post("/webhook", async (req, res) => {
   try {

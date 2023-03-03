@@ -59,7 +59,7 @@ router.post("/", auth, async (req, res) => {
         history: { $elemMatch: { imp_uid: imp_uid } },
       }
     ).then((order) => order);
-    
+
     console.log("findOrder::::", findOrder);
 
     const order = findOrder.history[0];
@@ -95,9 +95,9 @@ router.post("/", auth, async (req, res) => {
       // 결제금액 불일치. 위/변조 된 결제
       return res.send({ status: "forgery", message: "위조된 결제시도" });
     }
-  } catch (e) {
-    console.log("error:::", e);
-    res.status(400).send(e);
+  } catch (error) {
+    console.log("error:::", error);
+    res.status(400).send(error);
   }
 });
 

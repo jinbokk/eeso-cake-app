@@ -22,7 +22,7 @@ import "./css/cartPage.css";
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const { authUserData } = useSelector((state) => state.user);
   const { width } = useWindowDimensions();
 
@@ -58,6 +58,7 @@ const CartPage = () => {
   const ShoppingButton = styled(Button)(() => ({
     padding: "15px 20px",
     width: "100%",
+    whiteSpace: "nowrap",
     fontSize: width < 992 ? "1rem" : "1.2rem",
     boxShadow: "none",
     fontFamily: "inherit",
@@ -72,6 +73,7 @@ const CartPage = () => {
   const OrderButton = styled(Button)(() => ({
     padding: "15px 20px",
     width: "100%",
+    whiteSpace: "nowrap",
     fontSize: width < 992 ? "1rem" : "1.2rem",
     boxShadow: "none",
     fontFamily: "inherit",
@@ -515,56 +517,55 @@ const CartPage = () => {
               </Col>
             </Row>
 
-            <Container>
-              <Row className="py-5 w-auto justify-content-center">
-                <Col xs={3} className="text-center align-items-center">
-                  <NavLink to="/order" style={{ width: "100%" }}>
-                    <ShoppingButton variant="outlined">
-                      쇼핑하러 가기
-                    </ShoppingButton>
-                  </NavLink>
-                </Col>
-                <Col xs={3} className="text-center align-items-center">
-                  {checkedCartItems.length > 0 ? (
-                    <ShoppingButton
-                      variant="outlined"
-                      onClick={() => {
-                        if (
-                          window.confirm(
-                            "선택하신 상품을 장바구니에서 제거하시겠습니까?"
-                          )
-                        ) {
-                          removeFromCart(checkedCartIds);
-                        } else {
-                          return;
-                        }
-                      }}
-                    >
-                      선택상품 제거
-                    </ShoppingButton>
-                  ) : (
-                    <ShoppingButton disabled variant="outlined">
-                      선택상품 제거
-                    </ShoppingButton>
-                  )}
-                </Col>
+            <Row className="py-5 justify-content-center px-3">
+              <Col xs={12} lg={4} className="text-center align-items-center py-2">
+                <NavLink to="/order" style={{ width: "100%" }}>
+                  <ShoppingButton variant="outlined">
+                    <div>쇼핑하러 가기</div>
+                  </ShoppingButton>
+                </NavLink>
+              </Col>
+              <Col xs={12} lg={4} className="text-center align-items-center py-2">
+                {checkedCartItems.length > 0 ? (
+                  <ShoppingButton
+                    variant="outlined"
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "선택하신 상품을 장바구니에서 제거하시겠습니까?"
+                        )
+                      ) {
+                        removeFromCart(checkedCartIds);
+                      } else {
+                        return;
+                      }
+                    }}
+                  >
+                    <div>선택상품 제거</div>
+                  </ShoppingButton>
+                ) : (
+                  <ShoppingButton disabled variant="outlined">
+                    <div>선택상품 제거</div>
+                  </ShoppingButton>
+                )}
+              </Col>
 
-                <Col xs={3} className="text-center align-items-center">
-                  {checkedCartItems.length > 0 ? (
-                    <OrderButton
-                      variant="contained"
-                      onClick={handleOrderNavigate}
-                    >
-                      선택상품 주문
-                    </OrderButton>
-                  ) : (
-                    <OrderButton disabled variant="contained">
-                      선택상품 주문
-                    </OrderButton>
-                  )}
-                </Col>
+              <Col xs={12} lg={4} className="text-center align-items-center py-2">
+                {checkedCartItems.length > 0 ? (
+                  <OrderButton
+                    variant="contained"
+                    onClick={handleOrderNavigate}
+                  >
+                    <div>선택상품 주문</div>
+                  </OrderButton>
+                ) : (
+                  <OrderButton disabled variant="contained">
+                    <div>선택상품 주문</div>
+                  </OrderButton>
+                )}
+              </Col>
 
-                {/* <Col xs={3} className="text-center align-items-center">
+              {/* <Col xs={3} className="text-center align-items-center">
                   {checkedCartItems.length > 0 ? (
                     <OrderButton
                       variant="contained"
@@ -578,8 +579,7 @@ const CartPage = () => {
                     </OrderButton>
                   )}
                 </Col> */}
-              </Row>
-            </Container>
+            </Row>
           </>
         ) : (
           <Row className="border-top empty_msg">

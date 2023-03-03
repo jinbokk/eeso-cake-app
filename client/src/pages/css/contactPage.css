@@ -19,11 +19,18 @@
 }
 
 .contact_image {
-  width: 100%;
-  max-width: 500px;
+  /* width: 100%; */
+  /* max-width: 500px; */
+  width: 500px;
   padding: 3rem;
   object-fit: cover;
   position: sticky;
+}
+
+@media screen and (max-width: 992px) {
+  .contact_image {
+    max-width: 100%;
+  }
 }
 
 .location_link {
