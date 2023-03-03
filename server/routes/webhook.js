@@ -15,6 +15,12 @@ router.post("/", async (req, res) => {
     const { imp_uid, merchant_uid } = req.body;
     const order_status = req.body.status;
 
+    if (order_status === "cancelled") {
+      return res
+        .status(200)
+        .json({ status: "cancelled_confirm", message: "취소_확인" });
+    }
+
     console.log("req.body:::", req.body);
 
     console.log("webhook imp_uid:::", imp_uid);
@@ -103,8 +109,7 @@ router.post("/", async (req, res) => {
         .json({ status: "forgery", message: "위조된 결제시도" });
     }
   } catch (error) {
-    console.log("error:::", error);
-    res.status(400).json({ success: false, error: error });
+    res.status(400).json({ status: "error", error: error });
   }
 });
 
