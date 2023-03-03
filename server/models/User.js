@@ -56,7 +56,7 @@ const userSchema = mongoose.Schema({
   history: { type: Array, default: [] },
   createdAt: {
     type: Date,
-    default: dayjs().add(-9, "hour").format(),
+    default: dayjs().add(9, "hour").format(),
   },
   token: {
     type: String,

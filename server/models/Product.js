@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema(
     views: { type: Number, default: 0 },
     createdAt: {
       type: Date,
-      default: dayjs().add(-9, "hour").format(),
+      default: dayjs().add(9, "hour").format(),
     },
   }
 );
