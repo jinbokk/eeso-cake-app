@@ -123,13 +123,15 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
               console.log("res::::::", res);
             });
 
-            axios.post("https://eeso-cake.com/webhook", {
-              data: {
-                imp_uid: res.imp_uid,
-                merchant_uid: res.merchant_uid,
-                //기타 필요한 데이터가 있으면 추가 전달
-              },
-            });
+            axios
+              .post("https://eeso-cake.com/webhook", {
+                data: {
+                  imp_uid: res.imp_uid,
+                  merchant_uid: res.merchant_uid,
+                  //기타 필요한 데이터가 있으면 추가 전달
+                },
+              })
+              .then((res) => console.log(res.data));
 
             let checkedCartIds = authUserDataWithCheckedCart.cart.map(
               (item) => item._id

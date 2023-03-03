@@ -9,10 +9,11 @@ const {
 } = require("../util/iamportGenerateAccessToken");
 
 // "/webhook"에 대한 POST 요청을 처리
-router.post("/", auth, async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     // req의 body에서 imp_uid, merchant_uid 추출
     const { imp_uid, merchant_uid } = req.body;
+    const order_status = req.body.status;
 
     console.log("req.body:::", req.body);
 
@@ -70,12 +71,13 @@ router.post("/", auth, async (req, res) => {
 
     console.log("amountToBePaid::::", amountToBePaid);
     // // 결제 검증하기
-    const { amount, status } = paymentData;
+    const { amount } = paymentData;
+    const paymentStatus = paymentData.status;
     // 결제금액 일치. 결제 된 금액 === 결제 되어야 하는 금액
     if (amount === amountToBePaid) {
       // DB에 결제 정보 저장
       // await Orders.findByIdAndUpdate(merchant_uid, { $set: paymentData });
-      switch (status) {
+      switch (paymentStatus) {
         // case "ready": // 가상계좌 발급
         //   // DB에 가상계좌 발급 정보 저장
         //   const { vbank_num, vbank_date, vbank_name } = paymentData;
@@ -89,15 +91,20 @@ router.post("/", auth, async (req, res) => {
         //   res.send({ status: "vbankIssued", message: "가상계좌 발급 성공" });
         //   break;
         case "paid": // 결제 완료
-          return res.send({ status: "success", message: "일반 결제 성공" });
+          res
+            .status(200)
+            .json({ status: "success", message: "일반 결제 성공" });
+          break;
       }
     } else {
       // 결제금액 불일치. 위/변조 된 결제
-      return res.send({ status: "forgery", message: "위조된 결제시도" });
+      return res
+        .status(400)
+        .json({ status: "forgery", message: "위조된 결제시도" });
     }
   } catch (error) {
     console.log("error:::", error);
-    res.status(400).send(error);
+    res.status(400).json({ success: false, error: error });
   }
 });
 
