@@ -123,10 +123,12 @@ const OrderDetailPage = () => {
         dateType: moment(deliveryDateTime).format(),
       },
       letteringToggle: letteringToggle,
-      letteringText: letteringText,
+      letteringText: letteringText !== undefined ? letteringText : null,
       designTopperToggle: designTopperToggle,
-      designTopperText: designTopperText,
-      customerRequestText: customerRequestText,
+      designTopperText:
+        designTopperText !== undefined ? designTopperText : null,
+      customerRequestText:
+        customerRequestText !== undefined ? customerRequestText : null,
       quantity: 1,
       price: parseInt(productDetail.price) + parseInt(designTopperPrice),
     };
@@ -142,6 +144,7 @@ const OrderDetailPage = () => {
       alert("선택하신 옵션을 다시 확인해 주세요");
     } else {
       setCartItems((prev) => [...prev, createdCart]);
+      console.log("cartItems::::", cartItems);
       dispatch({ type: "RESET_FORM" });
     }
   };
@@ -338,11 +341,7 @@ const OrderDetailPage = () => {
                                   <div className="preview_text">
                                     케이크 판 레터링 / {item.letteringText}
                                   </div>
-                                ) : (
-                                  <div className="preview_text">
-                                    케이크 판 레터링 / 추가하지 않기
-                                  </div>
-                                )}
+                                ) : null}
 
                                 {item.designTopperToggle === "추가 하기" ? (
                                   <div className="preview_text">
@@ -350,11 +349,7 @@ const OrderDetailPage = () => {
                                     {designTopperPrice.toLocaleString("ko-KR")}
                                     원) / {item.designTopperText}
                                   </div>
-                                ) : (
-                                  <div className="preview_text">
-                                    디자인 토퍼 / 추가하지 않기
-                                  </div>
-                                )}
+                                ) : null}
 
                                 {item.customerRequestText ? (
                                   <div className="preview_text">

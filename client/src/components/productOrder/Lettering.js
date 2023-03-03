@@ -62,6 +62,7 @@ const Lettering = ({ control, cartItems }) => {
     setLetteringToggle(false);
     setLetteringText("");
     setLetteringLength(0);
+    LetteringLengthHandler("");
     setLetteringLengthError(false);
   }, [cartItems]);
 

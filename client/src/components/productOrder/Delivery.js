@@ -21,15 +21,8 @@ import { DatePicker, TimePicker } from "antd";
 import { ConfigProvider } from "antd";
 import locale from "antd/lib/locale/ko_KR";
 import datePickerLocale from "antd/es/date-picker/locale/ko_KR";
+import dayjs from "dayjs";
 import "dayjs/locale/ko";
-
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-
-import { format, addDays } from "date-fns";
-import { ko } from "date-fns/locale";
-
-import moment from "moment";
-import "moment/locale/ko";
 
 const Delivery = ({ control, cartItems }) => {
   const dispatch = useDispatch();
@@ -85,18 +78,18 @@ const Delivery = ({ control, cartItems }) => {
   // const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
   // console.log("timezoneOffset:", timezoneOffset);
   const [dateOpen, setDateOpen] = useState(false);
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState(undefined);
   const [dateError, setDateError] = useState(undefined);
 
   const dateHandler = (date) => {
     setDate(date);
     // const selectedDate = new Date(date.getTime() + timezoneOffset); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
-    const selectedDate = moment(date).format(); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
+    const selectedDate = dayjs(date).locale("ko").format(); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
     console.log("selectedDate:::::", selectedDate);
     // const modifiedDate = format(date, "YYYY-MM-DD (eee)", {
     //   locale: ko,
     // });
-    const modifiedDate = moment(date).format("YYYY-MM-DD (ddd)");
+    const modifiedDate = dayjs(date).locale("ko").format("YYYY-MM-DD (ddd)");
     console.log("modifiedDate:::::", modifiedDate);
 
     const body = {
@@ -108,24 +101,23 @@ const Delivery = ({ control, cartItems }) => {
   };
 
   const [timeOpen, setTimeOpen] = useState(false);
-  const [time, setTime] = useState(null);
+  const [time, setTime] = useState(undefined);
   const [minTime, setMinTime] = useState(undefined);
   const [maxTime, setMaxTime] = useState(undefined);
   const [timeError, setTimeError] = useState(undefined);
 
   const timeHandler = (date) => {
     setTime(date);
-    // const selectedTime = new Date(date.getTime() + timezoneOffset);
-    const selectedTime = moment(date).format(); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
+    const selectedTime = dayjs(date).locale("ko").format();
     console.log("selectedTime:::::", selectedTime);
-    // const modifiedTime = format(date, "a hh:mm", { locale: ko });
-    const modifiedTime = moment(date).format("a hh:mm");
+    const modifiedTime = dayjs(date).locale("ko").format("a hh:mm");
     console.log("modifiedTime:::::", modifiedTime);
 
     const body = {
       dateType: selectedTime,
       stringType: modifiedTime,
     };
+
     dispatch(orderActions.setDeliveryTime(body));
     // let ampm_before = time ? format(time, "a", { locale: ko }) : undefined;
     // console.log(time);
@@ -163,7 +155,7 @@ const Delivery = ({ control, cartItems }) => {
     // 일요일   am 10:00 ~ pm 12:00
 
     // const selectedDay = format(date, "eee", { locale: ko });
-    const selectedDay = moment(date).format("ddd");
+    const selectedDay = dayjs(date).format("ddd");
     console.log("selectedDay", selectedDay);
 
     if (selectedDay === "토") {
@@ -180,9 +172,9 @@ const Delivery = ({ control, cartItems }) => {
 
   // default when create cartItems
   useEffect(() => {
-    setDelivery(null);
-    setDate(null);
-    setTime(null);
+    setDelivery(undefined);
+    setDate(undefined);
+    setTime(undefined);
   }, [cartItems]);
 
   return (
@@ -315,25 +307,29 @@ const Delivery = ({ control, cartItems }) => {
                 <DatePicker
                   {...field}
                   inputReadOnly
-                  onChange={onChange}
-                  onOk={console.log(value)}
+                  value={date}
+                  onChange={(value) => {
+                    onChange(value);
+                    dateHandler(value);
+                  }}
+                  // onOk={console.log(value)}
                   defaultValue={undefined}
                   format={"YYYY-MM-DD (ddd)"}
                   locale={datePickerLocale}
                   style={{ width: "100%" }}
                   popupClassName="custom_dropdown"
                   disabledDate={(current) => {
-                    let after = moment().add(5, "days").format("YYYY-MM-DD");
-                    let before = moment().add(3, "week").format("YYYY-MM-DD");
+                    let after = dayjs().add(5, "days").format("YYYY-MM-DD");
+                    let before = dayjs().add(3, "week").format("YYYY-MM-DD");
 
                     return (
-                      (current && current < moment(after, "YYYY-MM-DD")) ||
-                      (current && current > moment(before, "YYYY-MM-DD"))
+                      (current && current < dayjs(after, "YYYY-MM-DD")) ||
+                      (current && current > dayjs(before, "YYYY-MM-DD"))
                       // ||
                       // (current &&
                       //   current ===
-                      //     moment(
-                      //       moment().weekday(1).format("YYYY-MM-DD"),
+                      //     dayjs(
+                      //       dayjs().weekday(1).format("YYYY-MM-DD"),
                       //       "YYYY-MM-DD"
                       //     ))
                       // 매주 월요일 선택불가 하도록 해야함
@@ -356,13 +352,20 @@ const Delivery = ({ control, cartItems }) => {
                 <TimePicker
                   {...field}
                   inputReadOnly
-                  onChange={onChange}
-                  onOk={console.log(value)}
-                  format={"HH시 mm분"}
+                  value={time}
+                  onChange={(value) => {
+                    onChange(value);
+                    timeHandler(value);
+                  }}
+                  // onOk={console.log(value)}
+                  format={"(a) h시 mm분"}
                   minuteStep={10}
                   // disabledTime={{}}
                   style={{ width: "100%" }}
                   popupClassName="custom_dropdown"
+                  disabledTime={() => {
+                    return { disabledHours: () => [11, 13] };
+                  }}
                 />
               )}
             />
