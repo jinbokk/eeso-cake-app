@@ -6,6 +6,8 @@ const bcrypt = require("bcrypt");
 const { mongo } = require("mongoose");
 const ObjectId = require("mongodb").ObjectId;
 const moment = require("moment");
+require("moment/locale/ko");
+
 const {
   iamportGenerateAccessToken,
 } = require("../util/iamportGenerateAccessToken");
@@ -331,7 +333,7 @@ router.post("/addToCart", auth, async (req, res) => {
           ).then((result) => result);
         })
       );
-      
+
       const resultCart = await User.findOne({ _id: req.user._id }).then(
         (user) => user.cart
       );
