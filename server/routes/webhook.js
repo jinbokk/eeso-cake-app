@@ -20,8 +20,9 @@ router.post("/", async (req, res) => {
         { history: { $elemMatch: { imp_uid: imp_uid } } },
         // { _id: req.user._id },
         {
-          $set: { status: "test" },
-        }
+          $set: { "history.$[elem].status": "test" },
+        },
+        { new: true, arrayFilters: [{ "elem.imp_uid": imp_uid }] }
       ).then((result) => result);
 
       // const order = findOrder.history[0];
