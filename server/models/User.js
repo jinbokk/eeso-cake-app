@@ -18,56 +18,59 @@ const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
 // const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 ;
 // const selectedTime = new Date(date.getTime() + timezoneOffset);
 
-const userSchema = mongoose.Schema({
-  email: {
-    type: String,
-    trim: true,
-    unique: 1,
-    required: true,
+const userSchema = mongoose.Schema(
+  {
+    email: {
+      type: String,
+      trim: true,
+      unique: 1,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: Object,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
+    marketing: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    role: {
+      type: Number,
+      default: 0,
+    },
+    cart: { type: Array, default: [] },
+    history: { type: Array, default: [] },
+    // createdAt: {
+    //   type: Date,
+    //   default: dayjs().format(),
+    //   // default: moment().format(),
+    // },
+    token: {
+      type: String,
+    },
+    tokenExp: {
+      type: Number,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  gender: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: Object,
-    required: true,
-  },
-  phoneNumber: {
-    type: String,
-    required: true,
-  },
-  marketing: {
-    type: Boolean,
-    default: false,
-    required: true,
-  },
-  role: {
-    type: Number,
-    default: 0,
-  },
-  cart: { type: Array, default: [] },
-  history: { type: Array, default: [] },
-  createdAt: {
-    type: Date,
-    default: dayjs().format(),
-    // default: moment().format(),
-  },
-  token: {
-    type: String,
-  },
-  tokenExp: {
-    type: Number,
-  },
-});
+  { timestamps: true }
+);
 
 //before save to mongoDb
 userSchema.pre("save", function (next) {
