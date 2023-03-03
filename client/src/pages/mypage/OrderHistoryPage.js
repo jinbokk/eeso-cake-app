@@ -11,6 +11,9 @@ import format from "date-fns/format";
 import { ko } from "date-fns/locale";
 import moment from "moment";
 import "moment/locale/ko";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+
 
 import "../css/orderHistoryPage.css";
 import { userActions } from "../../redux/actions/userActions";
@@ -26,10 +29,10 @@ const OrderHistoryPage = () => {
   }, []);
 
   function checkPaymentWithin24Hours(paymentDate) {
-    const now = moment();
+    const now = dayjs();
     console.log("now:::", now);
-    const paymentMoment = moment(paymentDate).format("YYYY MM DD HH:mm:ss");
-    const targetDate = moment(now).subtract(1, "day").toDate();
+    const paymentMoment = dayjs(paymentDate).format("YYYY MM DD HH:mm:ss");
+    const targetDate = dayjs(now).subtract(1, "day").toDate();
     const diffInHours = now.diff(paymentMoment, "hours");
     console.log("diffInHours:::", diffInHours);
     return `${diffInHours}시간 이전에 결제`;

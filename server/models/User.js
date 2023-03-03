@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
+require("moment/locale/ko");
+const dayjs = require("dayjs");
+require("dayjs/locale/ko");
 
 // const AddressSchema = mongoose.Schema({
 //   postcode: String,
@@ -54,7 +57,8 @@ const userSchema = mongoose.Schema({
   history: { type: Array, default: [] },
   createdAt: {
     type: Date,
-    default: new Date(moment().format()),
+    default: dayjs().format(),
+    // default: moment().format(),
   },
   token: {
     type: String,
@@ -103,7 +107,7 @@ userSchema.methods.generateToken = async function (cb) {
     expiresIn: "2h",
   });
 
-  let twoHour = moment().add(2, "hour").valueOf();
+  let twoHour = dayjs().add(2, "hour").valueOf();
 
   user.token = token;
 

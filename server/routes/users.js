@@ -8,6 +8,9 @@ const ObjectId = require("mongodb").ObjectId;
 const moment = require("moment");
 require("moment/locale/ko");
 
+const dayjs = require("dayjs");
+require("dayjs/locale/ko");
+
 const {
   iamportGenerateAccessToken,
 } = require("../util/iamportGenerateAccessToken");
@@ -463,7 +466,8 @@ router.post("/order-complete", auth, async (req, res) => {
             status: status,
             deliveryType: deliveryType,
             deliveryDateTime: deliveryDateTime,
-            paymentDate: moment().format(),
+            paymentDate: dayjs().format(),
+            // paymentDate: moment().format(),
           },
         },
       },
@@ -502,7 +506,8 @@ router.post("/order-cancel", auth, async (req, res) => {
         $set: {
           "history.$[elem].status": "order_cancelled",
           "history.$[elem].cancelInfo": {
-            cancelledDate: moment().format(),
+            cancelledDate: dayjs().format(),
+            // cancelledDate: moment().format(),
             cancelReceiptURL: cancel_order_result.cancel_receipt_urls[0],
           },
         },

@@ -11,6 +11,9 @@ import { ko } from "date-fns/locale";
 import moment from "moment";
 // import Postcode from "../components/utils/Postcode";
 
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+
 import "./css/paymentPage.css";
 
 const PaymentPage = () => {
@@ -496,13 +499,13 @@ const PaymentPage = () => {
                             : "text-center px-0 me-2"
                         }
                       >
-                        {moment(
+                        {dayjs(
                           authUserDataWithCheckedCart.cart[0].deliveryDateTime
                             .dateType
                         ).format("YYYY-MM-DD (ddd)")}
                       </Col>
                       <Col lg={"auto"} className="text-center px-0">
-                        {moment(
+                        {dayjs(
                           authUserDataWithCheckedCart.cart[0].deliveryDateTime
                             .dateType
                         ).format("a hh:mm")}

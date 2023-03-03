@@ -1,5 +1,8 @@
 const { User } = require("../models/User.js");
 const moment = require("moment");
+require("moment/locale/ko");
+const dayjs = require("dayjs");
+require("dayjs/locale/ko");
 
 exports.update_order_status = async () => {
   const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
@@ -16,7 +19,7 @@ exports.update_order_status = async () => {
         {
           "elem.status": "order_paid",
           "elem.paymentDate": {
-            $lte: moment().subtract(1, "days").format(),
+            $lte: dayjs().subtract(1, "days").format(),
           }, // 1일 전
         },
       ],

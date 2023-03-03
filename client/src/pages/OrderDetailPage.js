@@ -29,6 +29,8 @@ import CustomerRequest from "../components/productOrder/CustomerRequest";
 
 import moment from "moment";
 import "moment/locale/ko";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 
 import "./css/orderDetailPage.css";
 
@@ -101,10 +103,10 @@ const OrderDetailPage = () => {
     //   time.getMilliseconds()
     // );
 
-    const dateForm = moment(date).format("YYYY-MM-DD");
-    const timeForm = moment(time).format("hh:mm");
+    const dateForm = dayjs(date).format("YYYY-MM-DD");
+    const timeForm = dayjs(time).format("hh:mm");
 
-    return moment(dateForm + " " + timeForm, "YYYY-MM-DD a hh:mm (ddd)");
+    return dayjs(dateForm + " " + timeForm, "YYYY-MM-DD a hh:mm (ddd)");
   };
 
   const optionConfirmHandler = () => {
@@ -120,7 +122,7 @@ const OrderDetailPage = () => {
       deliveryType: deliveryType,
       deliveryDateTime: {
         stringType: deliveryDate.stringType + " " + deliveryTime.stringType,
-        dateType: moment(deliveryDateTime).format(),
+        dateType: dayjs(deliveryDateTime).format(),
       },
       letteringToggle: letteringToggle,
       letteringText: letteringText !== undefined ? letteringText : null,
