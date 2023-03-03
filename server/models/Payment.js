@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 
-const paymentSchema = new mongoose.Schema(
-  {
-    user: { type: Array, default: [] },
-    data: { type: Array, default: [] },
-    product: { type: Array, default: [] },
+const paymentSchema = new mongoose.Schema({
+  user: { type: Array, default: [] },
+  data: { type: Array, default: [] },
+  product: { type: Array, default: [] },
+  createdAt: {
+    type: Date,
+    default: dayjs().add(-9, "hour").format(),
   },
-  { timestamps: true }
-);
+});
 
 const Payment = mongoose.model("Payment", paymentSchema);
 

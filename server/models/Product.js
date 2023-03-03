@@ -14,8 +14,11 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, default: 0 },
     sold: { type: Number, default: 0 },
     views: { type: Number, default: 0 },
-  },
-  { timestamps: true }
+    createdAt: {
+      type: Date,
+      default: dayjs().add(-9, "hour").format(),
+    },
+  }
 );
 
 productSchema.plugin(mongoosePaginate);

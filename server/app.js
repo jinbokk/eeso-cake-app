@@ -54,67 +54,6 @@ app.use("/api/iamport", require("./routes/iamport"));
 app.use("/api/instagram", require("./routes/instagram"));
 app.use("/webhook", require("./routes/webhook"));
 
-// app.post("/webhook", async (req, res) => {
-//   try {
-//     const { tx_id, payment_id } = req.body;
-
-//     // 1. 포트원 API를 사용하기 위한 액세스 토큰 발급 받기
-
-//     const access_token = await iamportGenerateAccessToken();
-
-//     // const signinResponse = await axios({
-//     //   url: "https://api.portone.io/v2/signin/api-key",
-//     //   method: "post",
-//     //   headers: { "Content-Type": "application/json" },
-//     //   data: {
-//     //     api_key: process.env.IMP_API_KEY, // 포트원 API Key
-//     //   },
-//     // });
-//     // const { access_token } = signinResponse.data;
-
-//     console.log("access_token:::", access_token);
-
-//     // 2. 포트원 결제내역 단건조회 API 호출
-//     const paymentResponse = await axios({
-//       url: `https://api.portone.io/v2/payments/${payment_id}`,
-//       method: "get",
-//       // 1번에서 발급받은 액세스 토큰을 Bearer 형식에 맞게 넣어주세요.
-//       headers: { Authorization: "Bearer " + access_token },
-//     });
-//     const {
-//       payment: { id, transactions },
-//     } = paymentResponse.data;
-//     // 대표 트랜잭션(승인된 트랜잭션)을 선택합니다.
-//     const transaction = transactions.find((tx) => tx.is_primary === true);
-
-//     // 3. 가맹점 내부 주문 데이터의 가격과 실제 지불된 금액을 비교합니다.
-//     const order = await OrderService.findById(id);
-//     if (order.amount === transaction.amount.total) {
-//       switch (status) {
-//         case "VIRTUAL_ACCOUNT_ISSUED": {
-//           const { virtual_account } = transaction.payment_method_detail;
-//           // 가상 계좌가 발급된 상태입니다.
-//           // 계좌 정보(virtual_account)를 이용해 원하는 로직을 구성하세요.
-//           break;
-//         }
-//         case "PAID": {
-//           // 모든 금액을 지불했습니다! 완료 시 원하는 로직을 구성하세요.
-//           break;
-//         }
-//       }
-//     } else {
-//       // 결제 금액이 불일치하여 위/변조 시도가 의심됩니다.
-//     }
-//   } catch (error) {
-//     // 결제 검증에 실패했습니다.
-//     res.status(400).send(error);
-//     console.log("error:::", error.response);
-//   }
-// });
-
-// const instaApiBaseURL = process.env.INSTAGRAM_API_BASE_URL;
-// app.use(instaApiBaseURL, require("./routes/instagram"));
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
