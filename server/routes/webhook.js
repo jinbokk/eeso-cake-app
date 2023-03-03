@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 
     if (order_status === "cancelled") {
       try {
-        const orderStatusUpdate = await User.findOneAndUpdate(
+        await User.findOneAndUpdate(
           { history: { $elemMatch: { imp_uid: imp_uid } } },
           // { _id: req.user._id },
           {
@@ -36,14 +36,7 @@ router.post("/", async (req, res) => {
           message: "관리자페이지 취소 DB 업데이트 실패",
         });
       }
-
-      // const order = findOrder.history[0];
     }
-
-    console.log("req.body:::", req.body);
-
-    console.log("webhook imp_uid:::", imp_uid);
-    console.log("webhook merchant_uid:::", merchant_uid);
 
     ///////////             done
 
@@ -64,8 +57,6 @@ router.post("/", async (req, res) => {
 
     const access_token = await iamportGenerateAccessToken();
 
-    console.log("access_token:::", access_token);
-
     // imp_uid로 포트원 서버에서 결제 정보 조회
     /* ...중략... */
 
@@ -79,9 +70,9 @@ router.post("/", async (req, res) => {
     console.log("paymentData:::", paymentData);
 
     //     // DB에서 결제되어야 하는 금액 조회
+
     const order = await User.findOne(
       {},
-      // { _id: req.user._id },
       {
         history: { $elemMatch: { imp_uid: imp_uid } },
       }
@@ -113,10 +104,26 @@ router.post("/", async (req, res) => {
         //   res.send({ status: "vbankIssued", message: "가상계좌 발급 성공" });
         //   break;
         case "paid": // 결제 완료
-          res
-            .status(200)
-            .json({ status: "success", message: "일반 결제 성공" });
-          break;
+          try {
+            await User.findOneAndUpdate(
+              { history: { $elemMatch: { imp_uid: imp_uid } } },
+              // { _id: req.user._id },
+              {
+                $set: { "history.$[elem].status": "order_paid" },
+              },
+              { new: true, arrayFilters: [{ "elem.imp_uid": imp_uid }] }
+            ).then((result) => result);
+
+            return res.status(200).json({
+              status: "order_confirm_success",
+              message: "결제 완료 / DB 업데이트 성공",
+            });
+          } catch (error) {
+            return res.status(400).json({
+              status: "order_confirm_error",
+              message: "결제 완료 / DB 업데이트 실패",
+            });
+          }
       }
     } else {
       // 결제금액 불일치. 위/변조 된 결제

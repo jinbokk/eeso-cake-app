@@ -274,18 +274,18 @@ function orderCancel(body) {
   };
 }
 
-function paymentWebhook(body) {
-  return async (dispatch) => {
-    try {
-      await axios.post("/webhook", body).then((res) => {
-        console.log("paymentWebhook res.data :::", res.data);
-        return res.data;
-      });
-    } catch (error) {
-      console.log("error occurred : ", error);
-    }
-  };
-}
+// function paymentWebhook(body) {
+//   return async (dispatch) => {
+//     try {
+//       await axios.post("/webhook", body).then((res) => {
+//         console.log("paymentWebhook res.data :::", res.data);
+//         return res.data;
+//       });
+//     } catch (error) {
+//       console.log("error occurred : ", error);
+//     }
+//   };
+// }
 
 export const userActions = {
   registerUser,
@@ -301,5 +301,5 @@ export const userActions = {
   decreaseQuantity,
   orderComplete,
   orderCancel,
-  paymentWebhook,
+  // paymentWebhook,
 };
