@@ -16,22 +16,28 @@ router.post("/", async (req, res) => {
     const order_status = req.body.status;
 
     if (order_status === "cancelled") {
-      const orderStatusUpdate = await User.findOneAndUpdate(
-        { history: { $elemMatch: { imp_uid: imp_uid } } },
-        // { _id: req.user._id },
-        {
-          $set: { "history.$[elem].status": "test" },
-        },
-        { new: true, arrayFilters: [{ "elem.imp_uid": imp_uid }] }
-      ).then((result) => result);
+      try {
+        const orderStatusUpdate = await User.findOneAndUpdate(
+          { history: { $elemMatch: { imp_uid: imp_uid } } },
+          // { _id: req.user._id },
+          {
+            $set: { "history.$[elem].status": "order_cancelled" },
+          },
+          { new: true, arrayFilters: [{ "elem.imp_uid": imp_uid }] }
+        );
+
+        return res.status(200).json({
+          status: "cancelled_confirm_success",
+          message: "관리자페이지 취소 DB 업데이트 성공",
+        });
+      } catch (error) {
+        return res.status(400).json({
+          status: "cancelled_confirm_error",
+          message: "관리자페이지 취소 DB 업데이트 실패",
+        });
+      }
 
       // const order = findOrder.history[0];
-
-      return res.status(200).json({
-        status: "cancelled_confirm",
-        message: "취소_확인",
-        order: orderStatusUpdate,
-      });
     }
 
     console.log("req.body:::", req.body);
