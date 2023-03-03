@@ -18,6 +18,8 @@ import "dayjs/locale/ko";
 import "../css/orderHistoryPage.css";
 import { userActions } from "../../redux/actions/userActions";
 
+dayjs.locale("ko");
+
 const OrderHistoryPage = () => {
   const dispatch = useDispatch();
   const [title, setTitle] = useOutletContext();
@@ -27,17 +29,6 @@ const OrderHistoryPage = () => {
   useLayoutEffect(() => {
     setTitle("쇼핑 정보");
   }, []);
-
-  function checkPaymentWithin24Hours(paymentDate) {
-    const now = dayjs();
-    console.log("now:::", now);
-    const paymentMoment = dayjs(paymentDate).format("YYYY MM DD HH:mm:ss");
-    const targetDate = dayjs(now).subtract(1, "day").toDate();
-    const diffInHours = now.diff(paymentMoment, "hours");
-    console.log("diffInHours:::", diffInHours);
-    return `${diffInHours}시간 이전에 결제`;
-    // return diffInHours <= 24 ? "true" : "false";
-  }
 
   const orderCancelHandler = (body) => {
     let confirm = window.confirm(

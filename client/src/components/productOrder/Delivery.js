@@ -24,6 +24,8 @@ import datePickerLocale from "antd/es/date-picker/locale/ko_KR";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 
+dayjs.locale("ko");
+
 const Delivery = ({ control, cartItems }) => {
   const dispatch = useDispatch();
 
@@ -84,12 +86,12 @@ const Delivery = ({ control, cartItems }) => {
   const dateHandler = (date) => {
     setDate(date);
     // const selectedDate = new Date(date.getTime() + timezoneOffset); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
-    const selectedDate = dayjs(date).locale("ko").format(); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
+    const selectedDate = dayjs(date).format(); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
     console.log("selectedDate:::::", selectedDate);
     // const modifiedDate = format(date, "YYYY-MM-DD (eee)", {
     //   locale: ko,
     // });
-    const modifiedDate = dayjs(date).locale("ko").format("YYYY-MM-DD (ddd)");
+    const modifiedDate = dayjs(date).format("YYYY-MM-DD (ddd)");
     console.log("modifiedDate:::::", modifiedDate);
 
     const body = {
@@ -108,9 +110,9 @@ const Delivery = ({ control, cartItems }) => {
 
   const timeHandler = (date) => {
     setTime(date);
-    const selectedTime = dayjs(date).locale("ko").format();
+    const selectedTime = dayjs(date).format();
     console.log("selectedTime:::::", selectedTime);
-    const modifiedTime = dayjs(date).locale("ko").format("a hh:mm");
+    const modifiedTime = dayjs(date).format("a hh:mm");
     console.log("modifiedTime:::::", modifiedTime);
 
     const body = {

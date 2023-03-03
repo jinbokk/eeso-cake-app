@@ -21,6 +21,8 @@ import "dayjs/locale/ko";
 
 import "./css/cartPage.css";
 
+dayjs.locale("ko");
+
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -520,14 +522,22 @@ const CartPage = () => {
             </Row>
 
             <Row className="py-5 justify-content-center px-3">
-              <Col xs={12} lg={4} className="text-center align-items-center py-2">
+              <Col
+                xs={12}
+                lg={4}
+                className="text-center align-items-center py-2"
+              >
                 <NavLink to="/order" style={{ width: "100%" }}>
                   <ShoppingButton variant="outlined">
                     <div>쇼핑하러 가기</div>
                   </ShoppingButton>
                 </NavLink>
               </Col>
-              <Col xs={12} lg={4} className="text-center align-items-center py-2">
+              <Col
+                xs={12}
+                lg={4}
+                className="text-center align-items-center py-2"
+              >
                 {checkedCartItems.length > 0 ? (
                   <ShoppingButton
                     variant="outlined"
@@ -552,7 +562,11 @@ const CartPage = () => {
                 )}
               </Col>
 
-              <Col xs={12} lg={4} className="text-center align-items-center py-2">
+              <Col
+                xs={12}
+                lg={4}
+                className="text-center align-items-center py-2"
+              >
                 {checkedCartItems.length > 0 ? (
                   <OrderButton
                     variant="contained"

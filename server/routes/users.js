@@ -10,6 +10,7 @@ require("moment/locale/ko");
 
 const dayjs = require("dayjs");
 require("dayjs/locale/ko");
+dayjs.locale("ko");
 
 const {
   iamportGenerateAccessToken,

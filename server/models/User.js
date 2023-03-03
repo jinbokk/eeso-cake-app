@@ -6,6 +6,7 @@ const moment = require("moment");
 require("moment/locale/ko");
 const dayjs = require("dayjs");
 require("dayjs/locale/ko");
+dayjs.locale("ko");
 
 // const AddressSchema = mongoose.Schema({
 //   postcode: String,

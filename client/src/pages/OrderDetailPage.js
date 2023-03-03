@@ -29,10 +29,15 @@ import CustomerRequest from "../components/productOrder/CustomerRequest";
 
 import moment from "moment";
 import "moment/locale/ko";
+
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import "dayjs/locale/ko";
 
 import "./css/orderDetailPage.css";
+
+dayjs.locale("ko");
+dayjs.extend(customParseFormat);
 
 const OrderDetailPage = () => {
   const dispatch = useDispatch();
@@ -104,9 +109,9 @@ const OrderDetailPage = () => {
     // );
 
     const dateForm = dayjs(date).format("YYYY-MM-DD");
-    const timeForm = dayjs(time).format("hh:mm");
+    const timeForm = dayjs(time).format("HH:mm");
 
-    return dayjs(dateForm + " " + timeForm, "YYYY-MM-DD a hh:mm (ddd)");
+    return dayjs(dateForm + " " + timeForm).format("YYYY-MM-DD HH:mm");
   };
 
   const optionConfirmHandler = () => {
@@ -122,7 +127,7 @@ const OrderDetailPage = () => {
       deliveryType: deliveryType,
       deliveryDateTime: {
         stringType: deliveryDate.stringType + " " + deliveryTime.stringType,
-        dateType: dayjs(deliveryDateTime).format(),
+        dateType: dayjs(deliveryDateTime, "YYYY-MM-DD HH:mm"),
       },
       letteringToggle: letteringToggle,
       letteringText: letteringText !== undefined ? letteringText : null,

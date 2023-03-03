@@ -3,6 +3,7 @@ const moment = require("moment");
 require("moment/locale/ko");
 const dayjs = require("dayjs");
 require("dayjs/locale/ko");
+dayjs.locale("ko");
 
 exports.update_order_status = async () => {
   const KR_TIME_DIFF = 9 * 60 * 60 * 1000;

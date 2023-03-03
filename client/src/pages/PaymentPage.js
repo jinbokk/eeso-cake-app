@@ -16,6 +16,8 @@ import "dayjs/locale/ko";
 
 import "./css/paymentPage.css";
 
+dayjs.locale("ko");
+
 const PaymentPage = () => {
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
