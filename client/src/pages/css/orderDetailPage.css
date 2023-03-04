@@ -219,9 +219,19 @@
   padding: 0 !important;
 }
 
+.ant-picker-footer-extra {
+  padding: 10px 0;
+  font-size: 0.85rem;
+  line-height: 2rem !important;
+}
+
 @media screen and (max-width: 992px) {
   .ant-picker-input input {
     font-size: 1rem !important;
+  }
+
+  .ant-picker-footer-extra {
+    font-size: 0.95rem;
   }
 }
 

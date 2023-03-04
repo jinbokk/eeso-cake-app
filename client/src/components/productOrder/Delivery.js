@@ -151,25 +151,45 @@ const Delivery = ({ control, cartItems }) => {
   //   setCombinedDateWithTime(combinedDateWithTime);
   // };
 
-  const storeHourHandler = (date) => {
+  const disabledTimeHandler = () => {
     // 평일     am 11:00 ~ pm 7:30
     // 토요일   am 10:00 ~ pm 4:00
     // 일요일   am 10:00 ~ pm 12:00
 
     // const selectedDay = format(date, "eee", { locale: ko });
     const selectedDay = dayjs(date).format("ddd");
-    console.log("selectedDay", selectedDay);
+
+    let dayHours = Array.from(Array(24).keys()); // [0,1,2,.....,23]
+    let timeArray;
 
     if (selectedDay === "토") {
-      setMinTime(new Date(0, 0, 0, 10));
-      setMaxTime(new Date(0, 0, 0, 16));
+      // 10 ~ 16
+      let start = dayHours.slice(0, 10);
+      let end = dayHours.slice(17, 24);
+      timeArray = [...start, ...end];
     } else if (selectedDay === "일") {
-      setMinTime(new Date(0, 0, 0, 10));
-      setMaxTime(new Date(0, 0, 0, 12));
+      // 10 ~ 12
+      let start = dayHours.slice(0, 10);
+      let end = dayHours.slice(13, 24);
+      timeArray = [...start, ...end];
     } else {
-      setMinTime(new Date(0, 0, 0, 11));
-      setMaxTime(new Date(0, 0, 0, 19, 30));
+      // 11 ~ 19
+      let start = dayHours.slice(0, 11);
+      let end = dayHours.slice(20, 24);
+      timeArray = [...start, ...end];
     }
+
+    return {
+      disabledHours: () => {
+        return timeArray;
+      },
+      disabledMinutes: () => {
+        if (parseInt(date.format("HH")) === timeArray[timeArray.length - 1]) {
+          console.log("00분만 가능~!");
+        }
+        // 만약 선택한 hour가 array의 마지막이라면["0"] 제외하고 모두 비활성화
+      },
+    };
   };
 
   // default when create cartItems
@@ -315,10 +335,12 @@ const Delivery = ({ control, cartItems }) => {
                     dateHandler(value);
                   }}
                   // onOk={console.log(value)}
+                  showToday={false}
                   defaultValue={undefined}
                   format={"YYYY-MM-DD (ddd)"}
                   locale={datePickerLocale}
                   style={{ width: "100%" }}
+                  placeholder="날짜를 선택해 주세요"
                   popupClassName="custom_dropdown"
                   disabledDate={(current) => {
                     let after = dayjs().add(5, "days").format("YYYY-MM-DD");
@@ -335,6 +357,17 @@ const Delivery = ({ control, cartItems }) => {
                       //       "YYYY-MM-DD"
                       //     ))
                       // 매주 월요일 선택불가 하도록 해야함
+                    );
+                  }}
+                  renderExtraFooter={() => {
+                    return (
+                      <div className="text-center">
+                        <div className="fw-bold">~ 픽업 가능 시간 안내 ~</div>
+                        <div>월요일 휴무</div>
+                        <div>평일 : 오전 11시 ~ 오후 7시 30분</div>
+                        <div>토요일 : 오전 10시 ~ 오후 4시</div>
+                        <div>일요일 : 오전 10시 ~ 오후 12시 (정오)</div>
+                      </div>
                     );
                   }}
                 />
@@ -360,14 +393,13 @@ const Delivery = ({ control, cartItems }) => {
                     timeHandler(value);
                   }}
                   // onOk={console.log(value)}
-                  format={"(a) h시 mm분"}
+                  format={"HH시 mm분"}
+                  // use12Hours
+                  placeholder="시간을 선택해 주세요"
                   minuteStep={10}
-                  // disabledTime={{}}
                   style={{ width: "100%" }}
                   popupClassName="custom_dropdown"
-                  disabledTime={() => {
-                    return { disabledHours: () => [11, 13] };
-                  }}
+                  disabledTime={date ? disabledTimeHandler : null}
                 />
               )}
             />
