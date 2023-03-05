@@ -76,118 +76,97 @@ const Delivery = ({ control, cartItems }) => {
   };
 
   // date
-  // const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-  // const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
-  // console.log("timezoneOffset:", timezoneOffset);
-  const [dateOpen, setDateOpen] = useState(false);
   const [date, setDate] = useState(undefined);
-  const [dateError, setDateError] = useState(undefined);
 
   const dateHandler = (date) => {
     setDate(date);
-    // const selectedDate = new Date(date.getTime() + timezoneOffset); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
-    const selectedDate = dayjs(date).format(); // UTC 기준으로 -9h로 하루가 차이나는 경우가 생기므로 더 해줌.
-    console.log("selectedDate:::::", selectedDate);
-    // const modifiedDate = format(date, "YYYY-MM-DD (eee)", {
-    //   locale: ko,
-    // });
+    const dateData = dayjs(date).format();
     const modifiedDate = dayjs(date).format("YYYY-MM-DD (ddd)");
-    console.log("modifiedDate:::::", modifiedDate);
 
     const body = {
-      dateType: selectedDate,
+      dateType: dateData,
       stringType: modifiedDate,
     };
 
     dispatch(orderActions.setDeliveryDate(body));
   };
 
-  const [timeOpen, setTimeOpen] = useState(false);
   const [time, setTime] = useState(undefined);
-  const [minTime, setMinTime] = useState(undefined);
-  const [maxTime, setMaxTime] = useState(undefined);
   const [timeError, setTimeError] = useState(undefined);
 
-  const timeHandler = (date) => {
-    setTime(date);
-    const selectedTime = dayjs(date).format();
-    console.log("selectedTime:::::", selectedTime);
-    const modifiedTime = dayjs(date).format("a hh:mm");
-    console.log("modifiedTime:::::", modifiedTime);
+  const timeHandler = (selectedTime) => {
+    if (
+      parseInt(dayjs(time).format("HH")) ===
+        parseInt(dayjs(selectedTime).format("HH")) - 12 ||
+      parseInt(dayjs(time).format("HH")) ===
+        parseInt(dayjs(selectedTime).format("HH")) + 12
+    ) {
+      console.log("am/pm changed");
+      setTime(undefined);
+    } else {
+      setTime(selectedTime);
+    }
+
+    /// 로직 수정해야함.. 버그가 있다.
+
+    const timeData = dayjs(time).format();
+    const modifiedTime = dayjs(time).format("a hh:mm");
 
     const body = {
-      dateType: selectedTime,
+      dateType: timeData,
       stringType: modifiedTime,
     };
 
     dispatch(orderActions.setDeliveryTime(body));
-    // let ampm_before = time ? format(time, "a", { locale: ko }) : undefined;
-    // console.log(time);
-    // let ampm_after = format(date, "a", { locale: ko }); // 오전 || 오후
-
-    // console.log("ampm_before", ampm_before);
-    // console.log("ampm_after", ampm_after);
-
-    // if ((ampm_before !== undefined || null) && ampm_before !== ampm_after) {
-    //   setTime(new Date(0, 0, 0, 11));
-    // } else {
-    //   setTime(date);
-    // }
   };
 
-  // const [combinedDateWithTime, setCombinedDateWithTime] = useState(undefined);
+  let disabledTimeArray;
+  let closeTime;
+  let disabledMinutes;
 
-  // const combineDateWithTime = (date, time) => {
-  //   const combinedDateWithTime = new Date(
-  //     date.getFullYear(),
-  //     date.getMonth(),
-  //     date.getDate(),
-  //     time.getHours(),
-  //     time.getMinutes(),
-  //     time.getSeconds(),
-  //     time.getMilliseconds()
-  //   );
-
-  //   setCombinedDateWithTime(combinedDateWithTime);
-  // };
+  useEffect(() => {
+    if (parseInt(dayjs(time).format("HH")) === parseInt(closeTime)) {
+      disabledMinutes = [10, 20, 30, 40, 50];
+    } else {
+      disabledMinutes = [];
+    }
+  }, [time]);
 
   const disabledTimeHandler = () => {
     // 평일     am 11:00 ~ pm 7:30
     // 토요일   am 10:00 ~ pm 4:00
     // 일요일   am 10:00 ~ pm 12:00
 
-    // const selectedDay = format(date, "eee", { locale: ko });
     const selectedDay = dayjs(date).format("ddd");
 
     let dayHours = Array.from(Array(24).keys()); // [0,1,2,.....,23]
-    let timeArray;
 
     if (selectedDay === "토") {
       // 10 ~ 16
       let start = dayHours.slice(0, 10);
       let end = dayHours.slice(17, 24);
-      timeArray = [...start, ...end];
+      disabledTimeArray = [...start, ...end];
+      closeTime = dayHours[16];
     } else if (selectedDay === "일") {
       // 10 ~ 12
       let start = dayHours.slice(0, 10);
       let end = dayHours.slice(13, 24);
-      timeArray = [...start, ...end];
+      disabledTimeArray = [...start, ...end];
+      closeTime = dayHours[12];
     } else {
       // 11 ~ 19
       let start = dayHours.slice(0, 11);
       let end = dayHours.slice(20, 24);
-      timeArray = [...start, ...end];
+      disabledTimeArray = [...start, ...end];
+      closeTime = dayHours[19];
     }
 
     return {
       disabledHours: () => {
-        return timeArray;
+        return disabledTimeArray;
       },
       disabledMinutes: () => {
-        if (parseInt(date.format("HH")) === timeArray[timeArray.length - 1]) {
-          console.log("00분만 가능~!");
-        }
-        // 만약 선택한 hour가 array의 마지막이라면["0"] 제외하고 모두 비활성화
+        return disabledMinutes;
       },
     };
   };
@@ -319,11 +298,11 @@ const Delivery = ({ control, cartItems }) => {
 
       <ConfigProvider locale={locale}>
         <div className="option_menu_section">
-          <span className="option_menu_text">수령 일자</span>
+          <span className="option_menu_text">수령 날짜</span>
           <div className="controller_container">
             <Controller
               control={control}
-              name="수령_일자"
+              name="수령_날짜"
               // defaultValue={null}
               render={({ field: { onChange, value, ...field } }) => (
                 <DatePicker
@@ -334,8 +313,8 @@ const Delivery = ({ control, cartItems }) => {
                     onChange(value);
                     dateHandler(value);
                   }}
-                  // onOk={console.log(value)}
                   showToday={false}
+                  allowClear={false}
                   defaultValue={undefined}
                   format={"YYYY-MM-DD (ddd)"}
                   locale={datePickerLocale}
@@ -382,7 +361,6 @@ const Delivery = ({ control, cartItems }) => {
             <Controller
               control={control}
               name="수령_시간"
-              // defaultValue={null}
               render={({ field: { onChange, value, ...field } }) => (
                 <TimePicker
                   {...field}
@@ -390,19 +368,49 @@ const Delivery = ({ control, cartItems }) => {
                   value={time}
                   onChange={(value) => {
                     onChange(value);
-                    timeHandler(value);
+                    // timeHandler(value);
                   }}
-                  // onOk={console.log(value)}
-                  format={"HH시 mm분"}
-                  // use12Hours
+                  onSelect={(selectedTime) => {
+                    timeHandler(selectedTime);
+
+                    console.log("time", parseInt(dayjs(time).format("HH")));
+                    console.log(
+                      "selectedTime",
+                      parseInt(dayjs(selectedTime).format("HH"))
+                    );
+                  }}
+                  format={"a h시 mm분"}
+                  use12Hours
                   placeholder="시간을 선택해 주세요"
                   minuteStep={10}
+                  hideDisabledOptions
+                  showNow={false}
+                  allowClear={false}
                   style={{ width: "100%" }}
                   popupClassName="custom_dropdown"
-                  disabledTime={date ? disabledTimeHandler : null}
+                  onClick={() => {
+                    if (date === undefined) {
+                      setTimeError(true);
+                    } else {
+                      setTimeError(false);
+                    }
+                  }}
+                  disabled={timeError ? true : false}
+                  popupStyle={timeError ? { display: "none" } : null}
+                  className={timeError ? "error" : ""}
+                  disabledTime={disabledTimeHandler}
+                  // status={"error"}
+                  // disabledTime={
+                  //   date
+                  //     ? (selectedHour) => disabledTimeHandler(selectedHour)
+                  //     : null
+                  // }
                 />
               )}
             />
+            {timeError ? (
+              <div className="error_text">! 수령 날짜를 먼저 선택해 주세요</div>
+            ) : null}
           </div>
         </div>
       </ConfigProvider>

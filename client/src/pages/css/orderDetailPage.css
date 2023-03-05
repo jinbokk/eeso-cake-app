@@ -225,6 +225,14 @@
   line-height: 2rem !important;
 }
 
+/* .ant-picker-time-panel-cell-disabled {
+  display: none !important;
+} */
+
+.ant-picker-time-panel-column::after {
+  height: 50px !important;
+}
+
 @media screen and (max-width: 992px) {
   .ant-picker-input input {
     font-size: 1rem !important;
@@ -233,6 +241,16 @@
   .ant-picker-footer-extra {
     font-size: 0.95rem;
   }
+}
+
+.error {
+  border: 1px solid rgb(225, 0, 0) !important;
+}
+
+.error_text {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: rgb(225, 0, 0);
 }
 
 /* font-size: clamp(0.8rem, 1vw, 1rem) !important; */
