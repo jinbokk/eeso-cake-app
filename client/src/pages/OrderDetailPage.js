@@ -94,20 +94,14 @@ const OrderDetailPage = () => {
 
   const { handleSubmit, control } = useForm();
 
+  // error handling
+  const [error, setError] = useState(false);
+
+  //cart Items
   const [cartItems, setCartItems] = useState([]);
   const [designTopperPrice, setDesignTopperPrice] = useState(0);
 
   const combineDateWithTime = (date, time) => {
-    // return new Date(
-    //   date.getFullYear(),
-    //   date.getMonth(),
-    //   date.getDate(),
-    //   time.getHours(),
-    //   time.getMinutes(),
-    //   time.getSeconds(),
-    //   time.getMilliseconds()
-    // );
-
     const dateForm = dayjs(date).format("YYYY-MM-DD");
     const timeForm = dayjs(time).format("HH:mm");
 
@@ -115,41 +109,41 @@ const OrderDetailPage = () => {
   };
 
   const optionConfirmHandler = () => {
-    const deliveryDateTime = combineDateWithTime(
-      deliveryDate.dateType,
-      deliveryTime.dateType
-    );
-
-    let createdCart = {
-      rootProductId: productDetail._id,
-      title: productDetail.title,
-      image_url: productDetail.image_url,
-      deliveryType: deliveryType,
-      deliveryDateTime: {
-        stringType: deliveryDate.stringType + " " + deliveryTime.stringType,
-        dateType: dayjs(deliveryDateTime, "YYYY-MM-DD HH:mm"),
-      },
-      letteringToggle: letteringToggle,
-      letteringText: letteringText !== undefined ? letteringText : null,
-      designTopperToggle: designTopperToggle,
-      designTopperText:
-        designTopperText !== undefined ? designTopperText : null,
-      customerRequestText:
-        customerRequestText !== undefined ? customerRequestText : null,
-      quantity: 1,
-      price: parseInt(productDetail.price) + parseInt(designTopperPrice),
-    };
-
     if (
-      !createdCart.deliveryType ||
-      !createdCart.deliveryDateTime ||
-      (createdCart.letteringToggle === "추가 하기" &&
-        !createdCart.letteringText) ||
-      (createdCart.designTopperToggle === "추가 하기" &&
-        !createdCart.designTopperText)
+      !deliveryType ||
+      !deliveryDate ||
+      !deliveryTime ||
+      error ||
+      (letteringToggle === "추가 하기" && !letteringText) ||
+      (designTopperToggle === "추가 하기" && !designTopperText)
     ) {
       alert("선택하신 옵션을 다시 확인해 주세요");
     } else {
+      const deliveryDateTime = combineDateWithTime(
+        deliveryDate.dateType,
+        deliveryTime.dateType
+      );
+
+      let createdCart = {
+        rootProductId: productDetail._id,
+        title: productDetail.title,
+        image_url: productDetail.image_url,
+        deliveryType: deliveryType,
+        deliveryDateTime: {
+          stringType: deliveryDate.stringType + " " + deliveryTime.stringType,
+          dateType: dayjs(deliveryDateTime, "YYYY-MM-DD HH:mm"),
+        },
+        letteringToggle: letteringToggle,
+        letteringText: letteringText !== undefined ? letteringText : null,
+        designTopperToggle: designTopperToggle,
+        designTopperText:
+          designTopperText !== undefined ? designTopperText : null,
+        customerRequestText:
+          customerRequestText !== undefined ? customerRequestText : null,
+        quantity: 1,
+        price: parseInt(productDetail.price) + parseInt(designTopperPrice),
+      };
+
       setCartItems((prev) => [...prev, createdCart]);
       console.log("cartItems::::", cartItems);
       dispatch({ type: "RESET_FORM" });
@@ -253,7 +247,11 @@ const OrderDetailPage = () => {
                   ) : null}
 
                   <ThemeProvider theme={theme}>
-                    <Delivery control={control} cartItems={cartItems} />
+                    <Delivery
+                      control={control}
+                      cartItems={cartItems}
+                      setError={setError}
+                    />
                     <Lettering control={control} cartItems={cartItems} />
                     <DesignTopper
                       control={control}

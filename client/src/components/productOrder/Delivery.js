@@ -26,7 +26,7 @@ import "dayjs/locale/ko";
 
 dayjs.locale("ko");
 
-const Delivery = ({ control, cartItems }) => {
+const Delivery = ({ control, cartItems, setError }) => {
   const dispatch = useDispatch();
 
   const CustomToggleButton = styled(ToggleButton)(() => ({
@@ -91,44 +91,68 @@ const Delivery = ({ control, cartItems }) => {
     dispatch(orderActions.setDeliveryDate(body));
   };
 
+  useEffect(() => {
+    setTime(undefined);
+    setTimeError({ value: false });
+  }, [date]);
+
+  // time
+  let dayHours = Array.from(Array(24).keys()); // [0,1,2,.....,23]
+  let disabledTimeArray;
+  let openTime;
+  let closeTime;
+  let disabledMinutes;
+
   const [time, setTime] = useState(undefined);
-  const [timeError, setTimeError] = useState(undefined);
+  const [timeError, setTimeError] = useState({});
+
+  useEffect(() => {
+    setError(timeError.value);
+  }, [timeError]);
 
   const timeHandler = (selectedTime) => {
     if (
       parseInt(dayjs(time).format("HH")) ===
-        parseInt(dayjs(selectedTime).format("HH")) - 12 ||
-      parseInt(dayjs(time).format("HH")) ===
-        parseInt(dayjs(selectedTime).format("HH")) + 12
+      parseInt(dayjs(selectedTime).format("HH")) - 12
     ) {
-      console.log("am/pm changed");
-      setTime(undefined);
+      let changedTime = dayjs(selectedTime).set("hour", 12).set("minute", 0);
+      selectedTime = changedTime;
+      setTime(changedTime);
     } else {
       setTime(selectedTime);
     }
 
-    /// 로직 수정해야함.. 버그가 있다.
-
-    const timeData = dayjs(time).format();
-    const modifiedTime = dayjs(time).format("a hh:mm");
-
-    const body = {
-      dateType: timeData,
-      stringType: modifiedTime,
-    };
-
-    dispatch(orderActions.setDeliveryTime(body));
+    if (
+      parseInt(dayjs(time).format("HH")) ===
+      parseInt(dayjs(selectedTime).format("HH")) + 12
+    ) {
+      let changedTime = dayjs(selectedTime)
+        .set("hour", parseInt(openTime + 1))
+        .set("minute", 0);
+      selectedTime = changedTime;
+      setTime(changedTime);
+    } else {
+      setTime(selectedTime);
+    }
   };
 
-  let disabledTimeArray;
-  let closeTime;
-  let disabledMinutes;
-
   useEffect(() => {
-    if (parseInt(dayjs(time).format("HH")) === parseInt(closeTime)) {
-      disabledMinutes = [10, 20, 30, 40, 50];
-    } else {
-      disabledMinutes = [];
+    if (time) {
+      if (parseInt(dayjs(time).format("HH")) === parseInt(closeTime)) {
+        disabledMinutes = [10, 20, 30, 40, 50];
+      } else {
+        disabledMinutes = [];
+      }
+
+      const timeData = dayjs(time).format();
+      const modifiedTime = dayjs(time).format("a hh:mm");
+
+      const body = {
+        dateType: timeData,
+        stringType: modifiedTime,
+      };
+
+      dispatch(orderActions.setDeliveryTime(body));
     }
   }, [time]);
 
@@ -139,25 +163,26 @@ const Delivery = ({ control, cartItems }) => {
 
     const selectedDay = dayjs(date).format("ddd");
 
-    let dayHours = Array.from(Array(24).keys()); // [0,1,2,.....,23]
-
     if (selectedDay === "토") {
       // 10 ~ 16
       let start = dayHours.slice(0, 10);
       let end = dayHours.slice(17, 24);
       disabledTimeArray = [...start, ...end];
+      openTime = dayHours[9];
       closeTime = dayHours[16];
     } else if (selectedDay === "일") {
       // 10 ~ 12
       let start = dayHours.slice(0, 10);
       let end = dayHours.slice(13, 24);
       disabledTimeArray = [...start, ...end];
+      openTime = dayHours[9];
       closeTime = dayHours[12];
     } else {
       // 11 ~ 19
       let start = dayHours.slice(0, 11);
       let end = dayHours.slice(20, 24);
       disabledTimeArray = [...start, ...end];
+      openTime = dayHours[10];
       closeTime = dayHours[19];
     }
 
@@ -327,7 +352,8 @@ const Delivery = ({ control, cartItems }) => {
 
                     return (
                       (current && current < dayjs(after, "YYYY-MM-DD")) ||
-                      (current && current > dayjs(before, "YYYY-MM-DD"))
+                      (current && current > dayjs(before, "YYYY-MM-DD")) ||
+                      (current && dayjs(current).format("ddd") === "월")
                       // ||
                       // (current &&
                       //   current ===
@@ -372,12 +398,6 @@ const Delivery = ({ control, cartItems }) => {
                   }}
                   onSelect={(selectedTime) => {
                     timeHandler(selectedTime);
-
-                    console.log("time", parseInt(dayjs(time).format("HH")));
-                    console.log(
-                      "selectedTime",
-                      parseInt(dayjs(selectedTime).format("HH"))
-                    );
                   }}
                   format={"a h시 mm분"}
                   use12Hours
@@ -390,26 +410,50 @@ const Delivery = ({ control, cartItems }) => {
                   popupClassName="custom_dropdown"
                   onClick={() => {
                     if (date === undefined) {
-                      setTimeError(true);
-                    } else {
-                      setTimeError(false);
+                      setTimeError({
+                        value: true,
+                        message: "수령 날짜를 먼저 선택해 주세요",
+                      });
+                    } else if (
+                      date &&
+                      time &&
+                      disabledTimeArray.includes(
+                        parseInt(dayjs(time).format("HH"))
+                      )
+                    ) {
+                      setTime(undefined);
+                      setTimeError({ value: false });
+                      console.log("요기?");
+                      dispatch(orderActions.setDeliveryTime(undefined));
                     }
                   }}
-                  disabled={timeError ? true : false}
-                  popupStyle={timeError ? { display: "none" } : null}
-                  className={timeError ? "error" : ""}
+                  onOpenChange={(isOpen) => {
+                    if (!isOpen) {
+                      console.log("닫힘");
+                      if (
+                        time &&
+                        disabledTimeArray.includes(
+                          parseInt(dayjs(time).format("HH"))
+                        )
+                      ) {
+                        setTimeError({
+                          value: true,
+                          message:
+                            "수령이 불가한 시간입니다. 다시 확인 해 주세요.",
+                        });
+                      }
+                    }
+                  }}
+                  disabled={timeError.value ? true : false}
+                  popupStyle={timeError.value ? { display: "none" } : null}
+                  className={timeError.value ? "error" : ""}
                   disabledTime={disabledTimeHandler}
-                  // status={"error"}
-                  // disabledTime={
-                  //   date
-                  //     ? (selectedHour) => disabledTimeHandler(selectedHour)
-                  //     : null
-                  // }
+                  id={"antd_timepicker"}
                 />
               )}
             />
             {timeError ? (
-              <div className="error_text">! 수령 날짜를 먼저 선택해 주세요</div>
+              <div className="error_text">{timeError.message}</div>
             ) : null}
           </div>
         </div>
