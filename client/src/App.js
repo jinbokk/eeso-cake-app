@@ -43,6 +43,7 @@ import PrivacyPolicyPage from "./pages/policy/PrivacyPolicyPage";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   // Hoc Auth
@@ -148,6 +149,7 @@ function App() {
           <Sidebar />
           {/* <AnimatePresence> */}
           <Routes>
+            <Route path="*" element={<NotFoundPage />} />
             <Route path="/" element={<AuthHome />} />
             <Route path="/login" element={<AuthLogin />} />
             <Route path="/register" element={<AuthRegister />} />

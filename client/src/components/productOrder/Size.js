@@ -56,7 +56,7 @@ const Size = ({ control, cartItems, setSizePrice }) => {
 
   return (
     <>
-      <div className="option_menu_section flex-column">
+      <div className="option_menu_section cake_size_section flex-column">
         <div>
           <div className="mb-3">케이크 사이즈</div>
         </div>
@@ -78,6 +78,7 @@ const Size = ({ control, cartItems, setSizePrice }) => {
                 exclusive
                 fullWidth
                 style={{
+                  // width: "100%",
                   whiteSpace: "nowrap",
                 }}
                 {...field}
