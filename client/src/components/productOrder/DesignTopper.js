@@ -31,7 +31,7 @@ const DesignTopper = ({ control, cartItems, setDesignTopperPrice }) => {
   }));
 
   // topper
-  const [topperToggle, setTopperToggle] = useState(false);
+  const [topperToggle, setTopperToggle] = useState(undefined);
   const topperToggleHandler = (value) => {
     setTopperToggle(value);
     console.log(value);
@@ -70,7 +70,7 @@ const DesignTopper = ({ control, cartItems, setDesignTopperPrice }) => {
     setTopperToggle(false);
     setTopperText("");
     setTopperLength(0);
-    topperLengthHandler("")
+    topperLengthHandler("");
     setTopperLengthError(false);
   }, [cartItems]);
 

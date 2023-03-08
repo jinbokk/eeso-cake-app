@@ -501,6 +501,38 @@ const PaymentPage = () => {
                             : "text-center px-0 me-2"
                         }
                       >
+                        {authUserDataWithCheckedCart.cart[0].deliveryDateTime.stringType.split(
+                          " "
+                        )[0] +
+                          " " +
+                          authUserDataWithCheckedCart.cart[0].deliveryDateTime.stringType.split(
+                            " "
+                          )[1]}
+                      </Col>
+                      <Col
+                        lg={"auto"}
+                        className={
+                          width < 992
+                            ? "text-center px-0"
+                            : "text-center px-0 me-2"
+                        }
+                      >
+                        {authUserDataWithCheckedCart.cart[0].deliveryDateTime.stringType.split(
+                          " "
+                        )[2] +
+                          " " +
+                          authUserDataWithCheckedCart.cart[0].deliveryDateTime.stringType.split(
+                            " "
+                          )[3]}
+                      </Col>
+                      {/* <Col
+                        lg={"auto"}
+                        className={
+                          width < 992
+                            ? "text-center px-0"
+                            : "text-center px-0 me-2"
+                        }
+                      >
                         {dayjs(
                           authUserDataWithCheckedCart.cart[0].deliveryDateTime
                             .dateType
@@ -511,7 +543,7 @@ const PaymentPage = () => {
                           authUserDataWithCheckedCart.cart[0].deliveryDateTime
                             .dateType
                         ).format("a hh:mm")}
-                      </Col>
+                      </Col> */}
                     </Row>
                   ) : (
                     "-"

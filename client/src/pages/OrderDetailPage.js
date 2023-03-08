@@ -114,6 +114,8 @@ const OrderDetailPage = () => {
       !deliveryDate ||
       !deliveryTime ||
       error ||
+      letteringToggle === undefined ||
+      designTopperToggle === undefined ||
       (letteringToggle === "추가 하기" && !letteringText) ||
       (designTopperToggle === "추가 하기" && !designTopperText)
     ) {
@@ -157,6 +159,46 @@ const OrderDetailPage = () => {
       setCartItems(cartItems.filter((item, index) => index !== optionIndex));
     } else {
       return;
+    }
+  };
+
+  const orderProductHandler = () => {
+    if (authUserData && !authUserData.isAuth) {
+      const confirm = window.confirm(
+        "장바구니에 상품을 담기 위해서는 로그인 해야합니다\n로그인 하시겠습니까?"
+      );
+
+      if (confirm) {
+        navigate("/login");
+      } else {
+        return;
+      }
+    } else {
+      let deliveryDateTimeIndex = cartItems[0].deliveryDateTime.stringType;
+
+      let isDifferenceDate = cartItems
+        .map(
+          (item) => item.deliveryDateTime.stringType !== deliveryDateTimeIndex
+        )
+        .includes(true);
+
+      if (isDifferenceDate) {
+        console.log(
+          "else",
+          cartItems.map(
+            (item) => item.deliveryDateTime.stringType !== deliveryDateTimeIndex
+          )
+        );
+
+        return alert(
+          "수령 일자가 같은 주문건에 대해서만 일괄 주문이 가능합니다.\n\n수령 일자가 서로 다른 주문건의 경우,\n장바구니에 담으신 후 개별 주문을 부탁드립니다."
+        );
+      } else {
+        navigate("/payment", {
+          replace: true,
+          state: { checkedCartItems: cartItems },
+        });
+      }
     }
   };
 
@@ -423,7 +465,7 @@ const OrderDetailPage = () => {
                               variant="contained"
                               type="button"
                               style={{ height: "50px" }}
-                              onClick={() => addToCartHandler()}
+                              onClick={() => orderProductHandler()}
                               fullWidth
                             >
                               <MdPayment

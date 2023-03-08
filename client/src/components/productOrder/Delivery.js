@@ -77,11 +77,18 @@ const Delivery = ({ control, cartItems, setError }) => {
 
   // date
   const [date, setDate] = useState(undefined);
+  const [dateError, setDateError] = useState({});
+
+  useEffect(() => {
+    setError(dateError.value);
+  }, [dateError]);
 
   const dateHandler = (date) => {
     setDate(date);
     const dateData = dayjs(date).format();
     const modifiedDate = dayjs(date).format("YYYY-MM-DD (ddd)");
+
+    console.log("dateType", dateData);
 
     const body = {
       dateType: dateData,
@@ -226,6 +233,7 @@ const Delivery = ({ control, cartItems, setError }) => {
                   onChange={(e) => {
                     onChange(e.target.value);
                     deliveryHandler(e.target.value);
+                    setDateError({ value: false });
                   }}
                   exclusive
                   fullWidth
@@ -338,6 +346,19 @@ const Delivery = ({ control, cartItems, setError }) => {
                     onChange(value);
                     dateHandler(value);
                   }}
+                  onClick={() => {
+                    if (!delivery) {
+                      setDateError({
+                        value: true,
+                        message: "수령 방법을 먼저 선택해 주세요",
+                      });
+                    }
+                  }}
+                  disabled={dateError && dateError.value ? true : false}
+                  popupStyle={
+                    dateError && dateError.value ? { display: "none" } : null
+                  }
+                  className={dateError && dateError.value ? "error" : ""}
                   showToday={false}
                   allowClear={false}
                   defaultValue={undefined}
@@ -354,14 +375,6 @@ const Delivery = ({ control, cartItems, setError }) => {
                       (current && current < dayjs(after, "YYYY-MM-DD")) ||
                       (current && current > dayjs(before, "YYYY-MM-DD")) ||
                       (current && dayjs(current).format("ddd") === "월")
-                      // ||
-                      // (current &&
-                      //   current ===
-                      //     dayjs(
-                      //       dayjs().weekday(1).format("YYYY-MM-DD"),
-                      //       "YYYY-MM-DD"
-                      //     ))
-                      // 매주 월요일 선택불가 하도록 해야함
                     );
                   }}
                   renderExtraFooter={() => {
@@ -378,6 +391,9 @@ const Delivery = ({ control, cartItems, setError }) => {
                 />
               )}
             />
+            {dateError && dateError.value ? (
+              <div className="error_text">{dateError.message}</div>
+            ) : null}
           </div>
         </div>
 
@@ -423,13 +439,11 @@ const Delivery = ({ control, cartItems, setError }) => {
                     ) {
                       setTime(undefined);
                       setTimeError({ value: false });
-                      console.log("요기?");
                       dispatch(orderActions.setDeliveryTime(undefined));
                     }
                   }}
                   onOpenChange={(isOpen) => {
                     if (!isOpen) {
-                      console.log("닫힘");
                       if (
                         time &&
                         disabledTimeArray.includes(
@@ -439,20 +453,21 @@ const Delivery = ({ control, cartItems, setError }) => {
                         setTimeError({
                           value: true,
                           message:
-                            "수령이 불가한 시간입니다. 다시 확인 해 주세요.",
+                            "수령이 불가한 시간입니다. 다시 선택해 주세요.",
                         });
                       }
                     }
                   }}
-                  disabled={timeError.value ? true : false}
-                  popupStyle={timeError.value ? { display: "none" } : null}
-                  className={timeError.value ? "error" : ""}
+                  disabled={timeError && timeError.value ? true : false}
+                  popupStyle={
+                    timeError && timeError.value ? { display: "none" } : null
+                  }
+                  className={timeError && timeError.value ? "error" : ""}
                   disabledTime={disabledTimeHandler}
-                  id={"antd_timepicker"}
                 />
               )}
             />
-            {timeError ? (
+            {timeError && timeError.value ? (
               <div className="error_text">{timeError.message}</div>
             ) : null}
           </div>

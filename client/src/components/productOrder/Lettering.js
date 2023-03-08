@@ -31,7 +31,7 @@ const Lettering = ({ control, cartItems }) => {
   }));
 
   // lettering
-  const [letteringToggle, setLetteringToggle] = useState(false);
+  const [letteringToggle, setLetteringToggle] = useState(undefined);
   const letteringToggleHandler = (value) => {
     setLetteringToggle(value);
     console.log(value);

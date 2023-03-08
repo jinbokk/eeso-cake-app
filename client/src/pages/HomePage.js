@@ -16,6 +16,7 @@ import { productActions } from "../redux/actions/productActions";
 import { Container, Row, Col } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Autoplay, EffectCards } from "swiper";
+import ConfettiAnimation from "../animations/ConfettiAnimation";
 import Instagram from "../components/Instagram";
 
 const HomePage = () => {
@@ -298,11 +299,8 @@ const HomePage = () => {
             </Col>
 
             <Col lg={6} xs={12}>
-              <iframe
-                title="party_animation"
-                src="https://embed.lottiefiles.com/animation/78667"
-                className="party_animation"
-              ></iframe>
+              <ConfettiAnimation />
+
               <div className="party_text">
                 <div className="underline mb-4">
                   더 특별하게, 더 기억에 남게
