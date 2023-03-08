@@ -125,40 +125,105 @@ const OrderHistoryPage = () => {
         </Col>
       </Row>
 
-      <Row>
-        <Col className="my-5">
-          <div className="mb-3">
-            <RxDot className="me-2" color="gray" />
-            <span className="text_emphasis">결제 완료</span> 상태의 주문의 경우
-            24시간 이내 주문 취소가 가능합니다
-          </div>
-          <div className="mb-3">
-            <RxDot className="me-2" color="gray" />
-            결제일시 기준으로, 24시간 이후{" "}
-            <span className="text_emphasis">제작중</span> 상태로 자동 변경됩니다
-          </div>
-          <div>
-            <RxDot className="me-2" color="gray" />
-            <span className="text_emphasis">제작중</span> 상태 주문의 경우,
-            <span className="text_underline">
-              홈페이지 내 주문 변경 및 취소가 불가
-            </span>
-            하며 관련 문의는 카카오톡
-            <a
-              href="https://pf.kakao.com/_ZyKnd"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-2 link"
-            >
-              @이소케이크
-            </a>
-            채널로 문의 부탁드립니다
-          </div>
-          {/* <div className="mb-4">
+      <Row className="my-5">
+        <Row className="mb-3">
+          <Col
+            lg={"auto"}
+            xs={"auto"}
+            className="d-flex justify-content-center align-items-center"
+          >
+            <RxDot color="gray" />
+          </Col>
+          <Col>
+            <div style={{ lineHeight: "2rem" }}>
+              <span className="text_emphasis">결제 완료</span> 상태의 주문의
+              경우 24시간 이내 주문 취소가 가능합니다
+            </div>
+          </Col>
+        </Row>
+
+        <Row className="mb-3">
+          <Col
+            lg={"auto"}
+            xs={"auto"}
+            className="d-flex justify-content-center align-items-center"
+          >
+            <RxDot color="gray" />
+          </Col>
+          <Col>
+            <div style={{ lineHeight: "2rem" }}>
+              결제일시 기준으로, 24시간 이후{" "}
+              <span className="text_emphasis">제작중</span> 상태로 자동
+              변경됩니다
+            </div>
+          </Col>
+        </Row>
+
+        <Row className="mb-3">
+          <Col
+            lg={"auto"}
+            xs={"auto"}
+            className="d-flex justify-content-center align-items-center"
+          >
+            <RxDot color="gray" />
+          </Col>
+          <Col>
+            <div style={{ lineHeight: "2rem" }}>
+              <span className="text_emphasis">제작중</span> 상태 주문의 경우,
+              <span className="text_underline">
+                홈페이지 내 주문 변경 및 취소가 불가
+              </span>
+              합니다.<br></br>(관련 문의는 카카오톡
+              <a
+                href="https://pf.kakao.com/_ZyKnd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-2 link"
+              >
+                @이소케이크
+              </a>
+              채널로 문의 부탁드립니다)
+            </div>
+          </Col>
+        </Row>
+
+        <Row className="mb-3">
+          <Col
+            lg={"auto"}
+            xs={"auto"}
+            className="d-flex justify-content-center align-items-center"
+          >
+            <RxDot color="gray" />
+          </Col>
+          <Col>
+            <div style={{ lineHeight: "2rem" }}>
+              수령일이 도래하면,{" "}
+              <span className="text_emphasis">픽업 대기</span> 상태로 자동
+              변경됩니다
+            </div>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col
+            lg={"auto"}
+            xs={"auto"}
+            className="d-flex justify-content-center align-items-center"
+          >
+            <RxDot color="gray" />
+          </Col>
+          <Col>
+            <div style={{ lineHeight: "2rem" }}>
+              수령일시 이후, <span className="text_emphasis">픽업 완료</span>{" "}
+              상태로 자동 변경됩니다
+            </div>
+          </Col>
+        </Row>
+
+        {/* <div className="mb-4">
             * 주문하신 제품은 픽업 4일전까지 레터링 문구만 수정 가능합니다
           </div>
           <div>* 레터링 외 수정사항은 취소 후 재주문 부탁드립니다.</div> */}
-        </Col>
       </Row>
 
       {/* 이하 결제 내역 */}

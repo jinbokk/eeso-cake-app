@@ -141,7 +141,7 @@ const OrderDetailPage = () => {
         deliveryType: deliveryType,
         deliveryDateTime: {
           stringType: deliveryDate.stringType + " " + deliveryTime.stringType,
-          dateType: dayjs(deliveryDateTime, "YYYY-MM-DD HH:mm"),
+          dateType: dayjs(deliveryDateTime).format(),
         },
         size: size,
         sizePrice: sizePrice,
