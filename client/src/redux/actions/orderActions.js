@@ -26,6 +26,26 @@ function setDeliveryTime(body) {
   };
 }
 
+// size
+function setSize(size) {
+  return async (dispatch) => {
+    dispatch({
+      type: "SET_SIZE",
+      payload: size,
+    });
+  };
+}
+
+// sheet
+function setSheet(sheet) {
+  return async (dispatch) => {
+    dispatch({
+      type: "SET_SHEET",
+      payload: sheet,
+    });
+  };
+}
+
 // lettering
 function setLetteringToggle(letteringToggle) {
   return async (dispatch) => {
@@ -76,6 +96,8 @@ export const orderActions = {
   setDeliveryType,
   setDeliveryDate,
   setDeliveryTime,
+  setSize,
+  setSheet,
   setLetteringToggle,
   setLetteringText,
   setDesignTopperToggle,

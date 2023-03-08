@@ -242,6 +242,27 @@ const CartPage = () => {
                             </div>
 
                             <div className="option_text border_bottom">
+                              {item.size ? (
+                                <div>
+                                  케이크 사이즈 : {item.size}{" "}
+                                  <span className="disabled_text">
+                                    {item.size === "2호"
+                                      ? " (+15,000원)"
+                                      : null}
+                                    {item.size === "3호"
+                                      ? " (+30,000원)"
+                                      : null}
+                                    {item.size === "2단 (1호+3호)"
+                                      ? " (+45,000원)"
+                                      : null}
+                                  </span>
+                                </div>
+                              ) : null}
+
+                              {item.sheet ? (
+                                <div>케이크 시트 : {item.sheet}</div>
+                              ) : null}
+
                               {item.letteringToggle === "추가 하기" ? (
                                 <div>레터링 문구 : {item.letteringText}</div>
                               ) : null}
@@ -380,6 +401,34 @@ const CartPage = () => {
                             </div>
 
                             <div className="option_text">
+                              {item.size ? (
+                                <div>
+                                  케이크 사이즈 : {item.size}{" "}
+                                  <span className="disabled_text">
+                                    {item.size === "2호"
+                                      ? " (+15,000원)"
+                                      : null}
+                                    {item.size === "3호"
+                                      ? " (+30,000원)"
+                                      : null}
+                                    {item.size === "2단 (1호+3호)"
+                                      ? " (+45,000원)"
+                                      : null}
+                                  </span>
+                                </div>
+                              ) : null}
+
+                              {item.sheet ? (
+                                <div>
+                                  케이크 시트 : {item.sheet}{" "}
+                                  <span className="disabled_text">
+                                    {item.sheet === "초코 시트"
+                                      ? " (+3,000원)"
+                                      : null}
+                                  </span>
+                                </div>
+                              ) : null}
+
                               {item.letteringToggle === "추가 하기" ? (
                                 <div>
                                   케이크 판 레터링 : {item.letteringText}

@@ -252,17 +252,17 @@ const Delivery = ({ control, cartItems, setError }) => {
                       방문 수령
                     </div>
                   </CustomToggleButton>
-                  <CustomToggleButton value="차량 배송">
+                  <CustomToggleButton value="퀵 배송">
                     <div
                       style={{
                         fontSize: "0.9rem",
                         pointerEvents: "none",
                       }}
                     >
-                      차량 배송
+                      퀵 배송 (본인신청)
                     </div>
                   </CustomToggleButton>
-                  <CustomToggleButton value="택배" disabled>
+                  {/* <CustomToggleButton value="택배" disabled>
                     <div
                       style={{
                         fontSize: "0.9rem",
@@ -271,14 +271,14 @@ const Delivery = ({ control, cartItems, setError }) => {
                     >
                       택배
                     </div>
-                  </CustomToggleButton>
+                  </CustomToggleButton> */}
                 </ToggleButtonGroup>
               )}
             />
           </div>
         </div>
 
-        {delivery === "차량 배송" ? (
+        {delivery === "퀵 배송" ? (
           <div className="flex-column option_menu_section">
             <div
               style={{
@@ -287,37 +287,25 @@ const Delivery = ({ control, cartItems, setError }) => {
                 marginBottom: "1rem",
               }}
             >
-              차량배송 주의사항 안내
+              퀵 배송 주의사항 안내
             </div>
             <div style={{ fontSize: "0.85rem", textAlign: "start" }}>
               <div>
-                <div>
-                  케이크 배송은 파손 위험으로 인해 1:1 차량 배송으로만
-                  가능합니다
-                  <br></br>
-                  수령하실 곳의 상세 주소지를 하단 요청사항에 기재 해 주시면
-                  <br></br>
-                  요금 조회후 안내를 도와 드리겠습니다
-                  <br></br>
+                <div className="mb-3">
+                  케이크 배송은 파손 위험으로 인해 1:1 퀵 배송으로만 가능합니다
                 </div>
 
-                <div className="py-3">
-                  <div className="mb-3">
-                    <FaCarSide className="me-2" />
-                    요금 안내
-                  </div>
-                  <div style={{ color: "red" }}>
-                    * 서울 / 경기 외 장거리, 지방 차량 배송 불가
-                  </div>
-                  의정부 내 : ₩ 9,000 ~<br></br>
-                  서울 / 경기 : ₩ 10,000 ~ ₩ 50,000
-                </div>
-
-                <div>
+                <div className="py-2">
                   <span style={{ color: "red" }}>
-                    픽업 후 이동 , 차량 배송건에 대한 파손 보상은 불가함을
+                    퀵 배송건의 경우,
+                    <br></br>주문하신 날짜와 시간에 맞추어{" "}
+                    <spn className="fw-bold">직접 신청</spn>을 진행 해 주셔야
+                    하며<br></br>픽업 후 퀵 배송건에 대한 파손 보상은 불가함을
                     안내드립니다
                   </span>
+                </div>
+
+                <div>
                   <br></br>
                   부득이하게 픽업이 어려우신 고객님들께 권해드리며
                   <br></br>
@@ -467,6 +455,11 @@ const Delivery = ({ control, cartItems, setError }) => {
                 />
               )}
             />
+            {delivery === "퀵 배송" ? (
+              <div className="quick_delivery_message">
+                배송 차량이 공방에 도착하는 시간을 선택 해 주세요
+              </div>
+            ) : null}
             {timeError && timeError.value ? (
               <div className="error_text">{timeError.message}</div>
             ) : null}

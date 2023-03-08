@@ -52,10 +52,6 @@ const CustomerRequest = ({ control, cartItems }) => {
                 requestHandler(e.target.value);
               }}
               inputProps={{
-                style: {
-                  fontSize: "0.9rem",
-                  fontFamily: "NanumSquareNeo-Variable",
-                },
                 maxLength: 30,
               }}
             />

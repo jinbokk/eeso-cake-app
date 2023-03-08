@@ -35,6 +35,8 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import "dayjs/locale/ko";
 
 import "./css/orderDetailPage.css";
+import Size from "../components/productOrder/Size";
+import Sheet from "../components/productOrder/Sheet";
 
 dayjs.locale("ko");
 dayjs.extend(customParseFormat);
@@ -57,6 +59,8 @@ const OrderDetailPage = () => {
     deliveryType,
     deliveryDate,
     deliveryTime,
+    size,
+    sheet,
     letteringToggle,
     letteringText,
     designTopperToggle,
@@ -99,6 +103,8 @@ const OrderDetailPage = () => {
 
   //cart Items
   const [cartItems, setCartItems] = useState([]);
+  const [sizePrice, setSizePrice] = useState(0);
+  const [sheetPrice, setSheetPrice] = useState(0);
   const [designTopperPrice, setDesignTopperPrice] = useState(0);
 
   const combineDateWithTime = (date, time) => {
@@ -114,6 +120,8 @@ const OrderDetailPage = () => {
       !deliveryDate ||
       !deliveryTime ||
       error ||
+      !size ||
+      !sheet ||
       letteringToggle === undefined ||
       designTopperToggle === undefined ||
       (letteringToggle === "추가 하기" && !letteringText) ||
@@ -135,15 +143,24 @@ const OrderDetailPage = () => {
           stringType: deliveryDate.stringType + " " + deliveryTime.stringType,
           dateType: dayjs(deliveryDateTime, "YYYY-MM-DD HH:mm"),
         },
+        size: size,
+        sizePrice: sizePrice,
+        sheet: sheet,
+        sheetPrice: sheetPrice,
         letteringToggle: letteringToggle,
         letteringText: letteringText !== undefined ? letteringText : null,
         designTopperToggle: designTopperToggle,
         designTopperText:
           designTopperText !== undefined ? designTopperText : null,
+        designTopperPrice: designTopperPrice,
         customerRequestText:
           customerRequestText !== undefined ? customerRequestText : null,
         quantity: 1,
-        price: parseInt(productDetail.price) + parseInt(designTopperPrice),
+        price:
+          parseInt(productDetail.price) +
+          parseInt(designTopperPrice) +
+          parseInt(sizePrice) +
+          parseInt(sheetPrice),
       };
 
       setCartItems((prev) => [...prev, createdCart]);
@@ -294,6 +311,16 @@ const OrderDetailPage = () => {
                       cartItems={cartItems}
                       setError={setError}
                     />
+                    <Size
+                      control={control}
+                      cartItems={cartItems}
+                      setSizePrice={setSizePrice}
+                    />
+                    <Sheet
+                      control={control}
+                      cartItems={cartItems}
+                      setSheetPrice={setSheetPrice}
+                    />
                     <Lettering control={control} cartItems={cartItems} />
                     <DesignTopper
                       control={control}
@@ -400,6 +427,29 @@ const OrderDetailPage = () => {
                               </Col>
 
                               <Col>
+                                {item.size ? (
+                                  <div className="preview_text">
+                                    케이크 사이즈 / {item.size}
+                                    {item.sizePrice !== 0
+                                      ? " (+" +
+                                        item.sizePrice.toLocaleString("ko-KR") +
+                                        "원)"
+                                      : null}
+                                  </div>
+                                ) : null}
+                                {item.sheet ? (
+                                  <div className="preview_text">
+                                    케이크 시트 / {item.sheet}
+                                    {item.sheetPrice !== 0
+                                      ? " (+" +
+                                        item.sheetPrice.toLocaleString(
+                                          "ko-KR"
+                                        ) +
+                                        "원)"
+                                      : null}
+                                  </div>
+                                ) : null}
+
                                 {item.letteringToggle === "추가 하기" ? (
                                   <div className="preview_text">
                                     케이크 판 레터링 / {item.letteringText}
@@ -408,9 +458,10 @@ const OrderDetailPage = () => {
 
                                 {item.designTopperToggle === "추가 하기" ? (
                                   <div className="preview_text">
-                                    디자인 토퍼 문구 (+
-                                    {designTopperPrice.toLocaleString("ko-KR")}
-                                    원) / {item.designTopperText}
+                                    디자인 토퍼 문구 / {item.designTopperText}{" "}
+                                    {" (+" +
+                                      item.sheetPrice.toLocaleString("ko-KR") +
+                                      "원)"}
                                   </div>
                                 ) : null}
 

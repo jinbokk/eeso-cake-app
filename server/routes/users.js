@@ -193,6 +193,8 @@ router.post("/addToCart", auth, async (req, res) => {
                   image_url: createdOptionItem.image_url,
                   deliveryType: createdOptionItem.deliveryType,
                   deliveryDateTime: createdOptionItem.deliveryDateTime,
+                  size: createdOptionItem.size,
+                  sheet: createdOptionItem.sheet,
                   letteringToggle: createdOptionItem.letteringToggle,
                   letteringText: createdOptionItem.letteringText,
                   designTopperToggle: createdOptionItem.designTopperToggle,
@@ -234,6 +236,8 @@ router.post("/addToCart", auth, async (req, res) => {
               createdOptionsItem.deliveryType &&
             existingOptionsItem.deliveryDateTime.stringType ===
               createdOptionsItem.deliveryDateTime.stringType &&
+            existingOptionsItem.size === createdOptionsItem.size &&
+            existingOptionsItem.sheet === createdOptionsItem.sheet &&
             existingOptionsItem.letteringToggle ===
               createdOptionsItem.letteringToggle &&
             existingOptionsItem.designTopperToggle ===
@@ -257,6 +261,8 @@ router.post("/addToCart", auth, async (req, res) => {
                 createdOptionsItem.deliveryType &&
               existingOptionsItem.deliveryDateTime.stringType ===
                 createdOptionsItem.deliveryDateTime.stringType &&
+              existingOptionsItem.size === createdOptionsItem.size &&
+              existingOptionsItem.sheet === createdOptionsItem.sheet &&
               existingOptionsItem.letteringToggle ===
                 createdOptionsItem.letteringToggle &&
               existingOptionsItem.designTopperToggle ===
@@ -291,6 +297,8 @@ router.post("/addToCart", auth, async (req, res) => {
                   "elem.deliveryType": duplicateItem.deliveryType,
                   "elem.deliveryDateTime.stringType":
                     duplicateItem.deliveryDateTime.stringType,
+                  "elem.size": duplicateItem.size,
+                  "elem.sheet": duplicateItem.sheet,
                   "elem.letteringToggle": duplicateItem.letteringToggle,
                   "elem.letteringText": duplicateItem.letteringText,
                   "elem.designTopperToggle": duplicateItem.designTopperToggle,
@@ -319,6 +327,8 @@ router.post("/addToCart", auth, async (req, res) => {
                   image_url: notDuplicateItem.image_url,
                   deliveryType: notDuplicateItem.deliveryType,
                   deliveryDateTime: notDuplicateItem.deliveryDateTime,
+                  size: notDuplicateItem.size,
+                  sheet: notDuplicateItem.sheet,
                   letteringToggle: notDuplicateItem.letteringToggle,
                   letteringText: notDuplicateItem.letteringText,
                   designTopperToggle: notDuplicateItem.designTopperToggle,
@@ -478,6 +488,25 @@ router.post("/order-complete", auth, async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({ success: false, error });
+  }
+});
+
+router.get("/find-order", async (req, res) => {
+  try {
+    console.log("here");
+    const access_token = await iamportGenerateAccessToken();
+    const { imp_uid } = req.query;
+    console.log("imp_uid", imp_uid);
+
+    const find_order = await axios
+      .get(`https://api.iamport.kr/payments/${imp_uid}`, {
+        headers: { Authorization: access_token },
+      })
+      .then((res) => res.data);
+
+    return res.status(200).json({ success: true, data: find_order });
+  } catch (error) {
+    return res.status(400).json({ success: false, error: error });
   }
 });
 

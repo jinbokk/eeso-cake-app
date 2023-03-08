@@ -80,7 +80,7 @@ const GuideBreadPage = () => {
                 합니다.
               </div>
               <div className="opacity-50">
-                부득이 배송을 원하시는 경우 지하철 택배 / 차량 배송으로만 받으실
+                부득이 배송을 원하시는 경우 퀵 배송으로만 받으실
                 수 있습니다.
               </div>
               <div className="opacity-50">

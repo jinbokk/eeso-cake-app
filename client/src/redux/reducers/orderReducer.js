@@ -2,6 +2,8 @@ let initialState = {
   deliveryType: undefined,
   deliveryDate: undefined,
   deliveryTime: undefined,
+  size: undefined,
+  sheet: undefined,
   letteringToggle: undefined,
   letteringText: undefined,
   designTopperToggle: undefined,
@@ -37,6 +39,14 @@ const orderReducer = (state = initialState, action) => {
           : undefined,
       };
 
+    // size
+    case "SET_SIZE":
+      return { ...state, size: payload };
+
+    // sheet
+    case "SET_SHEET":
+      return { ...state, sheet: payload };
+
     // lettering
     case "SET_LETTERING_TOGGLE":
       return { ...state, letteringToggle: payload };
@@ -59,6 +69,8 @@ const orderReducer = (state = initialState, action) => {
         deliveryType: undefined,
         deliveryDate: undefined,
         deliveryTime: undefined,
+        size: undefined,
+        sheet: undefined,
         letteringText: undefined,
         designTopperText: undefined,
         customerRequestText: undefined,

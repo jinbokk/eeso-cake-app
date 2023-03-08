@@ -14,9 +14,9 @@ import "moment/locale/ko";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 
-
 import "../css/orderHistoryPage.css";
 import { userActions } from "../../redux/actions/userActions";
+import axios from "axios";
 
 dayjs.locale("ko");
 
@@ -32,7 +32,7 @@ const OrderHistoryPage = () => {
 
   const orderCancelHandler = (body) => {
     let confirm = window.confirm(
-      "취소된 주문은 되돌릴 수 없으며, 필요시 재주문을 해주셔야 합니다.\n주문을 취소하시겠습니까?"
+      "주문 취소시, 해당 결제건의 모든 주문이 취소됩니다.\n취소된 주문은 되돌릴 수 없으며 필요시 재주문을 해주셔야 합니다.\n\n주문을 취소하시겠습니까?"
     );
 
     if (confirm) {
@@ -46,6 +46,14 @@ const OrderHistoryPage = () => {
     } else {
       return;
     }
+  };
+
+  const findOrderHandler = async (imp_uid) => {
+    let orderHistory = await axios
+      .get(`/api/users/find-order`, { params: { imp_uid: imp_uid } })
+      .then((res) => res.data);
+
+    return orderHistory;
   };
 
   return (
@@ -192,34 +200,6 @@ const OrderHistoryPage = () => {
                         ? "주문 취소"
                         : null}
                     </div>
-
-                    {historyItems.status === "order_paid" ? (
-                      <div
-                        className="order_cancel_button"
-                        onClick={() =>
-                          orderCancelHandler({
-                            imp_uid: historyItems.imp_uid,
-                            merchant_uid: historyItems.merchant_uid,
-                          })
-                        }
-                      >
-                        주문 취소
-                      </div>
-                    ) : null}
-
-                    {historyItems.status === "order_cancelled" ? (
-                      <div
-                        className="order_cancel_button"
-                        // onClick={() =>
-                        //   orderCancelHandler({
-                        //     imp_uid: historyItems.imp_uid,
-                        //     merchant_uid: historyItems.merchant_uid,
-                        //   })
-                        // }
-                      >
-                        취소영수증 조회
-                      </div>
-                    ) : null}
                   </Col>
 
                   <Col
@@ -326,23 +306,63 @@ const OrderHistoryPage = () => {
                                 {orderProducts.title}
                               </div>
                               <div>
-                                <div>
-                                  레터링 추가 : {orderProducts.letteringToggle}
-                                </div>
-                                {orderProducts.letteringText ? (
+                                {orderProducts.size ? (
                                   <div>
-                                    레터링 문구 : {orderProducts.letteringText}
+                                    케이크 사이즈 : {orderProducts.size}
+                                    <span className="disabled_text">
+                                      {orderProducts.size === "2호"
+                                        ? " (+15,000원)"
+                                        : null}
+                                      {orderProducts.size === "3호"
+                                        ? " (+30,000원)"
+                                        : null}
+                                      {orderProducts.size === "2단 (1호+3호)"
+                                        ? " (+45,000원)"
+                                        : null}
+                                    </span>
                                   </div>
                                 ) : null}
 
-                                <div>
-                                  디자인토퍼 추가 :{" "}
-                                  {orderProducts.designTopperToggle}
-                                </div>
-                                {orderProducts.designTopperText ? (
+                                {orderProducts.sheet ? (
                                   <div>
-                                    디자인토퍼 문구 :{" "}
-                                    {orderProducts.designTopperText}
+                                    케이크 시트 : {orderProducts.sheet}
+                                    <span className="disabled_text">
+                                      {orderProducts.sheet === "초코 시트"
+                                        ? " (+3,000원)"
+                                        : null}
+                                    </span>
+                                  </div>
+                                ) : null}
+
+                                {orderProducts.letteringToggle !==
+                                "추가하지 않기" ? (
+                                  <div>
+                                    <div>
+                                      레터링 추가 :{" "}
+                                      {orderProducts.letteringToggle}
+                                    </div>
+                                    {orderProducts.letteringText ? (
+                                      <div>
+                                        레터링 문구 :{" "}
+                                        {orderProducts.letteringText}
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                ) : null}
+
+                                {orderProducts.designTopperToggle !==
+                                "추가하지 않기" ? (
+                                  <div>
+                                    <div>
+                                      디자인토퍼 추가 :{" "}
+                                      {orderProducts.designTopperToggle}
+                                    </div>
+                                    {orderProducts.designTopperText ? (
+                                      <div>
+                                        디자인토퍼 문구 :{" "}
+                                        {orderProducts.designTopperText}
+                                      </div>
+                                    ) : null}
                                   </div>
                                 ) : null}
 
@@ -361,7 +381,7 @@ const OrderHistoryPage = () => {
                                   주문 수량 : {orderProducts.quantity}개
                                 </div>
                                 <div>
-                                  개당 금액 :{" "}
+                                  주문 금액 :{" "}
                                   {orderProducts.price.toLocaleString("ko-KR")}
                                   원
                                 </div>
@@ -369,6 +389,72 @@ const OrderHistoryPage = () => {
                             </Col>
                           </Row>
                         ))}
+
+                        <Row className="pt-3">
+                          {historyItems.status === "order_paid" ||
+                          "order_making" ||
+                          "order_waiting_for_pickup" ||
+                          "order_complete" ? (
+                            <Col
+                              className="order_cancel_button text-center"
+                              onClick={() =>
+                                findOrderHandler(historyItems.imp_uid).then(
+                                  (result) => {
+                                    console.log("result::", result);
+                                    if (result.success) {
+                                      window.open(
+                                        result.data.response.receipt_url,
+                                        "_blank"
+                                      );
+                                    } else {
+                                      return;
+                                    }
+                                  }
+                                )
+                              }
+                            >
+                              결제영수증 조회
+                            </Col>
+                          ) : null}
+
+                          {historyItems.status === "order_paid" ? (
+                            <Col
+                              className="order_cancel_button text-center"
+                              onClick={() =>
+                                orderCancelHandler({
+                                  imp_uid: historyItems.imp_uid,
+                                  merchant_uid: historyItems.merchant_uid,
+                                })
+                              }
+                            >
+                              주문 취소
+                            </Col>
+                          ) : null}
+
+                          {historyItems.status === "order_cancelled" ? (
+                            <Col
+                              className="order_cancel_button text-center"
+                              onClick={() =>
+                                findOrderHandler(historyItems.imp_uid).then(
+                                  (result) => {
+                                    console.log("result::", result);
+                                    if (result.success) {
+                                      window.open(
+                                        result.data.response
+                                          .cancel_receipt_urls[0],
+                                        "_blank"
+                                      );
+                                    } else {
+                                      return;
+                                    }
+                                  }
+                                )
+                              }
+                            >
+                              취소영수증 조회
+                            </Col>
+                          ) : null}
+                        </Row>
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>

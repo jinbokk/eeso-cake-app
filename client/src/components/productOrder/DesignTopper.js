@@ -70,6 +70,7 @@ const DesignTopper = ({ control, cartItems, setDesignTopperPrice }) => {
     setTopperToggle(false);
     setTopperText("");
     setTopperLength(0);
+    setDesignTopperPrice(0);
     topperLengthHandler("");
     setTopperLengthError(false);
   }, [cartItems]);
