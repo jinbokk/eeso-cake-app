@@ -25,7 +25,7 @@ const MypageNav = () => {
               to="/user/mypage/order-cancellation-history"
               style={({ isActive }) => (isActive ? activeStyle : null)}
             >
-              주문취소 현황
+              주문취소 조회
             </NavLink>
           </div>
         </Col>
