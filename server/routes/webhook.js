@@ -132,7 +132,7 @@ router.post("/portOne", async (req, res) => {
         .json({ status: "forgery", message: "위조된 결제시도" });
     }
   } catch (error) {
-    res.status(400).json({ status: "error", error: error, reqBody: req.body });
+    res.status(400).json({ status: "error", error: error });
   }
 });
 
