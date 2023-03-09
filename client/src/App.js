@@ -139,72 +139,66 @@ function App() {
 
   return (
     <>
-      {landingPageWithExpireDate ? (
+      {/* {landingPageWithExpireDate.viewToggle !== false ? (
         <LandingPage
           setLandingPageWithExpireDate={setLandingPageWithExpireDate}
         />
-      ) : (
-        <>
-          <Navbar />
-          <Sidebar />
-          {/* <AnimatePresence> */}
-          <Routes>
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/" element={<AuthHome />} />
-            <Route path="/login" element={<AuthLogin />} />
-            <Route path="/register" element={<AuthRegister />} />
-            <Route path="/about" element={<AuthAboutPage />} />
-            <Route path="/cakes/:ingredient" element={<AuthCakes />} />
-            <Route path="/order/:category" element={<AuthOrder />} />
-            <Route
-              path="/order/detail/:productId"
-              element={<AuthOrderDetail />}
-            />
+      ) : ( */}
+      <>
+        <Navbar />
+        <Sidebar />
+        {/* <AnimatePresence> */}
+        <Routes>
+          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/" element={<AuthHome />} />
+          <Route path="/login" element={<AuthLogin />} />
+          <Route path="/register" element={<AuthRegister />} />
+          <Route path="/about" element={<AuthAboutPage />} />
+          <Route path="/cakes/:ingredient" element={<AuthCakes />} />
+          <Route path="/order/:category" element={<AuthOrder />} />
+          <Route
+            path="/order/detail/:productId"
+            element={<AuthOrderDetail />}
+          />
 
-            <Route path="/user/mypage" element={<PrivateRoute />}>
-              <Route path="/user/mypage" element={<AuthMypage />}>
-                <Route path="order-history" element={<OrderHistoryPage />} />
-                <Route
-                  path="order-cancellation-history"
-                  element={<OrderCancellationHistoryPage />}
-                />
+          <Route path="/user/mypage" element={<PrivateRoute />}>
+            <Route path="/user/mypage" element={<AuthMypage />}>
+              <Route path="order-history" element={<OrderHistoryPage />} />
+              <Route
+                path="order-cancellation-history"
+                element={<OrderCancellationHistoryPage />}
+              />
 
-                <Route path="coupon" element={<CouponPage />} />
-                <Route path="mileage" element={<MileagePage />} />
-                <Route path="edit-profile" element={<EditProfilePage />} />
-                <Route path="unregister" element={<UnregisterPage />} />
-              </Route>
+              <Route path="coupon" element={<CouponPage />} />
+              <Route path="mileage" element={<MileagePage />} />
+              <Route path="edit-profile" element={<EditProfilePage />} />
+              <Route path="unregister" element={<UnregisterPage />} />
             </Route>
+          </Route>
 
-            <Route path="/user/cart" element={<PrivateRoute />}>
-              <Route path="/user/cart" element={<AuthCart />} />
-            </Route>
+          <Route path="/user/cart" element={<PrivateRoute />}>
+            <Route path="/user/cart" element={<AuthCart />} />
+          </Route>
 
-            <Route path="/payment" element={<AuthPayment />} />
-            <Route
-              path="/payment/success"
-              element={<AuthPaymentSuccessPage />}
-            />
-            <Route
-              path="/payment/failure"
-              element={<AuthPaymentFailurePage />}
-            />
+          <Route path="/payment" element={<AuthPayment />} />
+          <Route path="/payment/success" element={<AuthPaymentSuccessPage />} />
+          <Route path="/payment/failure" element={<AuthPaymentFailurePage />} />
 
-            <Route path="/guide/rice" element={<AuthGuideRice />} />
-            <Route path="/guide/bread" element={<AuthGuideBread />} />
-            <Route path="/faq" element={<AuthFAQ />} />
-            <Route path="/contact" element={<AuthContact />} />
-            <Route path="/upload" element={<AuthUploadProduct />} />
-            <Route
-              path="/policy/privacy-policy"
-              element={<AuthPrivacyPolicy />}
-            />
-            <Route path="/policy/terms" element={<AuthTerms />} />
-          </Routes>
-          {/* </AnimatePresence> */}
-          <Footer />
-        </>
-      )}
+          <Route path="/guide/rice" element={<AuthGuideRice />} />
+          <Route path="/guide/bread" element={<AuthGuideBread />} />
+          <Route path="/faq" element={<AuthFAQ />} />
+          <Route path="/contact" element={<AuthContact />} />
+          <Route path="/upload" element={<AuthUploadProduct />} />
+          <Route
+            path="/policy/privacy-policy"
+            element={<AuthPrivacyPolicy />}
+          />
+          <Route path="/policy/terms" element={<AuthTerms />} />
+        </Routes>
+        {/* </AnimatePresence> */}
+        <Footer />
+      </>
+      {/* )} */}
     </>
   );
 }
