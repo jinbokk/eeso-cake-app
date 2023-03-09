@@ -28,9 +28,9 @@ router.post("/portOne", async (req, res) => {
   //     // DB에서 결제되어야 하는 금액 조회
 
   const order = await User.findOne(
-    {},
+    { "history.imp_uid": imp_uid },
     {
-      history: { imp_uid: imp_uid },
+      "history.$": 1,
     }
   ).then((order) => order.history[0]);
 
