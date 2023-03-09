@@ -52,7 +52,7 @@ function RegisterPage() {
 
   const emailRegex =
     /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
-  const emailVerifyCheck = emailRegex.test(email.trim());
+  const emailVerifyCheck = emailRegex.test(email);
 
   const [isEmailWrong, setIsEmailWrong] = useState({
     error: false,
@@ -77,7 +77,7 @@ function RegisterPage() {
       if (isEmailWrong.error) {
         return;
       } else {
-        dispatch(userActions.duplicateEmailCheck(email.trim())).then(
+        dispatch(userActions.duplicateEmailCheck(email)).then(
           (isDuplicateEmail) => {
             setIsDuplicateEmail(isDuplicateEmail);
             if (isDuplicateEmail) {
@@ -112,7 +112,7 @@ function RegisterPage() {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   // 영어 대문자, 소문자, 숫자, 특수문자를 조합한 8자리 이상의 문자
-  const passwordVerifyCheck = passwordRegex.test(password.trim());
+  const passwordVerifyCheck = passwordRegex.test(password);
 
   const [isPasswordWrong, setIsPasswordWrong] = useState({
     error: false,
@@ -178,7 +178,7 @@ function RegisterPage() {
       if (isPhoneNumberWrong.error) {
         return;
       } else {
-        dispatch(userActions.duplicatePhoneNumberCheck(phoneNumber.trim())).then(
+        dispatch(userActions.duplicatePhoneNumberCheck(phoneNumber)).then(
           (isDuplicatePhoneNumber) => {
             setIsDuplicatePhoneNumber(isDuplicatePhoneNumber);
             if (isDuplicatePhoneNumber) {
@@ -262,7 +262,8 @@ function RegisterPage() {
       phoneNumber: phoneNumber,
       address: {
         postcode: address.postcode,
-        fullAddress: address.fullAddress + " " + extraAddress,
+        address:address.address,
+        extraAddress:extraAddress,
       },
       marketing: marketing,
     };
@@ -319,7 +320,7 @@ function RegisterPage() {
                 value={email}
                 placeholder="이메일을 입력해 주세요"
                 onChange={(e) => {
-                  setEmail(e.target.value.trim());
+                  setEmail(e.target.value);
                   setEmailVerify(false);
                   setIsDuplicateEmail(false);
                   setIsEmailWrong({
@@ -330,7 +331,7 @@ function RegisterPage() {
                 onKeyDown={(e) => {
                   e.key === "Enter" && e.preventDefault();
                 }}
-                onBlur={(e) => emailCheckHandler(e.target.value.trim())}
+                onBlur={(e) => emailCheckHandler(e.target.value)}
               />
               <InputGroup.Text className="input_area_button">
                 {!emailVerify ? (
@@ -399,13 +400,13 @@ function RegisterPage() {
                 className="input_area_password"
                 placeholder="비밀번호를 입력해 주세요"
                 onChange={(e) => {
-                  setPassword(e.target.value.trim());
+                  setPassword(e.target.value);
                   setConfirmPassword("");
                 }}
                 onKeyDown={(e) => {
                   e.key === "Enter" && e.preventDefault();
                 }}
-                onBlur={(e) => passwordCheckHandler(e.target.value.trim())}
+                onBlur={(e) => passwordCheckHandler(e.target.value)}
               />
               <InputGroup.Text
                 className="input_area_button"
@@ -442,11 +443,11 @@ function RegisterPage() {
                 autoComplete="new-confirm-password"
                 className="input_area_password"
                 placeholder="비밀번호 확인"
-                onChange={(e) => setConfirmPassword(e.target.value.trim())}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 onKeyDown={(e) => {
                   e.key === "Enter" && e.preventDefault();
                 }}
-                onBlur={(e) => confirmPasswordCheckHandler(e.target.value.trim())}
+                onBlur={(e) => confirmPasswordCheckHandler(e.target.value)}
               />
               <InputGroup.Text
                 className="input_area_button"
@@ -503,13 +504,13 @@ function RegisterPage() {
                 value={name}
                 placeholder="이름을 입력해 주세요"
                 onChange={(e) => {
-                  setName(e.target.value.trim());
+                  setName(e.target.value);
                   setIsNameWrong(false);
                 }}
                 onKeyDown={(e) => {
                   e.key === "Enter" && e.preventDefault();
                 }}
-                onBlur={(e) => nameCheckHandler(e.target.value.trim())}
+                onBlur={(e) => nameCheckHandler(e.target.value)}
               />
               <InputGroup.Text className="input_area_button">
                 {isNameWrong.checkMark ? (
@@ -599,7 +600,7 @@ function RegisterPage() {
                     e.target.value
                       .replace(/[^0-9]/g, "")
                       .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
-                      .replace(/\-{1,2}$/g, "").trim()
+                      .replace(/\-{1,2}$/g, "")
                   );
                   setPhoneNumberVerify(false);
                   setIsDuplicatePhoneNumber(false);
@@ -612,7 +613,7 @@ function RegisterPage() {
                   e.key === "Enter" && e.preventDefault();
                 }}
                 onBlur={(e) => {
-                  phoneNumberCheckHandler(e.target.value.trim());
+                  phoneNumberCheckHandler(e.target.value);
                 }}
               />
               <InputGroup.Text className="input_area_button">
@@ -688,7 +689,7 @@ function RegisterPage() {
             >
               <Form.Control
                 type="text"
-                value={address.fullAddress}
+                value={address.address}
                 readOnly
                 placeholder="기본 주소"
                 style={{ userSelect: "none", cursor: "default" }}

@@ -45,6 +45,23 @@ function unregisterUser(body) {
   };
 }
 
+function editUser(body) {
+  return async (dispatch) => {
+    try {
+      const registerResult = await axios
+        .post("/api/users/edit", body)
+        .then((res) => res.data);
+
+      dispatch({
+        type: "EDIT_USER",
+        payload: registerResult,
+      });
+    } catch (error) {
+      console.log("error occurred : ", error);
+    }
+  };
+}
+
 function duplicateEmailCheck(email) {
   let body = {
     email: email,
@@ -274,22 +291,10 @@ function orderCancel(body) {
   };
 }
 
-// function paymentWebhook(body) {
-//   return async (dispatch) => {
-//     try {
-//       await axios.post("/webhook", body).then((res) => {
-//         console.log("paymentWebhook res.data :::", res.data);
-//         return res.data;
-//       });
-//     } catch (error) {
-//       console.log("error occurred : ", error);
-//     }
-//   };
-// }
-
 export const userActions = {
   registerUser,
   unregisterUser,
+  editUser,
   duplicateEmailCheck,
   duplicatePhoneNumberCheck,
   loginUser,

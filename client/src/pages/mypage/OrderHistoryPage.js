@@ -235,8 +235,8 @@ const OrderHistoryPage = () => {
             .reverse()
             .map((historyItems, index) =>
               historyItems.status === "order_paid" ||
-              historyItems.status ==="order_waiting_for_pickup" ||
-              historyItems.status ==="order_complete" ? (
+              historyItems.status === "order_waiting_for_pickup" ||
+              historyItems.status === "order_complete" ? (
                 <div key={index} className="order_card">
                   <Row className="order_card_status text-start d-flex justify-content-between align-items-center mb-4">
                     <Col

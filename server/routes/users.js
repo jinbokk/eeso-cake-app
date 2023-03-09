@@ -3,6 +3,7 @@ const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
 const bcrypt = require("bcrypt");
+const saltRounds = 10;
 const { mongo } = require("mongoose");
 const ObjectId = require("mongodb").ObjectId;
 
@@ -84,6 +85,46 @@ router.post("/unregister", async (req, res) => {
     res.status(200).json({
       unregisterSuccess: false,
       message: "비밀번호가 틀립니다. 다시 입력해 주세요.",
+    });
+  }
+});
+
+router.post("/edit", async (req, res) => {
+  const { email, password, name, gender, phoneNumber, address, marketing } =
+    req.body;
+
+  console.log("password", password);
+  const salt = await bcrypt.genSalt(saltRounds);
+  console.log("salt", salt);
+  const bcryptPassword = await bcrypt.hash(password, salt);
+  console.log("bcryptPassword", bcryptPassword);
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { email: email },
+      {
+        $set: {
+          password: bcryptPassword,
+          name: name,
+          gender: gender,
+          phoneNumber: phoneNumber,
+          address: address,
+          marketing: marketing,
+        },
+      },
+      { new: true }
+    );
+
+    await user.save().then((user) => {
+      return res.status(200).json({
+        registerSuccess: true,
+      });
+    });
+  } catch (error) {
+    return res.status(400).json({
+      registerSuccess: false,
+      message: "회원가입에 실패하였습니다.",
+      error: error,
     });
   }
 });

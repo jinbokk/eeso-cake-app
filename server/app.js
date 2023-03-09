@@ -52,6 +52,7 @@ app.use("/api/users", require("./routes/users"));
 app.use("/api/products", require("./routes/products"));
 app.use("/api/iamport", require("./routes/iamport"));
 app.use("/api/instagram", require("./routes/instagram"));
+app.use("/api/timeTree", require("./routes/timeTree"));
 app.use("/webhook", require("./routes/webhook"));
 
 // catch 404 and forward to error handler

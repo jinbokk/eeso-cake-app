@@ -119,19 +119,6 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
 
             dispatch(userActions.orderComplete(body));
 
-            // dispatch(userActions.paymentWebhook(res)).then((res) => {
-            //   console.log("res::::::", res);
-            // });
-
-            // axios
-            //   .post("https://eeso-cake.com/webhook", {
-            //     data: {
-            //       imp_uid: res.imp_uid,
-            //       merchant_uid: res.merchant_uid,
-            //       //기타 필요한 데이터가 있으면 추가 전달
-            //     },
-            //   })
-
             let checkedCartIds = authUserDataWithCheckedCart.cart.map(
               (item) => item._id
             );

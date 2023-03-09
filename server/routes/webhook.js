@@ -34,8 +34,6 @@ router.post("/portOne", async (req, res) => {
     }
   );
 
-  console.log("order:::", order);
-
   const amountToBePaid = order.amount; // 결제 되어야 하는 금액
 
   // // 결제 검증하기
@@ -109,6 +107,10 @@ router.post("/portOne", async (req, res) => {
       .status(400)
       .json({ status: "forgery", message: "위조된 결제시도" });
   }
+});
+
+router.post("/timeTree", async (req, res) => {
+  res.status(200).json({ success: true, testData: req.body });
 });
 
 module.exports = router;

@@ -8,7 +8,7 @@ export default function Postcode({ setAddress }) {
 
   const handleComplete = (data) => {
     let postcode = data.zonecode;
-    let fullAddress = data.address;
+    let address = data.address;
     let extraAddress = "";
 
     if (data.addressType === "R") {
@@ -19,13 +19,13 @@ export default function Postcode({ setAddress }) {
         extraAddress +=
           extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
       }
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+      address += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    // console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    // console.log(address); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     setAddress({
       postcode: postcode,
-      fullAddress: fullAddress,
+      address: address,
     });
   };
 

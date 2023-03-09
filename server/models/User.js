@@ -6,16 +6,6 @@ const dayjs = require("dayjs");
 require("dayjs/locale/ko");
 dayjs.locale("ko");
 
-// const AddressSchema = mongoose.Schema({
-//   postcode: String,
-//   fullAddress: String,
-// });
-
-const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-
-// const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 ;
-// const selectedTime = new Date(date.getTime() + timezoneOffset);
-
 const userSchema = mongoose.Schema({
   email: {
     type: String,

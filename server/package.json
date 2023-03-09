@@ -8,6 +8,7 @@
     "dev": "concurrently \"npm run backend\" \"cd ../client && npm run start\""
   },
   "dependencies": {
+    "@timetreeapp/web-api": "^3.0.1",
     "axios": "^1.3.4",
     "bcrypt": "^5.1.0",
     "cloudinary": "^1.34.0",
