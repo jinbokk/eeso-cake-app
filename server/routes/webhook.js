@@ -56,6 +56,7 @@ router.post("/portOne", async (req, res) => {
       //   });
       //   res.send({ status: "vbankIssued", message: "가상계좌 발급 성공" });
       //   break;
+      
       case "cancelled": // 결제 취소
         try {
           await User.findOneAndUpdate(
