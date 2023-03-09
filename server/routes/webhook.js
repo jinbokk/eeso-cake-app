@@ -9,7 +9,7 @@ const {
 } = require("../util/iamportGenerateAccessToken");
 
 // "/webhook"에 대한 POST 요청을 처리
-router.post("/", async (req, res) => {
+router.post("/portOne", async (req, res) => {
   try {
     // req의 body에서 imp_uid, merchant_uid 추출
     const { imp_uid, merchant_uid } = req.body;
