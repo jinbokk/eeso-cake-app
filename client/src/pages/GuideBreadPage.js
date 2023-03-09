@@ -80,8 +80,7 @@ const GuideBreadPage = () => {
                 합니다.
               </div>
               <div className="opacity-50">
-                부득이 배송을 원하시는 경우 퀵 배송으로만 받으실
-                수 있습니다.
+                부득이 배송을 원하시는 경우 퀵 배송으로만 받으실 수 있습니다.
               </div>
               <div className="opacity-50">
                 ( 배송비 별도 9,000원~2만원이상 )
@@ -127,9 +126,9 @@ const GuideBreadPage = () => {
             <div className="mb-3">
               <div>&#10004; 100% 똑같은 색감이 아닐 수 있습니다.</div>
               <div className="opacity-50">
-                보내주시는 사진을 참고하여 최대한 동일한 색감으로 제작 해 드리지만
-                디스플레이 기기에 따라 사진과 실제 케이크의 색상이
-                다를 수 있다는 것을 양해 부탁드립니다.
+                보내주시는 사진을 참고하여 최대한 동일한 색감으로 제작 해
+                드리지만 디스플레이 기기에 따라 사진과 실제 케이크의 색상이 다를
+                수 있다는 것을 양해 부탁드립니다.
               </div>
             </div>
 
@@ -139,8 +138,8 @@ const GuideBreadPage = () => {
                 보관해 주셔야 합니다.
               </div>
               <div className="opacity-50">
-                30분 이상 상온 노출 시 크림 갈라짐 및 색 번짐이 발생할 수 있으며,
-                이에 대한 책임은 지지 않습니다.  여름철 이동 시 아이스팩
+                30분 이상 상온 노출 시 크림 갈라짐 및 색 번짐이 발생할 수
+                있으며, 이에 대한 책임은 지지 않습니다. 여름철 이동 시 아이스팩
                 구매를 추천드립니다. ( 개당 1,000원)
               </div>
             </div>
@@ -273,7 +272,7 @@ const GuideBreadPage = () => {
               <div className="d-flex justify-content-center align-items-center mb-3">
                 <span className="mx-1">옵션</span> <MdLooksTwo size="24" />
               </div>
-              <div> 투명 아크릴 패키지</div>
+              <div> 투명 2단 상자 패키지</div>
             </div>
           </Col>
         </Row>
@@ -296,7 +295,7 @@ const GuideBreadPage = () => {
               style={{ color: "var(--bg-accent)" }}
             >
               <div>전화 예약 : 0507 - 1424 - 1945</div>
-              <div>카카오톡 : leeso0904 @이소케이크</div>
+              <div>카카오톡 채널 : @이소케이크</div>
             </div>
 
             <div className="opacity-50">

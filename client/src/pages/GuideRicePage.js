@@ -320,7 +320,7 @@ const GuideRicePage = () => {
               <div className="d-flex justify-content-center align-items-center mb-3">
                 <span className="mx-1">옵션</span> <MdLooksTwo size="24" />
               </div>
-              <div> 투명 아크릴 패키지</div>
+              <div> 투명 2단 상자 패키지</div>
             </div>
           </Col>
         </Row>
@@ -341,7 +341,7 @@ const GuideRicePage = () => {
               style={{ color: "var(--bg-accent)" }}
             >
               <div>전화 예약 : 0507 - 1424 - 1945</div>
-              <div>카카오톡 : leeso0904 @이소케이크</div>
+              <div>카카오톡 채널 : @이소케이크</div>
             </div>
 
             <div className="opacity-50">
