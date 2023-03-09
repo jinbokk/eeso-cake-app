@@ -25,8 +25,6 @@ router.post("/portOne", async (req, res) => {
 
   const paymentData = getPaymentData.data.response; // 조회한 결제 정보
 
-  console.log("paymentData:::", paymentData);
-
   //     // DB에서 결제되어야 하는 금액 조회
 
   const order = await User.findOne(
@@ -35,6 +33,8 @@ router.post("/portOne", async (req, res) => {
       history: { $elemMatch: { imp_uid: imp_uid } },
     }
   ).then((order) => order.history[0]);
+
+  console.log("order:::", order);
 
   const amountToBePaid = order.amount; // 결제 되어야 하는 금액
 
