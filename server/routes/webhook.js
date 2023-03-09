@@ -32,7 +32,7 @@ router.post("/portOne", async (req, res) => {
     {
       "history.$": 1,
     }
-  ).then((order) => order.history[0]);
+  );
 
   console.log("order:::", order);
 
