@@ -112,27 +112,20 @@ router.get("/cakes/:ingredient", async (req, res) => {
 });
 
 // ORDER PAGE
-router.get("/order", async (req, res) => {
-  // let { ingredient } = req.params;
+router.get("/order/:category", async (req, res) => {
+  let { category } = req.params;
 
-  // let query;
-  // if (ingredient === "all") {
-  //   query = {
-  //     price: { $ne: null },
-  //   };
-  // } else {
-  //   query = {
-  //     ingredient: ingredient,
-  //   };
-  // }
+  console.log("category", category);
 
   let query = {
     price: { $ne: 0 },
   };
 
+  category !== "all" ? (query.ingredient = category) : null;
+
   const option = {
     page: parseInt(req.query.page) || parseInt(1),
-    limit: 30,
+    limit: 8,
   };
 
   const results = await Product.paginate(query, option);

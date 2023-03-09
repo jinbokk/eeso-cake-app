@@ -153,7 +153,7 @@ const Navbar = () => {
               />
 
               <NavLink
-                to="/order"
+                to="/order/all"
                 style={({ isActive }) => (isActive ? activeStyle : null)}
               >
                 <div className="nav_menu">ORDER</div>

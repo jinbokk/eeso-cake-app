@@ -155,7 +155,7 @@ function App() {
             <Route path="/register" element={<AuthRegister />} />
             <Route path="/about" element={<AuthAboutPage />} />
             <Route path="/cakes/:ingredient" element={<AuthCakes />} />
-            <Route path="/order" element={<AuthOrder />} />
+            <Route path="/order/:category" element={<AuthOrder />} />
             <Route
               path="/order/detail/:productId"
               element={<AuthOrderDetail />}

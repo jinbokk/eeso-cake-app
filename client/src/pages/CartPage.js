@@ -576,7 +576,7 @@ const CartPage = () => {
                 lg={4}
                 className="text-center align-items-center py-2"
               >
-                <NavLink to="/order" style={{ width: "100%" }}>
+                <NavLink to="/order/all" style={{ width: "100%" }}>
                   <ShoppingButton variant="outlined">
                     <div>쇼핑하러 가기</div>
                   </ShoppingButton>

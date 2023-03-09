@@ -17,7 +17,9 @@ const ContactPage = () => {
         <Row className="align-items-center">
           <Col lg={7}>
             <Row className="mb-4">
-              <div className="fw-bold mt-4">LOCATION / HOURS</div>
+              <div style={{ fontSize: "1.4rem" }} className="fw-bold mt-4">
+                공방 위치 및 운영 시간 안내
+              </div>
               <div>
                 <a
                   href="https://map.naver.com/v5/search/%EC%9D%B4%EC%86%8C%EC%BC%80%EC%9D%B4%ED%81%AC/place/661959504?c=14147586.5818935,4542283.8149681,16.63,0,0,0,dh&placePath=%3Fentry%253Dbmp"
@@ -79,7 +81,7 @@ const ContactPage = () => {
               >
                 @이소케이크
               </a>
-              로 진행 중 입니다
+              에서 진행하고 있습니다
             </div>
             <div>이소케이크는 언제나 고객님의 연락을 기다리고 있습니다</div>
           </Col>

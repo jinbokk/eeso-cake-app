@@ -1,5 +1,5 @@
 import React from "react";
-import ErrorAnimation from "../animations/ErrorAnimation";
+import ErrorAnimation from "../animations/HelloAnimation";
 
 import { NavLink } from "react-router-dom";
 

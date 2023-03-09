@@ -7,8 +7,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { AiOutlineSmile } from "react-icons/ai";
 import { motion } from "framer-motion";
+import HelloAnimation from "../animations/HelloAnimation";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const AboutPage = () => {
+  const { width } = useWindowDimensions();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: "20px" }}
@@ -18,6 +22,16 @@ const AboutPage = () => {
       {/* <img src="/public/images/about.png" alt="" className="about_bg"/> */}
       <Container className="about_container_top">
         <Row className="about_text_container_top">
+          {width < 992 ? (
+            <Col lg={6} className="p-5 position-absolute opacity-25">
+              <HelloAnimation />
+            </Col>
+          ) : (
+            <Col lg={6} className="p-5">
+              <HelloAnimation />
+            </Col>
+          )}
+
           <Col lg={6} className="about_text_container">
             <h2 className="text-center m-5">안녕하세요, 이소케이크 입니다</h2>
             <div className="mb-4">
@@ -38,7 +52,7 @@ const AboutPage = () => {
               <span className="text_accent">
                 어린이집 / 유치원 케이크, 피규어 케이크, 포토 케이크,
                 <br />
-                숫자 타르트, 앙금 플라워 떡케이크, 생화 및 웨딩 케이크 등
+                타르트, 앙금 플라워 떡케이크, 생화 및 웨딩 케이크 등
               </span>
               <br />
               남녀노소 구분없이 모두가 만족하는

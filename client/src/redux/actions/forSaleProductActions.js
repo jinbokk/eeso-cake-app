@@ -1,10 +1,10 @@
 import axios from "axios";
 
-function getForSaleProducts() {
+function getForSaleProducts(category) {
   return async (dispatch) => {
     dispatch({ type: "GET_FORSALE_PRODUCTS_REQUEST" });
 
-    axios.get(`/api/products/order`).then((res) => {
+    axios.get(`/api/products/order/${category}`).then((res) => {
       dispatch({
         type: "GET_FORSALE_PRODUCTS_SUCCESS",
         payload: {

@@ -123,7 +123,7 @@ const LandingPage = (props) => {
                 </div>
 
                 {/* <NavLink
-                  to="/order"
+                  to="/order/all"
                   className="landing_button ease_in_bottom_2"
                   onClick={() => props.setIsLandingPageView(true)}
                 >

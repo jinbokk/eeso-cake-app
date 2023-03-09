@@ -220,8 +220,8 @@ export default function UploadProductPage() {
                             <ToggleButton value="rice">떡케이크</ToggleButton>
                             <ToggleButton value="bread">빵케이크</ToggleButton>
                             <ToggleButton value="tart">타르트</ToggleButton>
-                            <ToggleButton value="event">
-                              이벤트 케이크
+                            <ToggleButton value="season">
+                              시즌 케이크
                             </ToggleButton>
                           </ToggleButtonGroup>
                         )}

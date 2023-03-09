@@ -41,7 +41,7 @@ const GuideRicePage = () => {
           <Col className="text-center">
             <h1 className="mb-5 guide_title">떡 케이크 가이드</h1>
             <h3 className="guide_sub_title">
-              설기떡 위에 앙금으로 만든 꽃을 올린 아름다운 케이크
+              설기떡 위에 아름다운 앙금 꽃을 올린 케이크
             </h3>
           </Col>
         </Row>

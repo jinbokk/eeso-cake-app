@@ -87,13 +87,13 @@ const scheduledTask = require("./util/scheduledTask");
 app.listen(8000, function () {
   // 5초마다 mongoDB 탐색하여 document 갱신
   schedule.scheduleJob("*/5 * * * * *", function () {
-    console.log("scheduler running / " + new Date());
+    // console.log("scheduler running / " + new Date());
     scheduledTask.update_order_status();
   });
 
   // 매달 1일 토큰 갱신
   schedule.scheduleJob("0 0 1 * *", function () {
-    console.log("Instagram Token has been updated");
+    // console.log("Instagram Token has been updated");
     scheduledTask.renew_instagramAPI_token();
   });
 });

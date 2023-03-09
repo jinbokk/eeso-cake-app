@@ -240,7 +240,6 @@
 @media screen and (max-width: 992px) {
   .main_banner_container {
     height: 75vh;
-    background-size: cover;
     background-position: top left -150px;
   }
 

@@ -109,7 +109,7 @@ const NavbarAside = (props) => {
 
               <Accordion.Item eventKey="4">
                 <NavLink
-                  to="/order"
+                  to="/order/all"
                   style={({ isActive }) => (isActive ? activeStyle : null)}
                   onClick={() => setToggleHandler(false)}
                 >

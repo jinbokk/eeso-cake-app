@@ -4,7 +4,7 @@
   height: calc(100vh - var(--nav-height));
 }
 
-.about_container_top::before {
+/* .about_container_top::before {
   position: absolute;
   top: 0;
   left: 0;
@@ -14,7 +14,7 @@
   background-image: url("/public/images/about.png");
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */
 
 @media screen and (max-width: 992px) {
   .about_container_top::before {
