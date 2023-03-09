@@ -30,7 +30,7 @@ router.post("/portOne", async (req, res) => {
   const order = await User.findOne(
     {},
     {
-      history: { $elemMatch: { imp_uid: imp_uid } },
+      history: { imp_uid: imp_uid },
     }
   ).then((order) => order.history[0]);
 
