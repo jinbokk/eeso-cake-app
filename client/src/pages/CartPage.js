@@ -254,7 +254,7 @@ const CartPage = () => {
                                       : null}
                                     {item.size === "2단 (1호+3호)"
                                       ? " (+45,000원)"
-                                      : null}
+                                      : null}v
                                   </span>
                                 </div>
                               ) : null}

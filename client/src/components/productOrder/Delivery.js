@@ -122,7 +122,7 @@ const Delivery = ({ control, cartItems, setError }) => {
       parseInt(dayjs(time).format("HH")) ===
       parseInt(dayjs(selectedTime).format("HH")) - 12
     ) {
-      let changedTime = dayjs(selectedTime).set("hour", 12).set("minute", 0);
+      let changedTime = dayjs(selectedTime).set("hour", 12).set("minute", 0).set("second", 0);
       selectedTime = changedTime;
       setTime(changedTime);
     } else {
@@ -135,7 +135,7 @@ const Delivery = ({ control, cartItems, setError }) => {
     ) {
       let changedTime = dayjs(selectedTime)
         .set("hour", parseInt(openTime + 1))
-        .set("minute", 0);
+        .set("minute", 0).set("second", 0);
       selectedTime = changedTime;
       setTime(changedTime);
     } else {

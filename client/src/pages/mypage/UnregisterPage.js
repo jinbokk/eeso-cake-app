@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { useOutletContext } from "react-router";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
+import { motion } from "framer-motion";
 
 const UnregisterPage = () => {
   const [title, setTitle] = useOutletContext();
@@ -59,59 +60,67 @@ const UnregisterPage = () => {
   };
 
   return (
-    <Container>
-      <Form className="form_container" onSubmit={unregisterHandler}>
-        <div>아이디 (이메일)</div>
-        <Form.Group
-          className="mb-3 d-flex align-items-center"
-          controlId="Email"
-        >
-          <InputGroup style={{ width: "300px", borderRight: "1px solid pink" }}>
-            <Form.Control
-              value={authUserData && authUserData.email}
-              readOnly
-              disabled
-            />
-          </InputGroup>
-        </Form.Group>
-
-        <div>비밀번호</div>
-        <Form.Group
-          className="mb-3 d-flex align-items-center"
-          controlId="Password"
-        >
-          <InputGroup style={{ width: "300px" }}>
-            <Form.Control
-              type={passwordType}
-              autoComplete="on"
-              className="input_area_password"
-              placeholder="비밀번호를 입력해 주세요."
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <InputGroup.Text
-              className="input_area_button"
-              onClick={togglePasswordVisibility}
+    <motion.div
+      initial={{ opacity: 0, y: "20px" }}
+      animate={{ opacity: 1, y: 0 }}
+      // exit={{ opacity: 0 }}
+    >
+      <Container className="d-flex justify-content-center align-items-center">
+        <Form className="form_container" onSubmit={unregisterHandler}>
+          <div>아이디 (이메일)</div>
+          <Form.Group
+            className="mb-3 d-flex align-items-center"
+            controlId="Email"
+          >
+            <InputGroup
+              style={{ width: "300px", borderRight: "1px solid pink" }}
             >
-              {password !== "" ? (
-                visible ? (
-                  <AiOutlineEyeInvisible />
-                ) : (
-                  <AiOutlineEye />
-                )
-              ) : null}
-            </InputGroup.Text>
-          </InputGroup>
-        </Form.Group>
+              <Form.Control
+                value={authUserData && authUserData.email}
+                readOnly
+                disabled
+              />
+            </InputGroup>
+          </Form.Group>
 
-        <Button
-          className="login_button mt-5"
-          style={{ width: "300px" }}
-          type="submit"
-        >
-          회원 탈퇴
-        </Button>
-      </Form>
-    </Container>
+          <div>비밀번호</div>
+          <Form.Group
+            className="mb-3 d-flex align-items-center"
+            controlId="Password"
+          >
+            <InputGroup style={{ width: "300px" }}>
+              <Form.Control
+                type={passwordType}
+                autoComplete="on"
+                className="input_area_password"
+                placeholder="비밀번호를 입력해 주세요."
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputGroup.Text
+                className="input_area_button"
+                onClick={togglePasswordVisibility}
+              >
+                {password !== "" ? (
+                  visible ? (
+                    <AiOutlineEyeInvisible />
+                  ) : (
+                    <AiOutlineEye />
+                  )
+                ) : null}
+              </InputGroup.Text>
+            </InputGroup>
+          </Form.Group>
+
+          <Button
+            className="login_button mt-5"
+            style={{ width: "300px" }}
+            type="submit"
+          >
+            회원 탈퇴
+          </Button>
+        </Form>
+      </Container>
+    </motion.div>
   );
 };
 

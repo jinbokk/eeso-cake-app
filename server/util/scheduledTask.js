@@ -45,8 +45,8 @@ exports.update_order_status = async () => {
         {
           "elem.status": "order_making",
           "elem.deliveryDateTime.dateType": {
-            $gt: dayjs().set("hour", 0).set("minute", 0).format(),
-            $lt: dayjs().set("hour", 23).set("minute", 59).format(),
+            $gt: dayjs().set("hour", 0).set("minute", 0).set("second", 0).format(),
+            $lt: dayjs().set("hour", 23).set("minute", 59).set("second",59).format(),
           },
         },
       ],

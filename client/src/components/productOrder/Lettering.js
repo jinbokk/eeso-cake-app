@@ -70,7 +70,12 @@ const Lettering = ({ control, cartItems }) => {
     <>
       <div className="d-block option_menu_section">
         <div className="d-flex justify-content-between align-items-center">
-          <span className="option_menu_text">케이크 레터링</span>
+          <di className="d-flex flex-column align-items-start justify-content-center">
+            <div className="option_menu_text">케이크 레터링</div>
+            <div className="option_menu_text disabled_text">
+              케이크 판 위에 작성됩니다
+            </div>
+          </di>
           <div className="controller_container">
             <Controller
               control={control}

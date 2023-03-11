@@ -1,0 +1,36 @@
+.history_search_container {
+  background-color: #a1887f3d;
+  padding: 1rem 0;
+  border-radius: 15px;
+}
+
+.history_search_picker {
+  min-height: 35px !important;
+}
+
+.history_search_picker input {
+  font-size: 0.85rem !important;
+  text-align: center;
+  width: fit-content !important;
+}
+
+.shortcut_button {
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: 0.15s;
+}
+
+.shortcut_button:hover {
+  background-color: #a1887f;
+  border-radius: 30px;
+  transition: 0.15s;
+}
+
+.ant-picker-cell-inner::before {
+  border: 1px solid #a1887f !important;
+}
+
+.ant-picker-today-btn {
+  color: #a1887f !important;
+}

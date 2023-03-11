@@ -6,9 +6,13 @@ import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { Col, Row } from "react-bootstrap";
+
+dayjs.locale("ko");
 
 const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
   const dispatch = useDispatch();
@@ -89,7 +93,7 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
         {
           pg: "danal_tpay", // PG사
           pay_method: pay_method, // 결제수단
-          merchant_uid: `${new Date().getTime()}`, // 주문번호
+          merchant_uid: `${parseInt(dayjs().valueOf())}`, // 주문번호 13자리의 숫자
           name: name, // 주문명
           amount: amount, // 결제금액
           buyer_name: buyer_name, // 구매자 이름
@@ -99,7 +103,7 @@ const Payment = ({ pay_method, authUserDataWithCheckedCart, pickupInfo }) => {
           buyer_postcode: buyer_postcode, // 구매자 우편번호
           m_redirect_url: "https://www.eeso-cake.com/payment/success",
         },
-         (res) => {
+        (res) => {
           /* 3. 콜백 함수 정의하기 */
           const { success, error_msg } = res;
           if (success) {
