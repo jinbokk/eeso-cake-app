@@ -102,9 +102,10 @@
 
 .order_cancel_button {
   font-size: 0.8rem;
+  font-weight: bold;
   padding: 8px;
   margin: 0 10px;
-  background-color: rgba(99, 48, 0, 0.2);
+  background-color: #a1887f9c;
   color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   cursor: pointer;

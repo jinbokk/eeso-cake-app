@@ -275,7 +275,6 @@ function orderComplete(body) {
 }
 
 function orderCancel(body) {
-  console.log("body::::", body);
   return async (dispatch) => {
     try {
       const orderCancelResult = await axios
@@ -288,6 +287,19 @@ function orderCancel(body) {
     } catch (error) {
       console.log("error occurred : ", error);
     }
+  };
+}
+
+function searchHistory(dateRange) {
+  return async (dispatch) => {
+    console.log("dateRange",dateRange)
+    try {
+      const searchHistoryResult = await axios.get(
+        `/api/users/search-history?start=${dateRange.start}&end=${dateRange.end}`
+      );
+
+      return searchHistoryResult;
+    } catch (error) {}
   };
 }
 
@@ -306,5 +318,6 @@ export const userActions = {
   decreaseQuantity,
   orderComplete,
   orderCancel,
+  searchHistory,
   // paymentWebhook,
 };

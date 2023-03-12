@@ -8,6 +8,12 @@
   min-height: 35px !important;
 }
 
+@media screen and (max-width: 992px) {
+  .history_search_picker {
+    margin-bottom: 15px;
+  }
+}
+
 .history_search_picker input {
   font-size: 0.85rem !important;
   text-align: center;
@@ -19,12 +25,17 @@
   cursor: pointer;
   border-radius: 30px;
   transition: 0.15s;
+  margin: 0 5px;
 }
 
 .shortcut_button:hover {
   background-color: #a1887f;
   border-radius: 30px;
   transition: 0.15s;
+}
+
+.shortcut_button.active {
+  background-color: #a1887f9c;
 }
 
 .ant-picker-cell-inner::before {

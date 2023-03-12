@@ -596,4 +596,52 @@ router.post("/order-cancel", auth, async (req, res) => {
   }
 });
 
+router.get("/search-history", auth, async (req, res) => {
+  try {
+    let { start, end, searchIndex } = req.query;
+
+    const startFormat = dayjs(start)
+      .set("hour", 0)
+      .set("minute", 0)
+      .set("second", 0)
+      .format();
+
+    const endFormat = dayjs(end)
+      .set("hour", 23)
+      .set("minute", 59)
+      .set("second", 59)
+      .format();
+
+    const user = await User.findById({
+      _id: req.user._id,
+    });
+
+    console.log("user", user);
+
+    if(searchIndex === "paid") {
+      const result = user.history.filter((item) => {
+        return (
+          startFormat < dayjs(item.paymentDate).format() &&
+          dayjs(item.paymentDate).format() < endFormat
+        );
+      });
+    } else {
+      const result = user.history.filter((item) => {
+        return (
+          startFormat < dayjs(item.paymentDate).format() &&
+          dayjs(item.paymentDate).format() < endFormat
+        );
+      });
+    }
+
+
+
+    console.log("result", result);
+
+    return res.status(200).json({ success: true, result: result });
+  } catch (error) {
+    if (error) res.status(400).json({ success: false, error: error });
+  }
+});
+
 module.exports = router;

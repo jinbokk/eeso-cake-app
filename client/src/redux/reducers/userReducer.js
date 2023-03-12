@@ -49,6 +49,12 @@ const userReducer = (state = initialState, action) => {
         authUserData: { ...state.authUserData, cart: payload },
       };
 
+    case "PAYMENT_HISTORY_SEARCH":
+      return {
+        ...state,
+        authUserData: { ...state.authUserData, history: payload },
+      };
+
     default:
       return state;
   }

@@ -78,7 +78,7 @@ const OrderCancellationHistoryPage = () => {
         </Row>
 
         <Row>
-          <HistorySearch />
+          <HistorySearch searchIndex={"cancel"} />
         </Row>
 
         <Row className="my-5">
@@ -123,11 +123,11 @@ const OrderCancellationHistoryPage = () => {
                           </div>
 
                           <div className="order_card_info">
-                            결제일자{" "}
+                            취소일자{" "}
                             {/* {format(new Date(historyItems.paymentDate), "YYYY-MM-DD", {
                       locale: ko,
                     })} */}
-                            {historyItems.paymentDate.slice(0, 10)}
+                            {historyItems.cancelInfo.cancelledDate.slice(0, 10)}
                             {/* DB상에 결제시간 그대로 들어 있음 */}
                           </div>
                         </Col>
@@ -314,7 +314,7 @@ const OrderCancellationHistoryPage = () => {
                               )}
 
                               <Row className="pt-3">
-                                {historyItems.status === "order_paid" ||
+                                {/* {historyItems.status === "order_paid" ||
                                 "order_making" ||
                                 "order_waiting_for_pickup" ||
                                 "order_complete" ? (
@@ -338,7 +338,7 @@ const OrderCancellationHistoryPage = () => {
                                   >
                                     결제영수증 조회
                                   </Col>
-                                ) : null}
+                                ) : null} */}
 
                                 {historyItems.status === "order_cancelled" ? (
                                   <Col
