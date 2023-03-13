@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Table } from "react-bootstrap";
 import { useOutletContext } from "react-router";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
@@ -189,11 +189,12 @@ const OrderHistoryPage = () => {
                         className={width < 992 ? "mt-4" : ""}
                       >
                         <div className="order_card_info">
-                          주문번호 {historyItems.merchant_uid}
+                          <span className="bubble">주문번호</span>{" "}
+                          {historyItems.merchant_uid}
                         </div>
 
                         <div className="order_card_info">
-                          결제일자{" "}
+                          <span className="bubble">결제일자</span>{" "}
                           {/* {format(new Date(historyItems.paymentDate), "YYYY-MM-DD", {
                       locale: ko,
                     })} */}
@@ -458,109 +459,143 @@ const OrderHistoryPage = () => {
 
         <Row className="my-5 info_text">
           <Row
-            className="justify-content-center text-center pb-4"
-            style={{ fontSize: "1.5rem", fontWeight: "bold" }}
+            className="justify-content-center text-center mb-4"
+            style={{ fontSize: "1.7rem", fontWeight: "bold" }}
           >
             주문상태 안내
           </Row>
-          <Row className="mb-3">
-            <Col
-              lg={"auto"}
-              xs={"auto"}
-              className="d-flex justify-content-center align-items-center"
-            >
-              <RxDot color="gray" />
-            </Col>
-            <Col>
-              <div style={{ lineHeight: "2rem" }}>
-                <span className="text_emphasis">결제 완료</span> 상태의 주문의
-                경우 24시간 이내 주문 취소가 가능합니다
-              </div>
-            </Col>
-          </Row>
 
-          <Row className="mb-3">
-            <Col
-              lg={"auto"}
-              xs={"auto"}
-              className="d-flex justify-content-center align-items-center"
-            >
-              <RxDot color="gray" />
-            </Col>
-            <Col>
-              <div style={{ lineHeight: "2rem" }}>
-                결제일시 기준으로, 24시간 이후{" "}
-                <span className="text_emphasis">제작중</span> 상태로 자동
-                변경됩니다
-              </div>
-            </Col>
-          </Row>
+          {width < 992 ? (
+            <Table className="order_history_table">
+              <thead className="text-center">
+                <tr style={{ color: "var(--bg-accent)" }}>
+                  <th style={{ width: "25%" }}>결제 완료</th>
+                  <th style={{ width: "25%" }}>제작중</th>
+                </tr>
+              </thead>
 
-          <Row className="mb-3">
-            <Col
-              lg={"auto"}
-              xs={"auto"}
-              className="d-flex justify-content-center align-items-center"
-            >
-              <RxDot color="gray" />
-            </Col>
-            <Col>
-              <div style={{ lineHeight: "2rem" }}>
-                <span className="text_emphasis">제작중</span> 상태 주문의 경우,
-                <span className="text_underline">
-                  홈페이지 내 주문 변경 및 취소가 불가
-                </span>
-                합니다. (관련 문의 : 카카오톡
-                <a
-                  href="https://pf.kakao.com/_ZyKnd"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mx-1 link"
-                >
-                  @이소케이크
-                </a>
-                채널)
-              </div>
-            </Col>
-          </Row>
+              <tbody>
+                <tr>
+                  <td>
+                    <div>
+                      주문 및 결제가 완료된 상태입니다. 결제일시 기준으로 24시간
+                      내에 주문 취소 및 즉시 환불 처리가 가능합니다
+                    </div>
+                  </td>
+                  <td>
+                    <div style={{ lineHeight: "2rem" }}>
+                      <div>
+                        결제일시 기준으로 24시간 이후{" "}
+                        <span className="text_emphasis">제작중</span> 상태로
+                        자동 변경되며,{" "}
+                        <span className="text_underline">
+                          홈페이지 내 주문 변경 및 취소가 불가
+                        </span>
+                        합니다.
+                        <br></br>
+                        관련 문의 : 카카오톡{" "}
+                        <a
+                          href="https://pf.kakao.com/_ZyKnd"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="link"
+                        >
+                          @이소케이크
+                        </a>{" "}
+                        채널
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
 
-          <Row className="mb-3">
-            <Col
-              lg={"auto"}
-              xs={"auto"}
-              className="d-flex justify-content-center align-items-center"
-            >
-              <RxDot color="gray" />
-            </Col>
-            <Col>
-              <div style={{ lineHeight: "2rem" }}>
-                수령 당일 날, <span className="text_emphasis">픽업 대기</span>{" "}
-                상태로 자동 변경됩니다
-              </div>
-            </Col>
-          </Row>
+              <thead className="text-center">
+                <tr style={{ color: "var(--bg-accent)" }}>
+                  <th style={{ width: "25%" }}>픽업 대기</th>
+                  <th style={{ width: "25%" }}>픽업 완료</th>
+                </tr>
+              </thead>
 
-          <Row>
-            <Col
-              lg={"auto"}
-              xs={"auto"}
-              className="d-flex justify-content-center align-items-center"
-            >
-              <RxDot color="gray" />
-            </Col>
-            <Col>
-              <div style={{ lineHeight: "2rem" }}>
-                예약하신 수령시간 이후,{" "}
-                <span className="text_emphasis">픽업 완료</span> 상태로 자동
-                변경됩니다
-              </div>
-            </Col>
-          </Row>
+              <tbody>
+                <tr>
+                  <td>
+                    <div style={{ lineHeight: "2rem" }}>
+                      수령 당일,{" "}
+                      <span className="text_emphasis">픽업 대기</span> 상태로
+                      자동 변경됩니다
+                    </div>
+                  </td>
+                  <td>
+                    <div style={{ lineHeight: "2rem" }}>
+                      예약하신 수령시간 이후,{" "}
+                      <span className="text_emphasis">픽업 완료</span> 상태로
+                      자동 변경됩니다
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+          ) : (
+            <Table className="order_history_table">
+              <thead className="text-center">
+                <tr style={{ color: "var(--bg-accent)" }}>
+                  <th style={{ width: "25%" }}>결제 완료</th>
+                  <th style={{ width: "25%" }}>제작중</th>
+                  <th style={{ width: "25%" }}>픽업 대기</th>
+                  <th style={{ width: "25%" }}>픽업 완료</th>
+                </tr>
+              </thead>
 
-          {/* <div className="mb-4">
-            * 주문하신 제품은 픽업 4일전까지 레터링 문구만 수정 가능합니다
-          </div>
-          <div>* 레터링 외 수정사항은 취소 후 재주문 부탁드립니다.</div> */}
+              <tbody>
+                <tr>
+                  <td>
+                    <div>
+                      주문 및 결제가 완료된 상태입니다. 결제일시 기준으로 24시간
+                      내에 주문 취소 및 즉시 환불 처리가 가능합니다
+                    </div>
+                  </td>
+                  <td>
+                    <div style={{ lineHeight: "2rem" }}>
+                      <div>
+                        결제일시 기준으로 24시간 이후{" "}
+                        <span className="text_emphasis">제작중</span> 상태로
+                        자동 변경되며,{" "}
+                        <span className="text_underline">
+                          홈페이지 내 주문 변경 및 취소가 불가
+                        </span>
+                        합니다.
+                        <br></br>
+                        관련 문의 : 카카오톡{" "}
+                        <a
+                          href="https://pf.kakao.com/_ZyKnd"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="link"
+                        >
+                          @이소케이크
+                        </a>{" "}
+                        채널
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div style={{ lineHeight: "2rem" }}>
+                      수령 당일,{" "}
+                      <span className="text_emphasis">픽업 대기</span> 상태로
+                      자동 변경됩니다
+                    </div>
+                  </td>
+                  <td>
+                    <div style={{ lineHeight: "2rem" }}>
+                      예약하신 수령시간 이후,{" "}
+                      <span className="text_emphasis">픽업 완료</span> 상태로
+                      자동 변경됩니다
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+          )}
         </Row>
       </Container>
     </motion.div>

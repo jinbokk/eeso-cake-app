@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Table } from "react-bootstrap";
 import { useOutletContext } from "react-router";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
@@ -15,10 +15,10 @@ import "moment/locale/ko";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 
-import "../css/orderHistoryPage.css";
 import { userActions } from "../../redux/actions/userActions";
 import axios from "axios";
 import HistorySearch from "../../components/HistorySearch";
+import "../css/orderHistoryPage.css";
 
 dayjs.locale("ko");
 
@@ -55,7 +55,7 @@ const OrderCancellationHistoryPage = () => {
       <Container>
         <Row className="order_history_lookup justify-content-around">
           <Col xs={6} className="order_history_lookup_item border_right">
-            <div className="order_history_lookup_text">취소대기</div>
+            <div className="order_history_lookup_text">취소 대기</div>
             <div className="display-5">
               {
                 authUserData.history.filter(
@@ -66,7 +66,7 @@ const OrderCancellationHistoryPage = () => {
           </Col>
 
           <Col xs={6} className="order_history_lookup_item">
-            <div className="order_history_lookup_text">취소완료</div>
+            <div className="order_history_lookup_text">취소 완료</div>
             <div className="display-5">
               {
                 authUserData.history.filter(
@@ -119,11 +119,12 @@ const OrderCancellationHistoryPage = () => {
                           className={width < 992 ? "mt-4" : ""}
                         >
                           <div className="order_card_info">
-                            주문번호 {historyItems.merchant_uid}
+                            <span className="bubble">주문번호</span>{" "}
+                            {historyItems.merchant_uid}
                           </div>
 
                           <div className="order_card_info">
-                            취소일자{" "}
+                            <span className="bubble">취소일자</span>{" "}
                             {/* {format(new Date(historyItems.paymentDate), "YYYY-MM-DD", {
                       locale: ko,
                     })} */}
@@ -372,14 +373,59 @@ const OrderCancellationHistoryPage = () => {
                   ))
               )}
         </Row>
-        {/* <Row>
-        <Col className="my-5">
-          <div className="mb-4">
-            * 주문하신 제품은 픽업 4일전까지 레터링 문구만 수정 가능합니다
-          </div>
-          <div>* 레터링 외 수정사항은 취소 후 재주문 부탁드립니다.</div>
-        </Col>
-      </Row> */}
+
+        <Row className="my-5 info_text">
+          <Row
+            className="justify-content-center text-center mb-4"
+            style={{ fontSize: "1.7rem", fontWeight: "bold" }}
+          >
+            취소상태 안내
+          </Row>
+          <Table className="order_history_table">
+            <thead className="text-center">
+              <tr style={{ color: "var(--bg-accent)" }}>
+                <th style={{ width: "25%" }}>취소 대기</th>
+                <th style={{ width: "25%" }}>취소 완료</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>
+                  <div>
+                    주문 취소 대기 상태 입니다.<br></br>
+                    <br></br>
+                    수령 5일 전 취소시 30% 위약금 발생
+                    <br></br>수령 4일 전 취소시 50% 위약금 발생
+                    <br></br>수령 3일 전 취소시 환불이 불가합니다.
+                    <br></br>
+                    <br></br>예약 입금이 완료된 후의 모든 취소건은 날짜일수에
+                    관계 없이 취소 수수료 10,000원이 발생되오니, 신중한 예약을
+                    부탁 드립니다
+                  </div>
+                </td>
+                <td>
+                  <div style={{ lineHeight: "2rem" }}>
+                    <div>
+                      주문 취소가 완료된 상태입니다.<br></br>환불까지 소요시간은
+                      카드사별로 다를 수 있습니다.<br></br>
+                      관련 문의 : 카카오톡{" "}
+                      <a
+                        href="https://pf.kakao.com/_ZyKnd"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link"
+                      >
+                        @이소케이크
+                      </a>{" "}
+                      채널
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Row>
       </Container>
     </motion.div>
   );

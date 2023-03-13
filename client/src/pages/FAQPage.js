@@ -9,6 +9,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Container } from "react-bootstrap";
 import { RxTriangleRight } from "react-icons/rx";
 import { MdContactSupport } from "react-icons/md";
+import { motion } from "framer-motion";
 
 import "./css/faqPage.css";
 
@@ -225,51 +226,57 @@ const FAQPage = () => {
   ];
 
   return (
-    <Container style={{ marginTop: "4rem" }}>
-      <div className="d-flex flex-column align-items-center pb-5">
-        <MdContactSupport size={50} />
-        <div className="display-6 mt-3">FAQPage</div>
-      </div>
-      {panels.map((item, index) => {
-        return (
-          <Accordion
-            key={index}
-            expanded={expanded === `panel${index}`}
-            onChange={handleChange(`panel${index}`)}
-            className="faq_section"
-          >
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography
-                sx={{ width: "100%", textAlign: "start", flexShrink: 0 }}
-              >
-                <span
-                  className="faq_title"
-                  style={
-                    expanded === `panel${index}`
-                      ? {
-                          color: "var(--bg-accent)",
-                        }
-                      : null
-                  }
+    <motion.div
+      initial={{ opacity: 0, y: "20px" }}
+      animate={{ opacity: 1, y: 0 }}
+      // exit={{ opacity: 0 }}
+    >
+      <Container style={{ marginTop: "4rem" }}>
+        <div className="d-flex flex-column align-items-center pb-5">
+          <MdContactSupport size={50} />
+          <div className="display-6 mt-3">FAQPage</div>
+        </div>
+        {panels.map((item, index) => {
+          return (
+            <Accordion
+              key={index}
+              expanded={expanded === `panel${index}`}
+              onChange={handleChange(`panel${index}`)}
+              className="faq_section"
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography
+                  sx={{ width: "100%", textAlign: "start", flexShrink: 0 }}
                 >
-                  <span className="faq_accent">Q.</span>
-                  {item.title}
-                </span>
-              </Typography>
-            </AccordionSummary>
+                  <span
+                    className="faq_title"
+                    style={
+                      expanded === `panel${index}`
+                        ? {
+                            color: "var(--bg-accent)",
+                          }
+                        : null
+                    }
+                  >
+                    <span className="faq_accent">Q.</span>
+                    {item.title}
+                  </span>
+                </Typography>
+              </AccordionSummary>
 
-            <AccordionDetails>
-              <Typography>
-                <span className="faq_contents">
-                  <span className="faq_accent">A.</span>
-                  {item.contents}
-                </span>
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-        );
-      })}
-    </Container>
+              <AccordionDetails>
+                <Typography>
+                  <span className="faq_contents">
+                    <span className="faq_accent">A.</span>
+                    {item.contents}
+                  </span>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          );
+        })}
+      </Container>
+    </motion.div>
   );
 };
 

@@ -56,6 +56,8 @@ function editUser(body) {
         type: "EDIT_USER",
         payload: registerResult,
       });
+
+      return registerResult;
     } catch (error) {
       console.log("error occurred : ", error);
     }
@@ -292,7 +294,7 @@ function orderCancel(body) {
 
 function searchHistory(dateRange) {
   return async (dispatch) => {
-    console.log("dateRange",dateRange)
+    console.log("dateRange", dateRange);
     try {
       const searchHistoryResult = await axios.get(
         `/api/users/search-history?start=${dateRange.start}&end=${dateRange.end}`

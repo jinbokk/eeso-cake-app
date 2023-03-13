@@ -1,7 +1,40 @@
+.order_history_table thead {
+  border-top: 2px solid var(--bg-accent) !important;
+  border-bottom: 1px solid var(--bg-accent) !important;
+}
+
+.order_history_table thead tr th {
+  border: 1px solid var(--bg-accent) !important;
+}
+
+.order_history_table thead tr th:first-child {
+  border-left: none !important;
+}
+
+.order_history_table thead tr th:last-child {
+  border-right: none !important;
+}
+
+.order_history_table tbody tr {
+  border-bottom: 2px solid var(--bg-accent) !important;
+}
+
+.order_history_table tbody tr td {
+  border: 1px solid var(--bg-accent) !important;
+}
+
+.order_history_table tbody tr td:first-child {
+  border-left: none !important;
+}
+
+.order_history_table tbody tr td:last-child {
+  border-right: none !important;
+}
+
 .text_emphasis {
   /* color: white; */
   background-color: lightgray;
-  padding: 5px 10px;
+  padding: 4px 10px;
   border-radius: 10px;
 }
 
@@ -9,7 +42,6 @@
   text-decoration: underline 1px solid;
   text-underline-offset: 8px;
   color: var(--bg-accent);
-  margin: 0px 5px;
 }
 
 .order_card {
@@ -29,6 +61,13 @@
 .order_card_info {
   font-weight: normal;
   font-size: 0.8rem;
+}
+
+.order_card_info .bubble {
+  background-color: var(--bg);
+  margin-right: 4px;
+  padding: 4px 7px;
+  border-radius: 10px;
 }
 
 .order_card_accordion {
@@ -105,7 +144,7 @@
   font-weight: bold;
   padding: 8px;
   margin: 0 10px;
-  background-color: #a1887f9c;
+  background-color: #d9bcb24d;
   color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   cursor: pointer;

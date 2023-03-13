@@ -215,17 +215,6 @@ const EditProfilePage = () => {
   // react-redux
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { registerResult } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (registerResult && registerResult.registerSuccess) {
-      navigate("/login", { replace: true }); // 회원가입 후 뒤로가기 방지
-      dispatch({ type: "REGISTER_USER", payload: undefined });
-      alert("회원가입이 완료되었습니다.");
-    } else if (registerResult && !registerResult.registerSuccess) {
-      alert(registerResult.message);
-    }
-  }, [registerResult]);
 
   // react-router-dom
   const submitHandler = (e) => {
@@ -249,22 +238,29 @@ const EditProfilePage = () => {
       marketing: marketing,
     };
 
-    // if (
-    //   isPasswordWrong.error ||
-    //   isConfirmPasswordWrong.error ||
-    //   isNameWrong.error ||
-    //   gender === "" ||
-    //   phoneNumberVerify === false ||
-    //   isDuplicatePhoneNumber === true ||
-    //   isPhoneNumberWrong.error ||
-    //   address === "" ||
-    //   terms === false ||
-    //   privacyPolicy === false
-    // ) {
-    //   alert("회원정보를 다시 확인 해 주세요");
-    // } else {
-    dispatch(userActions.editUser(registerForm));
-    // }
+    if (
+      isPasswordWrong.error ||
+      isConfirmPasswordWrong.error ||
+      isNameWrong.error ||
+      gender === "" ||
+      phoneNumberVerify === false ||
+      isDuplicatePhoneNumber === true ||
+      isPhoneNumberWrong.error ||
+      address === "" ||
+      terms === false ||
+      privacyPolicy === false
+    ) {
+      alert("회원정보를 다시 확인 해 주세요");
+    } else {
+    dispatch(userActions.editUser(registerForm)).then((result) => {
+      if (result.registerSuccess) {
+        alert("회원정보 수정이 완료되었습니다.\n페이지를 새로고침 합니다.");
+        return window.location.reload();
+      } else {
+        return alert("회원정보 수정에 실패하였습니다.");
+      }
+    });
+    }
   };
 
   useEffect(() => {
@@ -318,7 +314,7 @@ const EditProfilePage = () => {
                 name="register_email"
                 className="email"
                 autoComplete="new-email"
-                value={email}
+                value={email || ""}
                 disabled
                 placeholder="이메일을 입력해 주세요"
               />
@@ -354,7 +350,7 @@ const EditProfilePage = () => {
               <Form.Control
                 type={passwordType}
                 name="register_password"
-                value={password}
+                value={password || ""}
                 autoComplete="new-password"
                 className="input_area_password"
                 placeholder="비밀번호를 입력해 주세요"
@@ -398,7 +394,7 @@ const EditProfilePage = () => {
               <Form.Control
                 type={passwordType}
                 name="register_confirm_password"
-                value={confirmPassword}
+                value={confirmPassword || ""}
                 autoComplete="new-confirm-password"
                 className="input_area_password"
                 placeholder="비밀번호 확인"
@@ -551,7 +547,7 @@ const EditProfilePage = () => {
             <InputGroup>
               <Form.Control
                 type="text"
-                value={phoneNumber}
+                value={phoneNumber || ""}
                 maxLength={13}
                 placeholder="'-' 을 제외한 숫자만 입력해 주세요"
                 onChange={(e) => {
@@ -632,7 +628,7 @@ const EditProfilePage = () => {
             <InputGroup className="mb-2">
               <Form.Control
                 type="text"
-                value={address.postcode}
+                value={address.postcode || ""}
                 readOnly
                 placeholder="우편번호"
                 style={{ userSelect: "none", cursor: "default" }}
@@ -648,7 +644,7 @@ const EditProfilePage = () => {
             >
               <Form.Control
                 type="text"
-                value={address.address}
+                value={address.address || ""}
                 readOnly
                 placeholder="기본 주소"
                 style={{ userSelect: "none", cursor: "default" }}
@@ -662,7 +658,7 @@ const EditProfilePage = () => {
               <Form.Control
                 type="text"
                 placeholder="상세 주소"
-                value={extraAddress}
+                value={extraAddress || ""}
                 onChange={(e) => extraAddressHandler(e.target.value)}
               />
             </InputGroup>
