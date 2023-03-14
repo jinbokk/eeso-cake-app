@@ -70,7 +70,6 @@ const Delivery = ({ control, cartItems, setError }) => {
   const [delivery, setDelivery] = useState(undefined);
 
   const deliveryHandler = (value) => {
-    console.log(delivery);
     setDelivery(value);
     dispatch(orderActions.setDeliveryType(value));
   };
@@ -87,8 +86,6 @@ const Delivery = ({ control, cartItems, setError }) => {
     setDate(date);
     const dateData = dayjs(date).format();
     const modifiedDate = dayjs(date).format("YYYY-MM-DD (ddd)");
-
-    console.log("dateType", dateData);
 
     const body = {
       dateType: dateData,

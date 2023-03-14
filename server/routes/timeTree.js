@@ -15,8 +15,6 @@ const authenticator = new CalendarAppAuthenticator({
 
   const data = await client.getCalendar();
 
-  console.log("timetree data::", data.data);
-
   res.status(200).json({ success: true });
 });
 

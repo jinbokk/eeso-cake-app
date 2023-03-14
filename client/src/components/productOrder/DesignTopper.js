@@ -34,14 +34,12 @@ const DesignTopper = ({ control, cartItems, setDesignTopperPrice }) => {
   const [topperToggle, setTopperToggle] = useState(undefined);
   const topperToggleHandler = (value) => {
     setTopperToggle(value);
-    console.log(value);
     dispatch(orderActions.setDesignTopperToggle(value));
   };
 
   const [topperText, setTopperText] = useState("");
   const topperTextHandler = (value) => {
     setTopperText(value);
-    console.log(value);
     dispatch(orderActions.setDesignTopperText(value));
   };
 

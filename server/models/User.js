@@ -62,7 +62,6 @@ userSchema.pre("save", function (next) {
 
   if (user.isModified("password")) {
     // prevent multiple bcrypt (ex. change email also change password)
-    // console.log('password changed')
     bcrypt.genSalt(saltRounds, function (err, salt) {
       if (err) return next(err);
 
@@ -99,7 +98,6 @@ userSchema.methods.generateToken = async function (cb) {
 
   user.token = token;
 
-  console.log("token:::", token);
   user.tokenExp = twoHour;
 
   try {

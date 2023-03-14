@@ -34,10 +34,6 @@ const HistorySearch = ({ searchIndex }) => {
   );
 
   useEffect(() => {
-    console.log(dateRange);
-
-    // dateRange가 바뀔 때 마다, db데이터를 페이지네이션 하여 가져온다.
-
     if (dateRange.start !== undefined && dateRange.end !== undefined) {
       navigate(`?start=${dateRange.start}&end=${dateRange.end}`);
 
@@ -88,11 +84,6 @@ const HistorySearch = ({ searchIndex }) => {
 
   const rangeCheckHandler = (dateRange) => {
     const { start, end } = dateRange;
-    // if (dateRange.start !== undefined && dateRange.end !== undefined) {
-
-    // } else {
-    //   console.log("둘중 하나 undefined");
-    // }
     if (dayjs(start).format() > dayjs(end).format()) {
       alert("시작 날짜는 종료 날짜보다 클 수 없습니다");
     } else {

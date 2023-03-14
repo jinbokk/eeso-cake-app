@@ -34,14 +34,12 @@ const Lettering = ({ control, cartItems }) => {
   const [letteringToggle, setLetteringToggle] = useState(undefined);
   const letteringToggleHandler = (value) => {
     setLetteringToggle(value);
-    console.log(value);
     dispatch(orderActions.setLetteringToggle(value));
   };
 
   const [letteringText, setLetteringText] = useState("");
   const letteringTextHandler = (value) => {
     setLetteringText(value);
-    console.log(value);
     dispatch(orderActions.setLetteringText(value));
   };
 

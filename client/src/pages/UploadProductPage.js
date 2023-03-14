@@ -94,8 +94,6 @@ export default function UploadProductPage() {
     } else {
       let formData = new FormData();
 
-      console.log(data);
-
       formData.append("file", file[0]);
       formData.append("title", data.title);
       formData.append("price", data.price && parseInt(data.price));
@@ -103,8 +101,6 @@ export default function UploadProductPage() {
       formData.append("layer", data.layer && parseInt(data.layer));
       formData.append("design", data.design);
       formData.append("description", data.description);
-
-      console.log("final form:::", formData);
 
       axios
         .post("/api/products/upload", formData)
@@ -118,7 +114,6 @@ export default function UploadProductPage() {
         })
         .catch((error) => {
           alert("상품 업로드에 실패하였습니다.");
-          console.log(error.response.data.message.message);
         });
     }
   };

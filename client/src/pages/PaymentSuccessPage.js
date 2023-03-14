@@ -15,14 +15,9 @@ const PaymentSuccessPage = () => {
   const { state } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // http://localhost:3000/payment/success?imp_uid=imp_322736523057&merchant_uid=1677298735631&imp_success=true
   const imp_success = searchParams.get("imp_success");
   const imp_uid = searchParams.get("imp_uid");
   const merchant_uid = searchParams.get("merchant_uid");
-
-  console.log("imp_success:::", imp_success);
-  console.log("imp_uid:::", imp_uid);
-  console.log("merchant_uid:::", merchant_uid);
 
   // useEffect(() => {
   //   if (!state) {
@@ -31,7 +26,6 @@ const PaymentSuccessPage = () => {
   //   }
   // }, []);
 
-  console.log("state::", state);
   return state ? (
     <>
       <h1 className="payment_result_title">주문 결과</h1>

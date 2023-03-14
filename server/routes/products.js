@@ -115,8 +115,6 @@ router.get("/cakes/:ingredient", async (req, res) => {
 router.get("/order/:category", async (req, res) => {
   let { category } = req.params;
 
-  console.log("category", category);
-
   let query = {
     price: { $ne: 0 },
   };

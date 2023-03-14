@@ -9,7 +9,6 @@ import { BiErrorCircle } from "react-icons/bi";
 const PaymentFailurePage = () => {
   const { state } = useLocation();
 
-  console.log("state::", state);
   return (
     <>
       <h1 className="payment_result_title">주문 결과</h1>

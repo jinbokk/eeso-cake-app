@@ -12,11 +12,6 @@ import "./css/loginPage.css";
 
 function LoginPage() {
   const location = useLocation();
-  // console.log("location.state", location && location.state);
-  // console.log(
-  //   "location.state.originalPath",
-  //   location && location.state.originalPath
-  // );
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -66,7 +61,6 @@ function LoginPage() {
       alert("비밀번호를 입력해주세요");
     } else {
       dispatch(userActions.loginUser(body)).then((res) => {
-        console.log(res);
         if (res.loginSuccess) {
           navigate((location.state && location.state.originalPath) || "/", {
             replace: true,

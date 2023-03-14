@@ -15,8 +15,6 @@ const OrderPage = () => {
   const { category } = useParams();
   const { width } = useWindowDimensions();
 
-  console.log("category", category);
-
   const { loading, forSale_productsData } = useSelector(
     (state) => state.forSaleProduct
   );

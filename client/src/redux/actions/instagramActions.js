@@ -18,9 +18,6 @@ function getInstaData() {
         getFeedData,
       ]);
 
-      // console.log("1", profileDataJson);
-      // console.log("1", feedJson);
-
       dispatch({
         type: "GET_INSTA_DATA_SUCCESS",
         payload: {
@@ -28,12 +25,8 @@ function getInstaData() {
           feedJson: feedJson,
         },
       });
-
-      // console.log("2", profileDataJson);
-      // console.log("2", feedJson);
-      
     } catch (error) {
-      console.log(error);
+      console.log("instagram api Error :", error);
     }
   };
 }

@@ -62,8 +62,6 @@ router.post("/unregister", async (req, res) => {
 
   let comparePassword = await bcrypt.compare(req.body.password, existPassword);
 
-  console.log("comparePassword:::", comparePassword);
-
   if (comparePassword) {
     try {
       await User.findOne({
@@ -93,11 +91,8 @@ router.post("/edit", async (req, res) => {
   const { email, password, name, gender, phoneNumber, address, marketing } =
     req.body;
 
-  console.log("password", password);
   const salt = await bcrypt.genSalt(saltRounds);
-  console.log("salt", salt);
   const bcryptPassword = await bcrypt.hash(password, salt);
-  console.log("bcryptPassword", bcryptPassword);
 
   try {
     const user = await User.findOneAndUpdate(
@@ -289,7 +284,7 @@ router.post("/addToCart", auth, async (req, res) => {
         )
       );
 
-      console.log("duplicateOption", duplicateOption);
+      // console.log("duplicateOption", duplicateOption);
       // [] or 겹치는 옵션 걸러냄
 
       const notDuplicateOption = createdOptions.filter(
@@ -314,7 +309,7 @@ router.post("/addToCart", auth, async (req, res) => {
           )
       );
 
-      console.log("notDuplicateOption", notDuplicateOption);
+      // console.log("notDuplicateOption", notDuplicateOption);
       // 겹치지 않는 옵션
 
       // 1. 겹치는 옵션만 있을때
@@ -534,10 +529,8 @@ router.post("/order-complete", auth, async (req, res) => {
 
 router.get("/find-order", async (req, res) => {
   try {
-    console.log("here");
     const access_token = await iamportGenerateAccessToken();
     const { imp_uid } = req.query;
-    console.log("imp_uid", imp_uid);
 
     const find_order = await axios
       .get(`https://api.iamport.kr/payments/${imp_uid}`, {
@@ -563,8 +556,6 @@ router.post("/order-cancel", auth, async (req, res) => {
     .then((res) => res.data);
 
   const cancel_order_result = cancel_order.response;
-
-  console.log("cancel_order_result:::::", cancel_order_result);
 
   try {
     await User.findOneAndUpdate(
@@ -616,8 +607,6 @@ router.get("/search-history", auth, async (req, res) => {
       _id: req.user._id,
     });
 
-    console.log("user", user);
-
     if(searchIndex === "paid") {
       const result = user.history.filter((item) => {
         return (
@@ -633,10 +622,6 @@ router.get("/search-history", auth, async (req, res) => {
         );
       });
     }
-
-
-
-    console.log("result", result);
 
     return res.status(200).json({ success: true, result: result });
   } catch (error) {

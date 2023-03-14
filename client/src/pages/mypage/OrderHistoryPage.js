@@ -39,7 +39,6 @@ const OrderHistoryPage = () => {
 
     if (confirm) {
       dispatch(userActions.orderCancel(body)).then((res) => {
-        console.log("res::::", res);
         if (res.status === "cancelled") {
           window.alert("주문이 취소되었습니다.");
           dispatch(userActions.auth());
@@ -393,7 +392,6 @@ const OrderHistoryPage = () => {
                                   onClick={() =>
                                     findOrderHandler(historyItems.imp_uid).then(
                                       (result) => {
-                                        console.log("result::", result);
                                         if (result.success) {
                                           window.open(
                                             result.data.response.receipt_url,
@@ -430,7 +428,6 @@ const OrderHistoryPage = () => {
                                   onClick={() =>
                                     findOrderHandler(historyItems.imp_uid).then(
                                       (result) => {
-                                        console.log("result::", result);
                                         if (result.success) {
                                           window.open(
                                             result.data.response

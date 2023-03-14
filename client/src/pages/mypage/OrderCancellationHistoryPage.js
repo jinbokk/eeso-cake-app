@@ -315,32 +315,6 @@ const OrderCancellationHistoryPage = () => {
                               )}
 
                               <Row className="pt-3">
-                                {/* {historyItems.status === "order_paid" ||
-                                "order_making" ||
-                                "order_waiting_for_pickup" ||
-                                "order_complete" ? (
-                                  <Col
-                                    className="order_cancel_button text-center"
-                                    onClick={() =>
-                                      findOrderHandler(
-                                        historyItems.imp_uid
-                                      ).then((result) => {
-                                        console.log("result::", result);
-                                        if (result.success) {
-                                          window.open(
-                                            result.data.response.receipt_url,
-                                            "_blank"
-                                          );
-                                        } else {
-                                          return;
-                                        }
-                                      })
-                                    }
-                                  >
-                                    결제영수증 조회
-                                  </Col>
-                                ) : null} */}
-
                                 {historyItems.status === "order_cancelled" ? (
                                   <Col
                                     className="order_cancel_button text-center"
@@ -348,7 +322,6 @@ const OrderCancellationHistoryPage = () => {
                                       findOrderHandler(
                                         historyItems.imp_uid
                                       ).then((result) => {
-                                        console.log("result::", result);
                                         if (result.success) {
                                           window.open(
                                             result.data.response

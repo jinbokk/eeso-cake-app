@@ -15,11 +15,8 @@ export default function Auth(SpecificComponent, option, adminRoute = null) {
 
     const location = useLocation();
 
-    console.log("location", location);
-
     // useEffect(() => {
     dispatch(userActions.auth()).then((res) => {
-      console.log("res test:::", res);
       if (!res.isAuth) {
         // if (
         //   res.err.name === "TokenExpiredError"
@@ -54,12 +51,10 @@ export default function Auth(SpecificComponent, option, adminRoute = null) {
         }
         if (option === false) {
           if (location.state) {
-            console.log("location.state 존재 로직 탔음");
             // 로그인 뒤 로그인페이지에 머무르는 짧은 시간이 있어서 그때 이동시켜버리는 문제가 발생.
             // 로그인 한 유저는 접근 불가한 페이지로 가려고 한다면,
             navigate(location.state.originalPath.pathname, { replace: true });
           } else {
-            console.log("location.state 없음 로직 탔음");
             // 로그인 뒤 로그인페이지에 머무르는 짧은 시간이 있어서 그때 이동시켜버리는 문제가 발생.
             // 로그인 한 유저는 접근 불가한 페이지로 가려고 한다면,
             navigate("/", { replace: true });

@@ -44,12 +44,9 @@ function getMoreProducts(option) {
         }`
       )
       .then((res) => {
-        console.log("res.data:::::", res.data);
-
         let hasMore;
 
         if (res.data.hasNextPage) {
-          console.log("hasMore!");
           hasMore = true;
         }
 
