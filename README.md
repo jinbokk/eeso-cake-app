@@ -7,7 +7,7 @@
 - Developed using the MERN stack.
 - Hosted using AWS EC2 and AWS Route 53.
 
-## Code Stack
+## Stack
 - MERN (MongoDB, Express.js, React.js, Node.js)
 - Redux
 - React Router
