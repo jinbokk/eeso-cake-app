@@ -343,7 +343,7 @@ const Delivery = ({ control, cartItems, setError }) => {
                   popupStyle={
                     dateError && dateError.value ? { display: "none" } : null
                   }
-                  className={dateError && dateError.value ? "error" : ""}
+                  className={dateError && dateError.value ? "delivery_picker error" : "delivery_picker"}
                   showToday={false}
                   allowClear={false}
                   defaultValue={undefined}
@@ -351,7 +351,7 @@ const Delivery = ({ control, cartItems, setError }) => {
                   locale={datePickerLocale}
                   style={{ width: "100%" }}
                   placeholder="날짜를 선택해 주세요"
-                  popupClassName="custom_dropdown"
+                  popupClassName="delivery_dropdown"
                   disabledDate={(current) => {
                     let after = dayjs().add(5, "days").format("YYYY-MM-DD");
                     let before = dayjs().add(3, "week").format("YYYY-MM-DD");
@@ -408,7 +408,7 @@ const Delivery = ({ control, cartItems, setError }) => {
                   showNow={false}
                   allowClear={false}
                   style={{ width: "100%" }}
-                  popupClassName="custom_dropdown"
+                  popupClassName="delivery_dropdown"
                   onClick={() => {
                     if (date === undefined) {
                       setTimeError({
@@ -447,7 +447,7 @@ const Delivery = ({ control, cartItems, setError }) => {
                   popupStyle={
                     timeError && timeError.value ? { display: "none" } : null
                   }
-                  className={timeError && timeError.value ? "error" : ""}
+                  className={timeError && timeError.value ? "delivery_picker error" : "delivery_picker"}
                   disabledTime={disabledTimeHandler}
                 />
               )}

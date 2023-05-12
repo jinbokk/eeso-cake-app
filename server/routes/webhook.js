@@ -110,7 +110,8 @@ router.post("/portOne", async (req, res) => {
 });
 
 router.post("/timeTree", async (req, res) => {
-  res.status(200).json({ success: true, testData: req.body });
+  // res.status(200).json({ success: true, testData: req.body });
+  res.status(200).json({ success: true, testData: req });
 });
 
 module.exports = router;

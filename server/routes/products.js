@@ -147,16 +147,9 @@ router.get("/order/detail/:productId", async (req, res) => {
 
 // CART PAGE
 router.get("/products-by-id", async (req, res) => {
-  let productIds = req.query.id;
+  let productIds = req.query.id.split(",");
 
-  // id = 123,456,789 ... 이런 형태를
-  // id = ['123','456','789'] ... 이런 형태로 바꾸는 작업
-  let idsArray = req.query.id.split(",");
-  productIds = idsArray.map((item) => {
-    return item;
-  });
-
-  Product.find({ _id: { $in: productIds } }).then((err, productDetail) => {
+  await Product.find({ _id: { $in: productIds } }).then((err, productDetail) => {
     if (err) return res.status(400).send(err);
     return res.status(200).json(productDetail);
   });

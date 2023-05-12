@@ -13,10 +13,12 @@ instaloader.Instaloader(
     save_metadata=False,
     compress_json=False,
     post_metadata_txt_pattern="",
-    # – --post-metadata-txt, default is {caption}. Set to empty string to avoid creation of post metadata txt file.
+    # – --post-metadata-txt, default is {caption}.
+    # Set to empty string to avoid creation of post metadata txt file.
 ).download_profile(
     profile_name,
     fast_update=True,
 )
 
 print("Download Completed !")
+

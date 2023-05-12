@@ -8,6 +8,11 @@
   min-height: 35px !important;
 }
 
+.history_search_picker:hover {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 992px) {
   .history_search_picker {
     margin-bottom: 15px;
@@ -18,6 +23,12 @@
   font-size: 0.85rem !important;
   text-align: center;
   width: fit-content !important;
+  cursor: pointer !important;
+}
+
+.history_search_picker.ant-picker-focused {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  box-shadow: none !important;
 }
 
 .shortcut_button {
@@ -38,10 +49,14 @@
   background-color: #a1887f9c;
 }
 
-.ant-picker-cell-inner::before {
+.delivery_dropdown .ant-picker-header-view button:hover {
+  color: #a1887f !important;
+}
+
+.delivery_dropdown .ant-picker-cell-inner::before {
   border: 1px solid #a1887f !important;
 }
 
-.ant-picker-today-btn {
+.delivery_dropdown .ant-picker-today-btn {
   color: #a1887f !important;
 }

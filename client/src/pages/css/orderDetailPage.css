@@ -75,57 +75,6 @@
   }
 }
 
-.css-1mgnakj-MuiTypography-root-PrivatePickersToolbarText-root.Mui-selected {
-  color: #c0907f !important;
-}
-
-.css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root {
-  display: none !important;
-}
-
-.css-pbg3za-MuiGrid-root-MuiPickersToolbar-content {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.css-1hbyad5-MuiTypography-root,
-.MuiClockPicker-arrowSwitcher,
-.MuiPickersToolbar-penIconButton,
-.MuiTimePickerToolbar-ampmSelection {
-  display: none !important;
-}
-
-/* @media screen and (max-width: 992px) {
-  .MuiTimePickerToolbar-ampmSelection {
-    display: block !important;
-  }
-  .MuiTimePickerToolbar-ampmSelection button span{
-    margin: 0 5px;
-    font-weight: bold !important;
-  }
-} */
-
-.MuiClock-amButton {
-  position: absolute !important;
-  width: 3rem !important;
-  height: 3rem !important;
-  top: 22px !important;
-  left: 60% !important;
-}
-
-.MuiClock-pmButton {
-  position: absolute !important;
-  width: 3rem !important;
-  height: 3rem !important;
-  top: 22px !important;
-  left: 75% !important;
-}
-
-.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
-  width: 100%;
-}
-
 .option_menu_section {
   display: flex;
   justify-content: space-between;
@@ -206,79 +155,66 @@
   display: none;
 }
 
-.custom_dropdown {
+.delivery_dropdown {
   min-width: 280px !important;
 }
 
-.custom_dropdown th:first-child,
-.custom_dropdown th:last-child {
+.delivery_dropdown th:first-child,
+.delivery_dropdown th:last-child {
   color: red;
 }
 
-.ant-picker {
-  background: none !important;
-  border-color: rgba(0, 0, 0, 0.3) !important;
-  min-height: 48px !important;
-}
-
-.ant-picker:hover {
-  cursor: pointer;
-  background: #f1e4dd !important;
-}
-
-.ant-picker-input,
-.ant-picker-input input {
+.delivery_picker .ant-picker-input,
+.delivery_picker .ant-picker-input input {
   cursor: pointer !important;
   /* color: #8d6e63 !important; */
 }
 
-.ant-picker-cell-today,
-.ant-picker-cell-today .ant-picker-cell-inner::before {
+.delivery_dropdown .ant-picker-cell-today,
+.delivery_dropdown .ant-picker-cell-today .ant-picker-cell-inner::before {
   font-weight: bold !important;
   /* border-color: lightgray !important; */
 }
 
-.ant-picker-cell-selected .ant-picker-cell-inner,
-.ant-picker-ok button {
+.delivery_dropdown .ant-picker-cell-selected .ant-picker-cell-inner,
+.delivery_dropdown .ant-picker-ok button {
   background: #a1887f !important;
 }
 
-.ant-picker-clear {
+.delivery_dropdown .ant-picker-clear {
   background: #f1e4dd !important;
 }
 
-.ant-picker-ok .ant-btn-primary:disabled {
+.delivery_dropdown .ant-picker-ok .ant-btn-primary:disabled {
   color: rgba(255, 255, 255, 0.5) !important;
 }
 
-.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+.delivery_dropdown
+  .ant-picker-time-panel-cell-selected
+  .ant-picker-time-panel-cell-inner {
   background: #b99b90ad !important;
 }
 
-.ant-picker-year-btn:hover,
-.ant-picker-month-btn:hover {
+.delivery_dropdown .ant-picker-year-btn:hover,
+.delivery_dropdown .ant-picker-month-btn:hover {
   color: #a1887f !important;
 }
 
-.custom_dropdown .ant-picker-panel-layout,
-.ant-picker-panel,
-.ant-picker-time-panel-cell-inner {
+.delivery_dropdown .ant-picker-panel-layout,
+.delivery_dropdown .ant-picker-panel,
+.delivery_dropdown .ant-picker-time-panel-cell-inner {
   width: 100% !important;
   text-align: center !important;
   padding: 0 !important;
 }
 
-.ant-picker-footer-extra {
+.delivery_dropdown .ant-picker-footer-extra {
   padding: 10px 0;
   font-size: 0.85rem;
   line-height: 2rem !important;
 }
 
-/* .ant-picker-time-panel-cell-disabled {
-  display: none !important;
-} */
-
-.ant-picker-time-panel-column::after {
+.delivery_dropdown .ant-picker-time-panel-column::after {
   height: 50px !important;
 }
 
@@ -290,6 +226,29 @@
   .ant-picker-footer-extra {
     font-size: 0.95rem;
   }
+}
+
+.delivery_picker {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  min-height: 48px !important;
+  background: none !important;
+}
+
+.delivery_picker:hover {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  min-height: 48px !important;
+  background: none !important;
+  cursor: pointer;
+  background: #f1e4dd !important;
+}
+
+.delivery_picker .ant-picker-focused {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  box-shadow: none !important;
+}
+
+.delivery_picker .ant-picker-input input {
+  cursor: pointer !important;
 }
 
 .error {

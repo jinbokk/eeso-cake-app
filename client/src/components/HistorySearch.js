@@ -127,7 +127,7 @@ const HistorySearch = ({ searchIndex }) => {
               format={"YYYY-MM-DD"}
               locale={datePickerLocale}
               placeholder="시작일"
-              popupClassName="custom_dropdown"
+              popupClassName="delivery_dropdown"
             />
             <span className="mx-2">~</span>
             <DatePicker
@@ -144,7 +144,7 @@ const HistorySearch = ({ searchIndex }) => {
               format={"YYYY-MM-DD"}
               locale={datePickerLocale}
               placeholder="종료일"
-              popupClassName="custom_dropdown"
+              popupClassName="delivery_dropdown"
             />
           </Col>
           <Col

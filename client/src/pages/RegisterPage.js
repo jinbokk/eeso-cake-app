@@ -7,6 +7,7 @@ import {
   ButtonGroup,
   ToggleButton,
   Modal,
+  Dropdown,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,13 +15,24 @@ import { userActions } from "../redux/actions/userActions";
 import { motion } from "framer-motion";
 
 import { BsFillCheckCircleFill } from "react-icons/bs";
-import { AiOutlineEye } from "react-icons/ai";
-import { AiOutlineEyeInvisible } from "react-icons/ai";
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+  AiOutlinePlusCircle,
+} from "react-icons/ai";
 import Postcode from "../components/utils/Postcode";
+import { DatePicker, TimePicker } from "antd";
+import { ConfigProvider } from "antd";
+import locale from "antd/lib/locale/ko_KR";
+import datePickerLocale from "antd/es/date-picker/locale/ko_KR";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 
 import Terms from "../components/Terms";
 import PrivacyPolicy from "../components/PrivacyPolicy";
 import "./css/registerPage.css";
+
+dayjs.locale("ko");
 
 function RegisterPage() {
   //name
@@ -208,6 +220,14 @@ function RegisterPage() {
     { name: "여성", value: "여성" },
   ];
 
+  // birth-day
+  const [birthday, setBirthday] = useState(undefined);
+
+  // anniversary
+  const [anniversary_1, setAnniversary_1] = useState(undefined);
+  const [anniversary_2, setAnniversary_2] = useState(undefined);
+  const [anniversary_3, setAnniversary_3] = useState(undefined);
+
   //ToS
 
   // 이용약관 정보
@@ -262,8 +282,8 @@ function RegisterPage() {
       phoneNumber: phoneNumber,
       address: {
         postcode: address.postcode,
-        address:address.address,
-        extraAddress:extraAddress,
+        address: address.address,
+        extraAddress: extraAddress,
       },
       marketing: marketing,
     };
@@ -298,6 +318,8 @@ function RegisterPage() {
       <Container className="register_container">
         <img className="login_logo" src="/images/banner_bgremoved.png" alt="" />
         <Form className="form_container" onSubmit={submitHandler}>
+          <div className="my-5 is_require_text">필수사항</div>
+
           <Form.Group className="mb-5" controlId="Email">
             <Form.Label style={{ fontWeight: "bold" }}>
               <span>아이디 (이메일)</span>
@@ -352,14 +374,14 @@ function RegisterPage() {
             </InputGroup>
 
             {isEmailWrong.error ? (
-              <div style={{ color: "red", fontSize: "13px" }}>
+              <div style={{ color: "red", fontSize: "0.8rem" }}>
                 아이디를 확인해 주세요
               </div>
             ) : null}
 
             <div>
               {isDuplicateEmail ? (
-                <div style={{ color: "red", fontSize: "13px" }}>
+                <div style={{ color: "red", fontSize: "0.8rem" }}>
                   이미 가입되어 있는 아이디 입니다
                 </div>
               ) : null}
@@ -383,8 +405,10 @@ function RegisterPage() {
                 </div>
                 <div
                   style={{
+                    color: "gray",
+                    fontSize: "0.8rem",
                     fontWeight: "normal",
-                    fontSize: "13px",
+                    marginLeft: "6px",
                   }}
                 >
                   8자리 이상의 영어 대문자, 소문자, 숫자, 특수문자 조합
@@ -426,7 +450,7 @@ function RegisterPage() {
             </InputGroup>
           </Form.Group>
           {isPasswordWrong.error ? (
-            <div style={{ color: "red", margin: "5px 0", fontSize: "13px" }}>
+            <div style={{ color: "red", margin: "5px 0", fontSize: "0.8rem" }}>
               8자리 이상의 영어 대문자, 소문자, 숫자, 특수문자 조합이어야 합니다
             </div>
           ) : null}
@@ -467,112 +491,144 @@ function RegisterPage() {
             </InputGroup>
           </Form.Group>
           {isConfirmPasswordWrong.error && confirmPassword !== "" ? (
-            <div style={{ color: "red", margin: "5px 0", fontSize: "13px" }}>
+            <div style={{ color: "red", margin: "5px 0", fontSize: "0.8rem" }}>
               비밀번호가 일치하지 않습니다
             </div>
           ) : null}
 
-          <Form.Group className="my-5" controlId="Name">
-            <Form.Label style={{ fontWeight: "bold", width: "100%" }}>
-              <div className="d-flex justify-content-between">
-                <div>
-                  <span>이름</span>
-                  <span
+          <div className="d-flex justify-content-between align-items-center my-5">
+            <Form.Group controlId="Name" className="pe-4">
+              <Form.Label style={{ fontWeight: "bold", width: "100%" }}>
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <span>이름</span>
+                    <span
+                      style={{
+                        color: "red",
+                        fontWeight: "normal",
+                        marginLeft: "6px",
+                      }}
+                    >
+                      *
+                    </span>
+                  </div>
+                  <div
                     style={{
-                      color: "red",
+                      color: "gray",
+                      fontSize: "0.8rem",
                       fontWeight: "normal",
                       marginLeft: "6px",
                     }}
                   >
-                    *
-                  </span>
+                    5자 이하의 한글
+                  </div>
                 </div>
+              </Form.Label>
+
+              <InputGroup>
+                <Form.Control
+                  type="text"
+                  value={name}
+                  placeholder="이름을 입력해 주세요"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setIsNameWrong(false);
+                  }}
+                  onKeyDown={(e) => {
+                    e.key === "Enter" && e.preventDefault();
+                  }}
+                  onBlur={(e) => nameCheckHandler(e.target.value)}
+                />
+                <InputGroup.Text className="input_area_button">
+                  {isNameWrong.checkMark ? (
+                    <BsFillCheckCircleFill className="checked" />
+                  ) : null}
+                </InputGroup.Text>
+              </InputGroup>
+
+              {isNameWrong.error ? (
                 <div
                   style={{
-                    fontWeight: "normal",
-                    fontSize: "13px",
+                    color: "red",
+                    fontSize: "0.8rem",
                   }}
                 >
-                  5자 이하의 한글
+                  이름을 확인해 주세요
                 </div>
-              </div>
-            </Form.Label>
+              ) : null}
+            </Form.Group>
 
-            <InputGroup>
-              <Form.Control
-                type="text"
-                value={name}
-                placeholder="이름을 입력해 주세요"
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setIsNameWrong(false);
-                }}
-                onKeyDown={(e) => {
-                  e.key === "Enter" && e.preventDefault();
-                }}
-                onBlur={(e) => nameCheckHandler(e.target.value)}
-              />
-              <InputGroup.Text className="input_area_button">
-                {isNameWrong.checkMark ? (
-                  <BsFillCheckCircleFill className="checked" />
-                ) : null}
-              </InputGroup.Text>
-            </InputGroup>
-
-            {isNameWrong.error ? (
-              <div
+            <Form.Group
+              controlId="Name"
+              className="d-flex flex-column justify-content-between align-items-start"
+            >
+              <Form.Label
                 style={{
-                  color: "red",
-                  fontSize: "13px",
+                  fontWeight: "bold",
+                  width: "100%",
                 }}
               >
-                성함을 확인해 주세요
-              </div>
-            ) : null}
-          </Form.Group>
-
-          <Form.Group className="mb-5" controlId="Name">
-            <div className="d-flex justify-content-between">
-              <div>
-                <Form.Label
+                <span>성별</span>
+                <span
                   style={{
-                    fontWeight: "bold",
-                    width: "100%",
-                    margin: "0",
+                    color: "red",
+                    fontWeight: "normal",
+                    marginLeft: "6px",
                   }}
                 >
-                  <span>성별</span>
-                  <span
-                    style={{
-                      color: "red",
-                      fontWeight: "normal",
-                      marginLeft: "6px",
-                    }}
-                  >
-                    *
-                  </span>
-                </Form.Label>
-              </div>
+                  *
+                </span>
+              </Form.Label>
 
-              <div>
-                <ButtonGroup>
-                  {genders.map((radio, index) => (
-                    <ToggleButton
-                      key={index}
-                      id={`radio-${index}`}
-                      type="radio"
-                      name="gender"
-                      value={radio.value}
-                      checked={gender === radio.value}
-                      className="gender_btn"
-                      onChange={(e) => setGender(e.currentTarget.value)}
-                    >
-                      {radio.name}
-                    </ToggleButton>
-                  ))}
-                </ButtonGroup>
-              </div>
-            </div>
+              <ButtonGroup>
+                {genders.map((radio, index) => (
+                  <ToggleButton
+                    key={index}
+                    id={`radio-${index}`}
+                    type="radio"
+                    name="gender"
+                    value={radio.value}
+                    checked={gender === radio.value}
+                    className="gender_btn"
+                    onChange={(e) => setGender(e.currentTarget.value)}
+                  >
+                    {radio.name}
+                  </ToggleButton>
+                ))}
+              </ButtonGroup>
+            </Form.Group>
+          </div>
+
+          <Form.Group className="mt-5 mb-5" controlId="Birthday">
+            <Form.Label style={{ fontWeight: "bold", width: "100%" }}>
+              <span>생년월일</span>
+              <span
+                style={{
+                  color: "red",
+                  fontWeight: "normal",
+                  marginLeft: "6px",
+                }}
+              >
+                *
+              </span>
+            </Form.Label>
+
+            <DatePicker
+              inputReadOnly
+              size="small"
+              className="birthday_picker"
+              value={birthday}
+              onSelect={(selectedDate) => {
+                setBirthday(selectedDate.format("YYYY-MM-DD"));
+              }}
+              showToday={false}
+              allowClear={true}
+              defaultValue={undefined}
+              format={"YYYY-MM-DD (ddd)"}
+              locale={datePickerLocale}
+              placeholder="생년월일을 입력해 주세요"
+              popupClassName="birthday_picker_dropdown"
+            />
           </Form.Group>
 
           <Form.Group className="mt-5 mb-5" controlId="PhoneNumber">
@@ -638,7 +694,7 @@ function RegisterPage() {
               <div
                 style={{
                   color: "red",
-                  fontSize: "13px",
+                  fontSize: "0.8rem",
                 }}
               >
                 휴대폰 번호를 확인해 주세요
@@ -649,7 +705,7 @@ function RegisterPage() {
               <div
                 style={{
                   color: "red",
-                  fontSize: "13px",
+                  fontSize: "0.8rem",
                 }}
               >
                 이미 가입되어 있는 휴대폰 번호입니다
@@ -657,10 +713,12 @@ function RegisterPage() {
             ) : null}
           </Form.Group>
 
+          <div className="my-5 is_require_text">선택사항</div>
+
           <Form.Group>
             <Form.Label style={{ fontWeight: "bold", width: "100%" }}>
               <span>주소</span>
-              <span
+              {/* <span
                 style={{
                   color: "red",
                   fontWeight: "normal",
@@ -668,7 +726,7 @@ function RegisterPage() {
                 }}
               >
                 *
-              </span>
+              </span> */}
             </Form.Label>
             <InputGroup className="mb-2">
               <Form.Control
@@ -709,12 +767,123 @@ function RegisterPage() {
             </InputGroup>
           </Form.Group>
 
-          <div key={`ToS`} className="mb-3">
+          <Form.Group className="mt-5 mb-5" controlId="Anniversary">
+            <Form.Label style={{ fontWeight: "bold", width: "100%" }}>
+              <span>기념일</span>
+              <span
+                style={{
+                  color: "gray",
+                  fontSize: "0.8rem",
+                  fontWeight: "normal",
+                  marginLeft: "6px",
+                }}
+              >
+                (최대 3개까지 등록 가능합니다)
+              </span>
+            </Form.Label>
+
+            <DatePicker
+              inputReadOnly
+              size="small"
+              className="birthday_picker mb-2"
+              value={anniversary_1}
+              onSelect={(selectedDate) => {
+                setAnniversary_1(selectedDate.format("YYYY-MM-DD"));
+              }}
+              showToday={false}
+              allowClear={true}
+              defaultValue={undefined}
+              format={"YYYY-MM-DD (ddd)"}
+              locale={datePickerLocale}
+              placeholder="기념일 1 (선택)"
+              popupClassName="birthday_picker_dropdown"
+            />
+
+            <DatePicker
+              inputReadOnly
+              size="small"
+              className="birthday_picker mb-2"
+              value={anniversary_2}
+              onSelect={(selectedDate) => {
+                setAnniversary_2(selectedDate.format("YYYY-MM-DD"));
+              }}
+              showToday={false}
+              allowClear={true}
+              defaultValue={undefined}
+              format={"YYYY-MM-DD (ddd)"}
+              locale={datePickerLocale}
+              placeholder="기념일 2 (선택)"
+              popupClassName="birthday_picker_dropdown"
+            />
+
+            <DatePicker
+              inputReadOnly
+              size="small"
+              className="birthday_picker"
+              value={anniversary_3}
+              onSelect={(selectedDate) => {
+                setAnniversary_3(selectedDate.format("YYYY-MM-DD"));
+              }}
+              showToday={false}
+              allowClear={true}
+              defaultValue={undefined}
+              format={"YYYY-MM-DD (ddd)"}
+              locale={datePickerLocale}
+              placeholder="기념일 3 (선택)"
+              popupClassName="birthday_picker_dropdown"
+            />
+
+            {/* <div className="d-flex justify-content-between align-items-center">
+              <DatePicker
+                inputReadOnly
+                size="small"
+                className="birthday_picker"
+                value={undefined}
+                // onSelect={(selectedDate) => {
+                //   rangeCheckHandler({ start: selectedDate, end: endDate });
+                // }}
+                showToday={false}
+                allowClear={true}
+                defaultValue={undefined}
+                format={"YYYY-MM-DD (ddd)"}
+                locale={datePickerLocale}
+                placeholder="기념일을 입력해 주세요 (선택)"
+                popupClassName="birthday_picker_dropdown"
+              />
+              <AiOutlinePlusCircle size={25} className="ms-3" />
+            </div> */}
+          </Form.Group>
+
+          <div className="my-5 is_require_text">약관동의</div>
+
+          <div key={`ToS`} className="mb-3" style={{ fontSize: "0.9rem" }}>
+            <div className="ToS_label_container">
+              <Form.Check
+                type={"checkbox"}
+                id={`checkAll`}
+                label={`전체 동의`}
+                style={{ fontWeight: "bold" }}
+                checked={terms && privacyPolicy && marketing}
+                onChange={() => {
+                  if (terms || privacyPolicy || marketing) {
+                    setTerms(false);
+                    setPrivacyPolicy(false);
+                    setMarketing(false);
+                  } else {
+                    setTerms(true);
+                    setPrivacyPolicy(true);
+                    setMarketing(true);
+                  }
+                }}
+              />
+            </div>
+
             <div className="ToS_label_container">
               <Form.Check
                 type={"checkbox"}
                 id={`terms`}
                 label={`(필수) 이용약관 동의`}
+                checked={terms}
                 onChange={(e) => {
                   setTerms(e.target.checked);
                 }}
@@ -729,6 +898,7 @@ function RegisterPage() {
                 type={"checkbox"}
                 label={`(필수) 개인정보 처리방침 동의`}
                 id={`privacyPolicy`}
+                checked={privacyPolicy}
                 onChange={(e) => {
                   setPrivacyPolicy(e.target.checked);
                 }}
@@ -744,6 +914,7 @@ function RegisterPage() {
                 type={"checkbox"}
                 label={`(선택) 이벤트 및 할인 소식 알림 동의`}
                 id={`marketing`}
+                checked={marketing}
                 onChange={(e) => {
                   setMarketing(e.target.checked);
                 }}
