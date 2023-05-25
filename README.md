@@ -59,10 +59,16 @@ My goal in developing this project was to boost sales through this platform.
 I have learned the following during this project:
 
 * How to develop in a monorepo environment
+
 * How to deploy and manage applications in a cloud environment using AWS services.
+
 * How to implement CI/CD (Continuous Integration/Continuous Deployment) using GitHub Actions.
+
 * How to establish a contract with a payment gateway provider and implement actual payments instead of test payments.
+
 * How to manage page routing based on user permissions using the Higher Order Component (HOC) approach.
+
+
 ## Feedback
 
 * It should be implemented to allow ordering directly without requiring member login, including non-members.
