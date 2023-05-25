@@ -1,4 +1,4 @@
-# Project Name: EESO-CAKE
+# EESO-CAKE
 
 ![portfolio_eesocake](https://github.com/jinbokk/eeso-cake-app/assets/101123079/f35b5fbd-da7d-49a6-8f17-68f812e7e6d6)
 
