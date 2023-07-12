@@ -2,7 +2,7 @@
 
 ![portfolio_eesocake](https://github.com/jinbokk/eeso-cake-app/assets/101123079/f35b5fbd-da7d-49a6-8f17-68f812e7e6d6)
 
-My older sister's custom cake workshop website
+A website for custom cake workshop
 
 I developed a website to make it easier and faster for people to order cakes and get advice. 
 
