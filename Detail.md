@@ -1,8 +1,0 @@
-![001](https://github.com/jinbokk/eeso-cake-app/assets/101123079/f7e85372-23c6-4bd7-a56e-f07e352370d4)
-![002](https://github.com/jinbokk/eeso-cake-app/assets/101123079/043b2d66-d063-4b1a-8597-7e2c9da025b8)
-![003](https://github.com/jinbokk/eeso-cake-app/assets/101123079/d6bf2981-61c6-46ea-a3c7-a2e82faf3ef8)
-![004](https://github.com/jinbokk/eeso-cake-app/assets/101123079/4a0225d7-3b0e-484f-b85c-565308b9a140)
-![005](https://github.com/jinbokk/eeso-cake-app/assets/101123079/2197610a-c67a-4c32-b141-2182dec6304e)
-![006](https://github.com/jinbokk/eeso-cake-app/assets/101123079/270de459-da09-4286-808d-943b906ce13d)
-![007](https://github.com/jinbokk/eeso-cake-app/assets/101123079/5ac9f8d2-14eb-4717-bd80-7e4af6ad255f)
-![008](https://github.com/jinbokk/eeso-cake-app/assets/101123079/4c8ee9c4-dff9-4bca-b549-695a94ca11a3)
