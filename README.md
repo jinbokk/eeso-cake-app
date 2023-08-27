@@ -10,10 +10,6 @@ Before, they had to use KakaoTalk for this. I also made the website a place wher
 
 My goal in developing this project was to boost sales through this platform.
 
-[View Korean Version](https://github.com/jinbokk/eeso-cake-app/blob/master/Detail.md)
-
----
-
 ## Authors
 
 - [@jinbokk](https://www.github.com/jinbokk)
