@@ -9,6 +9,11 @@ I developed a website to make it easier and faster for people to order cakes and
 Before, they had to use KakaoTalk for this. I also made the website a place where people can see different categories of cake photos that have been sold before. 
 
 My goal in developing this project was to boost sales through this platform.
+
+[View Korean Version](https://github.com/jinbokk/eeso-cake-app/blob/master/Detail.md)
+
+---
+
 ## Authors
 
 - [@jinbokk](https://www.github.com/jinbokk)
